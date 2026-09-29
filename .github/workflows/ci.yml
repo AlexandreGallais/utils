@@ -15,10 +15,12 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+      # pnpm first, at the version of `packageManager`: setup-node caches the pnpm store and needs pnpm for it.
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v5
         with:
           node-version: 24
-      - run: corepack enable
+          cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - if: github.event_name == 'pull_request'

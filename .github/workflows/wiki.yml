@@ -25,10 +25,12 @@ jobs:
         with:
           # The "last updated" date of each page comes from the Git history.
           fetch-depth: 0
+      # pnpm first, at the version of `packageManager`: setup-node caches the pnpm store and needs pnpm for it.
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v5
         with:
           node-version: 24
-      - run: corepack enable
+          cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm wiki:build
         env:

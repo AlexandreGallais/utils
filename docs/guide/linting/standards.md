@@ -58,10 +58,5 @@ export default defineConfig([...withoutPlugins(angularAppProfile({ … }), ['uni
 
 ## Copyright headers
 
-This library has none. For a project that needs one:
-
-- **TypeScript / JavaScript**: `sonarjs/file-header` (off here) reports a missing header, and SonarQube has
-  the same rule (S1451). To **add** it automatically, [`eslint-plugin-headers`](https://www.npmjs.com/package/eslint-plugin-headers)
-  has an autofix: `eslint --fix` writes the header in every file.
-- **HTML and SCSS**: no widely used lint rule adds a header. The simplest is a small script run by
-  `lint:fix` (or a pre-commit hook) that prepends `<!-- … -->` or `/* … */` to the files that lack it.
+See [Copyright headers](./copyright.md): one text file, the right comment for each file type, added before
+each commit and checked in the CI.
