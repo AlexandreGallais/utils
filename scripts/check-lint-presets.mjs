@@ -8,7 +8,7 @@ import { ESLint } from 'eslint';
 import { defineConfig } from 'eslint/config';
 import { compile } from 'sass';
 import stylelint from 'stylelint';
-import { angularAppProfile } from '../lint/profiles/eslint-angular.mjs';
+import angularAppProfile from '../lint/profiles/eslint-angular-app.mjs';
 
 const EXAMPLE_DIRECTORY = path.resolve('examples/design-system');
 const LAYER_ORDER = '@layer reset, tokens, base, layout, components, utilities, overrides;';

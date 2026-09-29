@@ -62,7 +62,7 @@ type would reject the constructors with typed parameters, by contravariance). Th
 - **In an application**, the unsafe rules are **locked**: `// eslint-disable-next-line @typescript-eslint/no-explicit-any`
   is itself an error, whatever the reason. The code is fixed instead.
 
-<<< @/../lint/eslint/app.mjs
+<<< @/../lint/eslint/project/app.mjs
 
 `pnpm lint:presets` checks exactly this: the same justified `any` passes the library profile and is refused
 by the application profile.

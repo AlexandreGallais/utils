@@ -3,7 +3,7 @@
 // (see the "Linting" guide of the wiki); this file only adds what is specific to this repository.
 
 import { defineConfig, globalIgnores } from 'eslint/config';
-import oneFunctionPerFileBlock from './lint/eslint/one-function-per-file.mjs';
+import oneFunctionPerFileBlock from './lint/eslint/project/one-function-per-file.mjs';
 import typescriptLibraryProfile from './lint/profiles/eslint-typescript-library.mjs';
 
 export default defineConfig([

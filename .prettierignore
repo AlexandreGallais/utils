@@ -2,6 +2,7 @@ dist/
 coverage/
 pnpm-lock.yaml
 docs/api/
+docs/lint-rules/
 docs/.vitepress/generated/
 docs/.vitepress/cache/
 docs/.vitepress/dist/

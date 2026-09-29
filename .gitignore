@@ -4,6 +4,7 @@
 
 # Wiki: generated API pages and VitePress outputs
 /docs/api
+/docs/lint-rules
 /docs/.vitepress/generated
 /docs/.vitepress/cache
 /docs/.vitepress/dist

@@ -1,54 +1,47 @@
 # ESLint blocks
 
-Each block is a function in `lint/eslint/` returning flat config objects. Spread them in `defineConfig([…])`:
-the order matters, a later block overrides an earlier one (the profiles already use the right order).
+Each block is a function in `lint/eslint/` returning named flat config objects. Spread them in
+`defineConfig([…])`: the order matters, a later block overrides an earlier one (the profiles already use the
+right order). The blocks are grouped by **what they lint**, and the code rules by **concept**, whatever the
+plugin: `code/conditions` holds the rules of ESLint, SonarJS and Unicorn about conditions.
 
-| Block                   | Plugin            | What it checks                                                                           | Cost                                     |
-| ----------------------- | ----------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------- |
-| `base`                  | ESLint            | Possible bugs and bad practices of JavaScript; stale disable comments                    | low                                      |
-| `typescript`            | typescript-eslint | Types: no `any`, no unsafe call or assignment, promises awaited, strict booleans, naming | **high** (builds the TypeScript program) |
-| `imports`               | import-x          | Declared dependencies, no cycle, order, no default export                                | medium (`no-cycle` follows every import) |
-| `naming`                | check-file        | kebab-case files and folders, no `index` barrel                                          | low                                      |
-| `sonar`                 | SonarJS           | SonarQube rules: bugs, complexity, duplicated strings, security hotspots                 | medium                                   |
-| `unicorn`               | Unicorn           | Modern and consistent JavaScript (300 rules)                                             | low per rule                             |
-| `regexp`                | regexp            | Correct and efficient regular expressions                                                | low                                      |
-| `jsdoc`                 | jsdoc             | Documented public API: sentences, `@param`, `@returns`, `@example`                       | medium                                   |
-| `vitest`                | Vitest            | Specs: titles, matchers, no skipped test                                                 | low                                      |
-| `prettier`              | Prettier          | Formatting                                                                               | medium                                   |
-| `comments`              | eslint-comments   | One-line disables with a reason                                                          | low                                      |
-| `tooling`               | —                 | Node configs and scripts may use Node and default exports                                | —                                        |
-| `security`              | no-unsanitized    | No dynamic HTML injected (XSS), no sanitizer bypass                                      | low                                      |
-| `angular`               | angular-eslint    | Components, signals, inject(), OnPush, standalone, lifecycle                             | low                                      |
-| `angular-template`      | angular-eslint    | Templates: control flow, bindings, complexity                                            | low                                      |
-| `angular-accessibility` | angular-eslint    | WCAG in templates: alt texts, keyboard, labels, ARIA                                     | low                                      |
-| `angular-i18n`          | angular-eslint    | Every text marked for translation                                                        | low                                      |
-| `ngrx-signals`          | @ngrx             | Signal stores: protected state, no array at the root                                     | low                                      |
-| `rxjs`                  | rxjs-x            | Leaks, lost errors, nested subscriptions                                                 | medium (typed)                           |
-| `architecture`          | boundaries        | Atomic design layers: what may import what                                               | low                                      |
-| `storybook`             | storybook         | Stories in the Component Story Format                                                    | low                                      |
-| `app`                   | eslint-comments   | Unsafe rules cannot be disabled                                                          | —                                        |
-| `compat`                | compat            | Web APIs supported by the target browsers                                                | low                                      |
+| Folder        | Files                    | Blocks                                                                                                          |
+| ------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `setup/`      | —                        | `files` (shared globs), `javascript` (linter options, globals), `typescript` (parser, types)                    |
+| `code/`       | JS + TS                  | one block per concept (below), plus `imports`, `file-names`, `jsdoc`, `regexp`, `prettier`, `eslint-directives` |
+| `templates/`  | HTML (Angular templates) | `angular-template`, `angular-accessibility`, `angular-i18n`                                                     |
+| `frameworks/` | TS                       | `angular`, `angular-i18n`, `ngrx-signals`, `rxjs`, `storybook`                                                  |
+| `tests/`      | specs, benchmarks        | `vitest`                                                                                                        |
+| `node/`       | configs, scripts         | `tooling`: Node APIs and default exports allowed                                                                |
+| `project/`    | depends                  | `app` (locked rules), `architecture` (atomic design), `compat` (browsers), `one-function-per-file`              |
 
-## base
+The concepts of `code/`: `conditions`, `loops`, `functions`, `classes`, `objects-and-collections`, `arrays`,
+`strings`, `regular-expressions`, `numbers`, `types`, `variables`, `async`, `errors`, `modules`, `naming`,
+`comments`, `complexity`, `dead-code`, `security`, `browser-apis`, `node-apis`, `test-code`, `modern-syntax`,
+`formatting`, `other-frameworks`. Each concept file exports two configs: `code/<concept>` for every code file
+(core, SonarJS and Unicorn rules, under `// ---- Plugin ----` headers) and `code/<concept>/typescript` for the
+TypeScript files (typescript-eslint rules, and the core rules they replace turned off).
 
-The core rules of ESLint, every one listed: possible problems (`no-unsafe-finally`, `no-self-compare`…)
-and suggestions (`eqeqeq`, `curly`, `no-param-reassign`…). The `linterOptions` report a stale
-`eslint-disable` or inline config as an error.
+Every rule, its setting and its reason is listed in the [rule reference](/lint-rules/), generated from these
+files.
 
-## typescript
+## Profiles
 
-The strictest settings of typescript-eslint, with type information: no `any` (`no-explicit-any`,
-`no-unsafe-*`), no floating promise, booleans compared explicitly (`strict-boolean-expressions`), readonly
-parameters, explicit return types and member accessibility, and the naming convention
-(`@typescript-eslint/naming-convention`: camelCase, PascalCase types, UPPER_CASE constants, no `I` prefix).
+One profile per file in `lint/profiles/`; a project imports one and passes its options:
 
-## imports
+| Profile                         | For                                               | Adds                                      |
+| ------------------------------- | ------------------------------------------------- | ----------------------------------------- |
+| `eslint-core.mjs`               | any TypeScript project                            | setup, `code/`, `tests/`, `node/`         |
+| `eslint-typescript-library.mjs` | a TypeScript library (this repository, a SVG lib) | `code/jsdoc` on the public API            |
+| `eslint-angular-common.mjs`     | shared by the two Angular profiles                | `frameworks/`, `templates/`, architecture |
+| `eslint-angular-library.mjs`    | an Angular library of features                    | —                                         |
+| `eslint-angular-app.mjs`        | an Angular application                            | `project/app`, `project/compat`           |
+| `stylelint.mjs`                 | SCSS of a design system                           | every block of `lint/stylelint/`          |
 
-- Every package imported is declared in the nearest `package.json`; devDependencies only in the files listed
-  by the project (specs, stories, tool configs).
-- No import cycle, no relative import into another package, no default export (named exports are easier to
-  search and rename).
-- Import order: packages, then relative files; `import type` on its own line.
+## Cost
+
+Typed rules (typescript-eslint, `rxjs`) need the TypeScript program: they are the **high** cost of a lint.
+`import-x/no-cycle` follows every import (medium). The other blocks are cheap. See [Performance](./performance.md).
 
 ## architecture: atomic design
 
@@ -56,17 +49,17 @@ The layers of a design system library and of its features, by folder name. A lay
 below it; utils (pure functions) and models (shared types) are allowed everywhere; only `data-access` may use
 `HttpClient`.
 
-<<< @/../lint/eslint/architecture.mjs
+<<< @/../lint/eslint/project/architecture.mjs
 
 See [Atomic design](../css/atomic-design.md) for what goes in each layer.
 
-## angular, angular-template, angular-accessibility, angular-i18n
+## Angular: frameworks/ and templates/
 
 Angular is split in four so that a project enables what it needs. The template block turns the
 accessibility and i18n rules **off**, and the two dedicated blocks turn them **on**:
 
-<<< @/../lint/eslint/angular-accessibility.mjs
+<<< @/../lint/eslint/templates/angular-accessibility.mjs
 
-## security
+## code/security
 
-<<< @/../lint/eslint/security.mjs
+<<< @/../lint/eslint/code/security.mjs

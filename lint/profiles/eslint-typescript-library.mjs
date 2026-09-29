@@ -1,8 +1,7 @@
-// Profile: a TypeScript library without UI framework (utilities, an SVG library built by Vite): the core, the
-// JSDoc of the public API and the security rules for browser code.
+// Profile: a TypeScript library without UI framework (utilities, an SVG library built by Vite): the core and
+// the JSDoc of the public API.
 
-import jsdocBlock from '../eslint/jsdoc.mjs';
-import securityBlock from '../eslint/security.mjs';
+import jsdocBlock from '../eslint/code/jsdoc.mjs';
 import coreProfile from './eslint-core.mjs';
 
 /**
@@ -20,5 +19,5 @@ import coreProfile from './eslint-core.mjs';
  * @returns {import('eslint').Linter.Config[]} The configs, to spread in `defineConfig([…])`.
  */
 export default function typescriptLibraryProfile(options) {
-  return [...coreProfile(options), ...securityBlock(), ...jsdocBlock(options.apiFiles, options.ignoredApiFiles)];
+  return [...coreProfile(options), ...jsdocBlock(options.apiFiles, options.ignoredApiFiles)];
 }

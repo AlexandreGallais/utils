@@ -1,7 +1,7 @@
 // An Angular library of features, linted with the profile of lint/profiles/: this is all a project writes.
 
 import { defineConfig } from 'eslint/config';
-import { angularLibraryProfile } from '../../lint/profiles/eslint-angular.mjs';
+import angularLibraryProfile from '../../lint/profiles/eslint-angular-library.mjs';
 
 export default defineConfig([
   ...angularLibraryProfile({

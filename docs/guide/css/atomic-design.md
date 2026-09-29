@@ -25,7 +25,7 @@ Two more layers carry the features:
 An atom never imports a molecule; only pages talk to the stores; only data-access talks to the back end. The
 `architecture` ESLint block enforces it on every import:
 
-<<< @/../lint/eslint/architecture.mjs
+<<< @/../lint/eslint/project/architecture.mjs
 
 ## In an Angular library
 

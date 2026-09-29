@@ -4,12 +4,15 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { readLintBlocks } from './wiki/read-lint-blocks.mjs';
 import { directDependenciesOf, readFolders } from './wiki/read-sources.mjs';
 import { readCoverage, readTestResults } from './wiki/read-test-data.mjs';
 import { countExports, createSidebars, renderApiIndex, renderCategory } from './wiki/render-lists.mjs';
+import { blockPagePath, createLintSidebar, renderBlockPage, renderLintIndex } from './wiki/render-lint-reference.mjs';
 import { renderPage } from './wiki/render-page.mjs';
 
 const API_DIRECTORY = 'docs/api';
+const LINT_DIRECTORY = 'docs/lint-rules';
 const GENERATED_DIRECTORY = 'docs/.vitepress/generated';
 
 const folders = readFolders();
@@ -52,10 +55,22 @@ for (const folder of folders) {
     fs.writeFileSync(path.join(directory, `${entry.slug}.md`), renderPage(entry, context));
   }
 }
-fs.writeFileSync(
-  path.join(GENERATED_DIRECTORY, 'sidebar.json'),
-  `${JSON.stringify(createSidebars(folders), undefined, 2)}\n`,
-);
+// The rule reference: one page per lint block.
+const lintBlocks = await readLintBlocks();
+fs.rmSync(LINT_DIRECTORY, { recursive: true, force: true });
+fs.mkdirSync(LINT_DIRECTORY, { recursive: true });
+fs.writeFileSync(path.join(LINT_DIRECTORY, 'index.md'), renderLintIndex(lintBlocks));
+for (const tool of ['eslint', 'stylelint']) {
+  const toolBlocks = lintBlocks[tool];
+  for (const block of toolBlocks) {
+    const page = path.join(LINT_DIRECTORY, `${blockPagePath(tool, block.file)}.md`);
+    fs.mkdirSync(path.dirname(page), { recursive: true });
+    fs.writeFileSync(page, renderBlockPage(tool, block));
+  }
+}
+
+const sidebars = { ...createSidebars(folders), '/lint-rules/': createLintSidebar(lintBlocks) };
+fs.writeFileSync(path.join(GENERATED_DIRECTORY, 'sidebar.json'), `${JSON.stringify(sidebars, undefined, 2)}\n`);
 
 // eslint-disable-next-line no-console -- a command-line script reports its result.
 console.info(`${API_DIRECTORY}: ${countExports(folders)} pages in ${folders.length} categories.`);

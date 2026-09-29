@@ -32,6 +32,8 @@ export default defineConfig({
   cleanUrls: true,
   // The map of the 500 pages goes in one shared script instead of being inlined in every page.
   metaChunk: true,
+  // The lint blocks are `.mjs` files, included in the guides with `<<<`.
+  markdown: { languageAlias: { mjs: 'js' } },
   lastUpdated: true,
   // The catalog is the same list as the API pages.
   srcExclude: ['FUNCTIONS.md'],
@@ -46,6 +48,7 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'API', link: '/api/' },
       { text: 'Linting', link: '/guide/linting/' },
+      { text: 'Lint rules', link: '/lint-rules/' },
       { text: 'CSS', link: '/guide/css/design-tokens' },
       { text: 'Coverage', link: '/coverage/index.html', target: '_blank' },
       { text: 'Specification', link: '/SPEC' },
@@ -69,6 +72,7 @@ export default defineConfig({
             { text: 'ESLint blocks', link: '/guide/linting/eslint-blocks' },
             { text: 'Stylelint blocks', link: '/guide/linting/stylelint-blocks' },
             { text: 'Performance', link: '/guide/linting/performance' },
+            { text: 'Rule reference', link: '/lint-rules/' },
           ],
         },
         {
