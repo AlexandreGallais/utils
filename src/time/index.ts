@@ -7,3 +7,5 @@ export { getAnimationPhase } from './get-animation-phase.ts';
 export { getSyncedAnimationDelay } from './get-synced-animation-delay.ts';
 export { isBlinkOn } from './is-blink-on.ts';
 export type { TickSource } from './tick-source.ts';
+export { getSyncedAnimationDelaySimple } from './get-synced-animation-delay-simple.ts';
+export { isBlinkOnSimple } from './is-blink-on-simple.ts';

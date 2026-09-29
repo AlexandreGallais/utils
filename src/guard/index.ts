@@ -15,3 +15,4 @@ export { isRecord } from './is-record.ts';
 export { isString } from './is-string.ts';
 export { isUndefined } from './is-undefined.ts';
 export { isNonEmptyArray } from './is-non-empty-array.ts';
+export { assertSimple } from './assert-simple.ts';

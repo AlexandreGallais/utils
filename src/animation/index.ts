@@ -14,3 +14,5 @@ export { startTween } from './start-tween.ts';
 export type { TweenOptions } from './tween-options.ts';
 export type { BlinkOptions } from './blink-options.ts';
 export { startBlink } from './start-blink.ts';
+export { startBlinkSimple } from './start-blink-simple.ts';
+export { startAnimationSimple } from './start-animation-simple.ts';

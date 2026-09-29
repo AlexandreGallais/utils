@@ -21,3 +21,7 @@ export { differenceBy } from './difference-by.ts';
 export { intersectionBy } from './intersection-by.ts';
 export { moveItem } from './move-item.ts';
 export { sortedIndexBy } from './sorted-index-by.ts';
+export { shuffleSimple } from './shuffle-simple.ts';
+export { sampleSimple } from './sample-simple.ts';
+export { sortBySimple } from './sort-by-simple.ts';
+export { rangeSimple } from './range-simple.ts';

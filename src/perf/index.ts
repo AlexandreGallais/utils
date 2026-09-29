@@ -5,3 +5,5 @@ export { createFrameBatcher } from './create-frame-batcher.ts';
 export type { FpsMeter } from './fps-meter.ts';
 export type { FrameBatcher } from './frame-batcher.ts';
 export { measureDuration } from './measure-duration.ts';
+export { measureDurationSimple } from './measure-duration-simple.ts';
+export { createFpsMeterSimple } from './create-fps-meter-simple.ts';

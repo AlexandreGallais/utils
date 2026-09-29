@@ -10,7 +10,7 @@ import type { Point } from './point.ts';
  * @param target - Where the pivot must be drawn, in the parent coordinates.
  * @returns The moved transform.
  * @example
- * centerMatrixOn(parseTransform('rotate(30)') ?? identityMatrix(), { x: 10, y: 10 }, { x: 200, y: 100 });
+ * centerMatrixOn(parseTransform('rotate(30)') ?? createIdentityMatrix(), { x: 10, y: 10 }, { x: 200, y: 100 });
  * // still rotated by 30°, local (10, 10) now drawn at (200, 100)
  */
 export function centerMatrixOn(matrix: Matrix2D, pivot: Point, target: Point): Matrix2D {

@@ -1,18 +1,13 @@
 import { resetSvgRotationAndFlip } from './reset-svg-rotation-and-flip.ts';
-import { asSvgElement, createFakeSvgElement } from './testing/fake-svg-element.ts';
-import { screenCenter } from './testing/screen-center.ts';
+import { asSvgElement } from './testing/fake-svg-element.ts';
+import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
 
 describe(resetSvgRotationAndFlip, () => {
-  it('straightens and unmirrors the element without moving its center', () => {
-    const element = createFakeSvgElement('translate(10 10) rotate(90) scale(-2 2)', {
-      x: 0,
-      y: 0,
-      width: 4,
-      height: 4,
-    });
-    const before = screenCenter(element);
+  it('shows the element upright and unmirrored, at the same place', () => {
+    const element = createTwistedElement('rotate(40)');
+    const before = describeOnScreen(element);
     resetSvgRotationAndFlip(asSvgElement(element));
-    expect(element.attributes.get('transform')).toMatch(/^matrix\(2 0 0 2 /v);
-    expect(screenCenter(element)).toStrictEqual(before);
+    const after = describeOnScreen(element);
+    expect([after.rotation, after.isFlipped, after.center]).toStrictEqual([0, false, before.center]);
   });
 });

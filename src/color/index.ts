@@ -36,3 +36,5 @@ export { meetsApcaLevel } from './meets-apca-level.ts';
 export { toGrayscale } from './to-grayscale.ts';
 export { toHsl } from './to-hsl.ts';
 export { withAlpha } from './with-alpha.ts';
+export { meetsContrastLevelSimple } from './meets-contrast-level-simple.ts';
+export { getWcagLevelSimple } from './get-wcag-level-simple.ts';

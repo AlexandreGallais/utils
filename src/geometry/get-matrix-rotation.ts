@@ -15,7 +15,7 @@ const DEGREES_PER_RADIAN = HALF_TURN / Math.PI;
  * @param matrix - The transform of the element, such as the result of `parseTransform`.
  * @returns The rotation, in [0, 360[.
  * @example
- * getMatrixRotation(parseTransform('rotate(30) scale(-1 1)') ?? identityMatrix()); // 30
+ * getMatrixRotation(parseTransform('rotate(30) scale(-1 1)') ?? createIdentityMatrix()); // 30
  */
 export function getMatrixRotation(matrix: Matrix2D): number {
   return normalizeAngle(getRotationRadians(matrix) * DEGREES_PER_RADIAN);

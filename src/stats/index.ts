@@ -9,3 +9,5 @@ export { quantile } from './quantile.ts';
 export { median } from './median.ts';
 export { standardDeviation } from './standard-deviation.ts';
 export { variance } from './variance.ts';
+export { varianceSimple } from './variance-simple.ts';
+export { standardDeviationSimple } from './standard-deviation-simple.ts';

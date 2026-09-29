@@ -7,3 +7,4 @@ export type { LogLevel } from './log-level.ts';
 export type { LogSink } from './log-sink.ts';
 export type { Logger } from './logger.ts';
 export type { LoggerOptions } from './logger-options.ts';
+export { createLoggerSimple } from './create-logger-simple.ts';

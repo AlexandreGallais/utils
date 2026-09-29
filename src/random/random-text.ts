@@ -20,13 +20,16 @@ const MAX_SYLLABLES = 4;
  */
 export function randomText(minLength: number, maxLength: number, random: () => number): string {
   const length = randomInt(Math.max(minLength, 0), maxLength, random);
-  let text = '';
-  while (text.length < length) {
+  const words: string[] = [];
+  let full = '';
+  while (full.length <= length) {
     const syllableCount = randomInt(1, MAX_SYLLABLES, random);
-    const word = Array.from({ length: syllableCount }, () => SYLLABLES[randomInt(0, SYLLABLES.length - 1, random)]);
-    text += `${word.join('')} `;
+    words.push(
+      Array.from({ length: syllableCount }, () => SYLLABLES[randomInt(0, SYLLABLES.length - 1, random)]).join(''),
+    );
+    full = words.join(' ');
   }
-  // A space cut at the end is replaced by the letter that follows it in the syllable list, to keep the length.
-  const trimmed = text.slice(0, length).replace(/ $/v, 'a');
-  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+  // A cut right after a word would end with a space: the next letter takes its place, to keep the length.
+  const cut = full.charAt(length - 1) === ' ' ? full.slice(0, length - 1) + full.charAt(length) : full.slice(0, length);
+  return cut.charAt(0).toUpperCase() + cut.slice(1);
 }

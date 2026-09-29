@@ -1,4 +1,4 @@
-import { identityMatrix } from './identity-matrix.ts';
+import { createIdentityMatrix } from './create-identity-matrix.ts';
 import { multiplyMatrices } from './multiply-matrices.ts';
 
 const TRANSLATE = { a: 1, b: 0, c: 0, d: 1, e: 100, f: 0 };
@@ -16,7 +16,7 @@ describe(multiplyMatrices, () => {
   });
 
   it('is neutral with the identity', () => {
-    expect(multiplyMatrices(identityMatrix(), ROTATE_90)).toStrictEqual(ROTATE_90);
-    expect(multiplyMatrices(TRANSLATE, identityMatrix())).toStrictEqual(TRANSLATE);
+    expect(multiplyMatrices(createIdentityMatrix(), ROTATE_90)).toStrictEqual(ROTATE_90);
+    expect(multiplyMatrices(TRANSLATE, createIdentityMatrix())).toStrictEqual(TRANSLATE);
   });
 });

@@ -18,3 +18,8 @@ export { getTimeTickPattern } from './get-time-tick-pattern.ts';
 export { getTimeTicks } from './get-time-ticks.ts';
 export type { TimeTicks } from './time-ticks.ts';
 export { getWheelZoomFactor } from './get-wheel-zoom-factor.ts';
+export { getNiceTicksSimple } from './get-nice-ticks-simple.ts';
+export { getTimeTicksSimple } from './get-time-ticks-simple.ts';
+export { getWheelZoomFactorSimple } from './get-wheel-zoom-factor-simple.ts';
+export { padBoundsSimple } from './pad-bounds-simple.ts';
+export { sliceVisiblePointsSimple } from './slice-visible-points-simple.ts';

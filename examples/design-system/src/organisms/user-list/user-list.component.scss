@@ -1,0 +1,24 @@
+// Organism: arranges molecules and atoms into a section of a screen.
+
+@layer components {
+  .list {
+    display: grid;
+    gap: var(--space-inline);
+    padding: 0;
+    margin-block-start: var(--space-stack);
+    list-style: none;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-inline);
+    background: var(--color-surface-muted);
+    border-radius: var(--radius-surface);
+  }
+
+  .empty {
+    color: var(--color-text-muted);
+  }
+}

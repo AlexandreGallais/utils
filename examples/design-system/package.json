@@ -1,0 +1,17 @@
+{
+  "name": "design-system-example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Example Angular library of features, linted by the presets of lint/ (see the Linting guide of the wiki).",
+  "type": "module",
+  "peerDependencies": {
+    "@angular/common": "22.2.0",
+    "@angular/core": "22.2.0",
+    "@ngrx/signals": "22.0.1",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "eslint": "10.11.0",
+    "stylelint": "17.15.0"
+  }
+}

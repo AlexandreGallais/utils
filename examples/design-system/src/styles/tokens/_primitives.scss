@@ -1,0 +1,24 @@
+// Primitive tokens: the raw palette and scales, named after what they are. Components never use them directly.
+
+@layer tokens {
+  :root {
+    --color-blue-100: oklch(95% 0.03 250deg);
+    --color-blue-500: oklch(58% 0.16 250deg);
+    --color-blue-700: oklch(45% 0.15 250deg);
+    --color-gray-0: oklch(100% 0 0deg);
+    --color-gray-100: oklch(96% 0 0deg);
+    --color-gray-700: oklch(38% 0 0deg);
+    --color-gray-900: oklch(20% 0 0deg);
+    --color-red-600: oklch(55% 0.2 27deg);
+    --font-family-sans: system-ui, sans-serif;
+    --font-size-100: 0.875rem;
+    --font-size-200: 1rem;
+    --font-size-300: 1.25rem;
+    --radius-100: 0.25rem;
+    --radius-200: 0.5rem;
+    --space-100: 0.25rem;
+    --space-200: 0.5rem;
+    --space-300: 1rem;
+    --space-400: 1.5rem;
+  }
+}

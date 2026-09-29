@@ -1,6 +1,6 @@
 import { invertMatrix } from './invert-matrix.ts';
 import { multiplyMatrices } from './multiply-matrices.ts';
-import { rotationMatrix } from './rotation-matrix.ts';
+import { createRotationMatrix } from './create-rotation-matrix.ts';
 
 describe(invertMatrix, () => {
   it('inverts a scale and a translation', () => {
@@ -15,7 +15,7 @@ describe(invertMatrix, () => {
   });
 
   it('gives the identity once multiplied by the original', () => {
-    const matrix = multiplyMatrices(rotationMatrix(33, { x: 5, y: 7 }), { a: -2, b: 0, c: 0, d: 3, e: 4, f: -1 });
+    const matrix = multiplyMatrices(createRotationMatrix(33, { x: 5, y: 7 }), { a: -2, b: 0, c: 0, d: 3, e: 4, f: -1 });
     const inverse = invertMatrix(matrix);
     const product = inverse && multiplyMatrices(matrix, inverse);
     expect(product?.a).toBeCloseTo(1, 9);

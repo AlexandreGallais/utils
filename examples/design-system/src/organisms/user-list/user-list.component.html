@@ -1,0 +1,11 @@
+<ds-search-field (searched)="searched.emit($event)" />
+<ul class="list">
+  @for (user of users(); track user.id) {
+    <li class="item">
+      <span class="name">{{ user.name }}</span>
+      <ds-button variant="danger" (pressed)="removed.emit(user)">Remove</ds-button>
+    </li>
+  } @empty {
+    <li class="empty">No user</li>
+  }
+</ul>

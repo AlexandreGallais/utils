@@ -1,19 +1,19 @@
 import { moveMatrix } from '../geometry/move-matrix.ts';
-import { getSvgTransform } from './get-svg-transform.ts';
-import { setSvgTransform } from './set-svg-transform.ts';
+import { updateScreenMatrix } from './internal/update-screen-matrix.ts';
 
 /**
- * Moves an SVG element by an offset on screen (in its parent's coordinates), whatever its rotation or flip:
- * 10 to the right is always 10 to the right, where editing `x` or a local translation would follow the
- * rotation.
+ * Moves an SVG element by an offset in screen pixels, whatever its rotation, flip and groups: 5 to the left
+ * is always 5 pixels to the left of what is seen.
  *
- * @param element - The SVG element to move.
- * @param dx - Horizontal offset in the parent coordinates, positive to the right.
- * @param dy - Vertical offset in the parent coordinates, positive downwards.
- * @throws {TypeError} When its `transform` attribute is not a valid SVG transform list.
+ * @param element - A rendered SVG element.
+ * @param dx - Horizontal offset in screen pixels, positive to the right.
+ * @param dy - Vertical offset in screen pixels, positive downwards.
+ * @throws {TypeError} When the element is not rendered, a transform is flattened or its `transform`
+ * attribute is invalid.
  * @example
- * trackPointerDrag(symbol, { onMove: (dx, dy) => moveSvgElement(symbol, dx - lastX, dy - lastY) });
+ * placeSvgElement(badge, 'top-left', symbol, 'top-left');
+ * moveSvgElement(badge, -5, 5); // then 5 px to the left and 5 px down
  */
-export function moveSvgElement(element: Element, dx: number, dy: number): void {
-  setSvgTransform(element, moveMatrix(getSvgTransform(element), dx, dy));
+export function moveSvgElement(element: SVGGraphicsElement, dx: number, dy: number): void {
+  updateScreenMatrix(element, (screen) => moveMatrix(screen, dx, dy));
 }

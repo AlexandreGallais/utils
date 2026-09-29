@@ -1,12 +1,20 @@
 import { moveSvgElement } from './move-svg-element.ts';
-import { asSvgElement, createFakeSvgElement } from './testing/fake-svg-element.ts';
-import { screenCenter } from './testing/screen-center.ts';
+import { asSvgElement } from './testing/fake-svg-element.ts';
+import { createTwistedElement, describeOnScreen, isSamePoint } from './testing/scene.ts';
 
 describe(moveSvgElement, () => {
-  it('moves on screen whatever the rotation', () => {
-    const element = createFakeSvgElement('rotate(90)', { x: 0, y: 0, width: 10, height: 10 });
-    const before = screenCenter(element);
-    moveSvgElement(asSvgElement(element), 10, 0);
-    expect(screenCenter(element)).toStrictEqual({ x: before.x + 10, y: before.y });
+  it('moves by screen pixels whatever the parent transforms', () => {
+    const element = createTwistedElement('rotate(40)');
+    const before = describeOnScreen(element);
+    moveSvgElement(asSvgElement(element), -5, 5);
+    const after = describeOnScreen(element);
+    expect(isSamePoint(after.center, { x: before.center.x - 5, y: before.center.y + 5 })).toBe(true);
+    expect([after.width, after.height, after.rotation]).toStrictEqual([before.width, before.height, before.rotation]);
+  });
+
+  it('throws a TypeError for a flattened element', () => {
+    expect(() => {
+      moveSvgElement(asSvgElement(createTwistedElement('scale(0)')), 1, 1);
+    }).toThrow(TypeError);
   });
 });

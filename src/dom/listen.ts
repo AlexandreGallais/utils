@@ -1,19 +1,4 @@
-/**
- * The events a target can emit, by name, for the common DOM targets; any `Event` for the others.
- *
- * @template T - The event target.
- */
-type EventMapOf<T extends EventTarget> = T extends Window
-  ? WindowEventMap
-  : T extends Document
-    ? DocumentEventMap
-    : T extends HTMLElement
-      ? HTMLElementEventMap
-      : T extends SVGElement
-        ? SVGElementEventMap
-        : T extends MediaQueryList
-          ? MediaQueryListEventMap
-          : Record<string, Event>;
+import type { EventMapOf } from './event-map-of.ts';
 
 /**
  * Adds an event listener and returns the function that removes it, with the event type inferred from the

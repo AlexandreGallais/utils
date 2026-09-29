@@ -1,0 +1,4 @@
+// The cascade order of the design system, loaded first: a later layer always wins, whatever the specificity.
+// Unlayered styles would beat every layer: every rule of the design system and of the applications is in one.
+
+@layer reset, tokens, base, layout, components, utilities, overrides;

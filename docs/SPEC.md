@@ -165,7 +165,7 @@ La différence `isDefined` / `isNotUndefined` est documentée en JSDoc.
 
 ## `pattern.utils.ts`
 
-- `createSingleton<T>(factory: () => T): () => T` : lazy init, la factory n'est appelée qu'au premier appel (même si elle retourne `undefined`)
+- ~~`createSingleton`~~ : retiré, doublon de `once(() => factory())` (la factory ne tourne qu'au premier appel).
 
 ## `function.utils.ts` — **Ajout**
 
@@ -261,7 +261,7 @@ export type ValueOf<T> = T[keyof T]; // Ajout
 
 ## Deuxième lot
 
-Demandé après le premier lot ; la liste complète, avec les fichiers à copier, est dans [`FUNCTIONS.md`](FUNCTIONS.md).
+Demandé après le premier lot ; la liste complète, avec les fichiers à copier, est dans [`FUNCTIONS.md`](https://github.com/AlexandreGallais/utils/blob/main/docs/FUNCTIONS.md).
 
 ### Cache explicite
 
@@ -278,8 +278,8 @@ Demandé après le premier lot ; la liste complète, avec les fichiers à copier
 ### Géométrie et SVG (`geometry/`, `svg/`)
 
 - Convention d'angle unique (option A de la spec) : 0° en haut, sens horaire.
-- Points et rectangles : `distance`, `lerpPoint`, `polarToCartesian`, `headingBetween`, `rotatePoint`, `boundingRect`, `rectCenter`, `rectContainsPoint`, `rectIntersection`, `rectUnion`, `insetRect`, `fitRect`, `formatViewBox`, `parseViewBox`.
-- Transformations (`Matrix2D`, format SVG `a b c d e f`) : `parseTransform`, `formatMatrix`, `multiplyMatrices`, `invertMatrix`, `translationMatrix`, `rotationMatrix`, `scaleMatrix`, `transformPoint`, `transformDelta`, `decomposeMatrix`, `composeMatrix`, `removeRotationAndFlip` (annule rotation et flips, garde position et taille), `screenDeltaToLocal` (convertit un déplacement écran dans le repère d'un élément tourné ou retourné, sans le détransformer).
+- Points et rectangles : `getDistance`, `lerpPoint`, `polarToCartesian`, `getHeadingBetween`, `rotatePoint`, `getBoundingRect`, `getRectCenter`, `isPointInRect`, `getRectIntersection`, `getRectUnion`, `insetRect`, `fitRect`, `formatViewBox`, `parseViewBox`.
+- Transformations (`Matrix2D`, format SVG `a b c d e f`) : `parseTransform`, `formatMatrix`, `multiplyMatrices`, `invertMatrix`, `createTranslationMatrix`, `createRotationMatrix`, `createScaleMatrix`, `transformPoint`, `transformDelta`, `decomposeMatrix`, `composeMatrix`, `resetMatrixRotationAndFlip` (annule rotation et flips, garde position et taille), `screenDeltaToLocal` (convertit un déplacement écran dans le repère d'un élément tourné ou retourné, sans le détransformer).
 - Jauges rondes : `createArcPath` (arc de 360° en deux demi-arcs), `createRingSectorPath` (zones colorées), `valueToAngle`, `createArcTicks` (majeurs / mineurs sans doublon), `createTicksPath` (toutes les graduations dans un seul `<path>`).
 - Jauges en barre : `BarScale` (rectangle, `min` / `max`, sens `'up' | 'down' | 'left' | 'right'`), `valueToBarPosition`, `valueRangeToRect` (zone de seuil ou niveau de remplissage), `createBarTicks`.
 - Formes : `createPolylinePath`, `createSmoothPath` (courbe Catmull-Rom), `createRoundedRectPath`, `createRegularPolygonPoints`, `formatPoints`.
@@ -303,7 +303,7 @@ Demandé après le premier lot ; la liste complète, avec les fichiers à copier
 
 ## Troisième lot
 
-Règles d'écriture formalisées d'abord (section « Writing a function » d'[`AGENTS.md`](../AGENTS.md), skill `add-function`, JSDoc vérifiée par `eslint-plugin-jsdoc` : phrases complètes, `@param name - …`, `@returns`, `@throws`, `@example`, tags `@cached` et `@rejects`). Le catalogue du README et [`FUNCTIONS.md`](FUNCTIONS.md) sont générés par `pnpm docs:catalog` (lancé par `pnpm check`).
+Règles d'écriture formalisées d'abord (section « Writing a function » d'[`AGENTS.md`](https://github.com/AlexandreGallais/utils/blob/main/AGENTS.md), skill `add-function`, JSDoc vérifiée par `eslint-plugin-jsdoc` : phrases complètes, `@param name - …`, `@returns`, `@throws`, `@example`, tags `@cached` et `@rejects`). Le catalogue du README et [`FUNCTIONS.md`](https://github.com/AlexandreGallais/utils/blob/main/docs/FUNCTIONS.md) sont générés par `pnpm docs:catalog` (lancé par `pnpm check`).
 
 ### Formats et chaînes
 
@@ -388,7 +388,7 @@ Règles d'écriture formalisées d'abord (section « Writing a function » d'[`A
 
 - `trackPointerDrag(element, { canStart, onStart, onMove, onEnd })` : glisser à la souris, au doigt ou au stylet, pointeur capturé, distances depuis l'appui (à convertir avec `screenDeltaToLocal` pour un symbole tourné) ; renvoie son nettoyage.
 - `normalizeWheelDelta` (pixels quel que soit le `deltaMode`), `getWheelZoomFactor` (facteur exponentiel pour `zoomBounds`), `matchesShortcut(event, 'Ctrl+Shift+K')` (modificateurs exacts).
-- `snapToGrid` (sans bruit flottant, origine décalable), `isPointInPolygon` (pair-impair, polygones concaves), `isPointInTransformedRect` (symbole tourné ou retourné), `distanceToSegment` (survol d'une ligne fine avec tolérance).
+- `snapToGrid` (sans bruit flottant, origine décalable), `isPointInPolygon` (pair-impair, polygones concaves), `isPointInTransformedRect` (symbole tourné ou retourné), `getDistanceToSegment` (survol d'une ligne fine avec tolérance).
 
 ### Couleurs (suite)
 
@@ -415,7 +415,7 @@ Règles d'écriture formalisées d'abord (section « Writing a function » d'[`A
 
 ### Fonctions « sans surprise » : plus de paramètre par défaut
 
-- Tous les paramètres positionnels sont obligatoires : un appel montre tous les choix (`formatNumber(value, '1.0-2', 'en-US')`, `getNiceTicks(min, max, 5)`, `rotationMatrix(90, { x: 0, y: 0 })`, `randomInt(1, 6, Math.random)`, `createStaleDetector(1000, () => performance.now())`). Règle notée dans `AGENTS.md`.
+- Tous les paramètres positionnels sont obligatoires : un appel montre tous les choix (`formatNumber(value, '1.0-2', 'en-US')`, `getNiceTicks(min, max, 5)`, `createRotationMatrix(90, { x: 0, y: 0 })`, `randomInt(1, 6, Math.random)`, `createStaleDetector(1000, () => performance.now())`). Règle notée dans `AGENTS.md`.
 - Un paramètre dont l'absence a un sens prend `| undefined` explicitement (`sleep(ms, signal: AbortSignal | undefined)`).
 - `formatNumber` exige une locale et groupe les milliers selon elle ; le format invariant sans séparateur est `formatDecimal`.
 - `readStorage` / `createStorageItem` exigent un guard (`isFiniteNumber`, `isRecord`…).
@@ -423,10 +423,62 @@ Règles d'écriture formalisées d'abord (section « Writing a function » d'[`A
 
 ### SVG : remettre droit sans bouger à l'écran
 
-- Matrices (`geometry/`) : `removeRotation(matrix, pivot)`, `removeFlip(matrix, pivot)`, `removeRotationAndFlip(matrix, pivot)` (le pivot, typiquement le centre, reste au même endroit à l'écran), `moveMatrix(matrix, dx, dy)` (déplacement écran quelle que soit la rotation), `centerMatrixOn(matrix, pivot, target)`, `getMatrixRotation`, `isMatrixFlipped`. Un miroir est lu comme un flip horizontal appliqué avant la rotation (un flip vertical = flip horizontal + 180°), comme dans les éditeurs de symboles.
-- Éléments SVG (`svg/`) : `getSvgTransform` / `setSvgTransform` (attribut `transform`), `getSvgCenter` (centre de la `getBBox`), et en un appel `resetSvgRotation`, `resetSvgFlip`, `resetSvgRotationAndFlip`, `moveSvgElement`, `centerSvgElement` (recentre un texte mal centré sur sa ligne de base).
+- Matrices (`geometry/`) : `resetMatrixRotation(matrix, pivot)`, `resetMatrixFlip(matrix, pivot)`, `resetMatrixRotationAndFlip(matrix, pivot)` (le pivot, typiquement le centre, reste au même endroit à l'écran), `moveMatrix(matrix, dx, dy)` (déplacement écran quelle que soit la rotation), `centerMatrixOn(matrix, pivot, target)`, `getMatrixRotation`, `isMatrixFlipped`. Un miroir est lu comme un flip horizontal appliqué avant la rotation (un flip vertical = flip horizontal + 180°), comme dans les éditeurs de symboles.
+- Éléments SVG (`svg/`) : `getSvgTransform` / `setSvgTransform` (attribut `transform`), `getSvgLocalCenter` (centre de la `getBBox`), et en un appel `resetSvgRotation`, `resetSvgFlip`, `resetSvgRotationAndFlip`, `moveSvgElement`, `centerSvgElementOn` (recentre un texte mal centré sur sa ligne de base).
 - Formes : `createCirclePath`, `createRectPath`, `createPiePath` (part de camembert jointe au centre, disque complet à 360°), `createStarPoints`.
 - Animation : `getStrokeDashOffset(longueur, progression)` (anneau de progression, tracé qui se dessine), `getArcLength`, `formatRotation(angle, centre)` (aiguille mise à jour à chaque frame).
+
+## Sixième lot
+
+### Variantes `…Simple` (le standard maison)
+
+- Les fonctions existantes ne changent pas. Une fonction dont des paramètres sont des choix a une variante `…Simple` dans son propre fichier : moins de paramètres, choix figés, tag JSDoc `@simple` qui les liste (comme `@cached`). Règle dans `AGENTS.md`, rappel dans le skill `add-function`.
+- Standard : nombres en chiffres collés avec un point avant les décimales (`formatNumberSimple(1234.5, '1.2-2')` → `'1234.50'`), unités entières (secondes, degrés), heure locale pour les dates, `Math.random` et `performance.now()`, environ 5 graduations, bornes incluses, statistiques de population, jauges bornées, pas de signal d'annulation, `assertSimple(isTrue: boolean)` (booléen strict).
+- 67 variantes : formats, angles, dates, aléatoire, suivi, perf, graphiques, DOM, collections, maths, stats, chaînes, SVG, géométrie, couleurs, async, garde, mémoïsation, logs, enums, animation. Pas de variante là où rien de raisonnable ne peut être figé (langue d'un texte, guard du stockage).
+
+### SVG entre groupes
+
+- `getSvgMatrixBetween(from, to)` et `convertSvgPoint(point, from, to)` : conversion de coordonnées entre deux éléments, quels que soient les groupes et transformations entre eux (via `getCTM`).
+- `placeSvgElement(element, 'center', symbole, 'top-right')` : pose un point de la boîte d'un élément sur un point de la boîte d'un autre, dans n'importe quel groupe ; seule la position change.
+- `rotateSvgElementAround(element, angle, pivot)` (rotation ajoutée) et `setSvgRotationAround(element, angle, pivot)` (angle absolu, idéal pour une aiguille à chaque frame) autour du centre d'un autre élément ou du sien.
+
+### Visuel à l'écran (`svg/`)
+
+- Tout est calculé à l'écran (`getScreenCTM`), puis reconverti dans le repère du parent : peu importent les groupes et leurs transformations, y compris un parent en miroir. Les 9 ancres (`Anchor`) sont celles de la boîte visible (`getSvgScreenBox`, `getSvgAnchorPoint`).
+- `placeSvgElement(el, ancre, ref, ancreRef)` puis `moveSvgElement(el, dx, dy)` en pixels écran ; `rotateSvgElement`, `rotateSvgElementAround`, `setSvgRotation`, `setSvgRotationAround`, `flipSvgElement`, `scaleSvgElement` autour d'une ancre ; `resetSvgRotation` / `resetSvgFlip` / `resetSvgRotationAndFlip` jugés à l'écran ; variantes `…Simple` autour du centre.
+
+### Wiki
+
+- VitePress dans `docs/` : guide écrit à la main, une page par export générée depuis la JSDoc (signature, paramètres, exemple, variantes liées, tests avec leur résultat, couverture, fichiers à copier, code source avec bouton copier), barre latérale par catégorie, recherche locale (<kbd>Ctrl</kbd> <kbd>K</kbd>).
+- `.github/workflows/wiki.yml` : build et publication sur GitHub Pages à chaque push sur `main`, avec le rapport de couverture sous `/coverage/`.
+
+## Septième lot
+
+### Formes SVG autour d'un élément
+
+- `SvgArc` : `{ center, radius, startAngle, sweepAngle }`, le centre étant un élément (moyeu, cadran), l'arc démarrant à un angle et s'ouvrant d'un certain nombre de degrés.
+- `drawSvgArc`, `drawSvgArcBand` (bande d'épaisseur donnée : zone colorée de jauge), `drawSvgArcTicks` (graduations régulières, longueur donnée ; majeures et mineures dans deux `<path>`), `drawSvgPie`, `drawSvgCircle`, `getSvgArcPoint` (position d'une étiquette ou d'une pointe d'aiguille), `getSvgAnchorPointIn` : le `d` du `<path>` est écrit dans ses propres coordonnées, quels que soient les groupes.
+- D'élément à élément : `drawSvgLine(path, from, 'right', to, 'left')` (conduite entre deux symboles) et `drawSvgFrame(path, élément, marge)` (cadre de sélection).
+
+### Revue des noms
+
+- Géométrie alignée sur la table des préfixes : `getDistance`, `getDistanceToSegment`, `getHeadingBetween`, `getBoundingRect`, `getRectCenter`, `getRectIntersection`, `getRectUnion`, `isPointInRect(point, rect)` (comme `isPointInPolygon`), `createIdentityMatrix`, `createTranslationMatrix`, `createRotationMatrix`, `createScaleMatrix`, `resetMatrixRotation` / `resetMatrixFlip` / `resetMatrixRotationAndFlip` (comme `resetSvgRotation`).
+- SVG : `getSvgLocalCenter` (centre dans le repère local, à ne pas confondre avec `getSvgAnchorPoint` à l'écran), `centerSvgElementOn` (comme `centerMatrixOn`).
+- Les noms mathématiques standards restent (`clamp`, `lerp`, `mean`, `wrap`…).
+
+### Wiki
+
+- Le code source et le fichier de test sont inclus au build par VitePress (`<<< @/../src/…`) : rien n'est recopié dans les pages.
+- Chaque page liste les fonctions utilisées (« Uses ») et celles qui l'utilisent (« Used by »), les fichiers à copier, et des mots-clés tirés du nom pour la recherche.
+
+## Huitième lot : configs de lint par thème
+
+- Les règles sont découpées en **blocs thématiques** (`lint/eslint/`, `lint/stylelint/`), chacun une fonction qui renvoie des configs nommées, assemblés en **profils** par type de projet (`lint/profiles/`) : lib TypeScript (la lib SVG), lib Angular de features (design system, features, stores, accès au back), application Angular. La config de ce dépôt est le profil lib TypeScript plus ses règles propres ; la config résolue est identique règle pour règle à l'ancienne, à part les règles AWS de SonarJS désormais coupées.
+- Nouveaux blocs : `angular`, `angular-template`, `angular-accessibility` (WCAG, activable), `angular-i18n` (activable), `ngrx-signals`, `rxjs`, `storybook`, `security` (XSS, contournement du sanitizer), `architecture` (atomic design avec eslint-plugin-boundaries : un niveau n'importe que les niveaux inférieurs, seul `data-access` utilise HttpClient), `app` (les règles dangereuses ne peuvent pas être désactivées dans une application, même avec une raison ; une lib le peut, justifié), `compat` (navigateurs cibles).
+- Stylelint : `base`, `scss`, `order`, `strictness`, `design-tokens` (couleurs, espacements, rayons, ombres, polices, z-index par tokens uniquement), `layers` (règle maison : seules les cascade layers du design system), `performance` (animations sur transform/opacity), `accessibility`, `logical-properties`, `prettier`.
+- `examples/design-system/` : lib Angular d'exemple (atomes, molécules, organismes, page, store NgRx signals, data-access, tokens, layers) lintée par les profils ; `pnpm lint:presets` vérifie qu'elle passe et que chaque bloc attrape sa faute (dont le même `any` justifié, accepté en lib et refusé en application).
+- Performance mesurée : règles AWS de SonarJS coupées (20 % du temps), `--concurrency auto` (−38 %), `pnpm lint:cached` (3 s sans changement) ; Unicorn ne coûte pas cher (12 % pour 300 règles).
+- Wiki : guides « Linting » (profils, blocs, politique lib/application, performance) et « CSS & design system » (tokens, atomic design, cascade layers, bonnes pratiques), avec le code des blocs et de l'exemple inclus depuis les fichiers.
 
 ## Tests — cas limites couverts
 

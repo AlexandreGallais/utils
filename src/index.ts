@@ -18,7 +18,6 @@ export * from './log/index.ts';
 export * from './math/index.ts';
 export * from './object/index.ts';
 export * from './path/index.ts';
-export * from './pattern/index.ts';
 export * from './perf/index.ts';
 export * from './random/index.ts';
 export * from './stats/index.ts';

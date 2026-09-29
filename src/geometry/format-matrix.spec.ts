@@ -1,5 +1,5 @@
 import { formatMatrix } from './format-matrix.ts';
-import { rotationMatrix } from './rotation-matrix.ts';
+import { createRotationMatrix } from './create-rotation-matrix.ts';
 
 describe(formatMatrix, () => {
   it('formats the six values', () => {
@@ -7,7 +7,7 @@ describe(formatMatrix, () => {
   });
 
   it('removes float noise', () => {
-    expect(formatMatrix(rotationMatrix(90, { x: 0, y: 0 }), 6)).toBe('matrix(0 1 -1 0 0 0)');
+    expect(formatMatrix(createRotationMatrix(90, { x: 0, y: 0 }), 6)).toBe('matrix(0 1 -1 0 0 0)');
   });
 
   it('keeps the requested decimals', () => {

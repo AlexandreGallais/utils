@@ -9,7 +9,7 @@ import type { Matrix2D } from './matrix-2d.ts';
  * @param dy - Vertical offset in the parent coordinates, positive downwards.
  * @returns The moved transform.
  * @example
- * moveMatrix(parseTransform('rotate(90)') ?? identityMatrix(), 10, 0); // rotate(90) drawn 10 units to the right
+ * moveMatrix(parseTransform('rotate(90)') ?? createIdentityMatrix(), 10, 0); // rotate(90) drawn 10 units to the right
  */
 export function moveMatrix(matrix: Matrix2D, dx: number, dy: number): Matrix2D {
   return { a: matrix.a, b: matrix.b, c: matrix.c, d: matrix.d, e: matrix.e + dx, f: matrix.f + dy };

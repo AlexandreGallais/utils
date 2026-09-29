@@ -15,7 +15,7 @@ import { sleep } from './sleep.ts';
  * @yields {T[]} The next chunk of items, in order.
  * @rejects {Error} With the signal's reason when `signal` is aborted during a wait.
  * @example
- * for await (const rows of streamInChunks(alarms, 50, 16)) {
+ * for await (const rows of streamInChunks(alarms, 50, 16, undefined)) {
  *   table.append(...rows.map(createRow)); // 50 rows per frame
  * }
  */

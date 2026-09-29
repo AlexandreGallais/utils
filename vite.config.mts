@@ -35,7 +35,8 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/**/*.ts'],
       exclude: ['src/**/*.spec.ts', 'src/**/testing/**', 'src/index.ts'],
-      reporter: ['text', 'html', 'lcovonly'],
+      // `json-summary` feeds the coverage shown on the wiki pages.
+      reporter: ['text', 'html', 'lcovonly', 'json-summary'],
       reportsDirectory: './coverage',
       thresholds: {
         statements: 100,

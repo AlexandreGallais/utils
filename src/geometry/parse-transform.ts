@@ -1,10 +1,10 @@
 import { degreesToRadians } from '../angle/degrees-to-radians.ts';
-import { identityMatrix } from './identity-matrix.ts';
+import { createIdentityMatrix } from './create-identity-matrix.ts';
 import type { Matrix2D } from './matrix-2d.ts';
 import { multiplyMatrices } from './multiply-matrices.ts';
-import { rotationMatrix } from './rotation-matrix.ts';
-import { scaleMatrix } from './scale-matrix.ts';
-import { translationMatrix } from './translation-matrix.ts';
+import { createRotationMatrix } from './create-rotation-matrix.ts';
+import { createScaleMatrix } from './create-scale-matrix.ts';
+import { createTranslationMatrix } from './create-translation-matrix.ts';
 
 const SEPARATOR_PATTERN = /[\s,]+/v;
 const SEPARATORS_PATTERN = /[\s,]+/gv;
@@ -28,7 +28,7 @@ export function parseTransform(input: string): Matrix2D | undefined {
   const lastClose = input.lastIndexOf(')');
   const segments = lastClose === -1 ? [] : input.slice(0, lastClose).split(')');
   const rest = input.slice(lastClose + 1);
-  let result: Matrix2D | undefined = FILLER_PATTERN.test(rest) ? identityMatrix() : undefined;
+  let result: Matrix2D | undefined = FILLER_PATTERN.test(rest) ? createIdentityMatrix() : undefined;
   for (const segment of segments) {
     const step = parseFunction(segment);
     result = step && result && multiplyMatrices(result, step);
@@ -71,18 +71,18 @@ function toMatrix(name: string, values: readonly number[]): Matrix2D | undefined
     // SVG defaults: `translate(x)` is `translate(x, 0)`, `scale(s)` is `scale(s, s)`.
     case 'translate/1':
     case 'translate/2': {
-      return translationMatrix(first, second ?? 0);
+      return createTranslationMatrix(first, second ?? 0);
     }
     case 'scale/1':
     case 'scale/2': {
-      return scaleMatrix(first, second ?? first, origin);
+      return createScaleMatrix(first, second ?? first, origin);
     }
     case 'rotate/1': {
-      return rotationMatrix(first, origin);
+      return createRotationMatrix(first, origin);
     }
     case 'rotate/3': {
       const [, centerX = 0] = values;
-      return rotationMatrix(first, { x: centerX, y: third });
+      return createRotationMatrix(first, { x: centerX, y: third });
     }
     case 'skewX/1': {
       return { a: 1, b: 0, c: Math.tan(degreesToRadians(first)), d: 1, e: 0, f: 0 };

@@ -1,0 +1,35 @@
+// Global stylesheet of the design system: the layer order first, then each layer. A later layer always wins,
+// whatever the specificity: utilities override components without `!important`.
+
+@use 'layers';
+@use 'tokens/primitives';
+@use 'tokens/semantic';
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body);
+    color: var(--color-text);
+    background: var(--color-surface);
+  }
+}
+
+@layer utilities {
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+}

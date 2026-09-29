@@ -10,6 +10,7 @@ This repository is linted very strictly on purpose: most rules below are enforce
 - Helpers shared inside a theme live in `src/<theme>/internal/`, private to that theme; helpers shared by several themes live in `src/internal/`. Neither is exported by an `index.ts`.
 - Constants live in the file that uses them (duplicate a small constant rather than share it): each file stays self-contained, ready to be copied.
 - `docs/FUNCTIONS.md` is generated (`pnpm docs:catalog`): it lists every export and the files it needs.
+- The wiki is VitePress in `docs/` (`pnpm wiki:dev`): hand-written guide pages in `docs/guide/`, API pages generated from the JSDoc by `scripts/generate-wiki.mjs` into `docs/api/` (ignored by Git). `.github/workflows/wiki.yml` publishes it on GitHub Pages at each push to `main`. A new folder needs a title in `scripts/wiki/read-sources.mjs`.
 - Built by Vite in library mode (one output file per module, for tree-shaking) + `tsc` for the declarations.
 - Tests: Vitest (Node environment, globals). Benchmarks: Vitest benchmarks in `benchmarks/`, run on the built package.
 - The specification and the design decisions are in `docs/SPEC.md`: update it with any API change.
@@ -38,11 +39,14 @@ Run this before considering a change done:
 pnpm check
 ```
 
-It runs `typecheck`, `lint` (`--max-warnings 0`), `format:check`, `knip` (unused files, exports and dependencies), `coverage` (100 % thresholds), `build`, `check:package` (publint + attw) and `size` (size-limit). `pnpm lint:fix` and `pnpm format` fix most formatting and ordering issues. Commit messages follow Conventional Commits (commitlint).
+It runs `typecheck`, `lint` (`--max-warnings 0`), `lint:css` (Stylelint), `lint:presets`, `format:check`, `knip` (unused files, exports and dependencies), `coverage` (100 % thresholds), `build`, `check:package` (publint + attw) and `size` (size-limit). `pnpm lint:fix` and `pnpm format` fix most formatting and ordering issues. Commit messages follow Conventional Commits (commitlint).
 
 ## Tooling configuration
 
-- `eslint.config.mjs`: core, TypeScript, SonarJS, imports, file names, Vitest, ESLint comments. It imports the configs in `eslint/`: `jsdoc.config.mjs`, `regexp.config.mjs`, `unicorn.config.mjs` and `local.config.mjs` (project rules in `eslint/rules/`: `export-matches-filename`, `require-spec-file`).
+- Lint rules live in **themed blocks**: `lint/eslint/*.mjs` (base, typescript, imports, naming, sonar, unicorn, regexp, jsdoc, vitest, prettier, comments, tooling, security, architecture, angular, angular-template, angular-accessibility, angular-i18n, ngrx-signals, rxjs, storybook, app, compat) and `lint/stylelint/*.mjs` (base, scss, order, strictness, design-tokens, layers, performance, accessibility, logical-properties, prettier). Each block is a function returning named configs; `lint/profiles/` assembles them per kind of project (`typescriptLibraryProfile`, `angularLibraryProfile`, `angularAppProfile`, `stylelintProfile`).
+- `eslint.config.mjs` = `typescriptLibraryProfile` + what is specific to this repository (one-function-per-file rules in `lint/eslint/rules/`: `export-matches-filename`, `require-spec-file`). A rule change goes in its block, never in a project config.
+- `examples/design-system/` is an Angular library linted by the Angular and Stylelint profiles; `pnpm lint:presets` checks that it passes and that each block catches its mistake. Add a case there when a block gains a rule worth proving.
+- The wiki documents the blocks, the profiles and their performance (`docs/guide/linting/`), and the CSS of a design system (`docs/guide/css/`).
 - Every lint rule of every plugin is listed explicitly. When adding a plugin, list all its rules, turn off the ones that duplicate an existing rule (SonarJS included), and comment every non-default choice with a one-line prefix: `Custom:` (project choice), `Off:` (disabled on purpose), `Deprecated:` (replaced).
 - `tsconfig.json` holds the compiler options and references `tsconfig.lib.json` (sources, emits declarations), `tsconfig.spec.json` (specs), `tsconfig.bench.json` (benchmarks) and `tsconfig.node.json` (tool configs).
 - Relative imports name the `.ts` file (`./math.utils.ts`); `rewriteRelativeImportExtensions` turns them into `.js` in the output.
@@ -131,6 +135,8 @@ function helper(value: number): number {
 | `parse…OrThrow`             | a value from text, throws when invalid      | `parseColorOrThrow`                         |
 | `format…`                   | a `string` for display                      | `formatDecimal`, `formatDuration`           |
 | `create…`                   | a new object, function or path              | `createArcPath`, `createLogger`             |
+| `draw…`                     | writes the geometry of an SVG element       | `drawSvgArc`, `drawSvgLine`                 |
+| `reset…`                    | cancels a transform part without moving     | `resetSvgRotation`, `resetMatrixFlip`       |
 | `round…`, `floor…`, `ceil…` | a `number`                                  | `roundToStep`                               |
 | `…Cached`                   | the same result, through a value cache      | `parseColorCached`                          |
 
@@ -143,7 +149,7 @@ function helper(value: number): number {
 - Up to 3 or 4 positional parameters; beyond, an options object with its own `…Options` interface file (`BarTicksOptions`), every field `readonly` and documented, defaults destructured in the function.
 - Parameters are readonly (`readonly T[]`, `readonly` fields): a utility never mutates its arguments and returns new objects.
 - Callbacks are named for their role (`callback`, `keySelector`, `predicate`, `mapper`, `listener`).
-- **No default and no optional positional parameter**: every parameter is required, so a call always shows every choice (`formatNumber(value, '1.0-2', 'en-US')`, `rotationMatrix(90, { x: 0, y: 0 })`). A parameter whose absence is meaningful takes `| undefined` explicitly (`signal: AbortSignal | undefined`). JSDoc suggests usual values with "such as", never "by default".
+- **No default and no optional positional parameter**: every parameter is required, so a call always shows every choice (`formatNumber(value, '1.0-2', 'en-US')`, `createRotationMatrix(90, { x: 0, y: 0 })`). A parameter whose absence is meaningful takes `| undefined` explicitly (`signal: AbortSignal | undefined`). JSDoc suggests usual values with "such as", never "by default".
 - Time sources and randomness are parameters (`now: () => number`, `random: () => number`): callers pass `() => performance.now()` or `Math.random`, tests and replayable simulations pass fakes or `createSeededRandom`.
 - Angles: 0° up and clockwise everywhere (SVG y axis down, compass headings).
 - No magic numbers: module constants, documented.
@@ -153,6 +159,13 @@ function helper(value: number): number {
 - A programming error (argument out of range, invalid step) throws a `RangeError`, an unparsable input a `TypeError`; the message gives the expected range and the received value: `` `step must be a positive finite number, got ${step}` ``.
 - Data that may legitimately be invalid (user input, network) is parsed by a `parse…` function returning `undefined`, with a `parse…OrThrow` variant when useful.
 - Async functions reject with `Error` instances; an `AbortSignal` parameter cancels them (`signal?.throwIfAborted()`).
+
+### `…Simple` variants (the house standard)
+
+- A function whose parameters are choices (locale, decimals, random source, clock, time zone, tolerance…) may get a `…Simple` variant in its own file (`format-number-simple.ts` → `formatNumberSimple`): **fewer parameters**, the choices fixed to the house standard, and a call to the full function. The full function is never changed for it.
+- The variant is tagged `@simple` in its JSDoc, listing the fixed choices; its fixed values are named module constants.
+- House standard: numbers as digits in a row with a `.` before the decimals (`1234.50`, no thousands separator), whole units when a precision is needed (whole seconds, whole degrees), local time for dates, `Math.random` and `performance.now()` as sources, about 5 ticks on an axis, inclusive bounds, population statistics, clamped gauge values, no abort signal.
+- No variant when nothing sensible can be fixed (a language for texts, a guard for stored data).
 
 ### Caches
 

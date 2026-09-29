@@ -10,7 +10,7 @@ import type { Matrix2D } from './matrix-2d.ts';
  * @returns `'matrix(a b c d e f)'`.
  * @throws {RangeError} When `maxFractionDigits` is not an integer in [0, 100].
  * @example
- * element.setAttribute('transform', formatMatrix(parseTransform('rotate(90)') ?? identityMatrix(), 6));
+ * element.setAttribute('transform', formatMatrix(parseTransform('rotate(90)') ?? createIdentityMatrix(), 6));
  * // 'matrix(0 1 -1 0 0 0)'
  */
 export function formatMatrix(matrix: Matrix2D, maxFractionDigits: number): string {

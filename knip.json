@@ -1,5 +1,32 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": ["benchmarks/*.bench.ts", "eslint/rules/*.mjs"],
-  "project": ["src/**/*.ts", "benchmarks/**/*.ts", "eslint/**/*.mjs", "*.{mjs,mts}"]
+  "entry": [
+    "benchmarks/*.bench.ts",
+    "scripts/*.mjs",
+    "docs/.vitepress/config.mts",
+    "lint/**/*.mjs",
+    "examples/*/src/**/*.ts",
+    "examples/*/*.config.mjs"
+  ],
+  "project": [
+    "src/**/*.ts",
+    "benchmarks/**/*.ts",
+    "scripts/*.mjs",
+    "docs/.vitepress/*.mts",
+    "*.{mjs,mts}",
+    "lint/**/*.mjs",
+    "examples/*/src/**/*.ts",
+    "examples/*/*.config.mjs"
+  ],
+  "ignoreDependencies": [
+    "@double-great/stylelint-a11y",
+    "stylelint-config-recess-order",
+    "stylelint-config-standard",
+    "stylelint-config-standard-scss",
+    "stylelint-declaration-strict-value",
+    "stylelint-high-performance-animation",
+    "stylelint-order",
+    "stylelint-plugin-logical-css",
+    "stylelint-prettier"
+  ]
 }

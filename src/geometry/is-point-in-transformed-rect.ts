@@ -1,7 +1,7 @@
 import { invertMatrix } from './invert-matrix.ts';
 import type { Matrix2D } from './matrix-2d.ts';
 import type { Point } from './point.ts';
-import { rectContainsPoint } from './rect-contains-point.ts';
+import { isPointInRect } from './is-point-in-rect.ts';
 import type { Rect } from './rect.ts';
 import { transformPoint } from './transform-point.ts';
 
@@ -19,5 +19,5 @@ import { transformPoint } from './transform-point.ts';
  */
 export function isPointInTransformedRect(point: Point, rect: Rect, matrix: Matrix2D): boolean {
   const inverse = invertMatrix(matrix);
-  return inverse !== undefined && rectContainsPoint(rect, transformPoint(point, inverse));
+  return inverse !== undefined && isPointInRect(transformPoint(point, inverse), rect);
 }

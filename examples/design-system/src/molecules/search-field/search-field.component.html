@@ -1,0 +1,5 @@
+<label class="field" for="search">
+  <span class="label">Search</span>
+  <input #field id="search" class="input" type="search" [value]="text()" (input)="text.set(field.value)" />
+</label>
+<ds-button variant="primary" (pressed)="searched.emit(text())">Search</ds-button>

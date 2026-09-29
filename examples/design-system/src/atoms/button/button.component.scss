@@ -1,0 +1,35 @@
+// Atom: every value is a token; the component only decides which token goes where.
+
+@layer components {
+  .button {
+    padding-block: var(--space-inline);
+    padding-inline: var(--space-stack);
+    font-size: var(--font-size-body);
+    color: var(--color-action-text);
+    cursor: pointer;
+    background: var(--color-action);
+    border: none;
+    border-radius: var(--radius-control);
+    transition: opacity 150ms ease;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--color-action-hover);
+    }
+
+    &.secondary {
+      color: var(--color-text);
+      background: var(--color-surface-muted);
+    }
+
+    &.danger {
+      background: var(--color-danger);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .button {
+      transition: none;
+    }
+  }
+}

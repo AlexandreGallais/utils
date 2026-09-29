@@ -1,16 +1,17 @@
-import { removeFlip } from '../geometry/remove-flip.ts';
-import { getSvgCenter } from './get-svg-center.ts';
-import { getSvgTransform } from './get-svg-transform.ts';
-import { setSvgTransform } from './set-svg-transform.ts';
+import { resetMatrixFlip } from '../geometry/reset-matrix-flip.ts';
+import { getSvgLocalCenter } from './get-svg-local-center.ts';
+import { updateScreenMatrix } from './internal/update-screen-matrix.ts';
 
 /**
- * Unmirrors an SVG element without moving it on screen.
+ * Unmirrors an SVG element on screen without moving it: its center stays in place, its rotation and size are kept. Works whatever its groups: the result is judged on screen.
  *
- * @param element - A rendered SVG element with a `transform` attribute (or none).
- * @throws {TypeError} When its `transform` attribute is not a valid SVG transform list.
+ * @param element - A rendered SVG element.
+ * @throws {TypeError} When the element is not rendered, a transform is flattened or its `transform`
+ * attribute is invalid.
  * @example
- *  its center stays in place, the rotation and the scale are kept.:resetSvgFlip(label); // readable again, same place
+ * resetSvgFlip(symbol);
  */
 export function resetSvgFlip(element: SVGGraphicsElement): void {
-  setSvgTransform(element, removeFlip(getSvgTransform(element), getSvgCenter(element)));
+  const center = getSvgLocalCenter(element);
+  updateScreenMatrix(element, (screen) => resetMatrixFlip(screen, center));
 }

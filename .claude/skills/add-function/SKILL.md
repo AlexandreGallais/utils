@@ -11,6 +11,7 @@ Follow `AGENTS.md` → "Writing a function". In short:
 2. **Write it** from the template: constants documented, one exported function, private helpers after it, readonly parameters, options object beyond 3–4 parameters, `RangeError` / `TypeError` with the received value, injectable `now` / `random`, angles 0° up and clockwise.
 3. **Document it**: description sentences (capital, period), `@template`, `@param name - …`, `@returns`, `@throws` / `@rejects`, `@example` with results in comments; `@cached` for a `…Cached` variant, `@internal` for helpers. The description says more than the name.
 4. **Value cache?** Plain function without cache + `…Cached` variant in its own file, tagged `@cached` (key, size, eviction).
+   **Choice parameters?** (locale, decimals, random, clock, time zone…) Add a `…Simple` variant in its own file: fewer parameters, the house standard of `AGENTS.md` fixed in named constants, tagged `@simple`.
 5. **Test it** next to it (`*.spec.ts`): `describe(fn)`, `it.for` tables, edge cases (`NaN`, empty, negative, bounds, invalid arguments), at most 5 `expect` per test. Coverage must stay at 100 %.
 6. **Export it** in the folder's `index.ts` (`export { fn } from './fn.ts';`, `export type` for types); a new folder is added to `src/index.ts`.
 7. **Verify** one file at a time: `pnpm exec eslint --fix <files>`, `pnpm exec vitest run <spec>`, then `pnpm check` (it regenerates `README.md` and `docs/FUNCTIONS.md`).
