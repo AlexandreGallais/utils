@@ -46,7 +46,7 @@ function listBlockFiles(directory) {
     .readdirSync(directory, { recursive: true })
     .map((file) => path.join(directory, String(file)))
     .filter((file) => file.endsWith('.mjs') && !file.includes(`${path.sep}rules${path.sep}`))
-    .filter((file) => !['files.mjs', 'compose.mjs'].includes(path.basename(file)))
+    .filter((file) => !['files.mjs', 'compose.mjs', 'without-plugins.mjs'].includes(path.basename(file)))
     .toSorted();
 }
 

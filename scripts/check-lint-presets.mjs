@@ -8,7 +8,9 @@ import { ESLint } from 'eslint';
 import { defineConfig } from 'eslint/config';
 import { compile } from 'sass';
 import stylelint from 'stylelint';
+import withoutPlugins from '../lint/eslint/setup/without-plugins.mjs';
 import angularAppProfile from '../lint/profiles/eslint-angular-app.mjs';
+import { checkSonarWay } from './lint-presets/check-sonar-way.mjs';
 
 const EXAMPLE_DIRECTORY = path.resolve('examples/design-system');
 const LAYER_ORDER = '@layer reset, tokens, base, layout, components, utilities, overrides;';
@@ -140,6 +142,40 @@ async function checkEslintCases() {
 }
 
 /**
+ * Builds the application profile for the example.
+ *
+ * @returns {import('eslint').Linter.Config[]} The configs.
+ */
+function createAppProfile() {
+  return angularAppProfile({
+    tsconfigRootDirectory: EXAMPLE_DIRECTORY,
+    developmentDependencyFiles: ['**/*.spec.ts'],
+    prefix: 'ds',
+    isAccessible: true,
+    isTranslated: false,
+    usesRxjs: true,
+    storybookPackageDirectory: undefined,
+    browsers: ['last 2 Chrome versions', 'last 2 Firefox versions'],
+    polyfills: [],
+  });
+}
+
+/**
+ * Checks that the example passes the application profile without Unicorn and SonarJS.
+ *
+ * @returns {Promise<string[]>} The failures.
+ */
+async function checkWithoutPlugins() {
+  const eslint = new ESLint({
+    cwd: EXAMPLE_DIRECTORY,
+    overrideConfigFile: true,
+    overrideConfig: defineConfig(withoutPlugins(createAppProfile(), ['unicorn', 'sonarjs'])),
+  });
+  const reported = rulesOf(await eslint.lintFiles(['src']));
+  return reported.length > 0 ? [`without plugins: ESLint reports ${reported.join(', ')}`] : [];
+}
+
+/**
  * Checks that a justified escape hatch passes in a library and is refused in an application.
  *
  * @returns {Promise<string[]>} The failures.
@@ -149,19 +185,7 @@ function checkEscapeHatch() {
   const app = new ESLint({
     cwd: EXAMPLE_DIRECTORY,
     overrideConfigFile: true,
-    overrideConfig: defineConfig(
-      angularAppProfile({
-        tsconfigRootDirectory: EXAMPLE_DIRECTORY,
-        developmentDependencyFiles: ['**/*.spec.ts'],
-        prefix: 'ds',
-        isAccessible: true,
-        isTranslated: false,
-        usesRxjs: true,
-        storybookPackageDirectory: undefined,
-        browsers: ['last 2 Chrome versions', 'last 2 Firefox versions'],
-        polyfills: [],
-      }),
-    ),
+    overrideConfig: defineConfig(createAppProfile()),
   });
   return withCaseFile('src/utils/text/escape-hatch.ts', ESCAPE_HATCH, async (absolute) => {
     const libraryRules = rulesOf(await library.lintFiles([absolute]));
@@ -197,6 +221,8 @@ const failures = [
   ...(await checkEslintCases()),
   ...(await checkEscapeHatch()),
   ...(await checkStylelintCase()),
+  ...(await checkSonarWay()),
+  ...(await checkWithoutPlugins()),
 ];
 if (failures.length > 0) {
   // eslint-disable-next-line no-console -- a command-line script reports its result.

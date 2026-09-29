@@ -71,6 +71,7 @@ export default defineConfig({
             { text: 'Overview', link: '/guide/linting/' },
             { text: 'ESLint blocks', link: '/guide/linting/eslint-blocks' },
             { text: 'Stylelint blocks', link: '/guide/linting/stylelint-blocks' },
+            { text: 'Standards and SonarQube', link: '/guide/linting/standards' },
             { text: 'Performance', link: '/guide/linting/performance' },
             { text: 'Rule reference', link: '/lint-rules/' },
           ],
