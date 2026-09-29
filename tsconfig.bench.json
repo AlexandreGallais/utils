@@ -1,0 +1,9 @@
+/* Benchmarks: run against the built package (`utils` → dist/), typed against the sources. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["vitest/globals"],
+    "paths": { "utils": ["./src/index.ts"] }
+  },
+  "include": ["benchmarks/**/*.bench.ts"]
+}

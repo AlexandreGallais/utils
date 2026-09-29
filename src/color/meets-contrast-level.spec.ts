@@ -1,0 +1,23 @@
+import { meetsContrastLevel } from './meets-contrast-level.ts';
+import type { Rgb } from './rgb.ts';
+
+const BLACK: Rgb = { r: 0, g: 0, b: 0 };
+
+const WHITE: Rgb = { r: 255, g: 255, b: 255 };
+
+describe(meetsContrastLevel, () => {
+  const gray: Rgb = { r: 0x76, g: 0x76, b: 0x76 };
+  const lightGray: Rgb = { r: 0x94, g: 0x94, b: 0x94 };
+
+  it('applies the normal text thresholds', () => {
+    expect(meetsContrastLevel(gray, WHITE, 'AA')).toBe(true);
+    expect(meetsContrastLevel(gray, WHITE, 'AAA')).toBe(false);
+    expect(meetsContrastLevel(BLACK, WHITE, 'AAA')).toBe(true);
+  });
+
+  it('applies the large text thresholds', () => {
+    expect(meetsContrastLevel(lightGray, WHITE, 'AA')).toBe(false);
+    expect(meetsContrastLevel(lightGray, WHITE, 'AA', true)).toBe(true);
+    expect(meetsContrastLevel(gray, WHITE, 'AAA', true)).toBe(true);
+  });
+});

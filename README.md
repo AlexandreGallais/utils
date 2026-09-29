@@ -1,0 +1,654 @@
+# utils
+
+Strict, dependency-free TypeScript utilities for simulation UIs (Angular or not) that refresh values up to ~1 000 times per second: numbers, colors, SVG gauges, 2D charts, geometry, time and animations, DOM listeners for signals, strings, dates, collections and more.
+
+- **One function per file**, in a folder per theme, each with its spec. Copy one file into another project together with the files listed in [`docs/FUNCTIONS.md`](docs/FUNCTIONS.md).
+- **Fast by design**: no allocation in hot paths, precomputed tables, and every optimisation measured in [`benchmarks/`](benchmarks). Functions with a value cache exist twice: `parseColor` and `parseColorCached`.
+- **Strict**: TypeScript strict mode, an exhaustive ESLint configuration, 100 % test coverage, every export documented with an example.
+- **ESM and tree-shakable**: importing `clamp` alone adds 57 bytes to a bundle.
+
+The requirements and design decisions are in [`docs/SPEC.md`](docs/SPEC.md); the coding rules in [`AGENTS.md`](AGENTS.md).
+
+## Conventions
+
+- **Angles** are in degrees, 0° up and clockwise (SVG coordinates, compass headings), everywhere.
+- **Errors**: an invalid argument throws a `RangeError` (out of range) or a `TypeError` (unparsable); `parse…` functions return `undefined` instead, and `parse…OrThrow` variants throw.
+- **Caches** are opt-in: `…Cached` variants keep computed values in memory, the plain functions do not.
+- **Randomness and time** are injectable (`random`, `now` parameters), so tests and simulations can be replayed with `createSeededRandom`.
+- **Arguments are never mutated**: functions return new arrays and objects.
+
+## Examples
+
+```ts
+import { Clock, formatDecimal, isBlinkOn, MovingAverage, smoothTowards } from 'utils';
+
+const clock = new Clock(); // one shared tick source for the whole UI
+const speed = new MovingAverage(20); // smooths the noisy 1 000 Hz input
+let needle = 0;
+
+simulation.on('speed', (value) => speed.push(value));
+
+clock.subscribe(({ timestamp, deltaMs }) => {
+  needle = smoothTowards(needle, speed.value, deltaMs, 150); // same smoothing whatever the frame rate
+  label.textContent = `${formatDecimal(needle, 1)} kn`;
+  alarm.classList.toggle('on', isBlinkOn(timestamp, 1000)); // every alarm blinks in phase
+});
+```
+
+```ts
+import { createBarTicks, createTicksPath, valueRangeToRect } from 'utils';
+
+// vertical bar gauge from 0 to 10, filling from the bottom
+const scale = { min: 0, max: 10, rect: { x: 0, y: 0, width: 20, height: 200 }, direction: 'up' } as const;
+const redZone = valueRangeToRect(8, 10, scale); // { x: 0, y: 0, width: 20, height: 40 }
+const level = valueRangeToRect(scale.min, 6.5, scale); // current fill
+ticks.setAttribute('d', createTicksPath(createBarTicks({ ...scale, majorStep: 5, minorStep: 1, majorLength: 8 })));
+```
+
+```ts
+import { createLinearScale, createPolylinePath, downsampleMinMax, getNiceTicks, projectPoints, sliceVisiblePoints } from 'utils';
+
+// history sorted by time, zoomed on the last minute of an 800 × 200 px plot
+const bounds = { minX: now - 60_000, maxX: now, minY: 0, maxY: 40 };
+const plot = { x: 0, y: 0, width: 800, height: 200 };
+const visible = sliceVisiblePoints(history, bounds.minX, bounds.maxX); // with the neighbours outside, so the line reaches the edges
+line.setAttribute('d', createPolylinePath(projectPoints(downsampleMinMax(visible, plot.width), bounds, plot)));
+const y = createLinearScale([bounds.minY, bounds.maxY], [plot.height, 0]);
+const yTicks = getNiceTicks(bounds.minY, bounds.maxY).map((value) => ({ value, y: y(value) })); // 0, 10, 20, 30, 40
+```
+
+## Functions
+
+Generated from the JSDoc of the sources (`pnpm docs:catalog`); each name links to its file, where the full documentation and examples are.
+
+<!-- functions:start -->
+
+### angle
+
+Angles in degrees: conversions, normalization, shortest rotation, interpolation, compass points.
+
+| Export                                                  | What it does                                                                                                                                              |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`angleDifference`](src/angle/angle-difference.ts)      | Computes the shortest signed rotation from one angle to another, in [-180, 180[ degrees.                                                                  |
+| [`degreesToRadians`](src/angle/degrees-to-radians.ts)   | Converts an angle from degrees to radians.                                                                                                                |
+| [`headingToCardinal`](src/angle/heading-to-cardinal.ts) | Names the compass point closest to a heading: `N`, `NE`, `E`… The boundaries fall halfway between two points (with 8 points, `NE` covers 22.5° to 67.5°). |
+| [`lerpAngle`](src/angle/lerp-angle.ts)                  | Interpolates between two angles along the shortest path: a heading going from 350° to 10° passes through 0°, not through 180°.                            |
+| [`normalizeAngle`](src/angle/normalize-angle.ts)        | Brings an angle into [0, 360[ degrees, like a compass heading.                                                                                            |
+| [`radiansToDegrees`](src/angle/radians-to-degrees.ts)   | Converts an angle from radians to degrees.                                                                                                                |
+
+### animation
+
+Animations driven by a shared clock: easing curves, tweens, blinking with a rest state.
+
+| Export                                                            | What it does                                                                                                                                                                         |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`AnimationOptions`](src/animation/animation-options.ts) _(type)_ | Duration, curve and callbacks of `startAnimation`.                                                                                                                                   |
+| [`BlinkOptions`](src/animation/blink-options.ts) _(type)_         | Rhythm and rest state of `startBlink`.                                                                                                                                               |
+| [`easeInOutCubic`](src/animation/ease-in-out-cubic.ts)            | Accelerates then decelerates more strongly than `easeInOutQuad` (cubic).                                                                                                             |
+| [`easeInOutQuad`](src/animation/ease-in-out-quad.ts)              | Accelerates then decelerates (quadratic): a move between two positions.                                                                                                              |
+| [`easeInOutSine`](src/animation/ease-in-out-sine.ts)              | Accelerates then decelerates along a sine curve: the gentlest ease, for pulses and breathing effects.                                                                                |
+| [`easeInQuad`](src/animation/ease-in-quad.ts)                     | Starts slowly and accelerates (quadratic): an object leaving its rest position.                                                                                                      |
+| [`easeOutCubic`](src/animation/ease-out-cubic.ts)                 | Starts fast and decelerates more strongly than `easeOutQuad` (cubic): a needle settling on its value.                                                                                |
+| [`easeOutQuad`](src/animation/ease-out-quad.ts)                   | Starts fast and decelerates (quadratic): an object coming to rest, the most natural for UI movements.                                                                                |
+| [`EasingFunction`](src/animation/easing-function.ts) _(type)_     | An easing curve: maps the linear progress of an animation, in [0, 1], to the progress of the animated value (starting at 0, ending at 1, possibly overshooting in between).          |
+| [`linear`](src/animation/linear.ts)                               | Keeps a constant speed: the value moves as fast as time.                                                                                                                             |
+| [`startAnimation`](src/animation/start-animation.ts)              | Runs an animation on a shared clock: `onFrame` receives the eased progress and the elapsed time at every tick, until the duration is reached.                                        |
+| [`startBlink`](src/animation/start-blink.ts)                      | Makes something blink on a shared clock: `onChange` receives `true` then `false`, each for half of the period by default, and only when the state changes (no redundant DOM writes). |
+| [`startTween`](src/animation/start-tween.ts)                      | Animates a number from one value to another on a shared clock: a position, an opacity, a needle angle.                                                                               |
+| [`TweenOptions`](src/animation/tween-options.ts) _(type)_         | Values, duration, curve and callbacks of `startTween`.                                                                                                                               |
+
+### async
+
+Promises and long tasks: waiting, timeouts, retries, limited concurrency, non-blocking processing of long lists.
+
+| Export                                                                      | What it does                                                                                                                                                                 |
+| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`mapConcurrent`](src/async/map-concurrent.ts)                              | Maps a list with an async function, running at most `concurrency` calls at a time: load 500 symbols without opening 500 requests at once.                                    |
+| [`processInChunks`](src/async/process-in-chunks.ts)                         | Processes a long list without freezing the UI: items are handled for a time budget, then the main thread is given back to the browser (`yieldToMain`) before the next slice. |
+| [`ProcessInChunksOptions`](src/async/process-in-chunks-options.ts) _(type)_ | Settings of `processInChunks`: slice duration, cancellation and time source.                                                                                                 |
+| [`retry`](src/async/retry.ts)                                               | Runs an async operation until it succeeds, waiting longer after each failure (exponential backoff): a reconnection to a simulation server, a flaky request.                  |
+| [`RetryOptions`](src/async/retry-options.ts) _(type)_                       | Settings of `retry`: number of attempts, delays, error filter and cancellation.                                                                                              |
+| [`sleep`](src/async/sleep.ts)                                               | Waits for a delay, cancellable with an `AbortSignal`: the timer is cleared on abort.                                                                                         |
+| [`streamInChunks`](src/async/stream-in-chunks.ts)                           | Delivers a list progressively: the first chunk at once, then one chunk every `intervalMs`.                                                                                   |
+| [`TimeoutError`](src/async/timeout-error.ts)                                | Error thrown by `withTimeout` when the wrapped promise takes too long.                                                                                                       |
+| [`withTimeout`](src/async/with-timeout.ts)                                  | Races a promise against a delay.                                                                                                                                             |
+| [`yieldToMain`](src/async/yield-to-main.ts)                                 | Gives the main thread back to the browser for a moment, so it can render and handle input, then resumes.                                                                     |
+
+### chart
+
+2D charts: data window, zoom, scales, nice axis ticks, visible points, projection to screen, downsampling (clipping: `clipPolyline` in `geometry`).
+
+| Export                                                    | What it does                                                                                                                                                                                                                                                              |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`createLinearScale`](src/chart/create-linear-scale.ts)   | Creates a linear scale for a chart axis, like d3's `scaleLinear`: data values in `domain` map to screen coordinates in `range`.                                                                                                                                           |
+| [`DataBounds`](src/chart/data-bounds.ts) _(type)_         | The visible window of a chart, in data units: the y axis grows upwards, unlike screen coordinates.                                                                                                                                                                        |
+| [`downsampleMinMax`](src/chart/downsample-min-max.ts)     | Reduces a long series to at most two points per bucket, its lowest and highest, so that a line drawn through the result shows the same peaks as the full series: typically one bucket per pixel column, to draw 100 000 samples on an 800 px wide chart at every refresh. |
+| [`getDataBounds`](src/chart/get-data-bounds.ts)           | Computes the extent of data points in one pass, to fit a chart to its data.                                                                                                                                                                                               |
+| [`getNiceTicks`](src/chart/get-nice-ticks.ts)             | Computes round axis graduations covering a data interval, with steps of 1, 2 or 5 times a power of ten (0, 20, 40… rather than 0, 17.3, 34.6…).                                                                                                                           |
+| [`LinearScale`](src/chart/linear-scale.ts) _(type)_       | A linear mapping from data values to screen coordinates, returned by `createLinearScale`: call it to project a value, use `invert` to read the value under the mouse.                                                                                                     |
+| [`padBounds`](src/chart/pad-bounds.ts)                    | Adds a margin around a chart window, as a fraction of its range, so that the extreme points are not drawn on the edges.                                                                                                                                                   |
+| [`projectPoints`](src/chart/project-points.ts)            | Converts data points to screen coordinates: `bounds` is stretched over `rect` and the y axis is flipped so that larger values are drawn higher.                                                                                                                           |
+| [`sliceVisiblePoints`](src/chart/slice-visible-points.ts) | Keeps the points of a time series inside a horizontal window, by binary search: `O(log n)` instead of a full scan, for long histories scrolled or zoomed at every frame.                                                                                                  |
+| [`zoomBounds`](src/chart/zoom-bounds.ts)                  | Zooms a chart window around a fixed data point, such as the value under the mouse wheel: that point stays at the same place on screen.                                                                                                                                    |
+
+### collection
+
+Lists: grouping, sorting, splitting, comparing, sampling and paginating arrays.
+
+| Export                                                | What it does                                                                                                                                                                                          |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`chunk`](src/collection/chunk.ts)                    | Splits a list into consecutive chunks of the same size; the last chunk may be shorter.                                                                                                                |
+| [`compact`](src/collection/compact.ts)                | Removes the falsy values of a list: `null`, `undefined`, `false`, `0`, `0n`, `''` and `NaN`.                                                                                                          |
+| [`countBy`](src/collection/count-by.ts)               | Counts the items of a list per key, in a single pass.                                                                                                                                                 |
+| [`differenceBy`](src/collection/difference-by.ts)     | Keeps the items of a list whose key is absent from another list: the new alarms since the last update, the contacts that disappeared.                                                                 |
+| [`intersectionBy`](src/collection/intersection-by.ts) | Keeps the items of a list whose key is also in another list: the contacts still present, the alarms both active and acknowledged.                                                                     |
+| [`keyBy`](src/collection/key-by.ts)                   | Indexes the items of a list by key, in a single pass; with duplicate keys, the last item wins.                                                                                                        |
+| [`maxBy`](src/collection/max-by.ts)                   | Finds the item with the largest numeric key, in one pass, without sorting: the hottest sensor, the highest priority alarm.                                                                            |
+| [`minBy`](src/collection/min-by.ts)                   | Finds the item with the smallest numeric key, in one pass, without sorting: the oldest alarm, the nearest contact.                                                                                    |
+| [`moveItem`](src/collection/move-item.ts)             | Moves an item to another position, such as a row dropped at a new place in a reorderable list.                                                                                                        |
+| [`Page`](src/collection/page.ts) _(type)_             | One page of a list, returned by `paginate`, with what a pager needs.                                                                                                                                  |
+| [`paginate`](src/collection/paginate.ts)              | Extracts one page of a list.                                                                                                                                                                          |
+| [`pairwise`](src/collection/pairwise.ts)              | Lists the pairs of consecutive items: the segments of a route, the differences between measurements.                                                                                                  |
+| [`partition`](src/collection/partition.ts)            | Splits a list in two, in a single pass: the items that pass the predicate, then the others.                                                                                                           |
+| [`range`](src/collection/range.ts)                    | Builds the list of numbers from `start` (included) to `end` (excluded), by `step`.                                                                                                                    |
+| [`sample`](src/collection/sample.ts)                  | Picks a random item of a list, each with the same probability.                                                                                                                                        |
+| [`shuffle`](src/collection/shuffle.ts)                | Shuffles a list with the Fisher-Yates algorithm (every order equally likely), in a new array.                                                                                                         |
+| [`sortBy`](src/collection/sort-by.ts)                 | Sorts a list by a key, in a new array (the input is left untouched).                                                                                                                                  |
+| [`sortedIndexBy`](src/collection/sorted-index-by.ts)  | Finds by binary search where to insert an item in a sorted list to keep it sorted, after the items with the same key: `O(log n)`, to keep a live list sorted without sorting it again at each update. |
+| [`SortKey`](src/collection/sort-key.ts) _(type)_      | A sort key accepted by `sortBy`: compared with `<` (numbers, strings in code-unit order, bigints, dates by time); `undefined` and `NaN` sort last.                                                    |
+| [`uniqBy`](src/collection/uniq-by.ts)                 | Removes the items whose key was already seen, keeping the first occurrence of each key in order.                                                                                                      |
+| [`zip`](src/collection/zip.ts)                        | Pairs the items of two lists by position: labels with values, timestamps with samples.                                                                                                                |
+
+### color
+
+CSS colors: parsing any color string, WCAG contrast, readable text color, hex and rgb output, mixing.
+
+| Export                                                                      | What it does                                                                                                                                                                                        |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`ContrastLevel`](src/color/contrast-level.ts) _(type)_                     | WCAG 2.x conformance level of a contrast ratio: `'AA'` (minimum) or `'AAA'` (enhanced).                                                                                                             |
+| [`getApcaContrast`](src/color/get-apca-contrast.ts)                         | Computes the APCA lightness contrast (Lc) of a text color over a background, the perceptual contrast method of the WCAG 3 draft (APCA-W3 0.0.98G-4g).                                               |
+| [`getContrastRatio`](src/color/get-contrast-ratio.ts)                       | Computes the WCAG contrast ratio between two colors; their order does not matter.                                                                                                                   |
+| [`getContrastWithBlack`](src/color/get-contrast-with-black.ts)              | Computes the WCAG contrast ratio between a color and black text.                                                                                                                                    |
+| [`getContrastWithWhite`](src/color/get-contrast-with-white.ts)              | Computes the WCAG contrast ratio between a color and white text.                                                                                                                                    |
+| [`getReadableTextColor`](src/color/get-readable-text-color.ts)              | Picks black or white, whichever contrasts most with a background: the readable text color over it.                                                                                                  |
+| [`getReadableTextColorCached`](src/color/get-readable-text-color-cached.ts) | Picks black or white, whichever contrasts most with a background, like `getReadableTextColor`, with color strings parsed through the cache of `parseColorCached` (~13× faster on repeated strings). |
+| [`getRelativeLuminance`](src/color/get-relative-luminance.ts)               | Computes the WCAG relative luminance of a color: its perceived brightness, from 0 (black) to 1 (white).                                                                                             |
+| [`meetsContrastLevel`](src/color/meets-contrast-level.ts)                   | Checks whether two colors reach a WCAG 2.x contrast level: AA needs 4.5 (3 for large text), AAA needs 7 (4.5 for large text).                                                                       |
+| [`mixColors`](src/color/mix-colors.ts)                                      | Interpolates linearly between two colors, opacity included: use it for a color gradient along a gauge.                                                                                              |
+| [`parseColor`](src/color/parse-color.ts)                                    | Parses any CSS color string: hex with or without `#`, `rgb()`, `rgba()`, `hsl()`, `hsla()` or a named color, ignoring surrounding spaces and case.                                                  |
+| [`parseColorCached`](src/color/parse-color-cached.ts)                       | Parses any CSS color string, like `parseColor`, with a cache: parsing the same string again is a map lookup (~20× faster).                                                                          |
+| [`parseColorOrThrow`](src/color/parse-color-or-throw.ts)                    | Parses any CSS color string, like `parseColor`, but throws instead of returning `undefined`.                                                                                                        |
+| [`parseColorOrThrowCached`](src/color/parse-color-or-throw-cached.ts)       | Parses any CSS color string with the cache of `parseColorCached`, but throws instead of returning `undefined`.                                                                                      |
+| [`parseHex`](src/color/parse-hex.ts)                                        | Parses a hex color, with or without `#`, in any case.                                                                                                                                               |
+| [`parseHsl`](src/color/parse-hsl.ts)                                        | Parses a CSS `hsl()` or `hsla()` color, in comma or space syntax, any case.                                                                                                                         |
+| [`parseNamedColor`](src/color/parse-named-color.ts)                         | Parses a CSS named color, in any case: the 148 names of CSS Color 4 (`red`, `navy`, `rebeccapurple`…) and `transparent`.                                                                            |
+| [`parseRgb`](src/color/parse-rgb.ts)                                        | Parses a CSS `rgb()` or `rgba()` color, in comma or space syntax, any case.                                                                                                                         |
+| [`Rgb`](src/color/rgb.ts) _(type)_                                          | An sRGB color.                                                                                                                                                                                      |
+| [`Rgba`](src/color/rgba.ts) _(type)_                                        | An sRGB color with an opacity channel.                                                                                                                                                              |
+| [`toHex`](src/color/to-hex.ts)                                              | Formats a color as a lowercase hex string.                                                                                                                                                          |
+| [`toLinear`](src/color/to-linear.ts)                                        | Converts a gamma-encoded sRGB channel to linear light, as the luminance formulas need.                                                                                                              |
+| [`toRgbString`](src/color/to-rgb-string.ts)                                 | Formats a color as a CSS `rgb()` or `rgba()` string.                                                                                                                                                |
+
+### date
+
+Dates: validating, parsing texts and timestamps, reading parts, formatting, comparing days.
+
+| Export                                                                | What it does                                                                                                                                                                                        |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`addDays`](src/date/add-days.ts)                                     | Moves a date by a number of calendar days, keeping its time of day: across a daylight saving time change, `addDays` keeps 14:00 at 14:00 where adding 24 hours would give 13:00 or 15:00.           |
+| [`DateParts`](src/date/date-parts.ts) _(type)_                        | The fields of a date, as numbers people read, returned by `getDateParts`.                                                                                                                           |
+| [`differenceInCalendarDays`](src/date/difference-in-calendar-days.ts) | Counts the calendar days between two dates, whatever their times: from 23:59 to 00:01 the next day is one day.                                                                                      |
+| [`formatDate`](src/date/format-date.ts)                               | Formats a date with a fixed pattern, independent of the browser's locale: logs, file names, a `DD/MM/YYYY HH:mm` display.                                                                           |
+| [`getDateParts`](src/date/get-date-parts.ts)                          | Reads every field of a date at once, in local time or UTC, with the numbering people use: months from 1, ISO weekdays from 1 (Monday) to 7 (Sunday), plus the day of the year.                      |
+| [`isSameDay`](src/date/is-same-day.ts)                                | Checks whether two dates fall on the same calendar day, in local time or UTC: group log entries by day, show "today" in a list.                                                                     |
+| [`isValidDate`](src/date/is-valid-date.ts)                            | Checks whether a value is a usable `Date`: a `Date` instance whose time is not `NaN` (`new Date('oops')` is a `Date`, but an invalid one).                                                          |
+| [`parseDate`](src/date/parse-date.ts)                                 | Reads a date from the forms a backend or a storage sends: an ISO 8601 text (`2026-09-29`, `2026-09-29T14:30:00Z`, `2026-09-29 14:30`), a timestamp in milliseconds (number or digits), or a `Date`. |
+| [`parseDateFormat`](src/date/parse-date-format.ts)                    | Reads a date written in a known format, such as a French `DD/MM/YYYY HH:mm` or an American `MM/DD/YYYY`.                                                                                            |
+| [`startOfDay`](src/date/start-of-day.ts)                              | Computes midnight of the day of a date, in local time or UTC: the start of a daily chart or of a log filter.                                                                                        |
+
+### dom
+
+DOM listeners and observers returning their cleanup, to feed signals without RxJS; idle tasks.
+
+| Export                                                    | What it does                                                                                                                                                                                                |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`CleanupStack`](src/dom/cleanup-stack.ts) _(type)_       | A list of cleanups run together, created by `createCleanupStack`: listeners, observers, timers and subscriptions set up by one component or effect.                                                         |
+| [`createCleanupStack`](src/dom/create-cleanup-stack.ts)   | Creates a stack of cleanups to release at once, in reverse order of creation, like `DisposableStack`: one `dispose` in `ngOnDestroy` or in the cleanup of an effect instead of one field per listener.      |
+| [`listen`](src/dom/listen.ts)                             | Adds an event listener and returns the function that removes it, with the event type inferred from the target and the event name: the building block to feed signals from the DOM without RxJS `fromEvent`. |
+| [`observeIntersection`](src/dom/observe-intersection.ts)  | Watches whether an element is on screen and returns the function that stops watching: pause the updates of a gauge scrolled out of view, load a list page when its sentinel appears.                        |
+| [`observeResize`](src/dom/observe-resize.ts)              | Watches the size of an element and returns the function that stops watching: the signal-friendly form of `ResizeObserver`, to redraw a chart or a gauge when its container changes.                         |
+| [`watchMediaQuery`](src/dom/watch-media-query.ts)         | Follows a CSS media query, such as `(prefers-reduced-motion: reduce)` or `(max-width: 600px)`: calls back at once with the current state, then at each change, until the returned function is called.       |
+| [`watchPageVisibility`](src/dom/watch-page-visibility.ts) | Follows whether the page is visible: calls back at once with the current state, then each time the tab is hidden or shown again, until the returned function is called.                                     |
+| [`whenIdle`](src/dom/when-idle.ts)                        | Runs a low-priority task when the browser is idle, after the frames being drawn: prefetching, caching, analytics.                                                                                           |
+
+### duration
+
+Durations: splitting, C# TimeSpan and ISO 8601 parsing and formatting.
+
+| Export                                                     | What it does                                                                                                                                                                                      |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`DurationInput`](src/duration/duration-input.ts) _(type)_ | A duration given as units, every field optional and possibly fractional or negative.                                                                                                              |
+| [`DurationParts`](src/duration/duration-parts.ts) _(type)_ | A duration split into calendar-free units, as returned by `splitDuration` and the duration parsers.                                                                                               |
+| [`formatTimeSpan`](src/duration/format-time-span.ts)       | Formats a duration as a C# / .NET `TimeSpan` in the constant format `c` (`[-][d.]hh:mm:ss[.fffffff]`), the format a .NET backend parses and serializes to JSON.                                   |
+| [`parseIsoDuration`](src/duration/parse-iso-duration.ts)   | Parses an ISO 8601 duration, as sent by many APIs and by `Temporal.Duration`: `PT1H30M`, `P2DT3H`, `P1W`, `PT0.5S`.                                                                               |
+| [`parseTimeSpan`](src/duration/parse-time-span.ts)         | Parses a C# / .NET `TimeSpan` string, as serialized by a .NET backend: the constant format `c` (`1.02:03:04.5670000`, also the JSON format) and the general formats `g` / `G` (`1:02:03:04.567`). |
+| [`splitDuration`](src/duration/split-duration.ts)          | Splits a duration in milliseconds into days, hours, minutes, seconds and milliseconds, to display or reformat it.                                                                                 |
+| [`toMilliseconds`](src/duration/to-milliseconds.ts)        | Adds up a duration given in several units, instead of writing `5 * 60 * 1000` in the code: timeouts, intervals, simulation steps.                                                                 |
+
+### enum
+
+Enums: listing values and keys, validating and converting untyped values, literal types.
+
+| Export                                                  | What it does                                                                                                                                                                           |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`EnumLiteral`](src/enum/enum-literal.ts) _(type)_      | Turns an enum type into the union of its literal values: `'idle' \| 'running'` for a string enum, `0 \| 1` for a numeric enum.                                                         |
+| [`EnumObject`](src/enum/enum-object.ts) _(type)_        | Any TypeScript enum (string, numeric or both), or a `const` object used as one: the parameter type of the enum helpers.                                                                |
+| [`getEnumEntries`](src/enum/get-enum-entries.ts)        | Lists the members of an enum as `[name, value]` pairs, without the reverse mapping of numeric enums: to build a select list, or to show the name of each value.                        |
+| [`getEnumKey`](src/enum/get-enum-key.ts)                | Finds the member name of an enum value, for string enums too (TypeScript only generates the reverse mapping for numeric enums): to log a readable name, or to build a translation key. |
+| [`getEnumKeys`](src/enum/get-enum-keys.ts)              | Lists the member names of an enum, without the reverse mapping of numeric enums.                                                                                                       |
+| [`getEnumValues`](src/enum/get-enum-values.ts)          | Lists the values of an enum.                                                                                                                                                           |
+| [`isEnumValue`](src/enum/is-enum-value.ts)              | Checks whether a value is one of the values of a TypeScript enum (or of a `const` object used as one).                                                                                 |
+| [`isEnumValueCached`](src/enum/is-enum-value-cached.ts) | Checks whether a value is one of the values of a TypeScript enum, like `isEnumValue`, with the values of each enum computed once: checks are then an O(1) lookup.                      |
+| [`parseEnumValue`](src/enum/parse-enum-value.ts)        | Reads a member of an enum from a value that went through text: a query parameter, a storage entry, an HTML attribute.                                                                  |
+| [`toEnumValue`](src/enum/to-enum-value.ts)              | Returns a value typed as a member of an enum: the value itself when it belongs to the enum, the fallback otherwise.                                                                    |
+
+### event
+
+Typed event emitter.
+
+| Export                                         | What it does                                                                                  |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [`createEmitter`](src/event/create-emitter.ts) | Creates a small typed event emitter: event names and payload types are checked by TypeScript. |
+| [`Emitter`](src/event/emitter.ts) _(type)_     | A typed event emitter, created by `createEmitter`: event names and payload types are checked. |
+
+### format
+
+Numbers, durations and coordinates as display strings.
+
+| Export                                                       | What it does                                                                                                                                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`formatDecimal`](src/format/format-decimal.ts)              | Formats a number in an invariant format: `.` as decimal separator, no grouping, no trailing zeros, no scientific notation, no `-0`.                                                  |
+| [`formatDuration`](src/format/format-duration.ts)            | Formats a duration like a stopwatch: `m:ss`, or `h:mm:ss` from one hour, optionally with fractions of a second.                                                                      |
+| [`formatGeoCoordinate`](src/format/format-geo-coordinate.ts) | Formats a latitude or a longitude for a nautical display: degrees and decimal minutes (`48°51.400′ N`, the GPS and chart format), or degrees, minutes and seconds (`48°51′24.0″ N`). |
+| [`formatList`](src/format/format-list.ts)                    | Joins items into a readable list with the rules of a locale: `'a, b and c'` in English, `'a, b et c'` in French.                                                                     |
+| [`formatNumber`](src/format/format-number.ts)                | Formats a number with digits driven by `digitsInfo`, like Angular's `DecimalPipe`.                                                                                                   |
+| [`formatRelativeTime`](src/format/format-relative-time.ts)   | Formats a time offset in words with the rules of a locale, in the largest unit that fits (seconds to weeks): `'5 minutes ago'`, `'in 2 hours'`, `'il y a 3 jours'`.                  |
+
+### function
+
+Function wrappers: rate limiting for high-frequency sources, run once, memoization.
+
+| Export                                                                  | What it does                                                                                                                                                                                     |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`debounce`](src/function/debounce.ts)                                  | Delays a function until calls have stopped for a while, then runs it once with the latest arguments.                                                                                             |
+| [`memoize`](src/function/memoize.ts)                                    | Caches the results of a pure function by key: a call with an already seen key returns the stored result without running the function.                                                            |
+| [`MemoizedFunction`](src/function/memoized-function.ts) _(type)_        | A memoized function returned by `memoize`: same call signature, plus control over its cache.                                                                                                     |
+| [`memoizeLast`](src/function/memoize-last.ts)                           | Memoizes the last call only: called again with the same arguments (compared with `Object.is`), the function returns the previous result without running.                                         |
+| [`once`](src/function/once.ts)                                          | Wraps a function so it runs on the first call only; later calls return the first result.                                                                                                         |
+| [`rafThrottle`](src/function/raf-throttle.ts)                           | Limits a function to one call per animation frame, with the latest arguments: a value pushed 1 000 times per second is rendered at the screen refresh rate, never more.                          |
+| [`RateLimitedFunction`](src/function/rate-limited-function.ts) _(type)_ | A rate-limited version of a function, returned by `throttle`, `debounce` and `rafThrottle`: calls may be deferred and coalesced, keeping the latest arguments.                                   |
+| [`throttle`](src/function/throttle.ts)                                  | Limits a function to one call per interval: the first call runs immediately, the next ones are coalesced into a single trailing call with the latest arguments, so the last value is never lost. |
+
+### geometry
+
+2D geometry for SVG and the DOM: points, rectangles, view boxes and affine transform matrices.
+
+| Export                                                                 | What it does                                                                                                                                                                                                                                              |
+| ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`Anchor`](src/geometry/anchor.ts) _(type)_                            | One of the nine reference points of a box: its corners, the middles of its sides, its center.                                                                                                                                                             |
+| [`boundingRect`](src/geometry/bounding-rect.ts)                        | Computes the smallest axis-aligned rectangle containing every point, in one pass.                                                                                                                                                                         |
+| [`clipPolyline`](src/geometry/clip-polyline.ts)                        | Cuts a broken line to the parts inside a rectangle, such as a chart series zoomed in: each part is a continuous run to draw as its own polyline (a line leaving and coming back into view gives two runs).                                                |
+| [`clipSegment`](src/geometry/clip-segment.ts)                          | Cuts a segment to the part inside a rectangle (Liang–Barsky algorithm), to draw a line that leaves a plot area without spilling over the axes.                                                                                                            |
+| [`composeMatrix`](src/geometry/compose-matrix.ts)                      | Builds a matrix from readable steps, the inverse of `decomposeMatrix`: the same as the SVG transform `translate(translateX translateY) rotate(rotation) skewX(skewX) scale(scaleX scaleY)`.                                                               |
+| [`DecomposedTransform`](src/geometry/decomposed-transform.ts) _(type)_ | A transform split into readable steps, applied in this order to a point: scale, skew, rotation, then translation (`translate(…) rotate(…) skewX(…) scale(…)` in an SVG `transform` list).                                                                 |
+| [`decomposeMatrix`](src/geometry/decompose-matrix.ts)                  | Splits a matrix into readable steps: translation, rotation, scales and skew.                                                                                                                                                                              |
+| [`distance`](src/geometry/distance.ts)                                 | Computes the straight-line (Euclidean) distance between two points.                                                                                                                                                                                       |
+| [`fitRect`](src/geometry/fit-rect.ts)                                  | Scales and places a content in a container while keeping its aspect ratio, like SVG `preserveAspectRatio` or CSS `object-fit`: `'contain'` shows the whole content (`meet`), `'cover'` fills the container and crops the overflow (`slice`).              |
+| [`FittedRect`](src/geometry/fitted-rect.ts) _(type)_                   | Where to draw a content scaled by `fitRect`, and by how much it was scaled.                                                                                                                                                                               |
+| [`formatMatrix`](src/geometry/format-matrix.ts)                        | Formats a matrix as the value of an SVG `transform` attribute (or a CSS `transform` with commas).                                                                                                                                                         |
+| [`formatViewBox`](src/geometry/format-view-box.ts)                     | Formats a rectangle as the value of an SVG `viewBox` attribute.                                                                                                                                                                                           |
+| [`getAnchorPoint`](src/geometry/get-anchor-point.ts)                   | Finds a reference point of a box: a corner, the middle of a side or the center.                                                                                                                                                                           |
+| [`headingBetween`](src/geometry/heading-between.ts)                    | Computes the heading from one point to another, in the library's angle convention (0° up, clockwise), the inverse of `polarToCartesian`.                                                                                                                  |
+| [`identityMatrix`](src/geometry/identity-matrix.ts)                    | Creates the identity transform: points are left unchanged.                                                                                                                                                                                                |
+| [`insetRect`](src/geometry/inset-rect.ts)                              | Shrinks a rectangle by a margin on each side, like CSS padding: the drawing area of a gauge inside its frame.                                                                                                                                             |
+| [`Insets`](src/geometry/insets.ts) _(type)_                            | Distances from each side of a box, like CSS padding or margins.                                                                                                                                                                                           |
+| [`invertMatrix`](src/geometry/invert-matrix.ts)                        | Computes the inverse transform: it brings points from the transformed (screen) space back into the local space of an element, such as a click position into a rotated symbol's coordinates.                                                               |
+| [`lerpPoint`](src/geometry/lerp-point.ts)                              | Interpolates linearly between two points: the point at a fraction of the way from one to the other.                                                                                                                                                       |
+| [`Matrix2D`](src/geometry/matrix-2d.ts) _(type)_                       | A 2D affine transform, in the SVG / `DOMMatrix` layout `matrix(a b c d e f)`: a point `(x, y)` becomes `(a·x + c·y + e, b·x + d·y + f)`.                                                                                                                  |
+| [`multiplyMatrices`](src/geometry/multiply-matrices.ts)                | Composes two transforms, in the order of an SVG `transform` list: `multiplyMatrices(m1, m2)` is `transform="m1 m2"`, where `m2` applies first (in the local space) and `m1` then.                                                                         |
+| [`parseTransform`](src/geometry/parse-transform.ts)                    | Parses an SVG `transform` attribute into a single matrix: `matrix`, `translate`, `scale`, `rotate` (with an optional center), `skewX` and `skewY`, combined in order like the browser does.                                                               |
+| [`parseViewBox`](src/geometry/parse-view-box.ts)                       | Parses the value of an SVG `viewBox` attribute.                                                                                                                                                                                                           |
+| [`placeRect`](src/geometry/place-rect.ts)                              | Places a box of a given size relative to a target box: a badge on the top-right corner of a symbol, a label under a gauge, a tooltip beside a point.                                                                                                      |
+| [`PlaceRectOptions`](src/geometry/place-rect-options.ts) _(type)_      | Where `placeRect` puts a box relative to a target box.                                                                                                                                                                                                    |
+| [`Point`](src/geometry/point.ts) _(type)_                              | A position in a 2D coordinate system (SVG, canvas or screen: the y axis points down).                                                                                                                                                                     |
+| [`polarToCartesian`](src/geometry/polar-to-cartesian.ts)               | Computes the point at a given distance and angle from a center.                                                                                                                                                                                           |
+| [`Rect`](src/geometry/rect.ts) _(type)_                                | An axis-aligned rectangle: its top-left corner and its size, like an SVG `<rect>`, a `viewBox` or a `DOMRect`.                                                                                                                                            |
+| [`rectCenter`](src/geometry/rect-center.ts)                            | Computes the center of a rectangle, such as the rotation center of an SVG element from its bounding box.                                                                                                                                                  |
+| [`rectContainsPoint`](src/geometry/rect-contains-point.ts)             | Checks whether a point lies inside a rectangle, edges included: a hit test for a click or a hover.                                                                                                                                                        |
+| [`rectIntersection`](src/geometry/rect-intersection.ts)                | Computes the overlapping area of two rectangles; use it as a collision or visibility test too.                                                                                                                                                            |
+| [`rectUnion`](src/geometry/rect-union.ts)                              | Computes the smallest rectangle enclosing two rectangles, such as the area to redraw after an element moved from one place to another.                                                                                                                    |
+| [`removeRotationAndFlip`](src/geometry/remove-rotation-and-flip.ts)    | Resets the rotation, the flips and the skew of a transform while keeping its translation and its size: the element keeps its local origin at the same place, upright and unmirrored, so moving or resizing it afterwards works with plain screen offsets. |
+| [`resizeRect`](src/geometry/resize-rect.ts)                            | Changes the size of a rectangle while one of its anchors stays in place: a bar shrinking towards its base, a box growing from its center, a panel collapsing to its top edge.                                                                             |
+| [`rotatePoint`](src/geometry/rotate-point.ts)                          | Rotates a point around a center, clockwise on screen for a positive angle (the y axis points down), like an SVG `rotate()` transform.                                                                                                                     |
+| [`rotationMatrix`](src/geometry/rotation-matrix.ts)                    | Creates a rotation around a center, like SVG `rotate(angle cx cy)`: clockwise on screen for a positive angle.                                                                                                                                             |
+| [`scaleMatrix`](src/geometry/scale-matrix.ts)                          | Creates a scaling around a center, like SVG `scale(sx sy)`.                                                                                                                                                                                               |
+| [`scaleRect`](src/geometry/scale-rect.ts)                              | Scales a rectangle while one of its anchors stays in place: a fill level (`scaleRect(bar, 1, value / max, 'bottom')`), a highlight growing around an element.                                                                                             |
+| [`screenDeltaToLocal`](src/geometry/screen-delta-to-local.ts)          | Converts a movement made on screen (a drag) into the local coordinates of a transformed element, so it can be added to the element's own `x` / `y` even when the element is rotated, flipped or scaled: no need to reset the transform first.             |
+| [`Size`](src/geometry/size.ts) _(type)_                                | Dimensions of a box.                                                                                                                                                                                                                                      |
+| [`transformDelta`](src/geometry/transform-delta.ts)                    | Applies a transform to a displacement: rotation, scale, skew and flips, without the translation (a movement does not depend on where it starts).                                                                                                          |
+| [`transformPoint`](src/geometry/transform-point.ts)                    | Applies a transform to a point, translation included: where a point of an element's local space lands.                                                                                                                                                    |
+| [`transformRect`](src/geometry/transform-rect.ts)                      | Computes the axis-aligned box that a transformed rectangle occupies: the on-screen box of a symbol that users may have rotated, flipped or scaled.                                                                                                        |
+| [`translationMatrix`](src/geometry/translation-matrix.ts)              | Creates a translation, like SVG `translate(tx ty)`.                                                                                                                                                                                                       |
+
+### guard
+
+Type guards and assertions that narrow `unknown` values (enum guards are in `enum`).
+
+| Export                                               | What it does                                                                                                        |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [`assert`](src/guard/assert.ts)                      | Throws when a condition is falsy, and narrows its type otherwise: an invariant check that also informs TypeScript.  |
+| [`assertNever`](src/guard/assert-never.ts)           | Marks a code path as unreachable.                                                                                   |
+| [`isArray`](src/guard/is-array.ts)                   | Checks whether a value is an array, whatever its items.                                                             |
+| [`isArrayOf`](src/guard/is-array-of.ts)              | Checks whether a value is an array whose every item passes a type guard.                                            |
+| [`isBoolean`](src/guard/is-boolean.ts)               | Checks whether a value is a boolean.                                                                                |
+| [`isDefined`](src/guard/is-defined.ts)               | Checks whether a value is neither `null` nor `undefined`.                                                           |
+| [`isFiniteNumber`](src/guard/is-finite-number.ts)    | Checks whether a value is a finite number: neither `NaN` nor an infinity.                                           |
+| [`isFunction`](src/guard/is-function.ts)             |                                                                                                                     |
+| [`isNonEmptyArray`](src/guard/is-non-empty-array.ts) | Checks that an array has at least one item, and narrows it so that its first item is typed as defined.              |
+| [`isNotUndefined`](src/guard/is-not-undefined.ts)    | Checks whether a value is not `undefined`; `null` passes.                                                           |
+| [`isNumber`](src/guard/is-number.ts)                 | Checks whether a value is a number other than `NaN`.                                                                |
+| [`isObject`](src/guard/is-object.ts)                 | Checks whether a value is a non-null object: plain objects, arrays, class instances, dates… Functions are excluded. |
+| [`isRecord`](src/guard/is-record.ts)                 | Checks whether a value is a plain object: an object literal or `Object.create(null)`.                               |
+| [`isString`](src/guard/is-string.ts)                 | Checks whether a value is a string primitive.                                                                       |
+| [`isUndefined`](src/guard/is-undefined.ts)           | Checks whether a value is `undefined`; `null` does not pass.                                                        |
+
+### log
+
+A small scoped logger with a replaceable output.
+
+| Export                                                | What it does                                                                                                                                                                                                  |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`consoleSink`](src/log/console-sink.ts)              | Writes a log entry to the console with the method of its level (`console.warn` for a warning…), so the DevTools level filters work: `[12:34:56.789] WARN engine: Pressure low`, followed by the extra values. |
+| [`createLogger`](src/log/create-logger.ts)            | Creates a small scoped logger: four levels, a minimum level, sub-scopes, and a replaceable output (the console by default).                                                                                   |
+| [`LogEntry`](src/log/log-entry.ts) _(type)_           | A log entry, as handed to a `LogSink`.                                                                                                                                                                        |
+| [`Logger`](src/log/logger.ts) _(type)_                | A scoped logger, created by `createLogger`.                                                                                                                                                                   |
+| [`LoggerOptions`](src/log/logger-options.ts) _(type)_ | Settings of `createLogger`: minimum level, output and clock.                                                                                                                                                  |
+| [`LogLevel`](src/log/log-level.ts) _(type)_           | Severity of a log entry, from the most verbose; `'silent'` as a minimum level disables every entry.                                                                                                           |
+| [`LogSink`](src/log/log-sink.ts) _(type)_             | Receives the entries of a logger and writes them somewhere: the console, a file, a server.                                                                                                                    |
+
+### math
+
+Numbers: clamping, interpolation, wrapping, rounding without float noise, smoothing, simulation helpers.
+
+| Export                                                          | What it does                                                                                                                                                                                                                       |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`applyHysteresis`](src/math/apply-hysteresis.ts)               | Updates an on/off state with hysteresis: it switches on at or above `highThreshold`, off at or below `lowThreshold`, and keeps its previous value in between.                                                                      |
+| [`ceilToStep`](src/math/ceil-to-step.ts)                        | Rounds a number up to a multiple of a step, without float noise: `ceilToStep(0.3, 0.1)` is `0.3`, not `0.4`.                                                                                                                       |
+| [`clamp`](src/math/clamp.ts)                                    | Restricts a number to an interval.                                                                                                                                                                                                 |
+| [`clampedRatio`](src/math/clamped-ratio.ts)                     | Divides a value by a total and clamps the result to [0, 1]: a progress or fill level.                                                                                                                                              |
+| [`floorToStep`](src/math/floor-to-step.ts)                      | Rounds a number down to a multiple of a step, without float noise: `floorToStep(0.3, 0.1)` is `0.3`, not `0.2`.                                                                                                                    |
+| [`hasSignificantChange`](src/math/has-significant-change.ts)    | Tells whether a value moved enough since the last displayed one to be worth an update (a deadband): with values arriving 1 000 times per second, skipping sub-threshold noise saves most renders.                                  |
+| [`interpolateTable`](src/math/interpolate-table.ts)             | Reads a lookup table with linear interpolation between its points: a sensor calibration curve, an engine performance table, a fuel tank gauging table.                                                                             |
+| [`inverseLerp`](src/math/inverse-lerp.ts)                       | Computes where a value sits between two numbers: the inverse of `lerp`.                                                                                                                                                            |
+| [`isBetween`](src/math/is-between.ts)                           | Checks whether a number lies between two bounds, given in any order.                                                                                                                                                               |
+| [`isNearlyEqual`](src/math/is-nearly-equal.ts)                  | Compares two numbers with a tolerance: relative for large numbers, absolute near zero.                                                                                                                                             |
+| [`lerp`](src/math/lerp.ts)                                      | Interpolates linearly between two numbers, extrapolating outside [0, 1].                                                                                                                                                           |
+| [`moveTowards`](src/math/move-towards.ts)                       | Moves a value towards a target without exceeding a maximum rate of change (a slew-rate limiter): a needle, a rudder or a valve that cannot jump.                                                                                   |
+| [`ratio`](src/math/ratio.ts)                                    | Divides a value by a total, safely: the same as `inverseLerp(0, total, value)`.                                                                                                                                                    |
+| [`remap`](src/math/remap.ts)                                    | Maps a value from an input range to an output range, such as a sensor reading to a gauge angle.                                                                                                                                    |
+| [`roundToFractionDigits`](src/math/round-to-fraction-digits.ts) | Rounds a number to a given number of decimals, half away from zero.                                                                                                                                                                |
+| [`roundToStep`](src/math/round-to-step.ts)                      | Rounds a number to the nearest multiple of a step, without float noise: `roundToStep(0.3, 0.1)` is `0.3`, not `0.30000000000000004`.                                                                                               |
+| [`smoothTowards`](src/math/smooth-towards.ts)                   | Moves a value towards a target with frame-rate independent exponential smoothing: about 63 % of the distance is covered every `timeConstantMs`, whatever the refresh rate (unlike a fixed `lerp(current, target, 0.1)` per frame). |
+| [`wrap`](src/math/wrap.ts)                                      | Wraps a number into [min, max[ with an always-positive modulo, like a heading wrapping at 360°.                                                                                                                                    |
+
+### object
+
+Objects: picking, omitting, mapping values, shallow and deep equality.
+
+| Export                                        | What it does                                                                                                                                                                                                                                                       |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`deepMerge`](src/object/deep-merge.ts)       | Applies a partial patch to nested settings, such as saved user preferences over the defaults: plain objects are merged at every depth, anything else (arrays, dates, primitives) in the patch replaces the value, and `undefined` in the patch keeps the value.    |
+| [`isDeepEqual`](src/object/is-deep-equal.ts)  | Compares two values structurally, at every depth: primitives (`NaN` equals `NaN`, `0` equals `-0`), arrays, plain objects and class instances (same prototype, own enumerable keys), `Date`, `RegExp`, `Map`, `Set` (items compared by identity) and typed arrays. |
+| [`isEmpty`](src/object/is-empty.ts)           | Checks whether a container holds nothing: an empty string, array (or typed array), `Map`, `Set` or object without own enumerable key.                                                                                                                              |
+| [`mapValues`](src/object/map-values.ts)       | Transforms every value of an object, keeping its keys: format a record of readings, convert a map of settings.                                                                                                                                                     |
+| [`omit`](src/object/omit.ts)                  | Copies an object without some of its properties: remove internal fields before sending, drop a key from a state.                                                                                                                                                   |
+| [`pick`](src/object/pick.ts)                  | Copies some properties of an object into a new one: the fields a component needs, the payload of a request.                                                                                                                                                        |
+| [`shallowEqual`](src/object/shallow-equal.ts) | Compares two values at the first level: primitives with `Object.is`, objects and arrays by their own enumerable keys and `Object.is`-equal values.                                                                                                                 |
+
+### path
+
+URL paths.
+
+| Export                              | What it does                      |
+| ----------------------------------- | --------------------------------- |
+| [`joinPath`](src/path/join-path.ts) | Joins URL path segments with `/`. |
+
+### pattern
+
+Small creational patterns: lazy singleton, id generator.
+
+| Export                                                    | What it does                                                                                                                                |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`createIdGenerator`](src/pattern/create-id-generator.ts) | Creates a generator of unique, readable identifiers: `alarm-1`, `alarm-2`… for SVG `id`s (gradients, clip paths, markers), DOM ids or keys. |
+| [`createSingleton`](src/pattern/create-singleton.ts)      | Creates a lazy singleton: the factory runs on the first call only, every call returns the same instance (even `undefined`).                 |
+
+### perf
+
+Web performance: frame rate, timing, batched DOM reads and writes. See also `rafThrottle` and `yieldToMain`.
+
+| Export                                                   | What it does                                                                                                                                                                                                                                                                                               |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`createFpsMeter`](src/perf/create-fps-meter.ts)         | Creates a frame rate counter averaged over a sliding window of frames, in constant time per frame: show it in a debug overlay, or lower the refresh rate of a simulation view when the browser cannot keep up.                                                                                             |
+| [`createFrameBatcher`](src/perf/create-frame-batcher.ts) | Creates a queue that runs all DOM reads, then all DOM writes, once per animation frame (the fastdom pattern): interleaved reads and writes force the browser to compute the layout again after each write (layout thrashing), which quickly eats the frame budget when many widgets update at a high rate. |
+| [`FpsMeter`](src/perf/fps-meter.ts) _(type)_             | A frame rate measurement, created by `createFpsMeter`.                                                                                                                                                                                                                                                     |
+| [`FrameBatcher`](src/perf/frame-batcher.ts) _(type)_     | A queue of DOM reads and writes run together at the next frame, created by `createFrameBatcher`.                                                                                                                                                                                                           |
+| [`measureDuration`](src/perf/measure-duration.ts)        | Runs a function and measures how long it took, with the sub-millisecond `performance.now()`: check that a refresh stays within its frame budget, compare two implementations in the console.                                                                                                               |
+
+### random
+
+Randomness: seeded generators for replayable simulations, random numbers, and random test data.
+
+| Export                                                     | What it does                                                                                                                                                                                            |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`createSeededRandom`](src/random/create-seeded-random.ts) | Creates a fast pseudo-random generator from a seed (mulberry32): the same seed always gives the same sequence, so a simulation scenario (noise, failures, traffic) can be replayed exactly.             |
+| [`randomBetween`](src/random/random-between.ts)            | Draws a random number in an interval, uniformly: sensor noise, a random start position.                                                                                                                 |
+| [`randomBoolean`](src/random/random-boolean.ts)            | Draws `true` with a given probability: a random failure in a simulation, a random flag in test data.                                                                                                    |
+| [`randomDate`](src/random/random-date.ts)                  | Draws a date between two others, to the millisecond, for test data such as event timestamps.                                                                                                            |
+| [`randomEnumValue`](src/random/random-enum-value.ts)       | Draws one member of an enum, for test data covering every state.                                                                                                                                        |
+| [`randomHexColor`](src/random/random-hex-color.ts)         | Draws an opaque color, to tell series or items apart in tests and mock-ups.                                                                                                                             |
+| [`randomInt`](src/random/random-int.ts)                    | Draws a random integer between two bounds, both included, each with the same probability.                                                                                                               |
+| [`randomString`](src/random/random-string.ts)              | Draws a string of random characters, to fill a form or a table in tests: identifiers, codes, oversized labels to check truncation.                                                                      |
+| [`randomText`](src/random/random-text.ts)                  | Draws a placeholder text of words, starting with a capital letter, to fill labels and descriptions in tests and mock-ups: long enough to check wrapping and truncation without reading as real content. |
+
+### stats
+
+Statistics on arrays and typed arrays, without spreading them.
+
+| Export                                                 | What it does                                                                                                                                                                               |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`maxOf`](src/stats/max-of.ts)                         | Finds the largest number of a list, in one pass and without spreading it.                                                                                                                  |
+| [`mean`](src/stats/mean.ts)                            | Computes the arithmetic mean of a list of numbers.                                                                                                                                         |
+| [`median`](src/stats/median.ts)                        | Computes the median of a list of numbers: the middle value, robust to outliers (a sensor spike does not move it, unlike the mean).                                                         |
+| [`minOf`](src/stats/min-of.ts)                         | Finds the smallest number of a list, in one pass and without spreading it.                                                                                                                 |
+| [`NumberList`](src/stats/number-list.ts) _(type)_      | A list of numbers the statistics functions accept: an array or a typed array (`Float64Array`…).                                                                                            |
+| [`quantile`](src/stats/quantile.ts)                    | Computes a quantile (percentile) of a list of numbers, with linear interpolation between the two nearest ranks (the default method of spreadsheets and NumPy).                             |
+| [`standardDeviation`](src/stats/standard-deviation.ts) | Computes the standard deviation of a list of numbers: how far values typically stray from their mean, in the unit of the values.                                                           |
+| [`sum`](src/stats/sum.ts)                              | Adds up a list of numbers.                                                                                                                                                                 |
+| [`variance`](src/stats/variance.ts)                    | Computes the variance of a list of numbers in one pass with Welford's algorithm, numerically stable even for large values close to each other (unlike the textbook `mean(x²) - mean(x)²`). |
+
+### storage
+
+Web storage (localStorage, sessionStorage): JSON reads and writes that never throw, typed items.
+
+| Export                                                    | What it does                                                                                                                                                                                                            |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`createStorageItem`](src/storage/create-storage-item.ts) | Binds a typed value to one key of a web storage, with its fallback and guard declared once: a user setting, a panel layout, the last opened view.                                                                       |
+| [`readStorage`](src/storage/read-storage.ts)              | Reads a JSON value from a web storage (`localStorage`, `sessionStorage`) without ever throwing: a missing key, corrupted JSON, a value rejected by the guard or a storage blocked by the browser all give the fallback. |
+| [`StorageItem`](src/storage/storage-item.ts) _(type)_     | A typed value bound to one key of a web storage, returned by `createStorageItem`.                                                                                                                                       |
+| [`writeStorage`](src/storage/write-storage.ts)            | Writes a value as JSON to a web storage (`localStorage`, `sessionStorage`) without ever throwing: a full quota or a storage blocked by the browser gives `false` instead of an exception.                               |
+
+### string
+
+Strings: case conversion, word splitting, truncation, escaping, templating, number extraction.
+
+| Export                                                | What it does                                                                                                                                                                             |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`camelCase`](src/string/camel-case.ts)               | Converts a string to camelCase: words joined, the first in lower case, the next ones capitalized.                                                                                        |
+| [`capitalize`](src/string/capitalize.ts)              | Upper-cases the first character of a string and leaves the rest unchanged.                                                                                                               |
+| [`constantCase`](src/string/constant-case.ts)         | Converts a string to CONSTANT_CASE: uppercase words joined with `_`, as in constants and environment variables.                                                                          |
+| [`dotCase`](src/string/dot-case.ts)                   | Converts a string to dot.case: lower-case words joined with `.`, as in translation keys and property paths.                                                                              |
+| [`escapeHtml`](src/string/escape-html.ts)             | Escapes the characters that have a meaning in HTML (`& < > " '`), so a text can be inserted in markup or in an attribute value without being interpreted.                                |
+| [`escapeRegExp`](src/string/escape-reg-exp.ts)        | Escapes a text so it matches literally in a regular expression (outside a character class), with or without the `u` / `v` flags.                                                         |
+| [`extractNumber`](src/string/extract-number.ts)       | Extracts the first number of a text: sign and decimals, `.` or `,` as decimal separator.                                                                                                 |
+| [`extractNumbers`](src/string/extract-numbers.ts)     | Extracts every number of a text, with the rules of `extractNumber`.                                                                                                                      |
+| [`interpolate`](src/string/interpolate.ts)            | Replaces the `{key}` placeholders of a template with values.                                                                                                                             |
+| [`isBlank`](src/string/is-blank.ts)                   | Checks whether a value is missing or holds only whitespace: a required text field left empty.                                                                                            |
+| [`kebabCase`](src/string/kebab-case.ts)               | Converts a string to kebab-case: lowercase words joined with `-`, as in file names, CSS classes and URLs.                                                                                |
+| [`lowerCase`](src/string/lower-case.ts)               | Converts a string to lower-case words separated by spaces, whatever its case style: unlike `toLowerCase()`, it also splits `camelCase`, `kebab-case` and `snake_case` identifiers.       |
+| [`pascalCase`](src/string/pascal-case.ts)             | Converts a string to PascalCase: words joined, each capitalized, the rest in lower case.                                                                                                 |
+| [`pluralize`](src/string/pluralize.ts)                | Picks the singular or plural form of a word for a count, with the English rule (singular for exactly 1 or -1).                                                                           |
+| [`removeDiacritics`](src/string/remove-diacritics.ts) | Removes the accents and other diacritics of a text (`Été` → `Ete`), to compare, sort or search without accents, or to build identifiers.                                                 |
+| [`sentenceCase`](src/string/sentence-case.ts)         | Converts an identifier to a human-readable sentence: words separated by spaces, the first capitalized, the others in lower case.                                                         |
+| [`slugify`](src/string/slugify.ts)                    | Turns a text into a URL- and id-friendly slug: accents removed, lower-case words joined with `-`.                                                                                        |
+| [`snakeCase`](src/string/snake-case.ts)               | Converts a string to snake_case: lowercase words joined with `_`, as in database columns and JSON keys.                                                                                  |
+| [`squish`](src/string/squish.ts)                      | Trims a text and collapses every run of whitespace (spaces, tabs, line breaks) into a single space: clean a label typed by a user or read from a file before displaying or comparing it. |
+| [`titleCase`](src/string/title-case.ts)               | Converts a string to Title Case: words separated by spaces, each capitalized.                                                                                                            |
+| [`trainCase`](src/string/train-case.ts)               | Converts a string to Train-Case: capitalized words joined with `-`, as in HTTP header names.                                                                                             |
+| [`truncate`](src/string/truncate.ts)                  | Shortens a string to a maximum length, ending it with an ellipsis when it is cut.                                                                                                        |
+| [`uncapitalize`](src/string/uncapitalize.ts)          | Lower-cases the first character of a string and leaves the rest unchanged: the reverse of `capitalize`.                                                                                  |
+| [`upperCase`](src/string/upper-case.ts)               | Converts a string to upper-case words separated by spaces, whatever its case style: unlike `toUpperCase()`, it also splits `camelCase`, `kebab-case` and `snake_case` identifiers.       |
+| [`words`](src/string/words.ts)                        | Splits a string into words, whatever its case style: camelCase, PascalCase, kebab-case, snake_case, CONSTANT_CASE, spaces or punctuation.                                                |
+
+### structure
+
+Data structures for high-rate data: ring buffer, moving average, navigation history.
+
+| Export                                                     | What it does                                                                                                                                                                         |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`MovingAverage`](src/structure/moving-average.ts)         | Simple moving average over the last N values, in O(1) per value: a running sum over a preallocated `Float64Array`, recomputed once per window to cancel the accumulated float error. |
+| [`NavigationHistory`](src/structure/navigation-history.ts) | Back / forward history of views, like a browser's: `push` goes to a new entry and drops every entry after the current one, `back` and `forward` move without losing them.            |
+| [`RingBuffer`](src/structure/ring-buffer.ts)               | Fixed-capacity circular buffer: once full, each `push` overwrites the oldest item.                                                                                                   |
+
+### svg
+
+SVG drawing: arcs, gauge scales and ticks (round and bar), value ranges to shapes, paths and polygons.
+
+| Export                                                                   | What it does                                                                                                                                                                    |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`ArcTick`](src/svg/arc-tick.ts) _(type)_                                | A graduation of a round gauge, returned by `createArcTicks`.                                                                                                                    |
+| [`ArcTicksOptions`](src/svg/arc-ticks-options.ts) _(type)_               | Geometry and scale of the graduations built by `createArcTicks`.                                                                                                                |
+| [`BarDirection`](src/svg/bar-direction.ts) _(type)_                      | Direction in which the values of a bar gauge grow: `'up'` fills from the bottom, `'down'` from the top, `'right'` from the left, `'left'` from the right.                       |
+| [`BarScale`](src/svg/bar-scale.ts) _(type)_                              | Maps the values of a bar gauge onto its drawing area.                                                                                                                           |
+| [`BarTick`](src/svg/bar-tick.ts) _(type)_                                | A graduation of a bar gauge, returned by `createBarTicks`.                                                                                                                      |
+| [`BarTicksOptions`](src/svg/bar-ticks-options.ts) _(type)_               | Scale, steps and tick lengths of the graduations built by `createBarTicks`.                                                                                                     |
+| [`createArcPath`](src/svg/create-arc-path.ts)                            | Builds the `d` attribute of a circular arc, the track or the value bar of a round gauge.                                                                                        |
+| [`createArcTicks`](src/svg/create-arc-ticks.ts)                          | Computes the graduations of a round gauge: major ticks every `majorStep`, shorter minor ticks every `minorStep`, a minor tick falling on a major one dropped.                   |
+| [`createBarTicks`](src/svg/create-bar-ticks.ts)                          | Computes the graduations of a bar gauge: major ticks every `majorStep`, shorter minor ticks every `minorStep`, a minor tick falling on a major one dropped.                     |
+| [`createPolylinePath`](src/svg/create-polyline-path.ts)                  | Builds the `d` attribute of a broken line through points: a trend line, a sparkline, an outline.                                                                                |
+| [`createRegularPolygonPoints`](src/svg/create-regular-polygon-points.ts) | Computes the vertices of a regular polygon: a triangle pointer, a diamond marker, a hexagon symbol.                                                                             |
+| [`createRingSectorPath`](src/svg/create-ring-sector-path.ts)             | Builds the `d` attribute of a filled ring sector (a band between two radii): the colored zones of a round gauge.                                                                |
+| [`createRoundedRectPath`](src/svg/create-rounded-rect-path.ts)           | Builds the `d` attribute of a rectangle with rounded corners: a path, unlike `<rect rx>`, can be combined with other shapes, clipped or morphed.                                |
+| [`createSmoothPath`](src/svg/create-smooth-path.ts)                      | Builds the `d` attribute of a smooth curve passing through every point (a Catmull-Rom spline drawn as cubic Bézier curves): a trend curve that reads better than a broken line. |
+| [`createTicksPath`](src/svg/create-ticks-path.ts)                        | Joins tick lines into the `d` attribute of a single path: one DOM element for the whole scale is much cheaper to create, style and update than one `<line>` per tick.           |
+| [`formatPoints`](src/svg/format-points.ts)                               | Formats points as the `points` attribute of an SVG `<polygon>` or `<polyline>`.                                                                                                 |
+| [`valueRangeToRect`](src/svg/value-range-to-rect.ts)                     | Computes the part of a bar gauge between two values, across its whole thickness: a threshold zone (8 to 10 in red), or the fill level of the bar (`min` to the current value).  |
+| [`valueToAngle`](src/svg/value-to-angle.ts)                              | Converts a value to the angle of a round gauge's needle: `min` sits at `startAngle`, `max` at `endAngle` (library convention: 0° up, clockwise).                                |
+| [`valueToBarPosition`](src/svg/value-to-bar-position.ts)                 | Converts a value to a coordinate along a bar gauge: a `y` for an `'up'` or `'down'` bar, an `x` for a `'left'` or `'right'` bar.                                                |
+
+### time
+
+Shared clock and synchronized animations (blinking, phases, CSS animation delays).
+
+| Export                                                              | What it does                                                                                                                                                                  |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`Clock`](src/time/clock.ts)                                        | Shared tick source: one timer for the whole UI, whatever the number of subscribers, so everything animated from it (blinking alarms, gauges, symbols) moves on the same tick. |
+| [`ClockOptions`](src/time/clock-options.ts) _(type)_                | Settings of a `Clock`: tick source, period and time source.                                                                                                                   |
+| [`ClockTick`](src/time/clock-tick.ts) _(type)_                      | One tick of a `Clock`, shared by every subscriber of that tick.                                                                                                               |
+| [`getAnimationPhase`](src/time/get-animation-phase.ts)              | Computes the position within a repeating animation cycle at a given time, on a shared timeline.                                                                               |
+| [`getSyncedAnimationDelay`](src/time/get-synced-animation-delay.ts) | Computes the negative `animation-delay` that puts a CSS animation in phase with every other one of the same period, whenever it starts.                                       |
+| [`isBlinkOn`](src/time/is-blink-on.ts)                              | Tells whether a blinking element is visible at a given time.                                                                                                                  |
+| [`TickSource`](src/time/tick-source.ts) _(type)_                    | Anything that delivers clock ticks, such as a `Clock`: what the animation helpers need.                                                                                       |
+
+### types
+
+TypeScript utility types.
+
+| Export                                                               | What it does                                                                                                                                                                                        |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`AnyFunction`](src/types/any-function.ts) _(type)_                  | Any function, for generic constraints such as `F extends AnyFunction` (safer than `Function`, which also accepts classes and has an untyped call).                                                  |
+| [`Awaitable`](src/types/awaitable.ts) _(type)_                       | A value that is returned directly or through a promise: the result of a callback that may be sync or async.                                                                                         |
+| [`Brand`](src/types/brand.ts) _(type)_                               | Nominal type: a `T` that cannot be mixed up with another `T` of a different brand.                                                                                                                  |
+| [`Constructor`](src/types/constructor.ts) _(type)_                   |                                                                                                                                                                                                     |
+| [`DeepPartial`](src/types/deep-partial.ts) _(type)_                  | Makes every property optional, at every depth: a patch of a nested settings object, read-only since a patch is only read.                                                                           |
+| [`DeepReadonly`](src/types/deep-readonly.ts) _(type)_                | Makes every property and array read-only, at every depth: a frozen configuration, a state snapshot that must not be changed in place.                                                               |
+| [`ElementOf`](src/types/element-of.ts) _(type)_                      | Reads the item type of an array or tuple, such as the type of a `const` list of options.                                                                                                            |
+| [`Entries`](src/types/entries.ts) _(type)_                           | The `[key, value]` pairs of an object type, each key with its own value type: the precise type of `Object.entries`, which widens keys to `string`.                                                  |
+| [`FirstParameter`](src/types/first-parameter.ts) _(type)_            | Reads the type of the first parameter of a function, such as the event of a handler.                                                                                                                |
+| [`KeysOfType`](src/types/keys-of-type.ts) _(type)_                   | Lists the keys of the properties whose type matches: the numeric fields of a record to chart, the boolean flags of a settings object.                                                               |
+| [`LiteralUnion`](src/types/literal-union.ts) _(type)_                | A union of known literals that still accepts any value of the base type, without losing autocompletion of the literals (a plain `'a' \| 'b' \| string` collapses to `string`).                      |
+| [`Merge`](src/types/merge.ts) _(type)_                               | Combines two object types, the properties of the second replacing those of the first (like an object spread `{ ...a, ...b }`), where an intersection would give `never` for conflicting properties. |
+| [`Mutable`](src/types/mutable.ts) _(type)_                           | Removes `readonly` from the properties of a type, one level deep: a builder filling an object before handing it out as read-only.                                                                   |
+| [`NonEmptyArray`](src/types/non-empty-array.ts) _(type)_             | An array with at least one item, so that its first item is never `undefined`.                                                                                                                       |
+| [`Nullable`](src/types/nullable.ts) _(type)_                         | A `T` that may be `null`.                                                                                                                                                                           |
+| [`Nullish`](src/types/nullish.ts) _(type)_                           | A `T` that may be `null` or `undefined`.                                                                                                                                                            |
+| [`Optional`](src/types/optional.ts) _(type)_                         | A `T` that may be `undefined`.                                                                                                                                                                      |
+| [`PartialKeys`](src/types/partial-keys.ts) _(type)_                  | Makes some properties optional: the input of a factory that fills them with defaults.                                                                                                               |
+| [`PickByType`](src/types/pick-by-type.ts) _(type)_                   | Keeps the properties whose type matches.                                                                                                                                                            |
+| [`RequireKeys`](src/types/require-keys.ts) _(type)_                  | Makes some optional properties required: the result of filling in defaults.                                                                                                                         |
+| [`Simplify`](src/types/simplify.ts) _(type)_                         | Flattens intersections and mapped types into a plain object type, so that editor tooltips show the properties instead of `A & Omit<B, 'c'>`.                                                        |
+| [`UnionToIntersection`](src/types/union-to-intersection.ts) _(type)_ | Turns a union into the intersection of its members: `A \| B` gives `A & B`, to merge the types of a list of mixins or handlers.                                                                     |
+| [`ValueOf`](src/types/value-of.ts) _(type)_                          | Union of the value types of an object type, such as a `const` object used as an enum.                                                                                                               |
+
+### unit
+
+Unit conversions: speed, distance, temperature, pressure.
+
+| Export                                                     | What it does                                                                                                                        |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| [`convertDistance`](src/unit/convert-distance.ts)          | Converts a distance between units, with the exact international definitions (1 nmi = 1 852 m, 1 ft = 0.3048 m, 1 mi = 1 609.344 m). |
+| [`convertPressure`](src/unit/convert-pressure.ts)          | Converts a pressure between units: gauges in bar, weather in hectopascals, US equipment in psi.                                     |
+| [`convertSpeed`](src/unit/convert-speed.ts)                | Converts a speed between units, with the exact definitions (1 kn = 1 852 m/h, 1 mi = 1 609.344 m).                                  |
+| [`convertTemperature`](src/unit/convert-temperature.ts)    | Converts a temperature between units.                                                                                               |
+| [`DistanceUnit`](src/unit/distance-unit.ts) _(type)_       | A distance unit: metres, kilometres, nautical miles, feet, miles.                                                                   |
+| [`PressureUnit`](src/unit/pressure-unit.ts) _(type)_       | A pressure unit: bars, pascals, hectopascals, kilopascals, pounds per square inch.                                                  |
+| [`SpeedUnit`](src/unit/speed-unit.ts) _(type)_             | A speed unit: knots, metres per second, kilometres per hour, miles per hour.                                                        |
+| [`TemperatureUnit`](src/unit/temperature-unit.ts) _(type)_ | A temperature unit: degrees Celsius, degrees Fahrenheit, kelvins.                                                                   |
+
+<!-- functions:end -->
+
+## Performance
+
+Measured with `pnpm bench` (Node 24, Apple Silicon), on the built package, 1 000 calls per sample:
+
+| Operation                            | Library                 | Baseline                              | Gain |
+| ------------------------------------ | ----------------------- | ------------------------------------- | ---- |
+| `formatDecimal`                      | cached `Intl` formatter | `new Intl.NumberFormat()` per call    | ~47× |
+| `roundToFractionDigits`              | arithmetic              | `Number(formatDecimal())`             | ~37× |
+| `parseColorCached` (repeated input)  | cache                   | `parseColor`                          | ~28× |
+| `getReadableTextColorCached(string)` | cached parse            | `getReadableTextColor(string)`        | ~15× |
+| `MovingAverage` (window 100)         | running sum             | `slice` + `mean` per value            | ~11× |
+| `getRelativeLuminance`               | lookup table            | `Math.pow` per channel                | ~5×  |
+| `toHex`                              | byte table              | `toString(16).padStart` per channel   | ~3×  |
+| `roundToStep`                        | no float noise          | `Math.round(v / step) * step` (noisy) | 0.6× |
+| `maxOf` (10 000 values)              | loop                    | `Math.max(...values)`                 | 0.8× |
+
+The last two are slower on purpose: `roundToStep` pays ~15 ns for exact results, `maxOf` never throws on large arrays (`Math.max(...values)` throws a `RangeError` beyond ~100 000 values).
+
+## Development
+
+pnpm only (`corepack enable` makes the pinned version available).
+
+```sh
+pnpm install
+pnpm test          # unit tests (watch: pnpm test:watch)
+pnpm coverage      # tests + coverage report (coverage/), 100 % required
+pnpm lint          # ESLint, warnings count as errors
+pnpm typecheck     # every tsconfig project
+pnpm knip          # unused files, exports and dependencies
+pnpm build         # dist/: ES modules, declarations, source maps
+pnpm bench         # build, then benchmarks on the built package
+pnpm docs:catalog  # regenerate the function lists of README.md and docs/FUNCTIONS.md
+pnpm check         # everything above + publint, attw and size-limit
+```
+
+Commit messages follow Conventional Commits. To add a function, follow `AGENTS.md` → "Writing a function".

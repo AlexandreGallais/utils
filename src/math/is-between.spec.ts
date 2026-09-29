@@ -1,0 +1,19 @@
+import { isBetween } from './is-between.ts';
+
+describe(isBetween, () => {
+  it.for([
+    [5, 0, 10, true],
+    [0, 0, 10, true],
+    [10, 0, 10, true],
+    [11, 0, 10, false],
+    [5, 10, 0, true],
+  ] as const)('checks %s in [%s, %s] inclusively as %s', ([value, min, max, expected]) => {
+    expect(isBetween(value, min, max)).toBe(expected);
+  });
+
+  it('excludes the bounds when not inclusive', () => {
+    expect(isBetween(0, 0, 10, false)).toBe(false);
+    expect(isBetween(10, 0, 10, false)).toBe(false);
+    expect(isBetween(5, 0, 10, false)).toBe(true);
+  });
+});

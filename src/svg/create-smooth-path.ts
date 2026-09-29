@@ -1,0 +1,48 @@
+import type { Point } from '../geometry/point.ts';
+import { formatCoordinate } from './internal/format-coordinate.ts';
+
+/** Catmull-Rom to cubic Bézier: control points sit a sixth of the neighbour span away. */
+const CATMULL_ROM_DIVISOR = 6;
+/** A segment is computed from its two ends and their outer neighbours. */
+const SEGMENT_POINTS = 4;
+
+/**
+ * Builds the `d` attribute of a smooth curve passing through every point (a Catmull-Rom spline drawn as
+ * cubic Bézier curves): a trend curve that reads better than a broken line.
+ *
+ * @param points - The points to pass through, in drawing order.
+ * @param tension - Curvature: `0` gives straight lines, `1` a standard Catmull-Rom curve.
+ * @returns The path data; a single point gives a move only, no point gives `''`.
+ * @example
+ * trend.setAttribute('d', createSmoothPath(history.toArray().map((value, index) => ({ x: index * 4, y: 100 - value }))));
+ */
+export function createSmoothPath(points: readonly Point[], tension = 1): string {
+  const [first] = points;
+  if (!first) {
+    return '';
+  }
+  // The ends are repeated so the first and last segments have neighbours.
+  const extended = [first, ...points, ...points.slice(-1)];
+  const commands = [`M ${formatCoordinate(first.x)} ${formatCoordinate(first.y)}`];
+  for (let index = 1; index < points.length; index++) {
+    const [previous = first, start = first, end = first, next = first] = extended.slice(
+      index - 1,
+      index - 1 + SEGMENT_POINTS,
+    );
+    const factor = tension / CATMULL_ROM_DIVISOR;
+    const control1 = { x: start.x + (end.x - previous.x) * factor, y: start.y + (end.y - previous.y) * factor };
+    const control2 = { x: end.x - (next.x - start.x) * factor, y: end.y - (next.y - start.y) * factor };
+    commands.push(
+      [
+        'C',
+        formatCoordinate(control1.x),
+        formatCoordinate(control1.y),
+        formatCoordinate(control2.x),
+        formatCoordinate(control2.y),
+        formatCoordinate(end.x),
+        formatCoordinate(end.y),
+      ].join(' '),
+    );
+  }
+  return commands.join(' ');
+}

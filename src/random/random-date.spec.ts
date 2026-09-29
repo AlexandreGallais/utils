@@ -1,0 +1,23 @@
+import { randomDate } from './random-date.ts';
+
+describe(randomDate, () => {
+  const start = new Date('2026-01-01T00:00:00Z');
+  const end = new Date('2026-01-02T00:00:00Z');
+
+  it('draws between the dates, both included', () => {
+    expect(randomDate(start, end, () => 0)).toStrictEqual(start);
+    expect(randomDate(start, end, () => 0.9999999999)).toStrictEqual(end);
+    expect(randomDate(start, end, () => 0.5).toISOString()).toBe('2026-01-01T12:00:00.000Z');
+  });
+
+  it('returns a date in range by default', () => {
+    const date = randomDate(start, end);
+    expect(date.getTime()).toBeGreaterThanOrEqual(start.getTime());
+    expect(date.getTime()).toBeLessThanOrEqual(end.getTime());
+  });
+
+  it('throws a RangeError for an invalid or inverted interval', () => {
+    expect(() => randomDate(new Date('2026-02-01'), new Date('2026-01-01'))).toThrow(RangeError);
+    expect(() => randomDate(new Date(NaN), end)).toThrow(RangeError);
+  });
+});

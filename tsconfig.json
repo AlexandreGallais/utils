@@ -1,0 +1,35 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* Shared compiler options; references every project for the editor and ESLint (`pnpm typecheck` checks each one). */
+{
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["ES2024", "DOM"],
+    "types": [],
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    /* Relative imports name the `.ts` file; emitted declarations point to `.js` (valid for every resolution mode). */
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "noEmit": true,
+
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedSideEffectImports": true
+    /* noUnusedLocals, noUnusedParameters and allowUnreachableCode are left to ESLint: dead code fails the lint, not the build. */
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.lib.json" },
+    { "path": "./tsconfig.spec.json" },
+    { "path": "./tsconfig.bench.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}

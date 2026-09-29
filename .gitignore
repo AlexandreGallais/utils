@@ -1,0 +1,24 @@
+# Build outputs
+/dist
+/coverage
+*.tsbuildinfo
+
+# Node
+/node_modules
+npm-debug.log
+*.tgz
+
+# IDEs and editors
+.idea/*
+!.idea/codeStyles/
+!.idea/prettier.xml
+!.idea/jsLinters/
+!.idea/inspectionProfiles/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.history/*
+
+# System files
+.DS_Store
+Thumbs.db

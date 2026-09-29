@@ -1,0 +1,9 @@
+/* Tool configs (Vite, Vitest): run in Node. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2024"],
+    "types": ["node"]
+  },
+  "include": ["*.mts"]
+}

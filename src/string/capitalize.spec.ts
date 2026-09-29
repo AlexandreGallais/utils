@@ -1,0 +1,15 @@
+import { capitalize } from './capitalize.ts';
+
+describe(capitalize, () => {
+  it.for([
+    ['hello world', 'Hello world'],
+    ['Hello', 'Hello'],
+    ['hELLO', 'HELLO'],
+    ['élan', 'Élan'],
+    ['1st', '1st'],
+    ['', ''],
+    ['\u{10428}x', '\u{10400}x'],
+  ] as const)('capitalizes %j as %j', ([input, expected]) => {
+    expect(capitalize(input)).toBe(expected);
+  });
+});

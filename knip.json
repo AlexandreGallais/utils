@@ -1,0 +1,5 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["benchmarks/*.bench.ts", "eslint/rules/*.mjs"],
+  "project": ["src/**/*.ts", "benchmarks/**/*.ts", "eslint/**/*.mjs", "*.{mjs,mts}"]
+}

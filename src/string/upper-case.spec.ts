@@ -1,0 +1,12 @@
+import { upperCase } from './upper-case.ts';
+
+describe(upperCase, () => {
+  it.for([
+    ['engineRoomTemperature', 'ENGINE ROOM TEMPERATURE'],
+    ['max-speed', 'MAX SPEED'],
+    ['élan vital', 'ÉLAN VITAL'],
+    ['', ''],
+  ] as const)('converts %j to %j', ([input, expected]) => {
+    expect(upperCase(input)).toBe(expected);
+  });
+});

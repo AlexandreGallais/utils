@@ -1,0 +1,14 @@
+import { titleCase } from './title-case.ts';
+
+describe(titleCase, () => {
+  it.for([
+    ['engine-room', 'Engine Room'],
+    ['maxSpeedGPS', 'Max Speed GPS'],
+    ['user_id', 'User Id'],
+    ['HTTP status code', 'HTTP Status Code'],
+    ['speed2', 'Speed 2'],
+    ['', ''],
+  ] as const)('converts %j to %j', ([input, expected]) => {
+    expect(titleCase(input)).toBe(expected);
+  });
+});

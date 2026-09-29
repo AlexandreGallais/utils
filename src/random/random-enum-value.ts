@@ -1,0 +1,23 @@
+import type { EnumObject } from '../enum/enum-object.ts';
+import { getEnumValues } from '../enum/get-enum-values.ts';
+
+/**
+ * Draws one member of an enum, for test data covering every state.
+ *
+ * @template E - The enum type.
+ * @param enumObject - The enum to draw from, such as `Status`.
+ * @param random - Source of numbers in [0, 1), such as a seeded generator for reproducible runs.
+ * @returns A value of the enum.
+ * @throws {RangeError} When the enum has no member.
+ * @example
+ * randomEnumValue(Status); // Status.Running
+ */
+export function randomEnumValue<E extends EnumObject>(enumObject: E, random: () => number = Math.random): E[keyof E] {
+  const values = getEnumValues(enumObject);
+  const index = Math.floor(random() * values.length);
+  const [value] = values.slice(index, index + 1);
+  if (value === undefined) {
+    throw new RangeError('enumObject must have at least one member');
+  }
+  return value;
+}
