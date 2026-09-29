@@ -13,10 +13,10 @@ describe(parseDateFormat, () => {
     expect(parseDateFormat(input, pattern, true)?.toISOString()).toBe(expected);
   });
 
-  it('reads local time by default', () => {
-    const date = parseDateFormat('29/09/2026 14:30', 'DD/MM/YYYY HH:mm');
+  it('reads local time', () => {
+    const date = parseDateFormat('29/09/2026 14:30', 'DD/MM/YYYY HH:mm', false);
     expect([date?.getFullYear(), date?.getMonth(), date?.getDate(), date?.getHours()]).toStrictEqual([2026, 8, 29, 14]);
-    expect(parseDateFormat('01/01/0050', 'DD/MM/YYYY')?.getFullYear()).toBe(50);
+    expect(parseDateFormat('01/01/0050', 'DD/MM/YYYY', false)?.getFullYear()).toBe(50);
   });
 
   it.for([
@@ -36,6 +36,6 @@ describe(parseDateFormat, () => {
   });
 
   it('rejects an impossible local date', () => {
-    expect(parseDateFormat('31/04/2026', 'DD/MM/YYYY')).toBeUndefined();
+    expect(parseDateFormat('31/04/2026', 'DD/MM/YYYY', false)).toBeUndefined();
   });
 });

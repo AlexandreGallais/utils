@@ -7,10 +7,10 @@
  * @rejects {Error} With the signal's reason (an `AbortError` by default) when `signal` is aborted before the
  * delay elapses, or already aborted.
  * @example
- * await sleep(100);
+ * await sleep(100, undefined);
  * await sleep(1000, controller.signal); // rejects as soon as controller.abort() is called
  */
-export async function sleep(ms: number, signal?: AbortSignal): Promise<void> {
+export async function sleep(ms: number, signal: AbortSignal | undefined): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     if (signal?.aborted === true) {
       reject(abortReason(signal));

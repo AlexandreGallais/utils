@@ -16,7 +16,7 @@ const ISO_SUNDAY = 7;
  * // { year: 2026, month: 9, day: 29, hour: 14, minute: 30, second: 5, millisecond: 123,
  * //   weekday: 2, dayOfYear: 272, timestamp: 1790692205123 }
  */
-export function getDateParts(date: Readonly<Date>, isUtc = false): DateParts | undefined {
+export function getDateParts(date: Readonly<Date>, isUtc: boolean): DateParts | undefined {
   const timestamp = date.getTime();
   if (Number.isNaN(timestamp)) {
     return undefined;

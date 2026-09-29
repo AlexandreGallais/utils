@@ -15,9 +15,9 @@ type ComparableKey = Exclude<SortKey, Date>;
  * @returns A new sorted array.
  * @example
  * sortBy(alarms, (alarm) => alarm.priority, 'desc');
- * sortBy(['b', 'C', 'a'], (text) => text.toLowerCase()); // ['a', 'b', 'C']
+ * sortBy(['b', 'C', 'a'], (text) => text.toLowerCase(), 'asc'); // ['a', 'b', 'C']
  */
-export function sortBy<T>(items: readonly T[], keySelector: (item: T) => SortKey, order: 'asc' | 'desc' = 'asc'): T[] {
+export function sortBy<T>(items: readonly T[], keySelector: (item: T) => SortKey, order: 'asc' | 'desc'): T[] {
   const direction = order === 'asc' ? 1 : -1;
   // Keys are computed once per item, not once per comparison.
   const keyed = items.map((item, index) => ({ item, index, key: sortKey(keySelector(item)) }));

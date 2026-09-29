@@ -7,7 +7,7 @@ function apply(matrix: Matrix2D, x: number, y: number): [number, number] {
 
 describe(rotationMatrix, () => {
   it('rotates clockwise on screen around the origin', () => {
-    const [x, y] = apply(rotationMatrix(90), 10, 0);
+    const [x, y] = apply(rotationMatrix(90, { x: 0, y: 0 }), 10, 0);
     expect(x).toBeCloseTo(0, 9);
     expect(y).toBeCloseTo(10, 9);
   });
@@ -25,7 +25,7 @@ describe(rotationMatrix, () => {
   });
 
   it('is the identity for a full turn', () => {
-    const matrix = rotationMatrix(360);
+    const matrix = rotationMatrix(360, { x: 0, y: 0 });
     expect(matrix.a).toBeCloseTo(1, 9);
     expect(matrix.b).toBeCloseTo(0, 9);
   });

@@ -10,7 +10,12 @@ describe(scaleRect, () => {
     });
   });
 
-  it('scales uniformly around the center by default', () => {
-    expect(scaleRect({ x: 0, y: 0, width: 10, height: 10 }, 2)).toStrictEqual({ x: -5, y: -5, width: 20, height: 20 });
+  it('scales uniformly around the center', () => {
+    expect(scaleRect({ x: 0, y: 0, width: 10, height: 10 }, 2, 2, 'center')).toStrictEqual({
+      x: -5,
+      y: -5,
+      width: 20,
+      height: 20,
+    });
   });
 });

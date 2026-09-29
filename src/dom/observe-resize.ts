@@ -8,12 +8,12 @@
  * @returns A function that stops the observer.
  * @example
  * const size = signal({ width: 0, height: 0 });
- * destroyRef.onDestroy(observeResize(host, ({ contentRect }) => size.set(contentRect)));
+ * destroyRef.onDestroy(observeResize(host, ({ contentRect }) => size.set(contentRect), {}));
  */
 export function observeResize(
   element: Element,
   onResize: (entry: ResizeObserverEntry) => void,
-  options?: ResizeObserverOptions,
+  options: ResizeObserverOptions,
 ): () => void {
   const observer = new ResizeObserver((entries) => {
     for (const entry of entries) {

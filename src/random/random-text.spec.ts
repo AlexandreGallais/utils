@@ -18,15 +18,15 @@ describe(randomText, () => {
     }
   });
 
-  it('draws a fixed length by default', () => {
-    expect(randomText(25)).toHaveLength(25);
+  it('draws a fixed length', () => {
+    expect(randomText(25, 25, Math.random)).toHaveLength(25);
   });
 
   it('returns an empty string for a length of zero', () => {
-    expect(randomText(0)).toBe('');
+    expect(randomText(0, 0, Math.random)).toBe('');
   });
 
   it('throws a RangeError for inverted lengths', () => {
-    expect(() => randomText(5, 2)).toThrow(RangeError);
+    expect(() => randomText(5, 2, Math.random)).toThrow(RangeError);
   });
 });

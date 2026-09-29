@@ -6,8 +6,11 @@ describe(measureDuration, () => {
     expect(measureDuration(() => 'done', now)).toStrictEqual({ result: 'done', durationMs: 12.5 });
   });
 
-  it('uses performance.now by default', () => {
-    const { result, durationMs } = measureDuration(() => 42);
+  it('reads performance.now', () => {
+    const { result, durationMs } = measureDuration(
+      () => 42,
+      () => performance.now(),
+    );
     expect(result).toBe(42);
     expect(durationMs).toBeGreaterThanOrEqual(0);
   });

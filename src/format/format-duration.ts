@@ -15,11 +15,11 @@ const MAX_SECOND_FRACTION_DIGITS = 3;
  * @returns The formatted duration; `'--:--'` for `NaN` or an infinite duration.
  * @throws {RangeError} When `secondFractionDigits` is not an integer in [0, 3].
  * @example
- * formatDuration(309_000); // '5:09'
- * formatDuration(3_909_000); // '1:05:09'
+ * formatDuration(309_000, 0); // '5:09'
+ * formatDuration(3_909_000, 0); // '1:05:09'
  * formatDuration(9870, 1); // '0:09.8'
  */
-export function formatDuration(ms: number, secondFractionDigits = 0): string {
+export function formatDuration(ms: number, secondFractionDigits: number): string {
   if (
     !Number.isSafeInteger(secondFractionDigits) ||
     secondFractionDigits < 0 ||

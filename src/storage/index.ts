@@ -4,3 +4,5 @@ export { readStorage } from './read-storage.ts';
 export { writeStorage } from './write-storage.ts';
 export { createStorageItem } from './create-storage-item.ts';
 export type { StorageItem } from './storage-item.ts';
+export { createVersionedStorageItem } from './create-versioned-storage-item.ts';
+export type { VersionedStorageOptions } from './versioned-storage-options.ts';

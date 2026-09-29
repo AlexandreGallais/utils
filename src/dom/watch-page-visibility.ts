@@ -12,7 +12,12 @@ import { listen } from './listen.ts';
  */
 export function watchPageVisibility(onChange: (isVisible: boolean) => void): () => void {
   onChange(document.visibilityState === 'visible');
-  return listen(document, 'visibilitychange', () => {
-    onChange(document.visibilityState === 'visible');
-  });
+  return listen(
+    document,
+    'visibilitychange',
+    () => {
+      onChange(document.visibilityState === 'visible');
+    },
+    {},
+  );
 }

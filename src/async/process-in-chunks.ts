@@ -21,7 +21,7 @@ const DEFAULT_BUDGET_MS = 8;
 export async function processInChunks<T>(
   items: Iterable<T>,
   callback: (item: T, index: number) => void,
-  options: ProcessInChunksOptions = {},
+  options: ProcessInChunksOptions,
 ): Promise<void> {
   const { budgetMs = DEFAULT_BUDGET_MS, signal, now = (): number => performance.now() } = options;
   let index = 0;

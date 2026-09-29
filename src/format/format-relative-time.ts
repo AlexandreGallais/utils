@@ -28,14 +28,10 @@ const UNITS: readonly (readonly [unit: Intl.RelativeTimeFormatUnit, ms: number])
  * @param numeric - `'auto'` for words such as "yesterday" and "now", `'always'` for "1 day ago".
  * @returns The offset in words, rounded to the unit.
  * @example
- * formatRelativeTime(alarm.time - Date.now(), 'en-US'); // '5 minutes ago'
- * formatRelativeTime(-86_400_000, 'fr-FR'); // 'hier'
+ * formatRelativeTime(alarm.time - Date.now(), 'en-US', 'auto'); // '5 minutes ago'
+ * formatRelativeTime(-86_400_000, 'fr-FR', 'auto'); // 'hier'
  */
-export function formatRelativeTime(
-  offsetMs: number,
-  locale: string,
-  numeric: Intl.RelativeTimeFormatNumeric = 'auto',
-): string {
+export function formatRelativeTime(offsetMs: number, locale: string, numeric: Intl.RelativeTimeFormatNumeric): string {
   const key = `${locale}|${numeric}`;
   let formatter = relativeTimeFormatters.get(key);
   if (!formatter) {

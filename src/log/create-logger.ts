@@ -26,7 +26,7 @@ const LEVEL_RANKS: Readonly<Record<LogLevel, number>> = {
  * log.info('Started', { rpm: 800 }); // [12:34:56.789] INFO engine: Started { rpm: 800 }
  * log.child('pump').warn('Pressure low'); // [12:34:56.790] WARN engine:pump: Pressure low
  */
-export function createLogger(scope: string, options: LoggerOptions = {}): Logger {
+export function createLogger(scope: string, options: LoggerOptions): Logger {
   const { level = 'info', sink = consoleSink, now = Date.now } = options;
   const minimumRank = LEVEL_RANKS[level];
 

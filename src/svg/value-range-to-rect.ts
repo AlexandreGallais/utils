@@ -17,8 +17,8 @@ import { valueToBarPosition } from './value-to-bar-position.ts';
  * valueRangeToRect(scale.min, 2.5, scale); // { x: 0, y: 150, width: 20, height: 50 } (fill level)
  */
 export function valueRangeToRect(from: number, to: number, scale: BarScale): Rect {
-  const first = valueToBarPosition(from, scale);
-  const second = valueToBarPosition(to, scale);
+  const first = valueToBarPosition(from, scale, true);
+  const second = valueToBarPosition(to, scale, true);
   const start = Math.min(first, second);
   const length = Math.abs(second - first);
   const { rect } = scale;

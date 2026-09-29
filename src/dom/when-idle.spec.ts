@@ -22,8 +22,8 @@ describe(whenIdle, () => {
     callbacks.get(1)?.({ didTimeout: false, timeRemaining: () => 10 });
     expect(task).toHaveBeenCalledOnce();
 
-    whenIdle(task)();
-    expect(request).toHaveBeenLastCalledWith(expect.any(Function), undefined);
+    whenIdle(task, 1000)();
+    expect(request).toHaveBeenLastCalledWith(expect.any(Function), { timeout: 1000 });
     expect(cancel).toHaveBeenCalledExactlyOnceWith(2);
   });
 
@@ -31,9 +31,9 @@ describe(whenIdle, () => {
     vi.useFakeTimers();
     vi.stubGlobal('requestIdleCallback', undefined);
     const task = vi.fn<() => void>();
-    whenIdle(task);
+    whenIdle(task, 1000);
     const cancelled = vi.fn<() => void>();
-    whenIdle(cancelled)();
+    whenIdle(cancelled, 1000)();
     vi.runAllTimers();
     expect(task).toHaveBeenCalledOnce();
     expect(cancelled).not.toHaveBeenCalled();

@@ -7,7 +7,7 @@ describe(rotatePoint, () => {
     [-90, { x: 0, y: -10 }],
     [360, { x: 10, y: 0 }],
   ] as const)('rotates by %s° around the origin', ([angle, expected]) => {
-    const point = rotatePoint({ x: 10, y: 0 }, angle);
+    const point = rotatePoint({ x: 10, y: 0 }, angle, { x: 0, y: 0 });
     expect(point.x).toBeCloseTo(expected.x, 9);
     expect(point.y).toBeCloseTo(expected.y, 9);
   });

@@ -11,9 +11,9 @@ const HEX_RADIX = 16;
  * @param random - Source of numbers in [0, 1), such as a seeded generator for reproducible runs.
  * @returns A lowercase `#rrggbb` color.
  * @example
- * randomHexColor(); // '#3fa2c8'
+ * randomHexColor(Math.random); // '#3fa2c8'
  */
-export function randomHexColor(random: () => number = Math.random): string {
+export function randomHexColor(random: () => number): string {
   return `#${Math.floor(random() * COLOR_COUNT)
     .toString(HEX_RADIX)
     .padStart(HEX_DIGITS, '0')}`;

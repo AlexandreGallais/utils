@@ -20,9 +20,9 @@ interface Subscription {
  * Angular, provide one instance and subscribe outside the zone (`NgZone.runOutsideAngular`).
  *
  * @example
- * const clock = new Clock();
+ * const clock = new Clock({});
  * const unsubscribe = clock.subscribe(({ timestamp }) => {
- *   alarm.classList.toggle('on', isBlinkOn(timestamp, 1000));
+ *   alarm.classList.toggle('on', isBlinkOn(timestamp, 1000, 0.5));
  * });
  * clock.subscribe(({ deltaMs }) => simulation.step(deltaMs), 100); // every 100 ms, same timeline
  * clock.timeScale = 2; // simulated time runs twice as fast
@@ -48,7 +48,7 @@ export class Clock {
    * @param options - Tick source (`'frame'` by default or `'interval'`), interval and time source.
    * @throws {RangeError} When `intervalMs` is not a positive finite number.
    */
-  public constructor(options: ClockOptions = {}) {
+  public constructor(options: ClockOptions) {
     const { mode = 'frame', intervalMs = DEFAULT_INTERVAL_MS, now = (): number => performance.now() } = options;
     if (!Number.isFinite(intervalMs) || intervalMs <= 0) {
       throw new RangeError(`intervalMs must be a positive finite number, got ${intervalMs}`);

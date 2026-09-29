@@ -14,15 +14,15 @@ import type { Size } from './size.ts';
  * @param alignY - Vertical position of the content in the free space: 0 top, 0.5 centered, 1 bottom.
  * @returns Where to draw the content, with its scale factor.
  * @example
- * fitRect({ width: 200, height: 100 }, { x: 0, y: 0, width: 100, height: 100 });
+ * fitRect({ width: 200, height: 100 }, { x: 0, y: 0, width: 100, height: 100 }, 'contain', 0.5, 0.5);
  * // { x: 0, y: 25, width: 100, height: 50, scale: 0.5 }
  */
 export function fitRect(
   content: Size,
   container: Rect,
-  mode: 'contain' | 'cover' = 'contain',
-  alignX = 0.5,
-  alignY = 0.5,
+  mode: 'contain' | 'cover',
+  alignX: number,
+  alignY: number,
 ): FittedRect {
   const scaleX = content.width === 0 ? 0 : container.width / content.width;
   const scaleY = content.height === 0 ? 0 : container.height / content.height;

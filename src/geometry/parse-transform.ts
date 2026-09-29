@@ -62,21 +62,23 @@ function parseFunction(segment: string): Matrix2D | undefined {
  */
 function toMatrix(name: string, values: readonly number[]): Matrix2D | undefined {
   const [first = 0, second, third = 0] = values;
+  const origin = { x: 0, y: 0 };
   switch (`${name}/${values.length}`) {
     case 'matrix/6': {
       const [a = 1, b = 0, c = 0, d = 1, translateX = 0, translateY = 0] = values;
       return { a, b, c, d, e: translateX, f: translateY };
     }
+    // SVG defaults: `translate(x)` is `translate(x, 0)`, `scale(s)` is `scale(s, s)`.
     case 'translate/1':
     case 'translate/2': {
-      return translationMatrix(first, second);
+      return translationMatrix(first, second ?? 0);
     }
     case 'scale/1':
     case 'scale/2': {
-      return scaleMatrix(first, second);
+      return scaleMatrix(first, second ?? first, origin);
     }
     case 'rotate/1': {
-      return rotationMatrix(first);
+      return rotationMatrix(first, origin);
     }
     case 'rotate/3': {
       const [, centerX = 0] = values;

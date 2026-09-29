@@ -16,9 +16,9 @@ const MAX_SYLLABLES = 4;
  * with a space.
  * @throws {RangeError} When the lengths hold no valid integer.
  * @example
- * randomText(20, 40); // 'Remsit lorte amet conse iptur'
+ * randomText(20, 40, Math.random); // 'Remsit lorte amet conse iptur'
  */
-export function randomText(minLength: number, maxLength = minLength, random: () => number = Math.random): string {
+export function randomText(minLength: number, maxLength: number, random: () => number): string {
   const length = randomInt(Math.max(minLength, 0), maxLength, random);
   let text = '';
   while (text.length < length) {

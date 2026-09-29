@@ -14,9 +14,9 @@ const SEGMENT_POINTS = 4;
  * @param tension - Curvature: `0` gives straight lines, `1` a standard Catmull-Rom curve.
  * @returns The path data; a single point gives a move only, no point gives `''`.
  * @example
- * trend.setAttribute('d', createSmoothPath(history.toArray().map((value, index) => ({ x: index * 4, y: 100 - value }))));
+ * trend.setAttribute('d', createSmoothPath(history.toArray().map((value, index) => ({ x: index * 4, y: 100 - value })), 1));
  */
-export function createSmoothPath(points: readonly Point[], tension = 1): string {
+export function createSmoothPath(points: readonly Point[], tension: number): string {
   const [first] = points;
   if (!first) {
     return '';

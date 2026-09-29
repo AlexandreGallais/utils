@@ -23,6 +23,7 @@ describe(mapConcurrent, () => {
         return `${index}:${ms}`;
       },
       2,
+      undefined,
     );
     await vi.advanceTimersByTimeAsync(100);
     await expect(promise).resolves.toStrictEqual(['0:30', '1:10', '2:20']);
@@ -41,6 +42,7 @@ describe(mapConcurrent, () => {
         return value;
       },
       3,
+      undefined,
     );
     await vi.advanceTimersByTimeAsync(100);
     await promise;
@@ -56,17 +58,35 @@ describe(mapConcurrent, () => {
       return value;
     });
     await Promise.all([
-      expect(mapConcurrent([0, 1, 2, 3, 4], mapper, 2)).rejects.toThrow('failed 1'),
+      expect(mapConcurrent([0, 1, 2, 3, 4], mapper, 2, undefined)).rejects.toThrow('failed 1'),
       vi.advanceTimersByTimeAsync(100),
     ]);
     expect(mapper).toHaveBeenCalledTimes(3);
   });
 
+  it('stops starting calls once the signal is aborted', async () => {
+    const controller = new AbortController();
+    const mapper = vi.fn<(value: number, index: number, signal: AbortSignal | undefined) => Promise<number>>(
+      async (value) => {
+        await delay(10);
+        controller.abort(new Error('cancelled'));
+        return value;
+      },
+    );
+    await Promise.all([
+      expect(mapConcurrent([0, 1, 2, 3], mapper, 1, controller.signal)).rejects.toThrow('cancelled'),
+      vi.advanceTimersByTimeAsync(100),
+    ]);
+    expect(mapper).toHaveBeenCalledExactlyOnceWith(0, 0, controller.signal);
+  });
+
   it('returns an empty list for no item', async () => {
-    await expect(mapConcurrent([], vi.fn<() => Promise<number>>(), 2)).resolves.toStrictEqual([]);
+    await expect(mapConcurrent([], vi.fn<() => Promise<number>>(), 2, undefined)).resolves.toStrictEqual([]);
   });
 
   it.for([0, -1, 1.5])('throws a RangeError for concurrency %s', async (concurrency) => {
-    await expect(mapConcurrent([1], vi.fn<() => Promise<number>>(), concurrency)).rejects.toThrow(RangeError);
+    await expect(mapConcurrent([1], vi.fn<() => Promise<number>>(), concurrency, undefined)).rejects.toThrow(
+      RangeError,
+    );
   });
 });

@@ -7,8 +7,8 @@ import type { CleanupStack } from './cleanup-stack.ts';
  * @returns An empty stack.
  * @example
  * const cleanups = createCleanupStack();
- * cleanups.add(listen(window, 'resize', onResize));
- * cleanups.add(observeResize(host, onHostResize));
+ * cleanups.add(listen(window, 'resize', onResize, {}));
+ * cleanups.add(observeResize(host, onHostResize, {}));
  * destroyRef.onDestroy(() => cleanups.dispose());
  */
 export function createCleanupStack(): CleanupStack {

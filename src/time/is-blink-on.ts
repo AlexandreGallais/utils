@@ -11,9 +11,9 @@ import { getAnimationPhase } from './get-animation-phase.ts';
  * @returns `true` during the "on" part of the cycle.
  * @throws {RangeError} When `periodMs` is not a positive finite number.
  * @example
- * const isVisible = isBlinkOn(performance.now(), 1000); // on for 500 ms, off for 500 ms
+ * const isVisible = isBlinkOn(performance.now(), 1000, 0.5); // on for 500 ms, off for 500 ms
  * alarm.style.visibility = isVisible ? 'visible' : 'hidden';
  */
-export function isBlinkOn(timeMs: number, periodMs: number, dutyCycle = 0.5): boolean {
+export function isBlinkOn(timeMs: number, periodMs: number, dutyCycle: number): boolean {
   return getAnimationPhase(timeMs, periodMs) < dutyCycle;
 }

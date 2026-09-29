@@ -14,7 +14,7 @@ import { lerp } from './lerp.ts';
  * @param shouldClamp - Whether to keep the result within [outMin, outMax] instead of extrapolating.
  * @returns The mapped value; `outMin` when the input range is empty.
  * @example
- * remap(5, 0, 10, 0, 100); // 50
+ * remap(5, 0, 10, 0, 100, false); // 50
  * remap(15, 0, 10, 0, 100, true); // 100
  */
 export function remap(
@@ -23,7 +23,7 @@ export function remap(
   inMax: number,
   outMin: number,
   outMax: number,
-  shouldClamp = false,
+  shouldClamp: boolean,
 ): number {
   const t = inverseLerp(inMin, inMax, value);
   return lerp(outMin, outMax, shouldClamp ? clamp(t, 0, 1) : t);

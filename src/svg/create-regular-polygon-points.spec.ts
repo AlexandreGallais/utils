@@ -3,7 +3,7 @@ import { formatPoints } from './format-points.ts';
 
 describe(createRegularPolygonPoints, () => {
   it('starts at the top and goes clockwise', () => {
-    expect(formatPoints(createRegularPolygonPoints({ x: 50, y: 50 }, 10, 4))).toBe('50,40 60,50 50,60 40,50');
+    expect(formatPoints(createRegularPolygonPoints({ x: 50, y: 50 }, 10, 4, 0))).toBe('50,40 60,50 50,60 40,50');
   });
 
   it('applies the rotation', () => {
@@ -11,6 +11,6 @@ describe(createRegularPolygonPoints, () => {
   });
 
   it.for([2, 3.5, NaN])('throws a RangeError for %s sides', (sides) => {
-    expect(() => createRegularPolygonPoints({ x: 0, y: 0 }, 10, sides)).toThrow(RangeError);
+    expect(() => createRegularPolygonPoints({ x: 0, y: 0 }, 10, sides, 0)).toThrow(RangeError);
   });
 });

@@ -44,7 +44,7 @@ describe(createLogger, () => {
 
   it('writes to the console by default', () => {
     const info = vi.spyOn(console, 'info').mockImplementation(vi.fn<() => void>());
-    createLogger('app').info('Hello');
+    createLogger('app', {}).info('Hello');
     expect(info).toHaveBeenCalledOnce();
     vi.restoreAllMocks();
   });

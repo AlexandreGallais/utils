@@ -4,7 +4,7 @@ describe(NavigationHistory, () => {
   let history: NavigationHistory<string>;
 
   beforeEach(() => {
-    history = new NavigationHistory<string>();
+    history = new NavigationHistory<string>(Infinity);
   });
 
   it('starts empty', () => {

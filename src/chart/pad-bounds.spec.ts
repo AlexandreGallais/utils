@@ -2,7 +2,7 @@ import { padBounds } from './pad-bounds.ts';
 
 describe(padBounds, () => {
   it('adds a fraction of the range on each side', () => {
-    expect(padBounds({ minX: 0, maxX: 100, minY: -10, maxY: 10 }, 0.1)).toStrictEqual({
+    expect(padBounds({ minX: 0, maxX: 100, minY: -10, maxY: 10 }, 0.1, 1)).toStrictEqual({
       minX: -10,
       maxX: 110,
       minY: -12,
@@ -11,7 +11,7 @@ describe(padBounds, () => {
   });
 
   it('uses the fallback margin for an empty axis', () => {
-    expect(padBounds({ minX: 0, maxX: 100, minY: 20, maxY: 20 }, 0.1)).toStrictEqual({
+    expect(padBounds({ minX: 0, maxX: 100, minY: 20, maxY: 20 }, 0.1, 1)).toStrictEqual({
       minX: -10,
       maxX: 110,
       minY: 19,

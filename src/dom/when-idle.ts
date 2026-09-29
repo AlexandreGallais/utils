@@ -11,13 +11,13 @@ const FALLBACK_DELAY_MS = 1;
  * @example
  * const cancel = whenIdle(() => warmUpFormatters(), 2000);
  */
-export function whenIdle(task: () => void, timeoutMs?: number): () => void {
+export function whenIdle(task: () => void, timeoutMs: number): () => void {
   if (typeof requestIdleCallback === 'function') {
     const handle = requestIdleCallback(
       () => {
         task();
       },
-      timeoutMs === undefined ? undefined : { timeout: timeoutMs },
+      { timeout: timeoutMs },
     );
     return (): void => {
       cancelIdleCallback(handle);

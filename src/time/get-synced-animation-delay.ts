@@ -12,9 +12,9 @@ import { getAnimationPhase } from './get-animation-phase.ts';
  * @throws {RangeError} When `periodMs` is not a positive finite number.
  * @example
  * // .alarm { animation: blink 1s steps(1) infinite; }
- * alarm.style.animationDelay = `${getSyncedAnimationDelay(1000)}ms`;
+ * alarm.style.animationDelay = `${getSyncedAnimationDelay(1000, performance.now())}ms`;
  */
-export function getSyncedAnimationDelay(periodMs: number, nowMs: number = performance.now()): number {
+export function getSyncedAnimationDelay(periodMs: number, nowMs: number): number {
   // `0 -` turns a `-0` into `0`.
   return 0 - getAnimationPhase(nowMs, periodMs) * periodMs;
 }

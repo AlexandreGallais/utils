@@ -1,8 +1,8 @@
 /**
- * A linear mapping from data values to screen coordinates, returned by `createLinearScale`: call it to
- * project a value, use `invert` to read the value under the mouse.
+ * A mapping from data values to screen coordinates, returned by `createLinearScale` and `createLogScale`:
+ * call it to project a value, use `invert` to read the value under the mouse.
  */
-export type LinearScale = ((value: number) => number) & {
+export type Scale = ((value: number) => number) & {
   /** The data interval `[start, end]`. */
   readonly domain: readonly [start: number, end: number];
   /** The screen interval `[start, end]` the domain maps to. */

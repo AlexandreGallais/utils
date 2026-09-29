@@ -9,7 +9,7 @@ import type { Matrix2D } from './matrix-2d.ts';
  * @returns The combined transform.
  * @example
  * // translate(100 0) then, inside it, scale(2): a point (1, 1) lands on (102, 2)
- * multiplyMatrices(translationMatrix(100, 0), scaleMatrix(2)); // { a: 2, b: 0, c: 0, d: 2, e: 100, f: 0 }
+ * multiplyMatrices(translationMatrix(100, 0), scaleMatrix(2, 2, { x: 0, y: 0 })); // { a: 2, b: 0, c: 0, d: 2, e: 100, f: 0 }
  */
 export function multiplyMatrices(m1: Matrix2D, m2: Matrix2D): Matrix2D {
   return {

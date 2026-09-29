@@ -10,7 +10,7 @@ import { writeStorage } from './write-storage.ts';
  * @param storage - The storage, such as `localStorage`.
  * @param key - The key of the value.
  * @param fallback - Value read when nothing valid is stored.
- * @param guard - Checks the stored value; any JSON value is accepted when omitted.
+ * @param guard - Checks the stored value, such as `isFiniteNumber`.
  * @returns An item with `get`, `set` and `remove`.
  * @example
  * const theme = createStorageItem(localStorage, 'ui.theme', 'day', (value) => value === 'day' || value === 'night');
@@ -21,7 +21,7 @@ export function createStorageItem<T>(
   storage: Storage,
   key: string,
   fallback: T,
-  guard?: (value: unknown) => value is T,
+  guard: (value: unknown) => value is T,
 ): StorageItem<T> {
   return {
     key,

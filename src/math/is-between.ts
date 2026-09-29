@@ -7,10 +7,10 @@
  * @param isInclusive - Whether a value equal to a bound is between them.
  * @returns `true` when `value` lies within the bounds.
  * @example
- * isBetween(10, 0, 10); // true
+ * isBetween(10, 0, 10, true); // true
  * isBetween(10, 0, 10, false); // false
  */
-export function isBetween(value: number, min: number, max: number, isInclusive = true): boolean {
+export function isBetween(value: number, min: number, max: number, isInclusive: boolean): boolean {
   const lower = Math.min(min, max);
   const upper = Math.max(min, max);
   return isInclusive ? value >= lower && value <= upper : value > lower && value < upper;

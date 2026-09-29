@@ -32,7 +32,7 @@ describe('formatNumber', () => {
     await benchmark.compare(
       benchmark('formatNumber (cached per locale and digitsInfo)', () => {
         for (const value of VALUES) {
-          _sink = formatNumber(value, '1.0-2');
+          _sink = formatNumber(value, '1.0-2', 'en-US');
         }
       }),
       benchmark('new Intl.NumberFormat per call', () => {

@@ -1,11 +1,11 @@
 import { assert } from './assert.ts';
 
-const checkAssert: (condition: unknown, message?: string) => void = assert;
+const checkAssert: (condition: unknown, message: string) => void = assert;
 
 describe(assert, () => {
   it.for([true, 1, 'text', {}, []])('passes for the truthy value %j', (condition) => {
     expect(() => {
-      checkAssert(condition);
+      checkAssert(condition, 'Assertion failed');
     }).not.toThrow();
   });
 
@@ -13,11 +13,5 @@ describe(assert, () => {
     expect(() => {
       checkAssert(condition, 'Boom');
     }).toThrow('Boom');
-  });
-
-  it('has a default message', () => {
-    expect(() => {
-      checkAssert(false);
-    }).toThrow('Assertion failed');
   });
 });

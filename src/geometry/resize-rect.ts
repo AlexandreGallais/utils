@@ -9,13 +9,13 @@ import type { Size } from './size.ts';
  *
  * @param rect - The rectangle at its current size.
  * @param size - The new size.
- * @param anchor - The point that does not move; the top-left corner when omitted.
+ * @param anchor - The point that does not move, such as `'top-left'` or `'center'`.
  * @returns The resized rectangle.
  * @example
  * // a 100 px high bar anchored at its bottom, shrunk to 30 px
  * resizeRect({ x: 0, y: 0, width: 20, height: 100 }, { width: 20, height: 30 }, 'bottom'); // { x: 0, y: 70, width: 20, height: 30 }
  */
-export function resizeRect(rect: Rect, size: Size, anchor: Anchor = 'top-left'): Rect {
+export function resizeRect(rect: Rect, size: Size, anchor: Anchor): Rect {
   const fixed = getAnchorPoint(rect, anchor);
   const offset = getAnchorPoint({ x: 0, y: 0, width: size.width, height: size.height }, anchor);
   return { x: fixed.x - offset.x, y: fixed.y - offset.y, width: size.width, height: size.height };

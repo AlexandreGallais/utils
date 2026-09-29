@@ -1,4 +1,4 @@
-// DOM listeners and observers returning their cleanup, to feed signals without RxJS; idle tasks.
+// DOM listeners and observers returning their cleanup (to feed signals without RxJS), pointer drag, wheel, shortcuts, clipboard, downloads.
 
 export type { CleanupStack } from './cleanup-stack.ts';
 export { createCleanupStack } from './create-cleanup-stack.ts';
@@ -8,3 +8,10 @@ export { observeResize } from './observe-resize.ts';
 export { watchMediaQuery } from './watch-media-query.ts';
 export { watchPageVisibility } from './watch-page-visibility.ts';
 export { whenIdle } from './when-idle.ts';
+export type { DragHandlers } from './drag-handlers.ts';
+export { matchesShortcut } from './matches-shortcut.ts';
+export { normalizeWheelDelta } from './normalize-wheel-delta.ts';
+export { trackPointerDrag } from './track-pointer-drag.ts';
+export { downloadBlob } from './download-blob.ts';
+export { downloadText } from './download-text.ts';
+export { copyText } from './copy-text.ts';

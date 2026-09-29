@@ -358,6 +358,76 @@ Règles d'écriture formalisées d'abord (section « Writing a function » d'[`A
 - `deepMerge` (préférences sauvegardées sur les valeurs par défaut, avec `DeepPartial` ; sûr face à `__proto__`), `moveItem` (liste réordonnable), `sortedIndexBy` (insertion dans une liste triée en O(log n)), `isNonEmptyArray`, `formatRelativeTime` (`Intl.RelativeTimeFormat` : « il y a 5 min »).
 - Volontairement absents car natifs en ES2024 : `groupBy` (`Object.groupBy`, `Map.groupBy`), `deepClone` (`structuredClone`), `createDeferred` (`Promise.withResolvers`), `last` (`.at(-1)`), tri et modification sans mutation (`toSorted`, `toSpliced`, `with`).
 
+## Quatrième lot
+
+### Benchmarks et annulation
+
+- Benchmarks ajoutés pour les affirmations de performance : `sliceVisiblePoints` (~380× plus rapide que `filter` sur 36 000 points), `downsampleMinMax` + `projectPoints` (~2× plus rapide que projeter tous les points), `createFpsMeter` (~1,2× plus rapide qu'un tableau `push`/`shift`, sans allocation par frame). `projectPoints` n'est pas plus rapide que deux `createLinearScale` : aucune affirmation de performance dans sa doc.
+- `mapConcurrent(items, mapper, concurrency, signal?)` : plus aucun appel ne démarre une fois le signal annulé ; le `mapper` reçoit le signal (pour `fetch`). `withTimeout` n'a pas de signal : il ne fait que borner l'attente d'une promesse qu'il ne peut pas annuler.
+
+### Valeurs en direct (`tracking/`, `structure/`)
+
+- `createStaleDetector(maxAgeMs)` : une valeur qui n'est plus rafraîchie depuis X ms est signalée (`isStale`), pour l'afficher invalide plutôt que figée.
+- `createRateEstimator(timeConstantMs)` : vitesse de variation par seconde, lissée exponentiellement dans le temps (indépendante de la fréquence d'échantillonnage).
+- `createPeakHold(holdMs, decayPerSecond)` : maintien de crête, puis retour immédiat ou à vitesse limitée.
+- `RollingMinMax` : minimum et maximum des N dernières valeurs en O(1) amorti, sans allocation.
+
+### Alarmes (`alarm/`)
+
+- `ThresholdScale` (niveau sous le premier seuil + seuils croissants), `getThresholdLevel`, `getThresholdLevelWithHysteresis` (le niveau précédent est gardé tant que la valeur reste à moins de `deadband` d'une limite).
+- Machine d'état ISA-18.2 simplifiée (sans mise en attente ni suppression), en fonctions pures : `AlarmState`, `updateAlarmState(state, isActive)`, `acknowledgeAlarm`, `isAlarmUnacknowledged` (clignote), `isAlarmActive`.
+
+### Graphiques (suite)
+
+- `Scale` (ex-`LinearScale`, partagé par les deux échelles), `createLogScale`, `getLogTicks` (puissances de dix exactes).
+- Axe temporel : `getTimeTicks(start, end, count, isUtc)` (pas ronds de 1 ms à 1 semaine, alignés sur l'heure locale ou UTC) et `getTimeTickPattern(stepMs)` (le motif `formatDate` qui montre ce qui change entre deux graduations).
+- `findNearestPoint` (infobulle, recherche dichotomique), `downsampleLttb` (Largest-Triangle-Three-Buckets, pour une courbe lisse avec peu de points).
+- `svg/` : `createStepPath` (escalier `after` / `before` / `middle` pour les signaux discrets), `createAreaPath` (aire jusqu'à une ligne de base).
+
+### Interaction et tests de survol
+
+- `trackPointerDrag(element, { canStart, onStart, onMove, onEnd })` : glisser à la souris, au doigt ou au stylet, pointeur capturé, distances depuis l'appui (à convertir avec `screenDeltaToLocal` pour un symbole tourné) ; renvoie son nettoyage.
+- `normalizeWheelDelta` (pixels quel que soit le `deltaMode`), `getWheelZoomFactor` (facteur exponentiel pour `zoomBounds`), `matchesShortcut(event, 'Ctrl+Shift+K')` (modificateurs exacts).
+- `snapToGrid` (sans bruit flottant, origine décalable), `isPointInPolygon` (pair-impair, polygones concaves), `isPointInTransformedRect` (symbole tourné ou retourné), `distanceToSegment` (survol d'une ligne fine avec tolérance).
+
+### Couleurs (suite)
+
+- Retouche : `Hsl`, `toHsl`, `hslToRgba`, `lighten` / `darken` (luminosité HSL, teinte gardée), `withAlpha`, `toGrayscale` (gris de même luminance relative : un symbole désactivé garde son contraste), `getGradientColor(stops, value)` (dégradé à plusieurs arrêts : carte de chaleur, remplissage vert → orange → rouge).
+- Cibles de contraste explicites :
+  - WCAG 2 : `getWcagLevel(text, background, isLargeText)` → `'AAA'`, `'AA'` ou `undefined` (en plus de `meetsContrastLevel`).
+  - APCA : `ApcaLevel` par usage (`'fluent-text'` Lc 90, `'body-text'` 75, `'content-text'` 60, `'large-text'` 45, `'spot-text'` 30, `'non-text'` 15), `meetsApcaLevel(text, background, level)` et `getApcaLevel` (l'usage le plus exigeant atteint). Valeur absolue de Lc : la polarité (clair sur foncé) est gérée par `getApcaContrast`.
+
+### Formats, unités, export, stockage, cache
+
+- `formatCompact(value, locale)` (`'1.2K'`, `'1,2 k'`), `formatSigned(value, digits)` (`'+3.2'`, pas de signe pour zéro), `roundToSignificantDigits`.
+- Unités : `convertVolume` (mL, L, m³, gal US, ft³, bbl), `convertFlow` (L/s, L/min, m³/h, gal/min), `convertMass` (g, kg, t, lb), `convertAngularVelocity` (rpm, deg/s, rad/s).
+- Export : `toCsv(rows, separator, shouldEscapeFormulas)` (RFC 4180, CRLF, dates ISO, protection optionnelle contre l'injection de formules), `downloadText` / `downloadBlob` (téléchargement via un lien temporaire ; BOM U+FEFF pour qu'Excel lise l'UTF-8).
+- Stockage versionné : `createVersionedStorageItem(storage, key, { version, fallback, guard, migrate })` stocke `{ version, value }`. Quand une nouvelle version de l'application change la forme d'un réglage, `migrate(ancienneValeur, ancienneVersion)` convertit une fois la valeur sauvegardée (puis la réécrit) au lieu de la perdre ou de la relire avec la mauvaise forme ; une valeur sans enveloppe (écrite par `createStorageItem`) arrive en version 0.
+- `LruCache` : `Map` bornée qui oublie les entrées les moins récemment utilisées.
+
+### Extras
+
+- Angles : `smoothAngleTowards` / `moveAngleTowards` (lissage et vitesse de rotation limitée par le plus court chemin : une aiguille de compas passe de 350° à 10° par le nord), `meanAngle` (moyenne circulaire : 350° et 10° donnent 0°), `formatHeading` (`'005°'`).
+- `createLatestRunner(task)` : chaque appel annule le précédent (signal annulé, promesse rejetée), l'équivalent de `switchMap` sans RxJS pour une recherche à la frappe.
+- `getPolygonArea`, `getPolygonCentroid` (placement de l'étiquette d'une zone), `createArrowPath` (vecteur vitesse ou vent, sens d'écoulement), `copyText` (presse-papiers, renvoie `false` au lieu de lever).
+
+## Cinquième lot
+
+### Fonctions « sans surprise » : plus de paramètre par défaut
+
+- Tous les paramètres positionnels sont obligatoires : un appel montre tous les choix (`formatNumber(value, '1.0-2', 'en-US')`, `getNiceTicks(min, max, 5)`, `rotationMatrix(90, { x: 0, y: 0 })`, `randomInt(1, 6, Math.random)`, `createStaleDetector(1000, () => performance.now())`). Règle notée dans `AGENTS.md`.
+- Un paramètre dont l'absence a un sens prend `| undefined` explicitement (`sleep(ms, signal: AbortSignal | undefined)`).
+- `formatNumber` exige une locale et groupe les milliers selon elle ; le format invariant sans séparateur est `formatDecimal`.
+- `readStorage` / `createStorageItem` exigent un guard (`isFiniteNumber`, `isRecord`…).
+- Les objets d'options (`AnimationOptions`, `ClockOptions`, `RetryOptions`, `BarTicksOptions`…) gardent leurs champs facultatifs, mais l'objet lui-même est obligatoire (`{}` pour tout garder).
+
+### SVG : remettre droit sans bouger à l'écran
+
+- Matrices (`geometry/`) : `removeRotation(matrix, pivot)`, `removeFlip(matrix, pivot)`, `removeRotationAndFlip(matrix, pivot)` (le pivot, typiquement le centre, reste au même endroit à l'écran), `moveMatrix(matrix, dx, dy)` (déplacement écran quelle que soit la rotation), `centerMatrixOn(matrix, pivot, target)`, `getMatrixRotation`, `isMatrixFlipped`. Un miroir est lu comme un flip horizontal appliqué avant la rotation (un flip vertical = flip horizontal + 180°), comme dans les éditeurs de symboles.
+- Éléments SVG (`svg/`) : `getSvgTransform` / `setSvgTransform` (attribut `transform`), `getSvgCenter` (centre de la `getBBox`), et en un appel `resetSvgRotation`, `resetSvgFlip`, `resetSvgRotationAndFlip`, `moveSvgElement`, `centerSvgElement` (recentre un texte mal centré sur sa ligne de base).
+- Formes : `createCirclePath`, `createRectPath`, `createPiePath` (part de camembert jointe au centre, disque complet à 360°), `createStarPoints`.
+- Animation : `getStrokeDashOffset(longueur, progression)` (anneau de progression, tracé qui se dessine), `getArcLength`, `formatRotation(angle, centre)` (aiguille mise à jour à chaque frame).
+
 ## Tests — cas limites couverts
 
 - **Format** : `NaN`, `Infinity`, `-0`, `1.005`, `1e-7`, `1e21`, `maxFractionDigits` invalide

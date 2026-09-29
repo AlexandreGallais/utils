@@ -20,12 +20,12 @@ describe(parseEnumValue, () => {
     [undefined, undefined],
     [true, undefined],
   ] as const)('reads %j from a numeric enum as %s', ([input, expected]) => {
-    expect(parseEnumValue(Level, input)).toBe(expected);
+    expect(parseEnumValue(Level, input, false)).toBe(expected);
   });
 
   it('reads string enums', () => {
-    expect(parseEnumValue(Mode, 'night')).toBe(Mode.Night);
-    expect(parseEnumValue(Mode, 'Night')).toBeUndefined();
+    expect(parseEnumValue(Mode, 'night', false)).toBe(Mode.Night);
+    expect(parseEnumValue(Mode, 'Night', false)).toBeUndefined();
   });
 
   it('accepts member names on request', () => {

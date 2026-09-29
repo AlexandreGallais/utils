@@ -12,8 +12,8 @@ describe(range, () => {
     expect(range(start, end, step)).toStrictEqual(expected);
   });
 
-  it('uses a step of 1 by default', () => {
-    expect(range(2, 5)).toStrictEqual([2, 3, 4]);
+  it('uses a step of 1', () => {
+    expect(range(2, 5, 1)).toStrictEqual([2, 3, 4]);
   });
 
   it.for([0, NaN, Infinity])('throws a RangeError for step %s', (step) => {

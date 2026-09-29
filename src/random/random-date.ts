@@ -9,8 +9,8 @@ import { randomInt } from './random-int.ts';
  * @returns A new date.
  * @throws {RangeError} When a date is invalid or `start` is after `end`.
  * @example
- * randomDate(new Date('2026-01-01'), new Date('2026-12-31'));
+ * randomDate(new Date('2026-01-01'), new Date('2026-12-31'), Math.random);
  */
-export function randomDate(start: Date, end: Date, random: () => number = Math.random): Date {
+export function randomDate(start: Date, end: Date, random: () => number): Date {
   return new Date(randomInt(start.getTime(), end.getTime(), random));
 }

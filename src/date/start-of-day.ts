@@ -8,7 +8,7 @@
  * @example
  * startOfDay(new Date('2026-09-29T14:30:00Z'), true).toISOString(); // '2026-09-29T00:00:00.000Z'
  */
-export function startOfDay(date: Readonly<Date>, isUtc = false): Date {
+export function startOfDay(date: Readonly<Date>, isUtc: boolean): Date {
   const result = new Date(date);
   if (isUtc) {
     result.setUTCHours(0, 0, 0, 0);

@@ -10,11 +10,11 @@ describe(formatRelativeTime, () => {
     { offsetMs: -30_000, expected: '30 seconds ago' },
     { offsetMs: 200, expected: 'now' },
   ])('formats $offsetMs ms as "$expected"', ({ offsetMs, expected }) => {
-    expect(formatRelativeTime(offsetMs, 'en-US')).toBe(expected);
+    expect(formatRelativeTime(offsetMs, 'en-US', 'auto')).toBe(expected);
   });
 
   it('uses words for close days with the auto style', () => {
-    expect(formatRelativeTime(-86_400_000, 'fr-FR')).toBe('hier');
+    expect(formatRelativeTime(-86_400_000, 'fr-FR', 'auto')).toBe('hier');
     expect(formatRelativeTime(-86_400_000, 'fr-FR', 'always')).toBe('il y a 1 jour');
   });
 });

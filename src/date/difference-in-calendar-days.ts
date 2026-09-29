@@ -12,7 +12,7 @@ const MS_PER_DAY = 86_400_000;
  * @example
  * differenceInCalendarDays(new Date('2026-10-01T00:01:00Z'), new Date('2026-09-29T23:59:00Z'), true); // 2
  */
-export function differenceInCalendarDays(later: Readonly<Date>, earlier: Readonly<Date>, isUtc = false): number {
+export function differenceInCalendarDays(later: Readonly<Date>, earlier: Readonly<Date>, isUtc: boolean): number {
   return dayNumber(later, isUtc) - dayNumber(earlier, isUtc);
 }
 

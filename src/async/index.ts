@@ -10,3 +10,5 @@ export { streamInChunks } from './stream-in-chunks.ts';
 export { retry } from './retry.ts';
 export type { RetryOptions } from './retry-options.ts';
 export { mapConcurrent } from './map-concurrent.ts';
+export { createLatestRunner } from './create-latest-runner.ts';
+export type { LatestRunner } from './latest-runner.ts';

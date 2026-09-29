@@ -32,7 +32,7 @@ describe(deepMerge, () => {
 
   it('keeps __proto__ from JSON as an ordinary property', () => {
     const patch: unknown = JSON.parse('{ "__proto__": { "isAdmin": true } }');
-    assert(isRecord(patch));
+    assert(isRecord(patch), 'Assertion failed');
     const result = deepMerge<Record<string, unknown>>({}, patch);
     expect(Object.getPrototypeOf(result)).toBe(Object.prototype);
     expect(Object.hasOwn(result, '__proto__')).toBe(true);

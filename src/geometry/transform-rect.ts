@@ -12,7 +12,7 @@ import { transformPoint } from './transform-point.ts';
  * @returns The smallest axis-aligned rectangle containing the four transformed corners.
  * @example
  * // a 40 × 20 symbol rotated by 90° around its origin
- * transformRect({ x: 0, y: 0, width: 40, height: 20 }, rotationMatrix(90)); // { x: -20, y: 0, width: 20, height: 40 }
+ * transformRect({ x: 0, y: 0, width: 40, height: 20 }, rotationMatrix(90, { x: 0, y: 0 })); // { x: -20, y: 0, width: 20, height: 40 }
  */
 export function transformRect(rect: Rect, matrix: Matrix2D): Rect {
   const right = rect.x + rect.width;

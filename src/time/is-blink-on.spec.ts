@@ -10,7 +10,7 @@ describe(isBlinkOn, () => {
     [12_345_250, true],
     [-250, false],
   ] as const)('is on at %s ms: %s', ([timeMs, expected]) => {
-    expect(isBlinkOn(timeMs, 1000)).toBe(expected);
+    expect(isBlinkOn(timeMs, 1000, 0.5)).toBe(expected);
   });
 
   it('applies the duty cycle', () => {
@@ -21,11 +21,11 @@ describe(isBlinkOn, () => {
   });
 
   it('gives the same state to every element at the same time', () => {
-    const states = [0, 1, 2].map(() => isBlinkOn(1_234_567, 800));
+    const states = [0, 1, 2].map(() => isBlinkOn(1_234_567, 800, 0.5));
     expect(states).toStrictEqual([states[0], states[0], states[0]]);
   });
 
   it.for([0, -1, NaN, Infinity])('throws a RangeError for period %s', (periodMs) => {
-    expect(() => isBlinkOn(0, periodMs)).toThrow(RangeError);
+    expect(() => isBlinkOn(0, periodMs, 0.5)).toThrow(RangeError);
   });
 });

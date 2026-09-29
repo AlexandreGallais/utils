@@ -4,7 +4,7 @@ import type { BarScale } from './bar-scale.ts';
 
 /**
  * Converts a value to a coordinate along a bar gauge: a `y` for an `'up'` or `'down'` bar, an `x` for a
- * `'left'` or `'right'` bar. Out-of-range values stop at the ends of the bar by default.
+ * `'left'` or `'right'` bar. Out-of-range values stop at the ends of the bar when clamped.
  *
  * @param value - The value to place.
  * @param scale - Value range, drawing area and direction of the bar.
@@ -12,9 +12,9 @@ import type { BarScale } from './bar-scale.ts';
  * @returns The coordinate, in SVG user units.
  * @example
  * const scale = { min: 0, max: 10, rect: { x: 0, y: 0, width: 20, height: 200 }, direction: 'up' } as const;
- * valueToBarPosition(2.5, scale); // 150 (a quarter of the way up from the bottom)
+ * valueToBarPosition(2.5, scale, true); // 150 (a quarter of the way up from the bottom)
  */
-export function valueToBarPosition(value: number, scale: BarScale, shouldClamp = true): number {
+export function valueToBarPosition(value: number, scale: BarScale, shouldClamp: boolean): number {
   const { rect, direction } = scale;
   const ratio = inverseLerp(scale.min, scale.max, value);
   const t = shouldClamp ? clamp(ratio, 0, 1) : ratio;

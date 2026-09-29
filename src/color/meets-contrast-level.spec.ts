@@ -10,13 +10,13 @@ describe(meetsContrastLevel, () => {
   const lightGray: Rgb = { r: 0x94, g: 0x94, b: 0x94 };
 
   it('applies the normal text thresholds', () => {
-    expect(meetsContrastLevel(gray, WHITE, 'AA')).toBe(true);
-    expect(meetsContrastLevel(gray, WHITE, 'AAA')).toBe(false);
-    expect(meetsContrastLevel(BLACK, WHITE, 'AAA')).toBe(true);
+    expect(meetsContrastLevel(gray, WHITE, 'AA', false)).toBe(true);
+    expect(meetsContrastLevel(gray, WHITE, 'AAA', false)).toBe(false);
+    expect(meetsContrastLevel(BLACK, WHITE, 'AAA', false)).toBe(true);
   });
 
   it('applies the large text thresholds', () => {
-    expect(meetsContrastLevel(lightGray, WHITE, 'AA')).toBe(false);
+    expect(meetsContrastLevel(lightGray, WHITE, 'AA', false)).toBe(false);
     expect(meetsContrastLevel(lightGray, WHITE, 'AA', true)).toBe(true);
     expect(meetsContrastLevel(gray, WHITE, 'AAA', true)).toBe(true);
   });

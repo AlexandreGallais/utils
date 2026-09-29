@@ -10,10 +10,10 @@ const listFormatters = new Map<string, Intl.ListFormat>();
  * @param type - `'conjunction'` for "and", `'disjunction'` for "or", `'unit'` for a plain list.
  * @returns The joined list; `''` without item.
  * @example
- * formatList(['pump', 'valve', 'tank'], 'en-US'); // 'pump, valve, and tank'
+ * formatList(['pump', 'valve', 'tank'], 'en-US', 'conjunction'); // 'pump, valve, and tank'
  * formatList(['pompe', 'vanne'], 'fr-FR', 'disjunction'); // 'pompe ou vanne'
  */
-export function formatList(items: Iterable<string>, locale: string, type: Intl.ListFormatType = 'conjunction'): string {
+export function formatList(items: Iterable<string>, locale: string, type: Intl.ListFormatType): string {
   const key = `${locale}|${type}`;
   let formatter = listFormatters.get(key);
   if (!formatter) {

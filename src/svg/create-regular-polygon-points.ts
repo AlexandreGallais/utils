@@ -18,7 +18,7 @@ const MIN_SIDES = 3;
  * // triangle pointing down, for a marker above a bar
  * marker.setAttribute('points', formatPoints(createRegularPolygonPoints({ x: 10, y: 10 }, 6, 3, 180)));
  */
-export function createRegularPolygonPoints(center: Point, radius: number, sides: number, rotation = 0): Point[] {
+export function createRegularPolygonPoints(center: Point, radius: number, sides: number, rotation: number): Point[] {
   if (!Number.isSafeInteger(sides) || sides < MIN_SIDES) {
     throw new RangeError(`sides must be an integer of at least ${MIN_SIDES}, got ${sides}`);
   }

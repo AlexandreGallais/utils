@@ -8,7 +8,7 @@ describe(valueToAngle, () => {
     [45, 135],
     [-10, -135],
   ] as const)('places %s at %s°', ([value, expected]) => {
-    expect(valueToAngle(value, 0, 30, -135, 135)).toBe(expected);
+    expect(valueToAngle(value, 0, 30, -135, 135, true)).toBe(expected);
   });
 
   it('extrapolates when not clamped', () => {
@@ -16,6 +16,6 @@ describe(valueToAngle, () => {
   });
 
   it('supports counterclockwise scales', () => {
-    expect(valueToAngle(25, 0, 100, 90, -90)).toBe(45);
+    expect(valueToAngle(25, 0, 100, 90, -90, true)).toBe(45);
   });
 });

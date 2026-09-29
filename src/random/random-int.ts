@@ -4,13 +4,13 @@
  *
  * @param min - Smallest possible value (rounded up to an integer).
  * @param max - Largest possible value (rounded down to an integer).
- * @param random - Returns a number in [0, 1[, `Math.random` by default.
+ * @param random - Returns a number in [0, 1[: `Math.random`, or a seeded generator for replayable runs.
  * @returns An integer in [min, max].
  * @throws {RangeError} When the interval holds no integer.
  * @example
- * const dice = randomInt(1, 6);
+ * const dice = randomInt(1, 6, Math.random);
  */
-export function randomInt(min: number, max: number, random: () => number = Math.random): number {
+export function randomInt(min: number, max: number, random: () => number): number {
   const low = Math.ceil(min);
   const high = Math.floor(max);
   if (Number.isNaN(high - low) || high < low) {

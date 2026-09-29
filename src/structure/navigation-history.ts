@@ -4,7 +4,7 @@
  *
  * @template T - Type of the entries, such as a view name or a route.
  * @example
- * const history = new NavigationHistory<string>();
+ * const history = new NavigationHistory<string>(Infinity);
  * history.push('home');
  * history.push('engine');
  * history.push('alarms');
@@ -22,10 +22,10 @@ export class NavigationHistory<T> {
   /**
    * Creates an empty history.
    *
-   * @param maxSize - Maximum number of entries kept, a positive integer (unlimited by default).
+   * @param maxSize - Maximum number of entries kept, a positive integer (or `Infinity` for no limit).
    * @throws {RangeError} When `maxSize` is not a positive integer or `Infinity`.
    */
-  public constructor(maxSize = Infinity) {
+  public constructor(maxSize: number) {
     if (maxSize !== Infinity && (!Number.isSafeInteger(maxSize) || maxSize < 1)) {
       throw new RangeError(`maxSize must be a positive integer, got ${maxSize}`);
     }

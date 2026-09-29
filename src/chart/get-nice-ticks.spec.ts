@@ -14,8 +14,8 @@ describe(getNiceTicks, () => {
     expect(getNiceTicks(min, max, count)).toStrictEqual(expected);
   });
 
-  it('uses 5 ticks by default', () => {
-    expect(getNiceTicks(0, 10)).toStrictEqual([0, 2, 4, 6, 8, 10]);
+  it('uses 5 ticks', () => {
+    expect(getNiceTicks(0, 10, 5)).toStrictEqual([0, 2, 4, 6, 8, 10]);
   });
 
   it('never returns a negative zero', () => {
@@ -23,7 +23,7 @@ describe(getNiceTicks, () => {
   });
 
   it('returns the single value of an empty interval', () => {
-    expect(getNiceTicks(4, 4)).toStrictEqual([4]);
+    expect(getNiceTicks(4, 4, 5)).toStrictEqual([4]);
   });
 
   it.for([0, -1, 1.5])('throws a RangeError for count %s', (count) => {
@@ -31,6 +31,6 @@ describe(getNiceTicks, () => {
   });
 
   it('throws a RangeError for an inverted interval', () => {
-    expect(() => getNiceTicks(1, 0)).toThrow(RangeError);
+    expect(() => getNiceTicks(1, 0, 5)).toThrow(RangeError);
   });
 });

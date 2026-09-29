@@ -18,9 +18,13 @@ describe(processInChunks, () => {
 
   it('processes every item in order with its index', async () => {
     const seen: string[] = [];
-    await processInChunks(['a', 'b', 'c'], (item, index) => {
-      seen.push(`${index}:${item}`);
-    });
+    await processInChunks(
+      ['a', 'b', 'c'],
+      (item, index) => {
+        seen.push(`${index}:${item}`);
+      },
+      {},
+    );
     expect(seen).toStrictEqual(['0:a', '1:b', '2:c']);
   });
 
@@ -62,9 +66,13 @@ describe(processInChunks, () => {
 
   it('accepts any iterable and reads performance.now() by default', async () => {
     const seen: number[] = [];
-    await processInChunks(new Set([1, 2]), (item) => {
-      seen.push(item);
-    });
+    await processInChunks(
+      new Set([1, 2]),
+      (item) => {
+        seen.push(item);
+      },
+      {},
+    );
     expect(seen).toStrictEqual([1, 2]);
   });
 });

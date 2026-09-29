@@ -12,7 +12,7 @@ describe(headingToCardinal, () => {
     [-10, 'N'],
     [315, 'NW'],
   ] as const)('names %s° as %s with 8 points', ([heading, expected]) => {
-    expect(headingToCardinal(heading)).toBe(expected);
+    expect(headingToCardinal(heading, 8)).toBe(expected);
   });
 
   it('supports 4 and 16 points', () => {

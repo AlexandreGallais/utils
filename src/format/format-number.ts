@@ -1,10 +1,5 @@
 import { assertValidFractionDigits } from '../internal/assert-valid-fraction-digits.ts';
 
-/** Locale of the invariant format: `.` as decimal separator (grouping is turned off). */
-const INVARIANT_LOCALE = 'en-US';
-/** Cache key of the invariant format, which no BCP 47 locale can take. */
-const INVARIANT_KEY = '';
-
 /** Angular `DecimalPipe` defaults when a part of `digitsInfo` is omitted. */
 const DEFAULT_MIN_INTEGER_DIGITS = 1;
 const DEFAULT_MIN_FRACTION_DIGITS = 0;
@@ -20,31 +15,28 @@ const DIGITS_INFO_PATTERN = /^(?<minInteger>\d+)?\.(?:(?<minFraction>\d+)(?:-(?<
 const numberFormatters = new Map<string, Map<string, Intl.NumberFormat>>();
 
 /**
- * Formats a number with digits driven by `digitsInfo`, like Angular's `DecimalPipe`. Without a locale the
- * output is invariant: every digit in a row, `.` as decimal separator, no grouping (`1234.5`). With a locale,
- * its separators and grouping apply (`1,234.5`, `1 234,5`). `NaN`, infinities and `-0` are handled like
- * `formatDecimal`. Formatters are cached per locale
- * and `digitsInfo`.
+ * Formats a number with digits driven by `digitsInfo` and the separators of a locale, like Angular's
+ * `DecimalPipe` (`1,234.5` in `'en-US'`, `1 234,5` in `'fr-FR'`). For an invariant text without grouping,
+ * use `formatDecimal`. `NaN`, infinities and `-0` are handled like `formatDecimal`. Formatters are cached
+ * per locale and `digitsInfo`.
  *
  * @param value - The number to format.
  * @param digitsInfo - `'{minIntegerDigits}.{minFractionDigits}-{maxFractionDigits}'`, each part optional
  * (defaults `1.0-3`), such as `'1.0-2'` or `'3.2-4'`.
- * @param locale - BCP 47 locale of the separators and grouping; the invariant format when omitted.
+ * @param locale - BCP 47 locale of the separators and grouping, such as `'en-US'`.
  * @returns The formatted number.
  * @throws {RangeError} When `digitsInfo` is malformed or outside the `Intl.NumberFormat` limits.
  * @example
- * formatNumber(Math.PI, '1.0-2'); // '3.14'
- * formatNumber(5, '3.0-2'); // '005'
- * formatNumber(1234.5, '1.2-2'); // '1234.50'
+ * formatNumber(Math.PI, '1.0-2', 'en-US'); // '3.14'
+ * formatNumber(5, '3.0-2', 'en-US'); // '005'
  * formatNumber(1234.5, '1.2-2', 'en-US'); // '1,234.50'
  * formatNumber(1234.5, '1.2-2', 'de-DE'); // '1.234,50'
  */
-export function formatNumber(value: number, digitsInfo: string, locale?: string): string {
-  const localeKey = locale ?? INVARIANT_KEY;
-  let localeFormatters = numberFormatters.get(localeKey);
+export function formatNumber(value: number, digitsInfo: string, locale: string): string {
+  let localeFormatters = numberFormatters.get(locale);
   if (!localeFormatters) {
     localeFormatters = new Map();
-    numberFormatters.set(localeKey, localeFormatters);
+    numberFormatters.set(locale, localeFormatters);
   }
 
   let formatter = localeFormatters.get(digitsInfo);
@@ -59,11 +51,11 @@ export function formatNumber(value: number, digitsInfo: string, locale?: string)
  * Parses `digitsInfo` and creates the matching formatter.
  *
  * @param digitsInfo - The digits specification.
- * @param locale - BCP 47 locale, or `undefined` for the invariant format.
+ * @param locale - BCP 47 locale, such as `'en-US'` or `'fr-FR'`.
  * @returns A new formatter.
  * @throws {RangeError} When `digitsInfo` is malformed or outside the `Intl.NumberFormat` limits.
  */
-function createNumberFormatter(digitsInfo: string, locale: string | undefined): Intl.NumberFormat {
+function createNumberFormatter(digitsInfo: string, locale: string): Intl.NumberFormat {
   const groups = DIGITS_INFO_PATTERN.exec(digitsInfo)?.groups;
   if (!groups) {
     throw new RangeError(`digitsInfo must look like '1.0-2' (integer.minFraction-maxFraction), got '${digitsInfo}'`);
@@ -85,8 +77,7 @@ function createNumberFormatter(digitsInfo: string, locale: string | undefined): 
     );
   }
 
-  return new Intl.NumberFormat(locale ?? INVARIANT_LOCALE, {
-    useGrouping: locale !== undefined,
+  return new Intl.NumberFormat(locale, {
     minimumIntegerDigits: minIntegerDigits,
     minimumFractionDigits: minFractionDigits,
     maximumFractionDigits: maxFractionDigits,

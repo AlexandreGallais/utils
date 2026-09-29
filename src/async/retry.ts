@@ -19,7 +19,7 @@ const DEFAULT_MAX_DELAY_MS = 10_000;
  * @example
  * const state = await retry(() => fetchState(), { retries: 5, delayMs: 500 });
  */
-export async function retry<T>(operation: (attempt: number) => Promise<T>, options: RetryOptions = {}): Promise<T> {
+export async function retry<T>(operation: (attempt: number) => Promise<T>, options: RetryOptions): Promise<T> {
   const {
     retries = DEFAULT_RETRIES,
     delayMs = DEFAULT_DELAY_MS,

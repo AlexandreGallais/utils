@@ -8,7 +8,7 @@ describe(isBetween, () => {
     [11, 0, 10, false],
     [5, 10, 0, true],
   ] as const)('checks %s in [%s, %s] inclusively as %s', ([value, min, max, expected]) => {
-    expect(isBetween(value, min, max)).toBe(expected);
+    expect(isBetween(value, min, max, true)).toBe(expected);
   });
 
   it('excludes the bounds when not inclusive', () => {

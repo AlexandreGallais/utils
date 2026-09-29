@@ -11,7 +11,7 @@ describe(formatDuration, () => {
     [-65_000, '-1:05'],
     [-500, '0:00'],
   ] as const)('formats %s ms as %s', ([ms, expected]) => {
-    expect(formatDuration(ms)).toBe(expected);
+    expect(formatDuration(ms, 0)).toBe(expected);
   });
 
   it('shows truncated fractions of a second', () => {
@@ -21,8 +21,8 @@ describe(formatDuration, () => {
   });
 
   it('formats non-finite durations as a placeholder', () => {
-    expect(formatDuration(NaN)).toBe('--:--');
-    expect(formatDuration(Infinity)).toBe('--:--');
+    expect(formatDuration(NaN, 0)).toBe('--:--');
+    expect(formatDuration(Infinity, 0)).toBe('--:--');
   });
 
   it.for([-1, 4, 1.5])('throws a RangeError for %s fraction digits', (digits) => {

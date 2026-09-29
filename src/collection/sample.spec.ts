@@ -8,10 +8,10 @@ describe(sample, () => {
   });
 
   it('picks an item of the list with Math.random', () => {
-    expect(['a', 'b']).toContain(sample(['a', 'b']));
+    expect(['a', 'b']).toContain(sample(['a', 'b'], Math.random));
   });
 
   it('returns undefined for an empty list', () => {
-    expect(sample<string>([])).toBeUndefined();
+    expect(sample<string>([], Math.random)).toBeUndefined();
   });
 });

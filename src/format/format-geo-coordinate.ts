@@ -6,9 +6,6 @@ const TWO_DIGITS = 2;
 const LONGITUDE_DEGREE_DIGITS = 3;
 const MAX_LATITUDE = 90;
 const MAX_LONGITUDE = 180;
-/** Default decimals: minutes to a thousandth (about 2 m), seconds to a tenth (about 3 m). */
-const DEFAULT_MINUTE_DIGITS = 3;
-const DEFAULT_SECOND_DIGITS = 1;
 
 /**
  * Formats a latitude or a longitude for a nautical display: degrees and decimal minutes (`48°51.400′ N`, the
@@ -18,18 +15,18 @@ const DEFAULT_SECOND_DIGITS = 1;
  * @param value - The coordinate in decimal degrees: positive north or east.
  * @param axis - `'lat'` for a latitude (N/S), `'lon'` for a longitude (E/W).
  * @param style - `'dm'` for degrees and decimal minutes, `'dms'` for degrees, minutes and seconds.
- * @param fractionDigits - Decimals of the last field; 3 for minutes, 1 for seconds by default.
+ * @param fractionDigits - Decimals of the last field: 3 for minutes (about 2 m), 1 for seconds (about 3 m).
  * @returns The formatted coordinate; `''` for a value out of range or not finite.
  * @example
- * formatGeoCoordinate(48.856_667, 'lat'); // '48°51.400′ N'
- * formatGeoCoordinate(-2.35, 'lon'); // '002°21.000′ W'
- * formatGeoCoordinate(48.856_667, 'lat', 'dms'); // '48°51′24.0″ N'
+ * formatGeoCoordinate(48.856_667, 'lat', 'dm', 3); // '48°51.400′ N'
+ * formatGeoCoordinate(-2.35, 'lon', 'dm', 3); // '002°21.000′ W'
+ * formatGeoCoordinate(48.856_667, 'lat', 'dms', 1); // '48°51′24.0″ N'
  */
 export function formatGeoCoordinate(
   value: number,
   axis: 'lat' | 'lon',
-  style: 'dm' | 'dms' = 'dm',
-  fractionDigits = style === 'dm' ? DEFAULT_MINUTE_DIGITS : DEFAULT_SECOND_DIGITS,
+  style: 'dm' | 'dms',
+  fractionDigits: number,
 ): string {
   const limit = axis === 'lat' ? MAX_LATITUDE : MAX_LONGITUDE;
   if (!Number.isFinite(value) || Math.abs(value) > limit) {

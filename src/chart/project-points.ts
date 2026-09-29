@@ -4,8 +4,7 @@ import type { DataBounds } from './data-bounds.ts';
 
 /**
  * Converts data points to screen coordinates: `bounds` is stretched over `rect` and the y axis is flipped so
- * that larger values are drawn higher. Points out of the bounds land out of the rectangle. Built for large
- * series redrawn at every refresh: the scales are computed once, then one allocation per point.
+ * that larger values are drawn higher. Points out of the bounds land out of the rectangle.
  *
  * @param points - The data points.
  * @param bounds - The data window shown by the chart.

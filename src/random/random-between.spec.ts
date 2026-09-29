@@ -8,7 +8,7 @@ describe(randomBetween, () => {
   });
 
   it('stays within the interval with Math.random', () => {
-    const value = randomBetween(3, 4);
+    const value = randomBetween(3, 4, Math.random);
     expect(value).toBeGreaterThanOrEqual(3);
     expect(value).toBeLessThan(4);
   });

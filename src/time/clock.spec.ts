@@ -128,7 +128,7 @@ describe(Clock, () => {
 
   it('uses performance.now() by default', () => {
     vi.spyOn(performance, 'now').mockReturnValue(42);
-    const clock = new Clock();
+    const clock = new Clock({});
     const listener = vi.fn<(tick: ClockTick) => void>();
     clock.subscribe(listener);
     runFrame();

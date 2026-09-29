@@ -9,7 +9,7 @@
  * @example
  * addDays(new Date('2026-09-29T14:00:00Z'), 3, true).toISOString(); // '2026-10-02T14:00:00.000Z'
  */
-export function addDays(date: Readonly<Date>, days: number, isUtc = false): Date {
+export function addDays(date: Readonly<Date>, days: number, isUtc: boolean): Date {
   const result = new Date(date);
   if (isUtc) {
     result.setUTCDate(result.getUTCDate() + days);

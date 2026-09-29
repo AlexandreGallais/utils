@@ -18,7 +18,7 @@ const HALF_PERIOD = 0.5;
  * @returns A function that stops the blinking and applies the rest state (once).
  * @throws {RangeError} At the first tick, when `periodMs` is not a positive finite number.
  * @example
- * const stopBlink = startBlink(clock, 1000, (isOn) => alarm.classList.toggle('dimmed', !isOn));
+ * const stopBlink = startBlink(clock, 1000, (isOn) => alarm.classList.toggle('dimmed', !isOn), {});
  * // on acknowledgement:
  * stopBlink(); // back to visible
  */
@@ -26,7 +26,7 @@ export function startBlink(
   clock: TickSource,
   periodMs: number,
   onChange: (isOn: boolean) => void,
-  options: BlinkOptions = {},
+  options: BlinkOptions,
 ): () => void {
   const { dutyCycle = HALF_PERIOD, restState = true } = options;
   let state: boolean | undefined;

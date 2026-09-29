@@ -8,7 +8,7 @@ const TRIANGLE = [
 
 describe(createPolylinePath, () => {
   it('joins the points with lines', () => {
-    expect(createPolylinePath(TRIANGLE)).toBe('M 0 10 L 5 0 L 10 10');
+    expect(createPolylinePath(TRIANGLE, false)).toBe('M 0 10 L 5 0 L 10 10');
   });
 
   it('closes the shape', () => {

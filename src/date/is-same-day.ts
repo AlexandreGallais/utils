@@ -11,6 +11,6 @@ import { differenceInCalendarDays } from './difference-in-calendar-days.ts';
  * @example
  * isSameDay(new Date('2026-09-29T00:10:00Z'), new Date('2026-09-29T23:50:00Z'), true); // true
  */
-export function isSameDay(a: Readonly<Date>, b: Readonly<Date>, isUtc = false): boolean {
+export function isSameDay(a: Readonly<Date>, b: Readonly<Date>, isUtc: boolean): boolean {
   return differenceInCalendarDays(a, b, isUtc) === 0;
 }

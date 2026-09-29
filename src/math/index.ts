@@ -18,3 +18,4 @@ export { moveTowards } from './move-towards.ts';
 export { applyHysteresis } from './apply-hysteresis.ts';
 export { interpolateTable } from './interpolate-table.ts';
 export { hasSignificantChange } from './has-significant-change.ts';
+export { roundToSignificantDigits } from './round-to-significant-digits.ts';

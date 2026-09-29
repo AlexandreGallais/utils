@@ -8,11 +8,11 @@
  * @returns The values, empty when `step` goes away from `end`.
  * @throws {RangeError} When `step` is `0` or not finite.
  * @example
- * range(0, 5); // [0, 1, 2, 3, 4]
+ * range(0, 5, 1); // [0, 1, 2, 3, 4]
  * range(0, 1, 0.25); // [0, 0.25, 0.5, 0.75]
  * range(5, 0, -2); // [5, 3, 1]
  */
-export function range(start: number, end: number, step = 1): number[] {
+export function range(start: number, end: number, step: number): number[] {
   if (step === 0 || !Number.isFinite(step)) {
     throw new RangeError(`step must be a non-zero finite number, got ${step}`);
   }

@@ -11,8 +11,8 @@ describe(resizeRect, () => {
     expect(resizeRect(BAR, { width: 20, height: 30 }, anchor)).toStrictEqual(expected);
   });
 
-  it('keeps the top-left corner by default', () => {
-    expect(resizeRect({ x: 5, y: 5, width: 10, height: 10 }, { width: 4, height: 2 })).toStrictEqual({
+  it('keeps the top-left corner', () => {
+    expect(resizeRect({ x: 5, y: 5, width: 10, height: 10 }, { width: 4, height: 2 }, 'top-left')).toStrictEqual({
       x: 5,
       y: 5,
       width: 4,

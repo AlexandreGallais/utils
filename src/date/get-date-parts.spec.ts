@@ -21,12 +21,19 @@ describe(getDateParts, () => {
     expect(getDateParts(new Date('2028-12-31T23:59:59Z'), true)).toMatchObject({ dayOfYear: 366 });
   });
 
-  it('reads local time by default', () => {
+  it('reads local time', () => {
     const date = new Date(2026, 8, 29, 14, 30);
-    expect(getDateParts(date)).toMatchObject({ year: 2026, month: 9, day: 29, hour: 14, minute: 30, weekday: 2 });
+    expect(getDateParts(date, false)).toMatchObject({
+      year: 2026,
+      month: 9,
+      day: 29,
+      hour: 14,
+      minute: 30,
+      weekday: 2,
+    });
   });
 
   it('returns undefined for an invalid date', () => {
-    expect(getDateParts(new Date('oops'))).toBeUndefined();
+    expect(getDateParts(new Date('oops'), false)).toBeUndefined();
   });
 });

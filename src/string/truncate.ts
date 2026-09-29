@@ -11,11 +11,11 @@ const graphemeSegmenter = new Intl.Segmenter();
  * @returns The string itself when it fits, the cut string with its ellipsis otherwise.
  * @throws {RangeError} When `maxLength` is not a non-negative integer.
  * @example
- * truncate('Engine room temperature', 12); // 'Engine room…'
- * truncate('Short', 12); // 'Short'
+ * truncate('Engine room temperature', 12, '…'); // 'Engine room…'
+ * truncate('Short', 12, '…'); // 'Short'
  * truncate('Engine room temperature', 12, '...'); // 'Engine ro...'
  */
-export function truncate(input: string, maxLength: number, ellipsis = '…'): string {
+export function truncate(input: string, maxLength: number, ellipsis: string): string {
   if (!Number.isSafeInteger(maxLength) || maxLength < 0) {
     throw new RangeError(`maxLength must be a non-negative integer, got ${maxLength}`);
   }

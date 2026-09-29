@@ -16,12 +16,12 @@ describe(valueToBarPosition, () => {
     ['right', 2.5, 35],
     ['left', 2.5, 85],
   ] as const)('places %s bar value %s at %s', ([direction, value, expected]) => {
-    expect(valueToBarPosition(value, scale(direction))).toBe(expected);
+    expect(valueToBarPosition(value, scale(direction), true)).toBe(expected);
   });
 
   it('stops at the ends unless extrapolation is asked', () => {
-    expect(valueToBarPosition(20, scale('up'))).toBe(20);
-    expect(valueToBarPosition(-5, scale('right'))).toBe(10);
+    expect(valueToBarPosition(20, scale('up'), true)).toBe(20);
+    expect(valueToBarPosition(-5, scale('right'), true)).toBe(10);
     expect(valueToBarPosition(20, scale('up'), false)).toBe(-180);
   });
 });

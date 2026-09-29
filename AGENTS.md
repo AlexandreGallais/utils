@@ -143,7 +143,8 @@ function helper(value: number): number {
 - Up to 3 or 4 positional parameters; beyond, an options object with its own `…Options` interface file (`BarTicksOptions`), every field `readonly` and documented, defaults destructured in the function.
 - Parameters are readonly (`readonly T[]`, `readonly` fields): a utility never mutates its arguments and returns new objects.
 - Callbacks are named for their role (`callback`, `keySelector`, `predicate`, `mapper`, `listener`).
-- Time sources and randomness are injectable (`now = () => performance.now()`, `random = Math.random`) for tests and replayable simulations.
+- **No default and no optional positional parameter**: every parameter is required, so a call always shows every choice (`formatNumber(value, '1.0-2', 'en-US')`, `rotationMatrix(90, { x: 0, y: 0 })`). A parameter whose absence is meaningful takes `| undefined` explicitly (`signal: AbortSignal | undefined`). JSDoc suggests usual values with "such as", never "by default".
+- Time sources and randomness are parameters (`now: () => number`, `random: () => number`): callers pass `() => performance.now()` or `Math.random`, tests and replayable simulations pass fakes or `createSeededRandom`.
 - Angles: 0° up and clockwise everywhere (SVG y axis down, compass headings).
 - No magic numbers: module constants, documented.
 

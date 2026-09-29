@@ -1,3 +1,4 @@
+import { isFiniteNumber } from '../guard/is-finite-number.ts';
 import { createStorageItem } from './create-storage-item.ts';
 import { MemoryStorage } from './testing/memory-storage.ts';
 
@@ -26,7 +27,7 @@ describe(createStorageItem, () => {
   });
 
   it('removes the value', () => {
-    const zoom = createStorageItem(storage, 'zoom', 1);
+    const zoom = createStorageItem(storage, 'zoom', 1, isFiniteNumber);
     zoom.set(3);
     zoom.remove();
     expect(zoom.get()).toBe(1);

@@ -8,7 +8,7 @@ describe(addDays, () => {
   });
 
   it('keeps the local time of day', () => {
-    const date = addDays(new Date(2026, 2, 28, 14, 0), 2);
+    const date = addDays(new Date(2026, 2, 28, 14, 0), 2, false);
     expect([date.getDate(), date.getHours()]).toStrictEqual([30, 14]);
   });
 });

@@ -4,14 +4,14 @@
  *
  * @param value - The value that should have been narrowed to `never`.
  * @param message - Message of the thrown error.
- * @throws {Error} Always, with the unexpected value in the message.
+ * @throws {Error} Always, with the given message.
  * @example
  * switch (level) {
  *   case 'AA': return 4.5;
  *   case 'AAA': return 7;
- *   default: return assertNever(level);
+ *   default: return assertNever(level, `Unknown level: ${String(level)}`);
  * }
  */
-export function assertNever(value: never, message = `Unexpected value: ${String(value)}`): never {
+export function assertNever(value: never, message: string): never {
   throw new Error(message);
 }

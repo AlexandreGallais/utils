@@ -51,11 +51,11 @@ const MINUTES_OR_SECONDS = 60;
  * @param isUtc - Whether the fields are in UTC; local time otherwise.
  * @returns A new `Date`, or `undefined` when the text does not match the format or is not a real date.
  * @example
- * parseDateFormat('29/09/2026 14:30', 'DD/MM/YYYY HH:mm'); // 29 September 2026, 14:30 local time
+ * parseDateFormat('29/09/2026 14:30', 'DD/MM/YYYY HH:mm', false); // 29 September 2026, 14:30 local time
  * parseDateFormat('9/29/2026', 'M/D/YYYY', true)?.toISOString(); // '2026-09-29T00:00:00.000Z'
- * parseDateFormat('31/02/2026', 'DD/MM/YYYY'); // undefined
+ * parseDateFormat('31/02/2026', 'DD/MM/YYYY', false); // undefined
  */
-export function parseDateFormat(input: string, pattern: string, isUtc = false): Date | undefined {
+export function parseDateFormat(input: string, pattern: string, isUtc: boolean): Date | undefined {
   const fields = readFields(input.trim(), pattern);
   if (!fields) {
     return undefined;

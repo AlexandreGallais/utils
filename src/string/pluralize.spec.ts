@@ -8,11 +8,11 @@ describe(pluralize, () => {
     [3, 'alarms'],
     [1.5, 'alarms'],
   ] as const)('picks the form for %s', ([count, expected]) => {
-    expect(pluralize(count, 'alarm')).toBe(expected);
+    expect(pluralize(count, 'alarm', 'alarms', Math.abs(count) === 1)).toBe(expected);
   });
 
   it('uses the given plural and singular rule', () => {
-    expect(pluralize(2, 'box', 'boxes')).toBe('boxes');
+    expect(pluralize(2, 'box', 'boxes', Math.abs(2) === 1)).toBe('boxes');
     expect(pluralize(0, 'alarme', 'alarmes', true)).toBe('alarme');
   });
 });

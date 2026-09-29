@@ -11,7 +11,7 @@ describe(retry, () => {
 
   it('returns the first success', async () => {
     const operation = vi.fn<(attempt: number) => Promise<string>>().mockResolvedValue('ok');
-    await expect(retry(operation)).resolves.toBe('ok');
+    await expect(retry(operation, {})).resolves.toBe('ok');
     expect(operation).toHaveBeenCalledExactlyOnceWith(1);
   });
 

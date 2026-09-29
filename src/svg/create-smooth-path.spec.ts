@@ -3,11 +3,14 @@ import { createSmoothPath } from './create-smooth-path.ts';
 describe(createSmoothPath, () => {
   it('passes through every point with cubic curves', () => {
     expect(
-      createSmoothPath([
-        { x: 0, y: 0 },
-        { x: 6, y: 6 },
-        { x: 12, y: 0 },
-      ]),
+      createSmoothPath(
+        [
+          { x: 0, y: 0 },
+          { x: 6, y: 6 },
+          { x: 12, y: 0 },
+        ],
+        1,
+      ),
     ).toBe('M 0 0 C 1 1 4 6 6 6 C 8 6 11 1 12 0');
   });
 
@@ -24,7 +27,7 @@ describe(createSmoothPath, () => {
   });
 
   it('handles a single point and no point', () => {
-    expect(createSmoothPath([{ x: 3, y: 4 }])).toBe('M 3 4');
-    expect(createSmoothPath([])).toBe('');
+    expect(createSmoothPath([{ x: 3, y: 4 }], 1)).toBe('M 3 4');
+    expect(createSmoothPath([], 1)).toBe('');
   });
 });

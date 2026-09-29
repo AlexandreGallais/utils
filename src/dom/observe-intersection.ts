@@ -8,12 +8,12 @@
  * @returns A function that stops the observer.
  * @example
  * const isOnScreen = signal(false);
- * destroyRef.onDestroy(observeIntersection(host, (isVisible) => isOnScreen.set(isVisible)));
+ * destroyRef.onDestroy(observeIntersection(host, (isVisible) => isOnScreen.set(isVisible), {}));
  */
 export function observeIntersection(
   element: Element,
   onChange: (isIntersecting: boolean, entry: IntersectionObserverEntry) => void,
-  options?: IntersectionObserverInit,
+  options: IntersectionObserverInit,
 ): () => void {
   const observer = new IntersectionObserver((entries) => {
     for (const entry of entries) {

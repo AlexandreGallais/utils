@@ -1,5 +1,5 @@
 import { remap } from '../math/remap.ts';
-import type { LinearScale } from './linear-scale.ts';
+import type { Scale } from './scale.ts';
 
 /**
  * Creates a linear scale for a chart axis, like d3's `scaleLinear`: data values in `domain` map to screen
@@ -17,12 +17,12 @@ import type { LinearScale } from './linear-scale.ts';
 export function createLinearScale(
   domain: readonly [start: number, end: number],
   range: readonly [start: number, end: number],
-): LinearScale {
+): Scale {
   const [domainStart, domainEnd] = domain;
   const [rangeStart, rangeEnd] = range;
-  return Object.assign((value: number): number => remap(value, domainStart, domainEnd, rangeStart, rangeEnd), {
+  return Object.assign((value: number): number => remap(value, domainStart, domainEnd, rangeStart, rangeEnd, false), {
     domain: [domainStart, domainEnd] as const,
     range: [rangeStart, rangeEnd] as const,
-    invert: (coordinate: number): number => remap(coordinate, rangeStart, rangeEnd, domainStart, domainEnd),
+    invert: (coordinate: number): number => remap(coordinate, rangeStart, rangeEnd, domainStart, domainEnd, false),
   });
 }

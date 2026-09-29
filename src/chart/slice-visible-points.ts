@@ -14,13 +14,13 @@ import type { Point } from '../geometry/point.ts';
  * @example
  * const series = [{ x: 0, y: 1 }, { x: 10, y: 3 }, { x: 20, y: 2 }, { x: 30, y: 5 }];
  * sliceVisiblePoints(series, 12, 25, false); // [{ x: 20, y: 2 }]
- * sliceVisiblePoints(series, 12, 25); // [{ x: 10, y: 3 }, { x: 20, y: 2 }, { x: 30, y: 5 }]
+ * sliceVisiblePoints(series, 12, 25, true); // [{ x: 10, y: 3 }, { x: 20, y: 2 }, { x: 30, y: 5 }]
  */
 export function sliceVisiblePoints(
   points: readonly Point[],
   minX: number,
   maxX: number,
-  isNeighborIncluded = true,
+  isNeighborIncluded: boolean,
 ): Point[] {
   const start = findFirstIndex(points, (x) => x >= minX);
   const end = findFirstIndex(points, (x) => x > maxX);

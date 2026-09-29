@@ -14,7 +14,12 @@ import { listen } from './listen.ts';
 export function watchMediaQuery(query: string, onChange: (isMatching: boolean) => void): () => void {
   const list = matchMedia(query);
   onChange(list.matches);
-  return listen(list, 'change', (event) => {
-    onChange(event.matches);
-  });
+  return listen(
+    list,
+    'change',
+    (event) => {
+      onChange(event.matches);
+    },
+    {},
+  );
 }

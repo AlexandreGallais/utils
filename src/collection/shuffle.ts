@@ -4,12 +4,12 @@
  *
  * @template T - Type of the items.
  * @param items - The list to shuffle; left untouched.
- * @param random - Returns a number in [0, 1[, `Math.random` by default.
+ * @param random - Returns a number in [0, 1[: `Math.random`, or a seeded generator for replayable runs.
  * @returns A new array with the same items in random order.
  * @example
- * shuffle(['a', 'b', 'c']); // ['c', 'a', 'b'], for instance
+ * shuffle(['a', 'b', 'c'], Math.random); // ['c', 'a', 'b'], for instance
  */
-export function shuffle<T>(items: readonly T[], random: () => number = Math.random): T[] {
+export function shuffle<T>(items: readonly T[], random: () => number): T[] {
   const result = [...items];
   for (let index = result.length - 1; index > 0; index--) {
     const other = Math.floor(random() * (index + 1));

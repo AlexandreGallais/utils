@@ -13,14 +13,14 @@ import { getEnumEntries } from './get-enum-entries.ts';
  * @returns The member, or `undefined` when nothing matches.
  * @example
  * enum Level { Low = 0, High = 1 }
- * parseEnumValue(Level, '1'); // Level.High
+ * parseEnumValue(Level, '1', false); // Level.High
  * parseEnumValue(Level, 'High', true); // Level.High
- * parseEnumValue(Level, '7'); // undefined
+ * parseEnumValue(Level, '7', false); // undefined
  */
 export function parseEnumValue<E extends EnumObject>(
   enumObject: E,
   input: unknown,
-  isKeyAccepted = false,
+  isKeyAccepted: boolean,
 ): E[keyof E] | undefined {
   if (typeof input !== 'string' && typeof input !== 'number') {
     return undefined;

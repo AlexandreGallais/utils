@@ -33,11 +33,11 @@ const COMPASS_POINTS = [
  * @param points - Number of compass points: 4 (`N E S W`), 8 (with `NE`…) or 16 (with `NNE`…).
  * @returns The compass point, in English abbreviations.
  * @example
- * headingToCardinal(47); // 'NE'
+ * headingToCardinal(47, 8); // 'NE'
  * headingToCardinal(47, 4); // 'E'
  * headingToCardinal(-10, 16); // 'N'
  */
-export function headingToCardinal(heading: number, points: CompassPointCount = 8): (typeof COMPASS_POINTS)[number] {
+export function headingToCardinal(heading: number, points: CompassPointCount): (typeof COMPASS_POINTS)[number] {
   const sector = FULL_TURN / points;
   const index = Math.round(normalizeAngle(heading) / sector) % points;
   const stride = COMPASS_POINTS.length / points;

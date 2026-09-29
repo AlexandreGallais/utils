@@ -9,10 +9,10 @@ import type { NumberList } from './number-list.ts';
  * (divides by `n`).
  * @returns The variance; `NaN` for an empty list (or a single value with `isSample`).
  * @example
- * variance([2, 4, 4, 4, 5, 5, 7, 9]); // 4
+ * variance([2, 4, 4, 4, 5, 5, 7, 9], false); // 4
  * variance([2, 4, 4, 4, 5, 5, 7, 9], true); // 4.571…
  */
-export function variance(values: NumberList, isSample = false): number {
+export function variance(values: NumberList, isSample: boolean): number {
   let count = 0;
   let mean = 0;
   let squaredDeviations = 0;

@@ -35,7 +35,7 @@ export function listen<T extends EventTarget, K extends keyof EventMapOf<T> & st
   target: T,
   type: K,
   listener: (event: EventMapOf<T>[K]) => void,
-  options?: AddEventListenerOptions,
+  options: AddEventListenerOptions,
 ): () => void {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- the event map of `T` gives the type of `K` events.
   const handler = listener as EventListener;

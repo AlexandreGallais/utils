@@ -9,7 +9,7 @@
  * assert(user !== undefined, 'User not loaded');
  * user.name; // `user` is no longer `undefined`
  */
-export function assert(condition: unknown, message = 'Assertion failed'): asserts condition {
+export function assert(condition: unknown, message: string): asserts condition {
   const isTruthy = Boolean(condition);
   if (!isTruthy) {
     throw new Error(message);

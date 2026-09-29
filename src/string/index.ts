@@ -25,3 +25,4 @@ export { removeDiacritics } from './remove-diacritics.ts';
 export { isBlank } from './is-blank.ts';
 export { squish } from './squish.ts';
 export { pluralize } from './pluralize.ts';
+export { toCsv } from './to-csv.ts';

@@ -9,7 +9,7 @@ describe(truncate, () => {
     ['🇫🇷🇫🇷🇫🇷', 2, '🇫🇷…'],
     ['abc', 0, ''],
   ] as const)('truncates %j to %s characters', ([input, maxLength, expected]) => {
-    expect(truncate(input, maxLength)).toBe(expected);
+    expect(truncate(input, maxLength, '…')).toBe(expected);
   });
 
   it('uses a custom ellipsis', () => {
@@ -18,6 +18,6 @@ describe(truncate, () => {
   });
 
   it.for([-1, 1.5, NaN])('throws a RangeError for maxLength %s', (maxLength) => {
-    expect(() => truncate('abc', maxLength)).toThrow(RangeError);
+    expect(() => truncate('abc', maxLength, '…')).toThrow(RangeError);
   });
 });

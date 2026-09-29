@@ -1,12 +1,12 @@
 import { scaleMatrix } from './scale-matrix.ts';
 
 describe(scaleMatrix, () => {
-  it('scales uniformly by default', () => {
-    expect(scaleMatrix(2)).toStrictEqual({ a: 2, b: 0, c: 0, d: 2, e: 0, f: 0 });
+  it('scales uniformly', () => {
+    expect(scaleMatrix(2, 2, { x: 0, y: 0 })).toStrictEqual({ a: 2, b: 0, c: 0, d: 2, e: 0, f: 0 });
   });
 
   it('scales each axis', () => {
-    expect(scaleMatrix(2, 3)).toStrictEqual({ a: 2, b: 0, c: 0, d: 3, e: 0, f: 0 });
+    expect(scaleMatrix(2, 3, { x: 0, y: 0 })).toStrictEqual({ a: 2, b: 0, c: 0, d: 3, e: 0, f: 0 });
   });
 
   it('keeps the center in place', () => {

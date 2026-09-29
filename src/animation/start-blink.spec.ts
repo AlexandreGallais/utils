@@ -10,9 +10,14 @@ describe(startBlink, () => {
 
   it('alternates on the shared timeline and reports changes only', () => {
     const states: boolean[] = [];
-    startBlink(clock, 1000, (isOn) => {
-      states.push(isOn);
-    });
+    startBlink(
+      clock,
+      1000,
+      (isOn) => {
+        states.push(isOn);
+      },
+      {},
+    );
     for (const timestamp of [100, 200, 600, 900, 1100, 1200]) {
       clock.tick(0, timestamp);
     }
@@ -22,9 +27,9 @@ describe(startBlink, () => {
   it('is in phase with another blink started later', () => {
     const first = vi.fn<(isOn: boolean) => void>();
     const second = vi.fn<(isOn: boolean) => void>();
-    startBlink(clock, 1000, first);
+    startBlink(clock, 1000, first, {});
     clock.tick(0, 100);
-    startBlink(clock, 1000, second);
+    startBlink(clock, 1000, second, {});
     clock.tick(0, 700);
     expect(first).toHaveBeenLastCalledWith(false);
     expect(second).toHaveBeenLastCalledWith(false);

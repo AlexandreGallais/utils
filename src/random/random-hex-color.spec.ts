@@ -7,7 +7,7 @@ describe(randomHexColor, () => {
     expect(randomHexColor(() => 0.5)).toBe('#800000');
   });
 
-  it('returns a #rrggbb color by default', () => {
-    expect(randomHexColor()).toMatch(/^#[0-9a-f]{6}$/v);
+  it('returns a #rrggbb color', () => {
+    expect(randomHexColor(Math.random)).toMatch(/^#[0-9a-f]{6}$/v);
   });
 });

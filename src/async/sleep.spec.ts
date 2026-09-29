@@ -12,7 +12,7 @@ describe(sleep, () => {
   it('resolves after the delay', async () => {
     const onResolved = vi.fn<() => void>();
     async function sleepThenNotify(): Promise<void> {
-      await sleep(100);
+      await sleep(100, undefined);
       onResolved();
     }
     const promise = sleepThenNotify();

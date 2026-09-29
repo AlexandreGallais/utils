@@ -14,9 +14,9 @@ describe(getSyncedAnimationDelay, () => {
     expect(Object.is(getSyncedAnimationDelay(1000, 2000), 0)).toBe(true);
   });
 
-  it('reads performance.now() by default', () => {
+  it('reads performance.now()', () => {
     vi.spyOn(performance, 'now').mockReturnValue(1300);
-    expect(getSyncedAnimationDelay(1000)).toBeCloseTo(-300, 9);
+    expect(getSyncedAnimationDelay(1000, performance.now())).toBeCloseTo(-300, 9);
     vi.restoreAllMocks();
   });
 

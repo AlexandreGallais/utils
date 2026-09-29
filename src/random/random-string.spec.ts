@@ -2,8 +2,10 @@ import { createSeededRandom } from './create-seeded-random.ts';
 import { randomString } from './random-string.ts';
 
 describe(randomString, () => {
-  it('draws letters and digits of a fixed length by default', () => {
-    expect(randomString(12)).toMatch(/^[0-9A-Za-z]{12}$/v);
+  it('draws letters and digits of a fixed length', () => {
+    expect(randomString(12, 12, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', Math.random)).toMatch(
+      /^[0-9A-Za-z]{12}$/v,
+    );
   });
 
   it('stays within the length bounds', () => {
@@ -19,12 +21,14 @@ describe(randomString, () => {
   });
 
   it('returns an empty string for a length of zero', () => {
-    expect(randomString(0)).toBe('');
-    expect(randomString(-3, 0)).toBe('');
+    expect(randomString(0, 0, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', Math.random)).toBe('');
+    expect(randomString(-3, 0, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', Math.random)).toBe('');
   });
 
   it('throws a RangeError for an empty alphabet or inverted lengths', () => {
-    expect(() => randomString(1, 1, '')).toThrow(RangeError);
-    expect(() => randomString(5, 2)).toThrow(RangeError);
+    expect(() => randomString(1, 1, '', Math.random)).toThrow(RangeError);
+    expect(() =>
+      randomString(5, 2, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', Math.random),
+    ).toThrow(RangeError);
   });
 });

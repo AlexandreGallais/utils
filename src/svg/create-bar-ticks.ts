@@ -29,7 +29,7 @@ export function createBarTicks(options: BarTicksOptions): BarTick[] {
   const inward = align === 'start' ? 1 : -1;
   return generateScaleValues(options.min, options.max, options.majorStep, options.minorStep).map(
     ({ value, isMajor }) => {
-      const position = valueToBarPosition(value, options);
+      const position = valueToBarPosition(value, options, true);
       const tip = origin + inward * (isMajor ? majorLength : minorLength);
       return {
         value,

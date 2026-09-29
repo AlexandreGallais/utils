@@ -13,7 +13,7 @@ describe(randomInt, () => {
   });
 
   it('stays within the bounds with Math.random', () => {
-    expect([3, 4]).toContain(randomInt(3, 4));
+    expect([3, 4]).toContain(randomInt(3, 4, Math.random));
   });
 
   it.for([
@@ -21,6 +21,6 @@ describe(randomInt, () => {
     [0.2, 0.8],
     [NaN, 1],
   ] as const)('throws a RangeError for [%s, %s]', ([min, max]) => {
-    expect(() => randomInt(min, max)).toThrow(RangeError);
+    expect(() => randomInt(min, max, Math.random)).toThrow(RangeError);
   });
 });

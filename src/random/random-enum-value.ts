@@ -10,9 +10,9 @@ import { getEnumValues } from '../enum/get-enum-values.ts';
  * @returns A value of the enum.
  * @throws {RangeError} When the enum has no member.
  * @example
- * randomEnumValue(Status); // Status.Running
+ * randomEnumValue(Status, Math.random); // Status.Running
  */
-export function randomEnumValue<E extends EnumObject>(enumObject: E, random: () => number = Math.random): E[keyof E] {
+export function randomEnumValue<E extends EnumObject>(enumObject: E, random: () => number): E[keyof E] {
   const values = getEnumValues(enumObject);
   const index = Math.floor(random() * values.length);
   const [value] = values.slice(index, index + 1);

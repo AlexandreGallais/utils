@@ -1,3 +1,5 @@
+import { isFiniteNumber } from '../guard/is-finite-number.ts';
+import { isRecord } from '../guard/is-record.ts';
 import { readStorage } from './read-storage.ts';
 import { MemoryStorage } from './testing/memory-storage.ts';
 
@@ -14,13 +16,13 @@ describe(readStorage, () => {
 
   it('reads a stored JSON value', () => {
     storage.setItem('settings', '{"zoom":2}');
-    expect(readStorage(storage, 'settings', {})).toStrictEqual({ zoom: 2 });
+    expect(readStorage(storage, 'settings', {}, isRecord)).toStrictEqual({ zoom: 2 });
   });
 
   it('returns the fallback for a missing key or corrupted JSON', () => {
     storage.setItem('broken', '{zoom');
-    expect(readStorage(storage, 'missing', 1)).toBe(1);
-    expect(readStorage(storage, 'broken', 1)).toBe(1);
+    expect(readStorage(storage, 'missing', 1, isFiniteNumber)).toBe(1);
+    expect(readStorage(storage, 'broken', 1, isFiniteNumber)).toBe(1);
   });
 
   it('applies the guard', () => {
@@ -34,6 +36,6 @@ describe(readStorage, () => {
     vi.spyOn(storage, 'getItem').mockImplementation(() => {
       throw new DOMException('Blocked', 'SecurityError');
     });
-    expect(readStorage(storage, 'zoom', 1)).toBe(1);
+    expect(readStorage(storage, 'zoom', 1, isFiniteNumber)).toBe(1);
   });
 });

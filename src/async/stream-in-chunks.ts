@@ -23,7 +23,7 @@ export async function* streamInChunks<T>(
   items: readonly T[],
   chunkSize: number,
   intervalMs: number,
-  signal?: AbortSignal,
+  signal: AbortSignal | undefined,
 ): AsyncGenerator<T[], void, undefined> {
   const chunks = chunk(items, chunkSize);
   for (const [index, part] of chunks.entries()) {

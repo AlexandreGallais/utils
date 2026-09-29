@@ -14,8 +14,8 @@ describe(formatDate, () => {
     expect(formatDate(DATE, pattern, true)).toBe(expected);
   });
 
-  it('writes local time by default', () => {
-    expect(formatDate(new Date(2026, 8, 29, 14, 30), 'DD/MM/YYYY HH:mm')).toBe('29/09/2026 14:30');
+  it('writes local time', () => {
+    expect(formatDate(new Date(2026, 8, 29, 14, 30), 'DD/MM/YYYY HH:mm', false)).toBe('29/09/2026 14:30');
   });
 
   it('round-trips with parseDateFormat', () => {
@@ -24,6 +24,6 @@ describe(formatDate, () => {
   });
 
   it('returns an empty string for an invalid date', () => {
-    expect(formatDate(new Date('oops'), 'YYYY')).toBe('');
+    expect(formatDate(new Date('oops'), 'YYYY', false)).toBe('');
   });
 });

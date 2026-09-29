@@ -9,9 +9,9 @@ import type { DataBounds } from './data-bounds.ts';
  * @param fallback - Margin on each side of an axis whose range is zero, in data units.
  * @returns The padded window.
  * @example
- * padBounds({ minX: 0, maxX: 100, minY: 20, maxY: 20 }, 0.1); // { minX: -10, maxX: 110, minY: 19, maxY: 21 }
+ * padBounds({ minX: 0, maxX: 100, minY: 20, maxY: 20 }, 0.1, 1); // { minX: -10, maxX: 110, minY: 19, maxY: 21 }
  */
-export function padBounds(bounds: DataBounds, ratio: number, fallback = 1): DataBounds {
+export function padBounds(bounds: DataBounds, ratio: number, fallback: number): DataBounds {
   const marginX = getMargin(bounds.maxX - bounds.minX, ratio, fallback);
   const marginY = getMargin(bounds.maxY - bounds.minY, ratio, fallback);
   return {

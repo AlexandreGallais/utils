@@ -16,7 +16,12 @@ const SYMBOL = { x: 0, y: 0, width: 40, height: 20 };
 
 describe(transformRect, () => {
   it('turns a rotated rectangle into its screen box', () => {
-    expect(rounded(transformRect(SYMBOL, rotationMatrix(90)))).toStrictEqual({ x: -20, y: 0, width: 20, height: 40 });
+    expect(rounded(transformRect(SYMBOL, rotationMatrix(90, { x: 0, y: 0 })))).toStrictEqual({
+      x: -20,
+      y: 0,
+      width: 20,
+      height: 40,
+    });
   });
 
   it('gives the same box for a flipped symbol', () => {
@@ -25,7 +30,7 @@ describe(transformRect, () => {
   });
 
   it('encloses a rotation by 45°', () => {
-    const box = transformRect({ x: -10, y: -10, width: 20, height: 20 }, rotationMatrix(45));
+    const box = transformRect({ x: -10, y: -10, width: 20, height: 20 }, rotationMatrix(45, { x: 0, y: 0 }));
     expect(box.width).toBeCloseTo(20 * Math.SQRT2, 9);
     expect(box.x).toBeCloseTo(-10 * Math.SQRT2, 9);
   });

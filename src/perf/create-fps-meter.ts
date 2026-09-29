@@ -11,13 +11,13 @@ const MS_PER_SECOND = 1000;
  * @returns A meter to feed with frame timestamps.
  * @throws {RangeError} When `windowSize` is not a positive integer.
  * @example
- * const meter = createFpsMeter();
+ * const meter = createFpsMeter(60);
  * const loop = (timestamp: number): void => {
  *   fps.set(Math.round(meter.tick(timestamp)));
  *   requestAnimationFrame(loop);
  * };
  */
-export function createFpsMeter(windowSize = 60): FpsMeter {
+export function createFpsMeter(windowSize: number): FpsMeter {
   if (!Number.isSafeInteger(windowSize) || windowSize < 1) {
     throw new RangeError(`windowSize must be a positive integer, got ${windowSize}`);
   }
@@ -36,8 +36,8 @@ export function createFpsMeter(windowSize = 60): FpsMeter {
       count = Math.min(count + 1, timestamps.length);
       // Once the buffer is full, the oldest timestamp is the one the next frame will overwrite.
       const oldestIndex = count === timestamps.length ? next : 0;
-      const [oldest = timestampMs] = timestamps.subarray(oldestIndex, oldestIndex + 1);
-      const elapsed = timestampMs - oldest;
+      /* v8 ignore next -- `oldestIndex` is always within the buffer; `??` only satisfies noUncheckedIndexedAccess. */
+      const elapsed = timestampMs - (timestamps[oldestIndex] ?? timestampMs);
       fps = elapsed > 0 ? ((count - 1) * MS_PER_SECOND) / elapsed : 0;
       return fps;
     },

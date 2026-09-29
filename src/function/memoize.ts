@@ -1,17 +1,14 @@
 import type { MemoizedFunction } from './memoized-function.ts';
 
-/** Entries kept by default before the oldest ones are evicted. */
-const DEFAULT_MAX_SIZE = 1000;
-
 /**
  * Caches the results of a pure function by key: a call with an already seen key returns the stored result
- * without running the function. The key is the first argument by default. For a value recomputed at each
+ * without running the function. The key is computed by `getKey`. For a value recomputed at each
  * refresh from inputs that rarely change, `memoizeLast` needs no memory at all.
  *
  * @template TArguments - Parameters of the wrapped function.
  * @template TResult - Return type of the wrapped function.
  * @param callback - A pure function.
- * @param getKey - Computes the cache key from the arguments; the first argument by default.
+ * @param getKey - Computes the cache key from the arguments, such as `(id) => id`.
  * @param maxSize - Maximum number of cached results, a positive integer.
  * @returns The memoized function, with its read-only `cache` and `clear()`.
  * @throws {RangeError} When `maxSize` is not a positive integer.
@@ -23,8 +20,8 @@ const DEFAULT_MAX_SIZE = 1000;
  */
 export function memoize<TArguments extends unknown[], TResult>(
   callback: (...callArguments: TArguments) => TResult,
-  getKey: (...callArguments: TArguments) => unknown = (...callArguments) => callArguments[0],
-  maxSize = DEFAULT_MAX_SIZE,
+  getKey: (...callArguments: TArguments) => unknown,
+  maxSize: number,
 ): MemoizedFunction<TArguments, TResult> {
   if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
     throw new RangeError(`maxSize must be a positive integer, got ${maxSize}`);

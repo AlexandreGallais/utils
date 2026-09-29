@@ -23,7 +23,7 @@ describe(createFpsMeter, () => {
   });
 
   it('starts over after reset', () => {
-    const meter = createFpsMeter();
+    const meter = createFpsMeter(60);
     meter.tick(0);
     meter.tick(16);
     meter.reset();
@@ -33,7 +33,7 @@ describe(createFpsMeter, () => {
   });
 
   it('reports 0 for frames at the same time', () => {
-    const meter = createFpsMeter();
+    const meter = createFpsMeter(60);
     meter.tick(5);
     expect(meter.tick(5)).toBe(0);
   });

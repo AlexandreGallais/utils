@@ -23,7 +23,7 @@ export function createArcTicks(options: ArcTicksOptions): ArcTick[] {
   const { center, startAngle, endAngle, min, max, innerRadius, outerRadius } = options;
   const minorInnerRadius = options.minorInnerRadius ?? innerRadius;
   return generateScaleValues(min, max, options.majorStep, options.minorStep).map(({ value, isMajor }) => {
-    const angle = valueToAngle(value, min, max, startAngle, endAngle);
+    const angle = valueToAngle(value, min, max, startAngle, endAngle, true);
     return {
       value,
       angle,

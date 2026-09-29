@@ -18,7 +18,7 @@ const NICE_FACTORS: readonly number[] = [1, 2, DECIMAL_BASE / 2];
  * getNiceTicks(0, 97, 5); // [0, 20, 40, 60, 80]
  * getNiceTicks(-0.25, 0.25, 5); // [-0.2, -0.1, 0, 0.1, 0.2]
  */
-export function getNiceTicks(min: number, max: number, count = 5): number[] {
+export function getNiceTicks(min: number, max: number, count: number): number[] {
   if (!Number.isSafeInteger(count) || count < 1) {
     throw new RangeError(`count must be a positive integer, got ${count}`);
   }

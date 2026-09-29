@@ -37,7 +37,7 @@ const TOKENS: readonly (readonly [token: string, field: keyof DateParts, width: 
  * formatDate(new Date('2026-09-29T14:30:05Z'), 'DD/MM/YYYY HH:mm', true); // '29/09/2026 14:30'
  * formatDate(new Date('2026-09-29T14:30:05Z'), 'YYYY-MM-DD[T]HH:mm:ss', true); // '2026-09-29T14:30:05'
  */
-export function formatDate(date: Readonly<Date>, pattern: string, isUtc = false): string {
+export function formatDate(date: Readonly<Date>, pattern: string, isUtc: boolean): string {
   const parts = getDateParts(date, isUtc);
   if (!parts) {
     return '';

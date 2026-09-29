@@ -3,7 +3,7 @@ import { shuffle } from './shuffle.ts';
 describe(shuffle, () => {
   it('keeps the same items and leaves the input untouched', () => {
     const input = [1, 2, 3, 4, 5];
-    const result = shuffle(input);
+    const result = shuffle(input, Math.random);
     expect(result.toSorted((a, b) => a - b)).toStrictEqual(input);
     expect(input).toStrictEqual([1, 2, 3, 4, 5]);
   });
@@ -16,7 +16,7 @@ describe(shuffle, () => {
   it('gives every order a similar frequency', () => {
     const counts = new Map<string, number>();
     for (let run = 0; run < 6000; run++) {
-      const order = shuffle(['a', 'b', 'c']).join('');
+      const order = shuffle(['a', 'b', 'c'], Math.random).join('');
       counts.set(order, (counts.get(order) ?? 0) + 1);
     }
     expect(counts.size).toBe(6);
@@ -24,7 +24,7 @@ describe(shuffle, () => {
   });
 
   it('handles empty and single-item lists', () => {
-    expect(shuffle([])).toStrictEqual([]);
-    expect(shuffle([1])).toStrictEqual([1]);
+    expect(shuffle([], Math.random)).toStrictEqual([]);
+    expect(shuffle([1], Math.random)).toStrictEqual([1]);
   });
 });

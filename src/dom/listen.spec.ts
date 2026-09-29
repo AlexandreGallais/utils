@@ -4,7 +4,7 @@ describe(listen, () => {
   it('calls the listener until the cleanup runs', () => {
     const target = new EventTarget();
     const listener = vi.fn<(event: Event) => void>();
-    const stop = listen(target, 'ping', listener);
+    const stop = listen(target, 'ping', listener, {});
     const event = new Event('ping');
     target.dispatchEvent(event);
     stop();

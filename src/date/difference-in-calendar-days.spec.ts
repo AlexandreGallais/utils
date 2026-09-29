@@ -10,10 +10,10 @@ describe(differenceInCalendarDays, () => {
   });
 
   it('counts local days across daylight saving time', () => {
-    expect(differenceInCalendarDays(new Date(2026, 2, 30, 12), new Date(2026, 2, 28, 12))).toBe(2);
+    expect(differenceInCalendarDays(new Date(2026, 2, 30, 12), new Date(2026, 2, 28, 12), false)).toBe(2);
   });
 
   it('returns NaN for an invalid date', () => {
-    expect(differenceInCalendarDays(new Date('oops'), new Date(0))).toBeNaN();
+    expect(differenceInCalendarDays(new Date('oops'), new Date(0), false)).toBeNaN();
   });
 });

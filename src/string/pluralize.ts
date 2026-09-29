@@ -4,18 +4,13 @@
  *
  * @param count - The number of items.
  * @param singular - The singular form, such as `'alarm'`.
- * @param plural - The plural form; `singular + 's'` when omitted.
- * @param isSingular - Whether the count takes the singular; `|count| === 1` by default.
+ * @param plural - The plural form, such as `'items'`.
+ * @param isSingular - Whether the count takes the singular: `Math.abs(count) === 1` in English, `Math.abs(count) < 2` in French.
  * @returns The form matching the count.
  * @example
- * `${count} ${pluralize(count, 'alarm')}`; // '1 alarm', '3 alarms'
+ * `${count} ${pluralize(count, 'alarm', 'alarms', Math.abs(count) === 1)}`; // '1 alarm', '3 alarms'
  * pluralize(0, 'alarme', 'alarmes', Math.abs(0) < 2); // 'alarme' (French rule)
  */
-export function pluralize(
-  count: number,
-  singular: string,
-  plural = `${singular}s`,
-  isSingular: boolean = Math.abs(count) === 1,
-): string {
+export function pluralize(count: number, singular: string, plural: string, isSingular: boolean): string {
   return isSingular ? singular : plural;
 }

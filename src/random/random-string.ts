@@ -1,8 +1,5 @@
 import { randomInt } from './random-int.ts';
 
-/** Default alphabet: ASCII letters and digits. */
-const ALPHANUMERIC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
 /**
  * Draws a string of random characters, to fill a form or a table in tests: identifiers, codes, oversized
  * labels to check truncation.
@@ -14,15 +11,10 @@ const ALPHANUMERIC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345
  * @returns A string of `minLength` to `maxLength` characters of the alphabet.
  * @throws {RangeError} When the lengths hold no valid integer or the alphabet is empty.
  * @example
- * randomString(8); // 'x3Kq9ZbA'
- * randomString(1, 3, 'ABC'); // 'CA'
+ * randomString(8, 8, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', Math.random); // 'x3Kq9ZbA'
+ * randomString(1, 3, 'ABC', Math.random); // 'CA'
  */
-export function randomString(
-  minLength: number,
-  maxLength = minLength,
-  characters = ALPHANUMERIC,
-  random: () => number = Math.random,
-): string {
+export function randomString(minLength: number, maxLength: number, characters: string, random: () => number): string {
   const segmenter = new Intl.Segmenter();
   const alphabet = Array.from(segmenter.segment(characters), ({ segment }) => segment);
   if (alphabet.length === 0) {

@@ -20,11 +20,11 @@ describe(sliceVisiblePoints, () => {
     { minX: 12, maxX: 18, expected: [10, 20] },
     { minX: 50, maxX: 60, expected: [40] },
     { minX: -20, maxX: -10, expected: [0] },
-  ])('adds the neighbours of [$minX, $maxX] by default', ({ minX, maxX, expected }) => {
-    expect(sliceVisiblePoints(series, minX, maxX).map(({ x }) => x)).toStrictEqual(expected);
+  ])('adds the neighbours of [$minX, $maxX]', ({ minX, maxX, expected }) => {
+    expect(sliceVisiblePoints(series, minX, maxX, true).map(({ x }) => x)).toStrictEqual(expected);
   });
 
   it('returns an empty list without point', () => {
-    expect(sliceVisiblePoints([], 0, 1)).toStrictEqual([]);
+    expect(sliceVisiblePoints([], 0, 1, true)).toStrictEqual([]);
   });
 });
