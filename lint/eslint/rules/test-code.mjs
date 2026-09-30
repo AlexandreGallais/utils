@@ -70,6 +70,8 @@ export default function testCodeBlock() {
       rules: {
         // Off: test tables are made of literal numbers.
         '@typescript-eslint/no-magic-numbers': ['off'],
+        // Off: a fake stands for a DOM element or an impossible value (`{} as SVGGraphicsElement`, `1 as never`).
+        '@typescript-eslint/no-unsafe-type-assertion': ['off'],
         // Off: fixtures are plain mutable objects.
         '@typescript-eslint/prefer-readonly-parameter-types': ['off'],
         // Off: `expect(mock.method).toHaveBeenCalled()` passes a method unbound on purpose.

@@ -545,7 +545,7 @@ Règles d'écriture formalisées d'abord (section « Writing a function » d'[`A
 
 - **Specs, helpers de test, benchmarks, stories** : chaque warning y devient une info, ainsi que les règles qui empêchent de bidouiller (`any`, `!`, assertions dangereuses) ; les erreurs restent (bugs, style corrigé automatiquement), ainsi que SonarJS et les règles qui le remplacent, car SonarQube analyse aussi les specs. Seules les règles actives partout sont abaissées : rien n'est allumé dans les tests.
 - **Niveaux relus** : une vingtaine de warnings de pur style passent en info (constructeurs inutiles, `default-param-last`, contraintes de type inutiles, `prefer-standalone`…) ; `no-useless-catch` reste un warning (il remplace une règle Sonar way).
-- **Démo des niveaux** : `examples/lint-levels/levels.mjs` (info, warning, erreur), ignoré par `pnpm lint`. WebStorm n'a pas de niveau info : il les montre en warning.
+- **Démo des niveaux** : `examples/lint-levels/levels.mjs` (info, warning, erreur), retirée depuis : ses fautes volontaires sortaient dans `npx eslint .`.
 - **`pnpm transfer <dossiers>`** : un seul fichier texte (`transfer/<nom>.mjs`) qui recrée les dossiers avec `node <fichier> [destination]` ; un dossier de `src/` emmène les dossiers de `src/` qu'il importe. Pour recopier `lint/` et la lib là où on ne peut que coller du texte.
 
 ## Seizième lot : Stylelint, config ESLint 8, CI par branche

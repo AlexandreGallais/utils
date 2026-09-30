@@ -153,10 +153,6 @@
       "severity": "info"
     },
     {
-      "rule": "@typescript-eslint/no-unsafe-type-assertion",
-      "severity": "info"
-    },
-    {
       "rule": "@typescript-eslint/no-useless-default-assignment",
       "severity": "info"
     },

@@ -22,7 +22,7 @@ export function svgRotateBy(
   anchor: Anchor = 'center',
   reference?: SVGGraphicsElement,
 ): SvgTransformOrder<[angleDegrees: number, anchor?: Anchor, reference?: SVGGraphicsElement]> {
-  return createOrder([angleDegrees, anchor, reference], (element, _screen, angle, point = 'center', other) => {
+  return createOrder([angleDegrees, anchor, reference], (element, _screen, angle, point, other) => {
     const { x, y } = getSvgAnchorPoint(other ?? element, point);
     return createMatrix(element).translate(x, y).rotate(angle).translate(-x, -y);
   });

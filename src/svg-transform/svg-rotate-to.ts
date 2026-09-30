@@ -22,7 +22,7 @@ export function svgRotateTo(
   anchor: Anchor = 'center',
   reference?: SVGGraphicsElement,
 ): SvgTransformOrder<[angleDegrees: number, anchor?: Anchor, reference?: SVGGraphicsElement]> {
-  return createOrder([angleDegrees, anchor, reference], (element, screen, angle, point = 'center', other) => {
+  return createOrder([angleDegrees, anchor, reference], (element, screen, angle, point, other) => {
     const sign = isMirrored(screen) ? -1 : 1;
     const current = Math.atan2(sign * screen.b, sign * screen.a) * DEGREES_PER_RADIAN;
     const { x, y } = getSvgAnchorPoint(other ?? element, point);

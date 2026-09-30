@@ -70,10 +70,6 @@ hacks (`any`, `!`, unsafe assertions); the errors stay (a bug, a style the autof
 SonarJS rules and the rules that stand for them, since SonarQube analyses the specs too
 (`setup/relax-tests-and-stories.mjs`).
 
-`examples/lint-levels/levels.mjs` shows the three levels: open it in the editor. VS Code shows the infos in blue
-once `pnpm lint:editor` has run; WebStorm has no info level and shows them as warnings. `pnpm lint` skips that
-folder (`--ignore-pattern`), since its mistakes are on purpose.
-
 A warning is silenced like this, and only like this:
 
 ```ts

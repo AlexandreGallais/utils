@@ -12,10 +12,10 @@
   "packageManager": "pnpm@12.6.0",
   "scripts": {
     "typecheck": "tsc -p tsconfig.lib.json && tsc -p tsconfig.spec.json && tsc -p tsconfig.bench.json && tsc -p tsconfig.node.json && tsc -p examples/design-system/tsconfig.json",
-    "lint": "ESLINT_INFO_RULES=off eslint . --ignore-pattern \"examples/lint-levels/\" --concurrency auto",
+    "lint": "ESLINT_INFO_RULES=off eslint . --concurrency auto",
     "lint:strict": "pnpm lint --max-warnings 0",
-    "lint:cached": "ESLINT_INFO_RULES=off eslint . --ignore-pattern \"examples/lint-levels/\" --concurrency auto --cache --cache-location node_modules/.cache/eslint/ --cache-strategy content",
-    "lint:fix": "ESLINT_INFO_RULES=off eslint . --ignore-pattern \"examples/lint-levels/\" --fix",
+    "lint:cached": "ESLINT_INFO_RULES=off eslint . --concurrency auto --cache --cache-location node_modules/.cache/eslint/ --cache-strategy content",
+    "lint:fix": "ESLINT_INFO_RULES=off eslint . --fix",
     "lint:css": "stylelint \"**/*.scss\"",
     "lint:css:strict": "pnpm lint:css --max-warnings 0",
     "lint:css:fix": "stylelint \"**/*.scss\" --fix",
