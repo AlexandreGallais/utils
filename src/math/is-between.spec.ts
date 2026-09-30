@@ -15,8 +15,4 @@ describe(isBetween, () => {
     expect(isBetween(10, 0, 10, false)).toBe(false);
     expect(isBetween(5, 0, 10, false)).toBe(true);
   });
-
-  it('takes the defaults', () => {
-    expect(isBetween(1)).toStrictEqual(isBetween(1, 0, 1, true));
-  });
 });

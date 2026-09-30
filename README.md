@@ -11,7 +11,7 @@ The requirements and design decisions are in [`docs/SPEC.md`](docs/SPEC.md); the
 ## Conventions
 
 - **Angles** are in degrees, 0° up and clockwise (SVG coordinates, compass headings), everywhere.
-- **Defaults in the signature** for the settings (`formatNumber(value)`, `rotateSvgElement(flag, 15)`); no `null`: pass `value ?? undefined` to get a default.
+- **Defaults in the signature** for the settings (`formatNumber(value)`, `svgRotate(15)`); no `null`: pass `value ?? undefined` to get a default.
 - **Inputs are trusted**: no argument validation; a `parse…` function throws a single `TypeError` when its text does not match the expected format.
 - **Arguments are never mutated**: functions return new arrays and objects.
 
@@ -26,18 +26,18 @@ const setpoint = roundToStep(dragged, 0.5); // 12.5, without float noise
 ```
 
 ```ts
-import { addSvgTransform, drawSvgArc, drawSvgArcBand, drawSvgArcTicks, getSvgAnchorPointIn } from 'utils';
+import { applySvgTransforms, createSvgArcBandPath, createSvgArcPath, createSvgArcTicksPath, svgFlip, svgPlace, svgRotate, svgRotateTo } from 'utils';
 
 // a round gauge drawn around its hub, whatever the groups of each element
 const arc = { center: hub, radius: 40, startAngle: -135, sweepAngle: 270 };
-drawSvgArc(track, arc);
-drawSvgArcBand(redZone, { ...arc, startAngle: 81, sweepAngle: 54 }, 6);
-drawSvgArcTicks(majorTicks, arc, 4, 8);
+track.setAttribute('d', createSvgArcPath(track, arc));
+redZone.setAttribute('d', createSvgArcBandPath(redZone, { ...arc, startAngle: 81, sweepAngle: 54 }, 6));
+majorTicks.setAttribute('d', createSvgArcTicksPath(majorTicks, arc, 4, 8));
 
-// the needle turns around the hub: only its rotation changes at each frame
-const rotation = addSvgTransform(needle);
-const axis = getSvgAnchorPointIn(hub, 'center', needle);
-rotation.setRotate(angle, axis.x, axis.y);
+// the needle: unmirrored, upright, its foot on the hub, then turned at each frame
+const rotation = svgRotate(0, 'center', hub);
+applySvgTransforms(needle, [svgFlip(false), svgRotateTo(0), svgPlace(hub, 'center', 'bottom'), rotation]);
+rotation.set(angle, 'center', hub);
 ```
 
 ## Functions
@@ -68,10 +68,9 @@ Colors: the fill of an SVG element, and the black or white text that reads best 
 
 Durations: C# TimeSpan parsing.
 
-| Export                                                     | What it does                                                                                                                                |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`DurationParts`](src/duration/duration-parts.ts) _(type)_ | A duration split into days, hours, minutes, seconds and milliseconds.                                                                       |
-| [`parseTimeSpan`](src/duration/parse-time-span.ts)         | Parses a .NET `TimeSpan`: the constant format `c` (`1.02:03:04.5670000`, the JSON one) or the general formats `g` / `G` (`1:02:03:04.567`). |
+| Export                                             | What it does                                                                                                                                                  |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`parseTimeSpan`](src/duration/parse-time-span.ts) | Parses a .NET `TimeSpan` into milliseconds: the constant format `c` (`1.02:03:04.5670000`, the JSON one) or the general formats `g` / `G` (`1:02:03:04.567`). |
 
 ### enum
 
@@ -129,7 +128,6 @@ Numbers: clamping, interpolation, wrapping, rounding without float noise, smooth
 | [`applyHysteresis`](src/math/apply-hysteresis.ts)                     | Updates an on/off state with hysteresis: on at or above `highThreshold`, off at or below `lowThreshold`, unchanged in between.                                          |
 | [`ceilToStep`](src/math/ceil-to-step.ts)                              | Rounds a number up to a multiple of a step, without float noise.                                                                                                        |
 | [`clamp`](src/math/clamp.ts)                                          | Restricts a number to an interval.                                                                                                                                      |
-| [`clampedRatio`](src/math/clamped-ratio.ts)                           | Divides a value by a total and clamps the result to [0, 1]: a progress or a fill level.                                                                                 |
 | [`floorToStep`](src/math/floor-to-step.ts)                            | Rounds a number down to a multiple of a step, without float noise.                                                                                                      |
 | [`hasSignificantChange`](src/math/has-significant-change.ts)          | Tells whether a value moved enough since the displayed one to be worth a render (a deadband).                                                                           |
 | [`interpolateTable`](src/math/interpolate-table.ts)                   | Reads a lookup table with linear interpolation between its points, such as a calibration curve or a tank gauging table.                                                 |
@@ -202,35 +200,40 @@ Strings: case conversion, word splitting, truncation, escaping, templating, numb
 | [`upperCase`](src/string/upper-case.ts)                  | Converts a string to upper-case words separated by spaces, splitting identifiers such as `camelCase`.                                  |
 | [`words`](src/string/words.ts)                           | Splits a string into words, whatever its case style (camelCase, kebab-case, snake_case, spaces…), in one pass.                         |
 
-### svg
+### svg-shape
 
-SVG elements as seen on screen: transform lists, placement by anchors across groups, moves, rotations, flips,
+SVG shapes around elements, in any group, as the `d` of a path: arcs, bands, ticks and pies of round gauges,
 
-| Export                                                              | What it does                                                                                                                                                                                                                    |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`addSvgTransform`](src/svg/add-svg-transform.ts)                   | Appends a transform to the `transform` list of an SVG element and returns it, to change it later with an absolute value (`setTranslate`, `setRotate`, `setScale`, `setMatrix`) without touching the others.                     |
-| [`Anchor`](src/svg/anchor.ts) _(type)_                              | One of the 9 points of a box: its corners, the middles of its sides, its center.                                                                                                                                                |
-| [`drawSvgArc`](src/svg/draw-svg-arc.ts)                             | Draws an arc in a `<path>` around the center of an element, in any group: the track of a gauge around its hub.                                                                                                                  |
-| [`drawSvgArcBand`](src/svg/draw-svg-arc-band.ts)                    | Draws a band along an arc in a `<path>`, around the center of an element in any group: a threshold zone of a round gauge.                                                                                                       |
-| [`drawSvgArcTicks`](src/svg/draw-svg-arc-ticks.ts)                  | Draws evenly spaced graduations along an arc in one `<path>`, around the center of an element in any group: `count` intervals give `count + 1` ticks.                                                                           |
-| [`drawSvgBarRange`](src/svg/draw-svg-bar-range.ts)                  | Draws the part of a bar between two ratios across its whole thickness, in a `<path>` of any group: the fill level of a bar graph (0 to the value), or a threshold zone.                                                         |
-| [`drawSvgBarTicks`](src/svg/draw-svg-bar-ticks.ts)                  | Draws evenly spaced graduations along a bar in one `<path>` of any group: `count` intervals give `count + 1` ticks, drawn across the bar from one of its sides.                                                                 |
-| [`drawSvgPie`](src/svg/draw-svg-pie.ts)                             | Draws a pie slice joined to the center of an element, in a `<path>` of any group: a radar sector, a remaining-time disk.                                                                                                        |
-| [`flipSvgElement`](src/svg/flip-svg-element.ts)                     | Mirrors an SVG element on screen around one of its anchors, whatever its rotation and groups.                                                                                                                                   |
-| [`getSvgAnchorPoint`](src/svg/get-svg-anchor-point.ts)              | Finds an anchor of the box an SVG element takes on screen: a corner, the middle of a side or the center.                                                                                                                        |
-| [`getSvgAnchorPointIn`](src/svg/get-svg-anchor-point-in.ts)         | Finds an anchor of an element as seen on screen, in the coordinates of another element, whatever groups lie between: the center of a hub for the `setRotate` of a needle drawn in another group.                                |
-| [`getSvgArcPoint`](src/svg/get-svg-arc-point.ts)                    | Finds a point along an arc, in the coordinates of an element of any group: where to put the label of a graduation or a marker.                                                                                                  |
-| [`moveSvgElement`](src/svg/move-svg-element.ts)                     | Moves an SVG element in a direction of the screen, by a distance in the units of its parent: 5 up goes up as seen, whatever the rotation of the element and its groups, by 5 units of the parent.                               |
-| [`placeSvgElement`](src/svg/place-svg-element.ts)                   | Moves an SVG element so that one of its anchors lands on an anchor of another element, as seen on screen, whatever groups and transforms each one is in: the top-right corner of a badge on the bottom-left corner of a symbol. |
-| [`resetSvgFlip`](src/svg/reset-svg-flip.ts)                         | Unmirrors an SVG element on screen with a cancelling transform of its list, whatever its groups: its center stays in place, its rotation and size are kept.                                                                     |
-| [`resetSvgRotation`](src/svg/reset-svg-rotation.ts)                 | Straightens an SVG element on screen with a cancelling transform of its list, whatever its groups: its center stays in place, its flip and size are kept.                                                                       |
-| [`resetSvgRotationAndFlip`](src/svg/reset-svg-rotation-and-flip.ts) | Straightens and unmirrors an SVG element on screen with a cancelling transform of its list, whatever its groups: its center stays in place, its size is kept.                                                                   |
-| [`resetSvgTransform`](src/svg/reset-svg-transform.ts)               | Empties the `transform` list of an SVG element: it is drawn as written, without any transform.                                                                                                                                  |
-| [`rotateSvgElement`](src/svg/rotate-svg-element.ts)                 | Turns an SVG element clockwise on screen, around one of its anchors, whatever its groups.                                                                                                                                       |
-| [`scaleSvgElement`](src/svg/scale-svg-element.ts)                   | Enlarges or shrinks an SVG element on screen around one of its anchors, whatever its rotation and groups: with `'bottom'`, it grows upwards.                                                                                    |
-| [`SvgArc`](src/svg/svg-arc.ts) _(type)_                             | An arc around the center of an element, for the `drawSvgArc…` functions (0° up, clockwise).                                                                                                                                     |
-| [`SvgBar`](src/svg/svg-bar.ts) _(type)_                             | A bar gauge laid on the box of an element, for the `drawSvgBar…` functions.                                                                                                                                                     |
-| [`translateSvgElement`](src/svg/translate-svg-element.ts)           | Moves an SVG element along its own axes, in its own units: rotated by 90°, "to the right" goes down on screen.                                                                                                                  |
+| Export                                                                | What it does                                                                                                                                                           |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`createSvgArcBandPath`](src/svg-shape/create-svg-arc-band-path.ts)   | Creates the `d` of a band along an arc, around the center of an element in any group: a threshold zone of a round gauge, to fill.                                      |
+| [`createSvgArcPath`](src/svg-shape/create-svg-arc-path.ts)            | Creates the `d` of an arc around the center of an element, in any group: the track of a gauge around its hub.                                                          |
+| [`createSvgArcTicksPath`](src/svg-shape/create-svg-arc-ticks-path.ts) | Creates the `d` of evenly spaced graduations along an arc, around the center of an element in any group: `count` intervals give `count + 1` ticks.                     |
+| [`createSvgBarRangePath`](src/svg-shape/create-svg-bar-range-path.ts) | Creates the `d` of the part of a bar between two ratios, across its whole thickness, in any group: the fill level of a bar graph (0 to the value) or a threshold zone. |
+| [`createSvgBarTicksPath`](src/svg-shape/create-svg-bar-ticks-path.ts) | Creates the `d` of evenly spaced graduations along a bar, in any group: `count` intervals give `count + 1` ticks, across the bar from one of its sides.                |
+| [`createSvgPiePath`](src/svg-shape/create-svg-pie-path.ts)            | Creates the `d` of a pie slice joined to the center of an element, in any group: a radar sector, a remaining-time disk, to fill.                                       |
+| [`getSvgArcPoint`](src/svg-shape/get-svg-arc-point.ts)                | Finds a point along an arc, in the coordinates of an element of any group: where to put the label of a graduation or a marker.                                         |
+| [`SvgArc`](src/svg-shape/svg-arc.ts) _(type)_                         | An arc around the center of an element, for `createSvgArcPath` and its siblings (0° up, clockwise).                                                                    |
+| [`SvgBar`](src/svg-shape/svg-bar.ts) _(type)_                         | A bar gauge laid on the box of an element, for `createSvgBarRangePath` and `createSvgBarTicksPath`.                                                                    |
+
+### svg-transform
+
+SVG transforms: orders applied one after the other and changed later, anchors across groups.
+
+| Export                                                                   | What it does                                                                                                                                                                                                                                |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`Anchor`](src/svg-transform/anchor.ts) _(type)_                         | One of the 9 points of a box: its corners, the middles of its sides, its center.                                                                                                                                                            |
+| [`applySvgTransforms`](src/svg-transform/apply-svg-transforms.ts)        | Applies orders to an SVG element, in order, each on what the previous ones give: one transform per order is added at the end of its `transform` list.                                                                                       |
+| [`clearSvgTransforms`](src/svg-transform/clear-svg-transforms.ts)        | Empties the `transform` list of an SVG element: it is drawn without any transform.                                                                                                                                                          |
+| [`getSvgAnchorPoint`](src/svg-transform/get-svg-anchor-point.ts)         | Finds an anchor of the box an SVG element takes on screen: a corner, the middle of a side or the center.                                                                                                                                    |
+| [`getSvgAnchorPointIn`](src/svg-transform/get-svg-anchor-point-in.ts)    | Finds an anchor of an element as seen on screen, in the coordinates of another element, whatever groups lie between: the center of a hub for the `setRotate` of a needle drawn in another group.                                            |
+| [`svgFlip`](src/svg-transform/svg-flip.ts)                               | An order of `applySvgTransforms` that makes the element mirrored or not, as seen on screen, around one of its anchors: `svgFlip(false)` makes a mirrored text readable again.                                                               |
+| [`svgPlace`](src/svg-transform/svg-place.ts)                             | An order of `applySvgTransforms` that moves the element so that one of its anchors lands on an anchor of another element, as seen on screen, whatever groups each one is in.                                                                |
+| [`svgRotate`](src/svg-transform/svg-rotate.ts)                           | An order of `applySvgTransforms` that turns the element by an angle from its position before this order, clockwise on screen, around an anchor of itself or of another element: `set(90)` after `set(3)` gives 90° from the start, not 93°. |
+| [`svgRotateTo`](src/svg-transform/svg-rotate-to.ts)                      | An order of `applySvgTransforms` that turns the element to an absolute angle on screen, clockwise from upright, around an anchor of itself or of another element: `svgRotateTo(0)` straightens it.                                          |
+| [`svgScale`](src/svg-transform/svg-scale.ts)                             | An order of `applySvgTransforms` that enlarges or shrinks the element in its own axes, around an anchor of its drawing, which gives the direction: with `'left'`, it grows to the right; with `'bottom'`, upwards.                          |
+| [`SvgTransformOrder`](src/svg-transform/svg-transform-order.ts) _(type)_ | An order of `applySvgTransforms`, created by `svgRotate`, `svgRotateTo`, `svgFlip`, `svgScale`, `svgTranslate` or `svgPlace`: keep it to change its values later with `set`.                                                                |
+| [`svgTranslate`](src/svg-transform/svg-translate.ts)                     | An order of `applySvgTransforms` that moves the element along its own axes, in its own units: turned by 90°, "to the right" goes down on screen.                                                                                            |
 
 ### types
 

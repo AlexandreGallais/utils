@@ -2,7 +2,6 @@
 
 export { ceilToStep } from './ceil-to-step';
 export { clamp } from './clamp';
-export { clampedRatio } from './clamped-ratio';
 export { floorToStep } from './floor-to-step';
 export { inverseLerp } from './inverse-lerp';
 export { isBetween } from './is-between';

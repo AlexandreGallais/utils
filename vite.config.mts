@@ -8,12 +8,12 @@ export default defineConfig({
     globals: true,
     // The SVG specs run in Chromium (Playwright): they need a rendered SVG (`getBBox`, `getScreenCTM`).
     projects: [
-      { extends: true, test: { name: 'node', include: ['src/**/*.spec.ts'], exclude: ['src/svg/**'] } },
+      { extends: true, test: { name: 'node', include: ['src/**/*.spec.ts'], exclude: ['src/svg-*/**'] } },
       {
         extends: true,
         test: {
           name: 'browser',
-          include: ['src/svg/**/*.spec.ts'],
+          include: ['src/svg-*/**/*.spec.ts'],
           browser: { enabled: true, headless: true, provider: playwright(), instances: [{ browser: 'chromium' }] },
         },
       },

@@ -17,8 +17,8 @@ node lint.mjs ../my-workspace  # or in another folder
 node lint.mjs --force          # replaces the files that already exist (kept otherwise)
 ```
 
-- A folder of `src/` brings the folders of `src/` it imports (`src/svg` brings `src/geometry`, `src/math`,
-  `src/angle`, `src/format` and `src/internal`), so that the copy compiles. Their `index.ts` come along: the
+- A folder of `src/` brings the folders of `src/` it imports (`src/svg` brings `src/math`), so that the copy
+  compiles. Their `index.ts` come along: the
   imports go through them.
 - The file is plain JavaScript text: every file of the folders is a string inside it. It can be read before it
   is run.

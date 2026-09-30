@@ -1,99 +1,73 @@
 # SVG on screen
 
-The SVG functions work on rendered `SVGGraphicsElement`s, **as seen on screen**, whatever the groups and
-transforms around each element. They use the browser's own APIs (`transform.baseVal`, `getScreenCTM`,
-`getBBox`, `DOMMatrix`): the SVG must be in the document and displayed.
+Two folders work on rendered `SVGGraphicsElement`s, whatever the groups and transforms around each element,
+with the browser's own SVG API (`transform.baseVal`, `createSVGTransform`, `getScreenCTM`, `getBBox`):
 
-## A transform list, changed piece by piece
+- `svg-transform` moves, turns, mirrors and scales elements, and finds their anchors;
+- `svg-shape` creates the `d` of gauges around elements: arcs, bands, ticks, pies and bars.
 
-`addSvgTransform` appends a transform to the `transform` list of an element and returns it. Keep each one in
-a constant and set it with an absolute value: the others do not change, nothing is recomputed. The list
-applies in order, the last transform first on the element.
+## Orders, applied one after the other
+
+`applySvgTransforms(element, orders)` applies a list of orders, in order, each on what the previous ones
+give. Each order adds its own transform at the end of the `transform` list; the transforms already there
+stay.
 
 ```ts
-const position = addSvgTransform(needle);
-const rotation = addSvgTransform(needle);
-const axis = getSvgAnchorPointIn(hub, 'center', needle); // the hub center, in the needle coordinates
-
-position.setTranslate(0, 10);
-rotation.setRotate(angle, axis.x, axis.y); // at each frame: only the rotation changes
+applySvgTransforms(symbol, [
+  svgFlip(false), // not mirrored on screen
+  svgRotateTo(0), // upright on screen
+  svgPlace(target), // its center on the center of the target, even in another group
+  svgTranslate(0, -10), // then 10 units up, along its own axes (upright now)
+]);
 ```
+
+An order is created with its first values. Keep it in a constant to change its values later with `set`, with
+the same arguments as its function: only its own transform is updated, from what the element shows without
+it. The other orders do not move, so put them in the order you need.
+
+```ts
+const rotation = svgRotate(0, 'center', hub); // around the center of the hub, in another group
+applySvgTransforms(needle, [svgPlace(hub, 'center', 'bottom'), rotation]);
+
+rotation.set(3, 'center', hub); // 3° from where it was drawn
+rotation.set(90, 'center', hub); // 90° from where it was drawn, not 93°
+```
+
+| Order                                            | Effect                                                                       |
+| ------------------------------------------------ | ---------------------------------------------------------------------------- |
+| `svgRotate(angle, anchor?, reference?)`          | turns it by an angle from its position before the order, clockwise on screen |
+| `svgRotateTo(angle, anchor?, reference?)`        | turns it to an absolute angle on screen: `svgRotateTo(0)` straightens it     |
+| `svgFlip(isFlipped?, axis?, anchor?)`            | makes it mirrored or not, as seen on screen: `svgFlip(false)` unmirrors it   |
+| `svgScale(scaleX, scaleY?, anchor?)`             | enlarges it in its own axes, from an anchor: `'left'` grows to the right     |
+| `svgTranslate(dx, dy)`                           | moves it along its own axes: turned by 90°, "right" goes down                |
+| `svgPlace(reference, referenceAnchor?, anchor?)` | puts one of its anchors on an anchor of another element                      |
+
+The rotations turn around an anchor of the element itself, or of another element in any group.
+`clearSvgTransforms(element)` empties the list.
 
 ## The 9 anchors
 
-Every element has 9 anchors on the box it takes on screen: `'top-left'`, `'top'`, `'top-right'`, `'left'`,
-`'center'`, `'right'`, `'bottom-left'`, `'bottom'`, `'bottom-right'`.
-
-```ts
-placeSvgElement(badge, 'top-right', symbol, 'bottom-left'); // the badge corner on the symbol corner
-placeSvgElement(label, 'center', zone); // centered on the zone, in another group
-```
-
-## Move, turn, flip, scale
-
-```ts
-moveSvgElement(label, 0, -5); // up as seen on screen, by 5 units of its parent
-translateSvgElement(train, 10, 0); // along its own axes: forward, where it points
-rotateSvgElement(flag, 15, 'bottom'); // 15° clockwise on screen, around its foot
-flipSvgElement(valve); // mirrored left-right, same place
-scaleSvgElement(tank, 1, 1.5, 'bottom'); // 50 % taller, growing upwards
-```
-
-Each of these functions, and each reset, adds its change to the `transform` list as a `matrix(…)` and
-returns it: the other transforms stay. Pass a transform of the list as last argument to set it again
-instead of adding one, at each frame for instance.
-
-```ts
-const placement = addSvgTransform(label);
-placeSvgElement(label, 'center', zone, 'center', placement); // at each frame, in the same transform
-```
-
-## Reset without moving
-
-```ts
-resetSvgRotation(symbol); // upright on screen, center in place
-resetSvgFlip(label); // readable again, center in place
-resetSvgRotationAndFlip(symbol); // a cancelling matrix in the list…
-addSvgTransform(symbol).setRotate(45, center.x, center.y); // …then 45° from upright
-resetSvgTransform(symbol); // no transform at all
-```
-
-## Step by step: straighten, then place
-
-Each step adds its own transform to the list of the element, in order; the earlier ones stay.
-
-```ts
-// 1. A cancelling matrix: the symbol is upright and unmirrored on screen, its center in place.
-resetSvgRotationAndFlip(symbol);
-
-// 2. A move: the center of the symbol lands on the center of the target, even in another group.
-placeSvgElement(symbol, 'center', target, 'center');
-
-// 3. A rotation around the center of the target, set again at each frame without piling up.
-const rotation = addSvgTransform(symbol);
-const axis = getSvgAnchorPointIn(target, 'center', symbol); // read once, before rotating
-rotation.setRotate(angle, axis.x, axis.y);
-```
-
-The list of `symbol` now holds its original transforms, then the cancelling `matrix(…)`, the move
-`matrix(…)` and the `rotate(…)`. `getSvgAnchorPointIn` gives the point in the coordinates of `symbol` after
-its whole list: read it before adding the rotation, so that the rotation turns around it.
+Every element has 9 anchors: `'top-left'`, `'top'`, `'top-right'`, `'left'`, `'center'`, `'right'`,
+`'bottom-left'`, `'bottom'`, `'bottom-right'`. `getSvgAnchorPoint` gives one on screen,
+`getSvgAnchorPointIn` in the coordinates of another element.
 
 ## Gauges drawn around elements
 
-The `drawSvg…` functions write the `d` attribute of a `<path>`, around the center of another element or
-along its box, in any group. Convert values with `ratio`, `remap` or `clamp` from `math`.
+The `createSvg…Path` functions of `svg-shape` return the `d` of a path, around the center of another element
+or along its box, in any group. They only read the element you give them, `target`: the path is written in
+its coordinates, usually the `<path>` that receives it. Convert values with `ratio`, `remap` or `clamp` from
+`math`.
 
 ```ts
 const arc = { center: hub, radius: 40, startAngle: -135, sweepAngle: 270 };
-drawSvgArc(track, arc); // the track
-drawSvgArcBand(redZone, { ...arc, startAngle: 81, sweepAngle: 54 }, 6); // a threshold zone
-drawSvgArcTicks(majorTicks, arc, 6, 8); // 7 ticks
-drawSvgPie(remaining, { ...arc, startAngle: 0, sweepAngle: 360 * ratio(left, total) });
+track.setAttribute('d', createSvgArcPath(track, arc)); // the track
+redZone.setAttribute('d', createSvgArcBandPath(redZone, { ...arc, startAngle: 81, sweepAngle: 54 }, 6)); // a threshold zone
+majorTicks.setAttribute('d', createSvgArcTicksPath(majorTicks, arc, 6, 8)); // 7 ticks
+remaining.setAttribute('d', createSvgPiePath(remaining, { ...arc, startAngle: 0, sweepAngle: 360 * ratio(left, total) }));
 const labelPoint = getSvgArcPoint(labels, { ...arc, radius: 28 }, 0.5);
 
 const bar = { element: barTrack, direction: 'up' } as const;
-drawSvgBarRange(level, bar, 0, ratio(value, max)); // the fill level
-drawSvgBarRange(barRedZone, bar, 0.8, 1); // the top 20 %
-drawSvgBarTicks(barTicks, bar, 5, 12);
+level.setAttribute('d', createSvgBarRangePath(level, bar, 0, ratio(value, max))); // the fill level
+barRedZone.setAttribute('d', createSvgBarRangePath(barRedZone, bar, 0.8, 1)); // the top 20 %
+barTicks.setAttribute('d', createSvgBarTicksPath(barTicks, bar, 5, 12));
 ```

@@ -8,5 +8,6 @@ export * from './math';
 export * from './object';
 export * from './path';
 export * from './string';
-export * from './svg';
+export * from './svg-shape';
+export * from './svg-transform';
 export type * from './types';

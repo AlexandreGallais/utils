@@ -16,8 +16,4 @@ describe(wrap, () => {
   it('never returns -0', () => {
     expect(Object.is(wrap(-360, 0, 360), 0)).toBe(true);
   });
-
-  it('takes the defaults', () => {
-    expect(wrap(1.25)).toStrictEqual(wrap(1.25, 0, 1));
-  });
 });

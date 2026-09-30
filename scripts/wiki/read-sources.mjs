@@ -22,7 +22,8 @@ const CATEGORY_TITLES = new Map([
   ['object', 'Objects'],
   ['path', 'Paths'],
   ['string', 'Strings'],
-  ['svg', 'SVG'],
+  ['svg-shape', 'SVG shapes'],
+  ['svg-transform', 'SVG transforms'],
   ['types', 'Types'],
 ]);
 

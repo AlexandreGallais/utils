@@ -18,7 +18,7 @@ synoptics. It has no dependency and runs in any browser.
 ## Conventions
 
 - **Angles** are in degrees, 0° up and clockwise, everywhere.
-- **Defaults in the signature** for the settings: `formatNumber(value)`, `rotateSvgElement(flag, 15)`. No
+- **Defaults in the signature** for the settings: `formatNumber(value)`, `svgRotate(15)`. No
   `null`: pass `value ?? undefined` to get a default.
 - **Inputs are trusted**: no argument validation; a `parse…` function throws a single `TypeError` when its
   text does not match the expected format.

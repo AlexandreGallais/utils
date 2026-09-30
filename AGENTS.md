@@ -7,7 +7,7 @@ This repository is linted very strictly on purpose: most rules below are enforce
 - A TypeScript utility library, never built nor published: its folders are copied into the Angular simulation UIs that use them. No runtime dependency.
 - **One exported function or class per file**, named after it, in a folder per theme: `src/math/round-to-step.ts` exports `roundToStep`, its spec is `src/math/round-to-step.spec.ts`. The types and constants that belong to it (its `…Options`, its result type) stay in its file; a type used by several files has its own file.
 - Every folder has an `index.ts` that re-exports what it shares (`internal/` and `testing/` included, for the files of their theme); `src/index.ts` re-exports every theme folder (`export * from './math';`).
-- Helpers shared inside a theme live in `src/<theme>/internal/`, private to that theme; helpers shared by several themes live in `src/internal/`. Neither is re-exported by `src/index.ts` or a theme's `index.ts`.
+- Helpers shared inside a theme live in `src/<theme>/internal/`, private to that theme; helpers shared by several themes would live in `src/internal/`. Neither is re-exported by `src/index.ts` or a theme's `index.ts`.
 - Constants live in the file that uses them (duplicate a small constant rather than share it).
 - `docs/FUNCTIONS.md` is generated (`pnpm docs:catalog`): it lists every export and the files it needs, followed through the `index.ts` files.
 - The wiki is VitePress in `docs/` (`pnpm wiki:dev`): hand-written guide pages in `docs/guide/`, API pages generated from the JSDoc by `scripts/generate-wiki.mjs` into `docs/api/` (ignored by Git). `.github/workflows/wiki.yml` publishes it on GitHub Pages at each push to `main`. A new folder needs a title in `scripts/wiki/read-sources.mjs`.
@@ -124,8 +124,8 @@ function helper(value: number): number {
 | `get…`                      | a value computed from the arguments                    | `getSvgAnchorPoint`, `getContrastingTextColor` |
 | `parse…`                    | a value from text, throws a `TypeError` when malformed | `parseTimeSpan`, `parseEnumValue`              |
 | `format…`                   | a `string` for display                                 | `formatDecimal`, `formatNumber`                |
-| `draw…`                     | writes the `d` of an SVG `<path>`                      | `drawSvgArc`, `drawSvgBarTicks`                |
-| `reset…`                    | cancels a transform part without moving                | `resetSvgRotation`, `resetSvgFlip`             |
+| `create…Path`               | the `d` of an SVG path                                 | `createSvgArcPath`, `createSvgBarTicksPath`    |
+| `svg…`                      | an order of `applySvgTransforms`                       | `svgRotate`, `svgPlace`                        |
 | `round…`, `floor…`, `ceil…` | a `number`                                             | `roundToStep`                                  |
 
 - Plural parameters for lists (`items`, `values`, `points`); `min` / `max`, `from` / `to`, `start` / `end` for ranges; units in names when ambiguous (`deltaMs`, `angleDegrees`, `periodMs`).
