@@ -1,6 +1,7 @@
 // Preset: the SCSS of an Angular project (a library, an application). The only import of its
-// stylelint.config.mjs (see lint/examples/). Every rule listed, by concept, with the same levels as ESLint: an
-// error is a real mistake or a style fixed on save, a warning is a style without autofix.
+// stylelint.config.mjs (see lint/examples/). Every rule listed, by concept: an error is a real mistake (an unknown
+// property, a duplicate, an invalid value) or a style fixed on save (the property order, the Prettier
+// formatting), a warning is a choice to justify; notations are left free.
 
 import postcssScss from 'postcss-scss';
 import atRulesBlock from '../rules/at-rules.mjs';
@@ -11,6 +12,7 @@ import disableCommentsBlock from '../rules/disable-comments.mjs';
 import fontsBlock from '../rules/fonts.mjs';
 import generalBlock from '../rules/general.mjs';
 import orderBlock from '../rules/order.mjs';
+import prettierBlock from '../rules/prettier.mjs';
 import scssBlock from '../rules/scss.mjs';
 import selectorsBlock from '../rules/selectors.mjs';
 import valuesAndUnitsBlock from '../rules/values-and-units.mjs';
@@ -42,6 +44,7 @@ export default function scssPreset(options) {
     valuesAndUnitsBlock(),
     scssBlock(),
     orderBlock(),
+    prettierBlock(),
     disableCommentsBlock(),
     { overrides: options.overrides },
   ]);

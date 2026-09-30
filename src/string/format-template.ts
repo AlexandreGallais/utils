@@ -8,11 +8,11 @@ const PLACEHOLDER_PATTERN = /\{(?<key>[\w$.]+)\}/gv;
  * @param values - The values by key.
  * @returns The text with every known placeholder replaced.
  * @example
- * interpolate('Heading {heading}°, speed {speed} kn', { heading: 270, speed: 12.5 });
+ * formatTemplate('Heading {heading}°, speed {speed} kn', { heading: 270, speed: 12.5 });
  * // 'Heading 270°, speed 12.5 kn'
- * interpolate('Hello {name}', {}); // 'Hello {name}'
+ * formatTemplate('Hello {name}', {}); // 'Hello {name}'
  */
-export function interpolate(
+export function formatTemplate(
   template: string,
   values: Readonly<Record<string, boolean | number | string | undefined>>,
 ): string {

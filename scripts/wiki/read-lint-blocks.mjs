@@ -31,6 +31,7 @@ const STYLELINT_DOCS = new Map([
   ['', 'https://stylelint.io/user-guide/rules/'],
   ['scss', 'https://github.com/stylelint-scss/stylelint-scss/tree/master/src/rules/'],
   ['order', 'https://github.com/hudochenkov/stylelint-order/blob/master/rules/'],
+  ['prettier', 'https://github.com/prettier/stylelint-prettier#'],
 ]);
 
 /**

@@ -1,24 +1,26 @@
 # Getting started
 
-`utils` is a library of small TypeScript functions for UIs that show live values: gauges, charts, alarms,
-synoptics. It has no dependency and runs in any browser.
+`utils` is a library of small TypeScript functions for the Angular UIs that show live values: gauges and
+synoptics. It has no dependency and runs in any browser. It is never published: its code is copied into the
+projects.
 
-## Two ways to use it
+## Two ways to copy it
 
-- **Import it** as a package: `import { formatNumber } from 'utils';`. Bundlers keep only what is used.
+- **Copy a folder**: `pnpm transfer src/math` packs a theme, with the themes it imports, into one text file
+  (see [Transfer folders](./transfer.md)).
 - **Copy a file**: every export lives in its own file. Its page lists the other files it needs, under
   **Source**, and shows the code with a copy button.
 
 ## Find a function
 
-- Press <kbd>Ctrl</kbd> <kbd>K</kbd> (or <kbd>⌘</kbd> <kbd>K</kbd>) and type a name or a need: _thousands_,
+- Press <kbd>Ctrl</kbd> <kbd>K</kbd> (or <kbd>⌘</kbd> <kbd>K</kbd>) and type a name or a need: _decimals_,
   _rotate_, _anchor_, _gauge_.
 - Or browse the [API](/api/) by category.
 
 ## Conventions
 
 - **Angles** are in degrees, 0° up and clockwise, everywhere.
-- **Defaults in the signature** for the settings: `formatNumber(value)`, `svgRotate(15)`. No
+- **Defaults in the signature** for the settings: `formatNumber(value)`, `svgRotateBy(15)`. No
   `null`: pass `value ?? undefined` to get a default.
 - **Inputs are trusted**: no argument validation; a `parse…` function throws a single `TypeError` when its
   text does not match the expected format.

@@ -2,35 +2,6 @@ import { isObject } from '../guard';
 
 type Visited = WeakMap<object, WeakSet<object>>;
 
-/**
- * Compares two values at every depth: primitives (`NaN` equals `NaN`), arrays, objects with the same
- * prototype, `Date`, `RegExp`, `Map`, `Set` and typed arrays. Circular references work.
- *
- * @param a - A value.
- * @param b - Another value.
- * @returns `true` when both values have the same structure and contents.
- * @example
- * isDeepEqual({ position: { x: 1 }, tags: ['a'] }, { position: { x: 1 }, tags: ['a'] }); // true
- */
-export function isDeepEqual(a: unknown, b: unknown): boolean {
-  return equals(a, b, new WeakMap());
-}
-
-function equals(a: unknown, b: unknown, visited: Visited): boolean {
-  if (a === b || (Number.isNaN(a) && Number.isNaN(b))) {
-    return true;
-  }
-  if (!isObject(a) || !isObject(b) || Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) {
-    return false;
-  }
-  const seen = visited.get(a);
-  if (seen?.has(b) === true) {
-    return true;
-  }
-  visited.set(a, (seen ?? new WeakSet()).add(b));
-  return equalObjects(a, b, visited);
-}
-
 function equalObjects(a: object, b: object, visited: Visited): boolean {
   if (a instanceof Date && b instanceof Date) {
     return Object.is(a.getTime(), b.getTime());
@@ -57,4 +28,33 @@ function equalObjects(a: object, b: object, visited: Visited): boolean {
     keys.length === Object.keys(b).length &&
     keys.every((key) => Object.hasOwn(b, key) && equals(Reflect.get(a, key), Reflect.get(b, key), visited))
   );
+}
+
+function equals(a: unknown, b: unknown, visited: Visited): boolean {
+  if (a === b || (Number.isNaN(a) && Number.isNaN(b))) {
+    return true;
+  }
+  if (!isObject(a) || !isObject(b) || Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) {
+    return false;
+  }
+  const seen = visited.get(a);
+  if (seen?.has(b) === true) {
+    return true;
+  }
+  visited.set(a, (seen ?? new WeakSet()).add(b));
+  return equalObjects(a, b, visited);
+}
+
+/**
+ * Checks whether two values are equal at every depth: primitives (`NaN` equals `NaN`), arrays, objects with the same
+ * prototype, `Date`, `RegExp`, `Map`, `Set` and typed arrays. Circular references work.
+ *
+ * @param a - The first value.
+ * @param b - The second value.
+ * @returns `true` when both values have the same structure and contents.
+ * @example
+ * isDeepEqual({ position: { x: 1 }, tags: ['a'] }, { position: { x: 1 }, tags: ['a'] }); // true
+ */
+export function isDeepEqual(a: unknown, b: unknown): boolean {
+  return equals(a, b, new WeakMap());
 }

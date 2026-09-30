@@ -1,5 +1,5 @@
 /**
- * Union of the value types of an object type, such as a `const` object used as an enum.
+ * The union of the value types of an object type, such as a `const` object used as an enum.
  *
  * @template T - The object type.
  * @example

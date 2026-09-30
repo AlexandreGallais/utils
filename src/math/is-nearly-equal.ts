@@ -1,8 +1,8 @@
 /**
- * Compares two numbers with a tolerance, relative for large numbers and absolute near zero.
+ * Checks whether two numbers are equal within a tolerance, relative for large numbers and absolute near zero.
  *
- * @param a - A number.
- * @param b - Another number.
+ * @param a - The first number.
+ * @param b - The second number.
  * @param epsilon - The tolerance, relative to the largest magnitude (at least 1). Defaults to `1e-9`.
  * @returns `true` when the numbers differ by no more than the tolerance.
  * @example

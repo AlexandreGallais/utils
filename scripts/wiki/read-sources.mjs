@@ -30,8 +30,8 @@ const CATEGORY_TITLES = new Map([
 /**
  * Converts a camelCase or PascalCase name to kebab-case, like the file names of the library.
  *
- * @param name - An export name, such as `parseColorCached`.
- * @returns The kebab-case name, such as `parse-color-cached`.
+ * @param name - An export name, such as `formatNumber`.
+ * @returns The kebab-case name, such as `format-number`.
  */
 export function toKebabCase(name) {
   return name.replaceAll(/(?<before>[\da-z])(?<upper>[A-Z])/gv, '$<before>-$<upper>').toLowerCase();

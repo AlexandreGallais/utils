@@ -1,6 +1,27 @@
 const NEEDS_QUOTES = /[\n\r"]|^\s|\s$/v;
 const FORMULA_START = /^[\t\r+\-=@]/v;
 
+function toText(value: unknown): string {
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
+    return String(value);
+  }
+  if (value instanceof Date) {
+    return value.toISOString();
+  }
+  return typeof value === 'object' && value !== null ? JSON.stringify(value) : '';
+}
+
+function formatField(value: unknown, separator: string, shouldEscapeFormulas: boolean): string {
+  let text = toText(value);
+  if (shouldEscapeFormulas && typeof value === 'string' && FORMULA_START.test(text)) {
+    text = `'${text}`;
+  }
+  return text.includes(separator) || NEEDS_QUOTES.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+}
+
 /**
  * Builds CSV text (RFC 4180): fields are quoted when needed, lines end with CRLF. Prepend `'\uFEFF'` so that
  * Excel reads UTF-8.
@@ -19,25 +40,4 @@ export function toCsv(rows: Iterable<readonly unknown[]>, separator = ',', shoul
     row.map((value) => formatField(value, separator, shouldEscapeFormulas)).join(separator),
   );
   return lines.join('\r\n');
-}
-
-function formatField(value: unknown, separator: string, shouldEscapeFormulas: boolean): string {
-  let text = toText(value);
-  if (shouldEscapeFormulas && typeof value === 'string' && FORMULA_START.test(text)) {
-    text = `'${text}`;
-  }
-  return text.includes(separator) || NEEDS_QUOTES.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
-}
-
-function toText(value: unknown): string {
-  if (typeof value === 'string') {
-    return value;
-  }
-  if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
-    return String(value);
-  }
-  if (value instanceof Date) {
-    return value.toISOString();
-  }
-  return typeof value === 'object' && value !== null ? JSON.stringify(value) : '';
 }

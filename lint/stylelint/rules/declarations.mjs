@@ -1,6 +1,7 @@
 // Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced,
-// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style the
-// autofix applies (never disabled); `warning` = a style without autofix (disabled for one line, with a reason).
+// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style fixed
+// on save: the property order, the Prettier formatting (never disabled); `warning` = a choice to justify (disabled
+// for one line, with a reason). Notations are free.
 // Declarations and properties: duplicates, shorthands, `!important`, custom properties.
 
 /**
@@ -12,11 +13,10 @@ export default function declarationsBlock() {
   return {
     rules: {
       'block-no-empty': true,
-      'block-no-redundant-nested-style-rules': [true, { severity: 'warning' }],
-      'custom-property-empty-line-before': [
-        'always',
-        { except: ['after-custom-property', 'first-nested'], ignore: ['after-comment', 'inside-single-line-block'] },
-      ],
+      // Off: a notation choice, not a mistake.
+      'block-no-redundant-nested-style-rules': null,
+      // Off: formatting, checked by prettier/prettier.
+      'custom-property-empty-line-before': null,
       'custom-property-no-missing-var-function': true,
       'custom-property-pattern': ['^([a-z][a-z0-9]*)(-[a-z0-9]+)*$', { severity: 'warning' }],
       'declaration-block-no-duplicate-custom-properties': true,
@@ -24,13 +24,13 @@ export default function declarationsBlock() {
         true,
         { ignore: ['consecutive-duplicates-with-different-syntaxes'] },
       ],
-      'declaration-block-no-redundant-longhand-properties': true,
+      // Off: a notation choice, not a mistake.
+      'declaration-block-no-redundant-longhand-properties': null,
       'declaration-block-no-shorthand-property-overrides': true,
-      'declaration-block-single-line-max-declarations': [1, { severity: 'warning' }],
-      'declaration-empty-line-before': [
-        'always',
-        { except: ['after-declaration', 'first-nested'], ignore: ['after-comment', 'inside-single-line-block'] },
-      ],
+      // Off: formatting, checked by prettier/prettier.
+      'declaration-block-single-line-max-declarations': null,
+      // Off: formatting, checked by prettier/prettier.
+      'declaration-empty-line-before': null,
       // Custom: `!important` wins over everything; justify it where it is needed.
       'declaration-no-important': [true, { severity: 'warning' }],
       'declaration-property-max-values': null,
@@ -44,8 +44,10 @@ export default function declarationsBlock() {
       'property-layout-mappings': null,
       'property-no-deprecated': true,
       'property-no-unknown': true,
-      'property-no-vendor-prefix': true,
-      'shorthand-property-no-redundant-values': true,
+      // Off: the Angular build adds the vendor prefixes.
+      'property-no-vendor-prefix': null,
+      // Off: a notation choice, not a mistake.
+      'shorthand-property-no-redundant-values': null,
     },
   };
 }

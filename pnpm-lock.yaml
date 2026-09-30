@@ -244,6 +244,9 @@ importers:
       stylelint-order:
         specifier: 8.1.1
         version: 8.1.1(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
+      stylelint-prettier:
+        specifier: 5.0.3
+        version: 5.0.3(prettier@3.9.9)(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
       stylelint-scss:
         specifier: 7.3.0
         version: 7.3.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3))
@@ -3071,6 +3074,13 @@ packages:
     engines: {node: '>=20.19.0'}
     peerDependencies:
       stylelint: ^16.18.0 || ^17.0.0
+
+  stylelint-prettier@5.0.3:
+    resolution: {integrity: sha512-B6V0oa35ekRrKZlf+6+jA+i50C4GXJ7X1PPmoCqSUoXN6BrNF6NhqqhanvkLjqw2qgvrS0wjdpeC+Tn06KN3jw==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      prettier: '>=3.0.0'
+      stylelint: '>=16.0.0'
 
   stylelint-scss@7.3.0:
     resolution: {integrity: sha512-FBz075AUFoEJ1WQKsgsRr6EJKcjy7jxQjV8xsAqbPcnhNiXnJ7C489vqUyDZccBy1GorewlshERkaMuCyOKXaw==}
@@ -6044,6 +6054,12 @@ snapshots:
     dependencies:
       postcss: 8.5.28
       postcss-sorting: 10.0.0(postcss@8.5.28)
+      stylelint: 17.15.0(supports-color@7.2.0)(typescript@6.0.3)
+
+  stylelint-prettier@5.0.3(prettier@3.9.9)(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3)):
+    dependencies:
+      prettier: 3.9.9
+      prettier-linter-helpers: 1.0.1
       stylelint: 17.15.0(supports-color@7.2.0)(typescript@6.0.3)
 
   stylelint-scss@7.3.0(stylelint@17.15.0(supports-color@7.2.0)(typescript@6.0.3)):

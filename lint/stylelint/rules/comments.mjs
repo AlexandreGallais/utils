@@ -1,6 +1,7 @@
 // Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced,
-// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style the
-// autofix applies (never disabled); `warning` = a style without autofix (disabled for one line, with a reason).
+// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style fixed
+// on save: the property order, the Prettier formatting (never disabled); `warning` = a choice to justify (disabled
+// for one line, with a reason). Notations are free.
 // Comments: empty comments, patterns.
 
 /**
@@ -11,10 +12,12 @@
 export default function commentsBlock() {
   return {
     rules: {
-      'comment-empty-line-before': ['always', { except: ['first-nested'], ignore: ['stylelint-commands'] }],
+      // Off: formatting, checked by prettier/prettier.
+      'comment-empty-line-before': null,
       'comment-no-empty': null,
       'comment-pattern': null,
-      'comment-whitespace-inside': 'always',
+      // Off: formatting, checked by prettier/prettier.
+      'comment-whitespace-inside': null,
       'comment-word-disallowed-list': null,
     },
   };

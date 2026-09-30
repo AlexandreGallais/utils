@@ -1,4 +1,4 @@
-// TypeScript utility types.
+// Types: TypeScript utility types.
 
 export type { Brand } from './brand';
 export type { Constructor } from './constructor';

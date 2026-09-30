@@ -1,7 +1,7 @@
 /**
  * Upper-cases the first character of a string, even outside the basic Unicode plane.
  *
- * @param input - Any string.
+ * @param input - The string.
  * @returns The string with its first character in upper case.
  * @example
  * capitalize('hello world'); // 'Hello world'

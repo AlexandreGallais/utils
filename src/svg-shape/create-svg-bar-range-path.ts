@@ -8,8 +8,8 @@ import type { SvgBar } from './svg-bar';
  *
  * @param target - The element in whose coordinates the path is written, such as the `<path>` that receives it.
  * @param bar - The element giving the area of the bar, and its direction.
- * @param fromRatio - One end, from 0 (start of the bar) to 1 (end).
- * @param toRatio - The other end.
+ * @param fromRatio - The start of the range, from 0 (start of the bar) to 1 (end).
+ * @param toRatio - The end of the range, in the same way.
  * @returns The closed path data.
  * @throws {TypeError} When an element is not rendered.
  * @example

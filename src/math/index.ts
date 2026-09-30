@@ -1,4 +1,4 @@
-// Numbers: clamping, interpolation, wrapping, rounding without float noise, smoothing, simulation helpers.
+// Math: clamping, interpolation, wrapping, rounding without float noise, smoothing.
 
 export { ceilToStep } from './ceil-to-step';
 export { clamp } from './clamp';

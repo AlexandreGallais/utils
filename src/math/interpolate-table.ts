@@ -3,7 +3,7 @@
  * gauging table. Outside the table, the first or last output is held. Binary search: O(log n).
  *
  * @param x - The input to look up.
- * @param table - Points `[x, y]` sorted by increasing `x`.
+ * @param table - The points `[x, y]`, sorted by increasing `x`.
  * @returns The interpolated output; `NaN` for an empty table.
  * @example
  * const tank = [[0, 0], [10, 150], [20, 380]] as const;

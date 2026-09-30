@@ -2,7 +2,7 @@
 
 export { extractNumber } from './extract-number';
 export { extractNumbers } from './extract-numbers';
-export { words } from './words';
+export { splitWords } from './split-words';
 export { capitalize } from './capitalize';
 export { camelCase } from './camel-case';
 export { pascalCase } from './pascal-case';
@@ -15,7 +15,7 @@ export { truncate } from './truncate';
 export { slugify } from './slugify';
 export { escapeHtml } from './escape-html';
 export { escapeRegExp } from './escape-reg-exp';
-export { interpolate } from './interpolate';
+export { formatTemplate } from './format-template';
 export { lowerCase } from './lower-case';
 export { upperCase } from './upper-case';
 export { dotCase } from './dot-case';

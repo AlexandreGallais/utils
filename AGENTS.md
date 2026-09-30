@@ -38,11 +38,11 @@ Run this before considering a change done:
 pnpm check
 ```
 
-`pnpm lint` and `pnpm lint:css` fail on errors, `pnpm lint:strict` and `pnpm lint:css:strict` on warnings too (a merge request to `main`). `pnpm transfer <folders>` packs folders into one text file (`transfer/`) that recreates them on another machine. `pnpm check` runs `docs:catalog`, `wiki:generate`, `typecheck`, `lint` (`--max-warnings 0`), `lint:presets`, `format:check`, `knip` (unused files, exports and dependencies) and `coverage` (100 % thresholds). `pnpm lint:fix` and `pnpm format` fix most formatting and ordering issues; `pnpm lint:fix` also rewrites imports through the folders' `index.ts`. Commit messages follow Conventional Commits (commitlint).
+`pnpm lint` and `pnpm lint:css` fail on errors, `pnpm lint:strict` and `pnpm lint:css:strict` on warnings too (a merge request to `main`). `pnpm transfer <folders>` packs folders into one text file (`transfer/`) that recreates them on another machine. `pnpm check` runs `docs:catalog`, `wiki:generate`, `typecheck`, `lint` (`--max-warnings 0`), `lint:presets`, `format:check`, `knip` (unused files, exports and dependencies) and `coverage` (100 % thresholds). `pnpm lint:fix` (TypeScript), `pnpm lint:css:fix` (SCSS) and `pnpm format` fix most formatting and ordering issues; `pnpm lint:fix` also rewrites imports through the folders' `index.ts`. Commit messages follow Conventional Commits (commitlint).
 
 ## Tooling configuration
 
-- Lint rules live in `lint/eslint/`: `rules/` (one file per concept — async, conditions, naming… — with the ESLint, typescript-eslint, SonarJS and import-x rules, each with a `/typescript` config for the TypeScript rules; SonarJS is always on, Sonar way profile, duplicates of core rules off; plus the blocks the presets choose: `node`, `browser`, `library`, `exports`, `angular-components`, `angular-templates`, `storybook`; `rules/local/` holds the rules written here: `kebab-case-path`, `export-matches-filename` (a warning in the presets), `import-folders` (autofix: "path can be simplified" through a folder's index), `disable-only-warnings`, `disable-reason`, `disable-next-line-only`), `setup/` (globs, parsers, the core and project rule lists, the `info` level, the severity mirror, `without-plugins`, `editor-settings.mjs`) and `presets/` (re-exported by `lint/index.mjs`): `typescript-node` for the root config of a workspace (Node mode), and for each project config, which imports the root config (`rootConfig`) and switches its `sourceFiles` to the browser mode, `typescript-browser` (`isLibrary`, `storybookPackageDirectory`), `angular-library` (`prefix`, `storybookPackageDirectory`) and `angular-app` (`prefix`); all take `overrides`. Screen-reader accessibility and @angular/localize rules are off (simulators, Transloco). Levels: `error` (a real mistake or an autofixed style, never disabled), `warn` (disabled for one line with a reason), `info` (a suggestion, shown in blue in the editor only: `pnpm lint:editor` lists them in `.vscode/settings.json`; `pnpm lint` sets `ESLINT_INFO_RULES=off`). In specs, test helpers, benchmarks and stories, warnings and the hack-blocking rules (`any`, `!`, unsafe assertions) become infos, SonarJS and its stand-ins excepted (`setup/relax-tests-and-stories.mjs`). `lint/examples/` holds a root config and a config per project preset. Stylelint (`lint/stylelint/`): every core, stylelint-scss and stylelint-order rule listed by concept in `rules/`, same levels (error = a mistake or an autofixed style, warning otherwise), `local/disable-only-warnings`, one preset `presets/scss.mjs` (`scssPreset`). `lint/legacy/angular-18.eslintrc.json` gives the same ESLint rules to an Angular 18 project on ESLint 8 (generated, checked with ESLint 8.57 and angular-eslint 18). `pnpm lint:presets` also proves that every SonarQube Sonar way rule is on or covered. The rule reference of the wiki (`docs/lint-rules/`) is generated from the blocks, the comment above each rule and each rule's own description.
+- Lint rules live in `lint/eslint/`: `rules/` (one file per concept — async, conditions, naming… — with the ESLint, typescript-eslint, SonarJS and import-x rules, each with a `/typescript` config for the TypeScript rules; SonarJS is always on, Sonar way profile, duplicates of core rules off; plus the blocks the presets choose: `node`, `browser`, `library`, `exports`, `angular-components`, `angular-templates`, `storybook`; `rules/local/` holds the rules written here: `kebab-case-path`, `export-matches-filename` (a warning in the presets), `import-folders` (autofix: "path can be simplified" through a folder's index), `disable-only-warnings`, `disable-reason`, `disable-next-line-only`), `setup/` (globs, parsers, the core and project rule lists, the `info` level, the severity mirror, `without-plugins`, `editor-settings.mjs`) and `presets/` (re-exported by `lint/index.mjs`): `typescript-node` for the root config of a workspace (Node mode), and for each project config, which imports the root config (`rootConfig`) and switches its `sourceFiles` to the browser mode, `typescript-browser` (`isLibrary`, `storybookPackageDirectory`), `angular-library` (`prefix`, `storybookPackageDirectory`) and `angular-app` (`prefix`); all take `overrides`. Screen-reader accessibility and @angular/localize rules are off (simulators, Transloco). Levels: `error` (a real mistake or an autofixed style, never disabled), `warn` (disabled for one line with a reason), `info` (a suggestion, shown in blue in the editor only: `pnpm lint:editor` lists them in `.vscode/settings.json`; `pnpm lint` sets `ESLINT_INFO_RULES=off`). In specs, test helpers, benchmarks and stories, warnings and the hack-blocking rules (`any`, `!`, unsafe assertions) become infos, SonarJS and its stand-ins excepted (`setup/relax-tests-and-stories.mjs`). `lint/examples/` holds a root config and a config per project preset. Stylelint (`lint/stylelint/`): every core, stylelint-scss and stylelint-order rule listed by concept in `rules/`; error = a real mistake or a style fixed on save (the property order, the Prettier formatting through `stylelint-prettier`), warning = a choice to justify, notations, vendor prefixes and font fallbacks off; `local/disable-only-warnings`, one preset `presets/scss.mjs` (`scssPreset`), used by the root `stylelint.config.mjs`. `lint/legacy/angular-18.eslintrc.json` gives the same ESLint rules to an Angular 18 project on ESLint 8 (generated, checked with ESLint 8.57 and angular-eslint 18). `pnpm lint:presets` also proves that every SonarQube Sonar way rule is on or covered. The rule reference of the wiki (`docs/lint-rules/`) is generated from the blocks, the comment above each rule and each rule's own description.
 - `eslint.config.mjs` = the `typescript-node` preset (root: scripts, benchmarks, tool configs) passed as `rootConfig` to the `typescript-browser` preset (`src/`, a library). A rule change goes in its block, never in a project config.
 - `examples/design-system/` is an Angular library linted by the Angular preset (folder imports through an `index.ts` per folder); `pnpm lint:presets` checks that it passes and that each block catches its mistake. Add a case there when a block gains a rule worth proving.
 - The wiki documents the blocks, the presets and their performance (`docs/guide/linting/`), and the CSS of a design system (`docs/guide/css/`).
@@ -90,6 +90,11 @@ import type { Rgb } from './rgb'; // a neighbour
 
 const MAX_CHANNEL = 255; // no comment: the name says it
 
+// Private helpers stay in the file, above the function that uses them, without JSDoc: their name says what they do.
+function helper(value: number): number {
+  …
+}
+
 /**
  * One short sentence saying what the function does, then, if needed, one saying when to use it or what
  * makes it special. Sentences start with a capital (or `code`) and end with a period.
@@ -106,27 +111,30 @@ export function functionName(value: number, isInclusive = true): number {
   …
 }
 
-// Private helpers stay in the file, after the exported function, without JSDoc: their name says what they do.
-function helper(value: number): number {
-  …
-}
 ```
 
 - **One exported function or class per file**, named like the file (`round-to-step.ts` → `roundToStep`), with the types and constants that belong to it; an enum goes in a `.enum.ts` file (`alarm-level.enum.ts` → `AlarmLevel`); a type shared by several files gets its own file (`rgb.ts` → `Rgb`).
 - **JSDoc on exports only**, in this tag order: `@cached`, `@template`, `@param`, `@returns`, `@yields`, `@throws`, `@rejects`, `@example`. Every exported function or class has an `@example` with its result as a `// comment`. Constants, private helpers and `internal/` files get no comment: an explicit name is enough. No comment in the body either, unless a line cannot be understood without it.
 - **Descriptions** are short sentences that say more than the name, written for developers: not "The matrix." but "The matrix to apply, such as the result of `parseTransform`.". One or two sentences; no long explanation.
+- **Wording**, the same everywhere:
+  - the first sentence of a function starts with a verb in the third person (`Formats…`, `Creates…`, `Parses…`); of a boolean function, with `Checks whether…`; of an SVG order, with ``An order of `applySvgTransforms` that…``; of a type or an interface, with a noun (`A…`, `The…`);
+  - a `@param` starts with `The…`, a boolean one with `Whether…`, a callback with `Returns…` or `Called…`, and ends with ``Defaults to `x`.`` when it has a default;
+  - a `@returns` starts with `The…`, or `` `true` when…`` for a boolean; the edge cases come after a `;` (`; `NaN` without value`);
+  - a `@throws` starts with `When…`;
+  - an `@example` shows the result in a `// comment`.
+- **Theme descriptions**, the first line of each theme's `index.ts`: `// <Theme>: <what it holds>.`, such as `// Math: clamping, interpolation, wrapping, rounding without float noise, smoothing.`.
 
 ### Naming
 
-| Prefix                      | Returns                                                | Examples                                       |
-| --------------------------- | ------------------------------------------------------ | ---------------------------------------------- |
-| `is…`, `has…`, `meets…`     | `boolean`                                              | `isBetween`, `hasSignificantChange`            |
-| `get…`                      | a value computed from the arguments                    | `getSvgAnchorPoint`, `getContrastingTextColor` |
-| `parse…`                    | a value from text, throws a `TypeError` when malformed | `parseTimeSpan`, `parseEnumValue`              |
-| `format…`                   | a `string` for display                                 | `formatDecimal`, `formatNumber`                |
-| `create…Path`               | the `d` of an SVG path                                 | `createSvgArcPath`, `createSvgBarTicksPath`    |
-| `svg…`                      | an order of `applySvgTransforms`                       | `svgRotate`, `svgPlace`                        |
-| `round…`, `floor…`, `ceil…` | a `number`                                             | `roundToStep`                                  |
+| Prefix                       | Returns                                                           | Examples                                       |
+| ---------------------------- | ----------------------------------------------------------------- | ---------------------------------------------- |
+| `is…`, `has…`, `meets…`      | `boolean`                                                         | `isBetween`, `hasSignificantChange`            |
+| `get…`                       | a value computed from the arguments                               | `getSvgAnchorPoint`, `getContrastingTextColor` |
+| `parse…`                     | a value from text, throws a `TypeError` when malformed            | `parseTimeSpan`, `parseEnumValue`              |
+| `format…`                    | a `string` for display                                            | `formatDecimal`, `formatNumber`                |
+| `create…Path`                | the `d` of an SVG path                                            | `createSvgArcPath`, `createSvgBarTicksPath`    |
+| `svg…By`, `svg…To`, `svg…On` | an order of `applySvgTransforms`: `By` is relative, `To` absolute | `svgRotateBy`, `svgRotateTo`, `svgPlaceOn`     |
+| `round…`, `floor…`, `ceil…`  | a `number`                                                        | `roundToStep`                                  |
 
 - Plural parameters for lists (`items`, `values`, `points`); `min` / `max`, `from` / `to`, `start` / `end` for ranges; units in names when ambiguous (`deltaMs`, `angleDegrees`, `periodMs`).
 - Decimals are `maxFractionDigits`.
@@ -164,7 +172,7 @@ function helper(value: number): number {
 
 ## Tests (Vitest)
 
-- Specs are `*.spec.ts` next to the tested file; `it`, never `test`. The SVG specs render real SVG in Chromium (`renderSvg` in `src/svg/testing/`).
+- Specs are `*.spec.ts` next to the tested file; `it`, never `test`. The SVG specs render real SVG in Chromium (`renderSvg` in the `testing/` folder of `src/svg-transform/` and `src/svg-shape/`).
 - Vitest globals are enabled: do NOT import `describe`, `it`, `expect`, `vi` from `vitest`.
 - `describe` title: the tested function or class (`describe(clamp, …)`); `it` titles in lowercase.
 - Table-driven tests with `it.for([...])`; at most 5 `expect` per test; no conditional expects or tests; no `.only`, `.skip` or commented-out tests.

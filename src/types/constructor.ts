@@ -1,5 +1,5 @@
 /**
- * Any class producing a `T`: mixins, dependency injection tokens, `instanceof` helpers.
+ * A type for any class producing a `T`: mixins, dependency injection tokens, `instanceof` helpers.
  *
  * @template T - Type of the instances.
  * @template TArguments - Parameters of the constructor.

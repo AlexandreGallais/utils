@@ -1,4 +1,4 @@
-// Enums: listing values and keys, validating and converting untyped values, literal types.
+// Enums: listing members, checking and reading untyped values, literal types.
 
 export type { EnumObject } from './enum-object';
 export { getEnumValues } from './get-enum-values';

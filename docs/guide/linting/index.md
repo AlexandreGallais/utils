@@ -13,7 +13,7 @@ lint/
                   import-x; plus node, browser, library, exports, angular-components, angular-templates,
                   storybook; local/ holds the rules written here
     setup/        file globs, parsers, the info level, the severity mirror, editor-settings.mjs
-  stylelint/      the SCSS rules, same principle (see Stylelint)
+  stylelint/      the SCSS rules, same principle, Prettier included (see Stylelint)
   legacy/         angular-18.eslintrc.json: the same rules for an old project (ESLint 8, .eslintrc.json)
   examples/       an eslint.config.mjs for a workspace root and for each kind of project, a stylelint.config.mjs
 examples/
@@ -111,7 +111,8 @@ that justifies disabling it. The [rule reference](/lint-rules/) lists them all, 
 | `pnpm lint`         | ESLint on the whole repository, in parallel, info rules off: errors fail.          |
 | `pnpm lint:strict`  | The same, warnings fail too (a merge request to `main`, see [CI](./ci.md)).        |
 | `pnpm lint:css`     | Stylelint on every `.scss` file (`lint:css:strict`: warnings fail too).            |
+| `pnpm lint:css:fix` | Fixes the SCSS: the order of the properties and the Prettier formatting.           |
 | `pnpm lint:cached`  | The same, skipping unchanged files (see [Performance](./performance.md)).          |
-| `pnpm lint:fix`     | Fixes what can be fixed automatically (order, formatting, simple rewrites).        |
+| `pnpm lint:fix`     | Fixes the TypeScript automatically (order, formatting, simple rewrites).           |
 | `pnpm lint:editor`  | Lists the info rules in `.vscode/settings.json`, so that VS Code shows them blue.  |
 | `pnpm lint:presets` | Lints the example with the presets and checks that each block catches its mistake. |

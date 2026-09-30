@@ -1,7 +1,7 @@
 import type { NonEmptyArray } from '../types';
 
 /**
- * Checks that an array has an item, and narrows it so that its first item is defined.
+ * Checks whether an array has an item, and narrows it so that its first item is defined.
  *
  * @template T - The type of the items.
  * @param items - The array to check.

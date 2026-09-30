@@ -1,6 +1,7 @@
 // Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced,
-// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style the
-// autofix applies (never disabled); `warning` = a style without autofix (disabled for one line, with a reason).
+// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style fixed
+// on save: the property order, the Prettier formatting (never disabled); `warning` = a choice to justify (disabled
+// for one line, with a reason). Notations are free.
 // Disable comments (`// stylelint-disable-next-line <rule> -- <reason>`): a rule set to `warning` may be disabled
 // for one line, with a reason; a rule set to `error` cannot be disabled at all. A disable that is no longer needed
 // is an error too.

@@ -13,11 +13,11 @@ import type { SvgTransformOrder } from './svg-transform-order';
  * @param reference - The element giving the anchor, in any group. Defaults to the element itself.
  * @returns The order, to change with `set(angleDegrees, anchor, reference)`.
  * @example
- * const rotation = svgRotate(0, 'center', hub);
+ * const rotation = svgRotateBy(0, 'center', hub);
  * applySvgTransforms(needle, [rotation]);
  * rotation.set(30, 'center', hub); // 30° around the hub, from where it was drawn
  */
-export function svgRotate(
+export function svgRotateBy(
   angleDegrees: number,
   anchor: Anchor = 'center',
   reference?: SVGGraphicsElement,

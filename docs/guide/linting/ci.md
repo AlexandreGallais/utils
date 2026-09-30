@@ -19,7 +19,8 @@ The scripts, in `package.json`:
     "lint": "ESLINT_INFO_RULES=off eslint . --concurrency auto",
     "lint:strict": "pnpm lint --max-warnings 0",
     "lint:css": "stylelint \"**/*.scss\"",
-    "lint:css:strict": "pnpm lint:css --max-warnings 0"
+    "lint:css:strict": "pnpm lint:css --max-warnings 0",
+    "lint:css:fix": "stylelint \"**/*.scss\" --fix"
   }
 }
 ```

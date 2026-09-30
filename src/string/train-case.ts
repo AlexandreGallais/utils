@@ -1,17 +1,17 @@
 import { capitalize } from './capitalize';
-import { words } from './words';
+import { splitWords } from './split-words';
 
 /**
  * Converts a string to Train-Case: capitalized words joined with `-`, as in HTTP header names.
  *
- * @param input - Any identifier or sentence.
+ * @param input - The identifier or sentence to convert, in any case style.
  * @returns The Train-Case string; `''` when there is no word.
  * @example
  * trainCase('contentType'); // 'Content-Type'
  * trainCase('x_request_id'); // 'X-Request-Id'
  */
 export function trainCase(input: string): string {
-  return words(input)
+  return splitWords(input)
     .map((word) => capitalize(word.toLowerCase()))
     .join('-');
 }

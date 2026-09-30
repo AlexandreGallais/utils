@@ -7,12 +7,12 @@ import type { SvgTransformOrder } from './svg-transform-order';
  * only, from what the element shows without it.
  *
  * @param element - A rendered SVG element.
- * @param orders - The orders, such as `svgRotateTo(0)`, `svgPlace(target)`, `svgRotate(0)`.
+ * @param orders - The orders, such as `svgRotateTo(0)`, `svgPlaceOn(target)`, `svgRotateBy(0)`.
  * @throws {TypeError} When the element is not rendered or not inside an `<svg>`, or an order was not created
  * by an order function.
  * @example
- * const rotation = svgRotate(0);
- * applySvgTransforms(needle, [svgPlace(hub, 'center', 'bottom'), rotation]);
+ * const rotation = svgRotateBy(0);
+ * applySvgTransforms(needle, [svgPlaceOn(hub, 'center', 'bottom'), rotation]);
  * rotation.set(45); // at each frame: 45° more than its first position
  */
 export function applySvgTransforms(element: SVGGraphicsElement, orders: readonly SvgTransformOrder<never>[]): void {

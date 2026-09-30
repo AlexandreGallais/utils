@@ -1,6 +1,6 @@
-import { words } from './words';
+import { splitWords } from './split-words';
 
-describe(words, () => {
+describe(splitWords, () => {
   it.for([
     ['helloWorld', ['hello', 'World']],
     ['HelloWorld', ['Hello', 'World']],
@@ -14,10 +14,10 @@ describe(words, () => {
     ['élémentÉtat', ['élément', 'État']],
     ['a.b/c', ['a', 'b', 'c']],
   ] as const)('splits %j', ([input, expected]) => {
-    expect(words(input)).toStrictEqual(expected);
+    expect(splitWords(input)).toStrictEqual(expected);
   });
 
   it.for(['', ' '.repeat(3), '-_./'])('returns no word for %j', (input) => {
-    expect(words(input)).toStrictEqual([]);
+    expect(splitWords(input)).toStrictEqual([]);
   });
 });

@@ -1,17 +1,17 @@
 import { isObject } from '../guard';
 
 /**
- * Compares two values at the first level, with `Object.is`: skips an update when a new object carries the
+ * Checks whether two values are equal at the first level, with `Object.is`: skips an update when a new object carries the
  * same values as the previous one.
  *
- * @param a - A value.
- * @param b - Another value.
+ * @param a - The first value.
+ * @param b - The second value.
  * @returns `true` when both values are shallowly equal; nested objects are compared by reference.
  * @example
- * shallowEqual({ x: 1, y: 2 }, { y: 2, x: 1 }); // true
- * shallowEqual({ p: { x: 1 } }, { p: { x: 1 } }); // false
+ * isShallowEqual({ x: 1, y: 2 }, { y: 2, x: 1 }); // true
+ * isShallowEqual({ p: { x: 1 } }, { p: { x: 1 } }); // false
  */
-export function shallowEqual(a: unknown, b: unknown): boolean {
+export function isShallowEqual(a: unknown, b: unknown): boolean {
   if (Object.is(a, b)) {
     return true;
   }

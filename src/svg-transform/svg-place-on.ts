@@ -12,9 +12,9 @@ import type { SvgTransformOrder } from './svg-transform-order';
  * @param anchor - The point of the element that lands on it. Defaults to `'center'`.
  * @returns The order, to change with `set(reference, referenceAnchor, anchor)`.
  * @example
- * applySvgTransforms(badge, [svgPlace(symbol, 'bottom-left', 'top-right')]); // the badge corner on the symbol corner
+ * applySvgTransforms(badge, [svgPlaceOn(symbol, 'bottom-left', 'top-right')]); // the badge corner on the symbol corner
  */
-export function svgPlace(
+export function svgPlaceOn(
   reference: SVGGraphicsElement,
   referenceAnchor: Anchor = 'center',
   anchor: Anchor = 'center',

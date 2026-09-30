@@ -471,3 +471,9 @@ convertTemperature(value: number, from: TemperatureUnit, to: TemperatureUnit): n
 type VolumeUnit
 convertVolume(value: number, from: VolumeUnit, to: VolumeUnit): number
 ```
+
+### math (removed part)
+
+```ts
+clampedRatio(value: number, total: number): number // clamp(ratio(value, total))
+```

@@ -1,4 +1,4 @@
-// Type guards and assertions that narrow `unknown` values (enum guards are in `enum`).
+// Guards: type guards and assertions that narrow values (the enum guards are in `enum`).
 
 export { assertNever } from './assert-never';
 export { assert } from './assert';
@@ -9,6 +9,8 @@ export { isDefined } from './is-defined';
 export { isFiniteNumber } from './is-finite-number';
 export { isFunction } from './is-function';
 export { isNotUndefined } from './is-not-undefined';
+export { isNull } from './is-null';
+export { isNullish } from './is-nullish';
 export { isNumber } from './is-number';
 export { isObject } from './is-object';
 export { isRecord } from './is-record';

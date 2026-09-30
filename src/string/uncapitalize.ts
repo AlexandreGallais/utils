@@ -1,7 +1,7 @@
 /**
  * Lower-cases the first character of a string and leaves the rest unchanged: the reverse of `capitalize`.
  *
- * @param input - Any string.
+ * @param input - The string.
  * @returns The string with its first character in lower case.
  * @example
  * uncapitalize('RingBuffer'); // 'ringBuffer'

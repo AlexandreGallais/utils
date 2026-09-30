@@ -584,3 +584,29 @@ Règles d'écriture formalisées d'abord (section « Writing a function » d'[`A
 - **Ordres** : `svgRotate(angle, anchor, reference)` (angle absolu à l'écran, autour d'une ancre de l'élément ou d'un autre ; `svgRotate(0)` redresse), `svgFlip(isFlipped, axis, anchor)` (miroir absolu tel que vu ; `svgFlip(false)` démiroite), `svgScale(scaleX, scaleY, anchor)` (dans les axes de l'élément, l'ancre donne le sens), `svgTranslate(dx, dy)` (axes de l'élément), `svgMove(dx, dy)` (direction de l'écran, unités du parent), `svgPlace(reference, referenceAnchor, anchor)`. Les resets disparaissent : rotation et miroir absolus les remplacent.
 - **Révision** : `svgRotate` devient relatif (un angle depuis la position avant l'ordre : `set(90)` après `set(3)` donne 90°, pas 93°) et `svgRotateTo` est la rotation absolue à l'écran. `svgMove` est retiré (`svgTranslate` et `svgPlace` suffisent). `set` ne met à jour que le transform de son ordre, calculé d'après ce que l'élément montre sans lui, les transforms suivants compris : les autres ordres ne bougent pas. `svgTranslate` et `svgScale` agissent dans les axes de l'élément tel qu'il est affiché.
 - **Formes** : les `drawSvg…` deviennent `createSvg…Path` (`createSvgArcPath`, `createSvgArcBandPath`, `createSvgArcTicksPath`, `createSvgPiePath`, `createSvgBarRangePath`, `createSvgBarTicksPath`) et renvoient la chaîne `d` au lieu de l'écrire. L'élément `target` ne sert qu'à donner le repère des coordonnées ; il n'est pas modifié.
+
+## Vingt et unième lot : noms explicites, derniers retraits
+
+- **Ordres SVG** : `By` pour un ordre relatif, `To` pour un absolu, `On` pour un placement : `svgRotateBy`, `svgRotateTo`, `svgFlipTo`, `svgScaleBy`, `svgTranslateBy`, `svgPlaceOn`.
+- **Renommages** : `words` → `splitWords`, `interpolate` → `formatTemplate` (un `format…` rend un texte, et « interpolate » se confondait avec l'interpolation numérique), `shallowEqual` → `isShallowEqual` (un booléen commence par `is`).
+- **Retrait** : `createSvgArcBandPath` (une bande rendue par un `stroke-width` épais sur l'arc de `createSvgArcPath`).
+- **Gardes** : `isNull` et `isNullish` (l'inverse de `isDefined`).
+- **Fichiers** : les helpers privés sont au-dessus de la fonction qui les utilise, dans l'ordre des dépendances.
+- **Gardés tels quels** : `digitsInfo = '1.0-3'` (le défaut du `DecimalPipe` d'Angular), `maxFractionDigits` (le nom d'`Intl.NumberFormat`).
+
+## Vingt-deuxième lot : Stylelint allégé, config racine, ménage
+
+- **Stylelint** : erreur = une vraie faute (propriété, unité, sélecteur inconnus, doublons, valeur invalide, syntaxe dépréciée, bugs Sass) ou l'ordre des propriétés corrigé à la sauvegarde ; warning = un choix à justifier (`rem` décimal, `!important`, `#id`, couleur nommée, imbrication). Off : les notations (`#fff`, `rgb()` moderne, alpha en %, guillemets, casse), les lignes vides et espacements (Prettier), les préfixes vendeurs (ajoutés par le build Angular), les polices (UIs hors ligne) et la plupart des patterns de nommage. Même structure qu'ESLint : un fichier par concept.
+- **`stylelint.config.mjs`** à la racine, comme `eslint.config.mjs`.
+- **Ménage** : l'ancien `dist/` supprimé ; les transferts régénérés (`lint`, `src`, `src/svg-transform` + `src/svg-shape`). Les benchmarks restent : ils justifient les caches `Intl` et `roundToFractionDigits`.
+
+## Vingt-troisième lot : une doc uniforme
+
+- **Règles de formulation** dans `AGENTS.md` : une fonction commence par un verbe, un booléen par « Checks whether… », un ordre SVG par « An order of `applySvgTransforms` that… », un type par un nom ; un `@param` par « The… » (« Whether… » pour un booléen, « Returns… » pour un callback) et finit par « Defaults to `x`. » ; un `@returns` par « The… » ou « `true` when… », les cas limites après un `;`.
+- **Descriptions des thèmes** au même format : `// <Thème>: <contenu>.` (elles titrent les sections du README et du wiki).
+- **Guides** relus : « Getting started » (la lib se copie, par dossier ou par fichier), « Transfer folders » (exemples à jour), « Tests » (commandes), titres alignés entre ESLint et Stylelint.
+
+## Vingt-quatrième lot : stylelint-prettier
+
+- **`stylelint-prettier`** (5.0.3) : Prettier tourne comme une règle Stylelint (`prettier/prettier`, erreur corrigée à la sauvegarde), comme `eslint-plugin-prettier` côté ESLint ; il lit `.prettierrc.json`. Un bloc `lint/stylelint/rules/prettier.mjs` de plus. `stylelint-config-prettier` reste inutile : Stylelint n'a plus de règles de mise en page depuis la version 15.
+- **`pnpm lint:css:fix`** corrige le SCSS (ordre des propriétés, formatage Prettier), à côté de `pnpm lint:fix` pour le TypeScript.

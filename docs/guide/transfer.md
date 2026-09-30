@@ -5,8 +5,9 @@ file** that recreates them: paste its text into a file there, run it with Node, 
 their whole tree.
 
 ```sh
-pnpm transfer                  # transfer/lint.mjs: the lint/ folder
-pnpm transfer src/svg src/dom  # transfer/src-svg+src-dom.mjs: two themes, and the themes they import
+pnpm transfer                                  # transfer/lint.mjs: the lint/ folder
+pnpm transfer src                              # transfer/src.mjs: the whole library
+pnpm transfer src/svg-transform src/svg-shape  # two themes, and the themes they import
 ```
 
 On the other machine:
@@ -17,9 +18,8 @@ node lint.mjs ../my-workspace  # or in another folder
 node lint.mjs --force          # replaces the files that already exist (kept otherwise)
 ```
 
-- A folder of `src/` brings the folders of `src/` it imports (`src/svg` brings `src/math`), so that the copy
-  compiles. Their `index.ts` come along: the
-  imports go through them.
+- A folder of `src/` brings the folders of `src/` it imports (`src/svg-shape` brings `src/svg-transform` and
+  `src/math`), so that the copy compiles. Their `index.ts` come along: the imports go through them.
 - The file is plain JavaScript text: every file of the folders is a string inside it. It can be read before it
   is run.
 - `transfer/` is ignored by Git.

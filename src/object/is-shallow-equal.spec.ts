@@ -1,6 +1,6 @@
-import { shallowEqual } from './shallow-equal';
+import { isShallowEqual } from './is-shallow-equal';
 
-describe(shallowEqual, () => {
+describe(isShallowEqual, () => {
   it.for([
     [1, 1, true],
     [NaN, NaN, true],
@@ -16,11 +16,11 @@ describe(shallowEqual, () => {
     [[1, 2], { 0: 1, 1: 2 }, false],
     [{ p: { x: 1 } }, { p: { x: 1 } }, false],
   ] as const)('compares %j and %j as %s', ([a, b, expected]) => {
-    expect(shallowEqual(a, b)).toBe(expected);
+    expect(isShallowEqual(a, b)).toBe(expected);
   });
 
   it('accepts shared nested references', () => {
     const point = { x: 1 };
-    expect(shallowEqual({ point }, { point })).toBe(true);
+    expect(isShallowEqual({ point }, { point })).toBe(true);
   });
 });

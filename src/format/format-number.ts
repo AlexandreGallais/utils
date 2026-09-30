@@ -5,6 +5,20 @@ const formatters = [
   new Map<string, Map<string, Intl.NumberFormat>>(),
 ] as const;
 
+function createFormatter(digitsInfo: string, locale: string, useGrouping: boolean): Intl.NumberFormat {
+  const groups = DIGITS_INFO_PATTERN.exec(digitsInfo)?.groups;
+  if (!groups) {
+    throw new TypeError(`digitsInfo must look like '1.0-3', got '${digitsInfo}'`);
+  }
+  return new Intl.NumberFormat(locale, {
+    minimumIntegerDigits: Number(groups['minInteger']),
+    minimumFractionDigits: Number(groups['minFraction']),
+    maximumFractionDigits: Number(groups['maxFraction']),
+    useGrouping,
+    signDisplay: 'negative',
+  });
+}
+
 /**
  * Formats a number like Angular's `DecimalPipe`: digits driven by `digitsInfo`, separators of a locale.
  * `NaN`, infinities and `-0` are handled like `formatDecimal`.
@@ -38,18 +52,4 @@ export function formatNumber(value: number, digitsInfo = '1.0-3', locale = 'en-U
     localeFormatters.set(digitsInfo, formatter);
   }
   return formatter.format(value);
-}
-
-function createFormatter(digitsInfo: string, locale: string, useGrouping: boolean): Intl.NumberFormat {
-  const groups = DIGITS_INFO_PATTERN.exec(digitsInfo)?.groups;
-  if (!groups) {
-    throw new TypeError(`digitsInfo must look like '1.0-3', got '${digitsInfo}'`);
-  }
-  return new Intl.NumberFormat(locale, {
-    minimumIntegerDigits: Number(groups['minInteger']),
-    minimumFractionDigits: Number(groups['minFraction']),
-    maximumFractionDigits: Number(groups['maxFraction']),
-    useGrouping,
-    signDisplay: 'negative',
-  });
 }

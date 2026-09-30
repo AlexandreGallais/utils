@@ -1,5 +1,5 @@
 /**
- * Tells whether a value moved enough since the displayed one to be worth a render (a deadband). A switch
+ * Checks whether a value moved enough since the displayed one to be worth a render (a deadband). A switch
  * between a number and `NaN` always counts.
  *
  * @param previous - The displayed value.

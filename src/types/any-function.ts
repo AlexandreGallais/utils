@@ -1,5 +1,5 @@
 /**
- * Any function, for generic constraints such as `F extends AnyFunction` (safer than `Function`, which also
+ * A type for any function, for generic constraints such as `F extends AnyFunction` (safer than `Function`, which also
  * accepts classes and has an untyped call).
  *
  * @example

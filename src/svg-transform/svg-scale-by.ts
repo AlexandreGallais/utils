@@ -11,11 +11,11 @@ import type { SvgTransformOrder } from './svg-transform-order';
  * @param anchor - The point of its drawing that stays in place. Defaults to `'center'`.
  * @returns The order, to change with `set(scaleX, scaleY, anchor)`.
  * @example
- * const level = svgScale(1, 0, 'bottom');
+ * const level = svgScaleBy(1, 0, 'bottom');
  * applySvgTransforms(tankLevel, [level]);
  * level.set(1, 0.75, 'bottom'); // filled to 75 %, from the bottom
  */
-export function svgScale(
+export function svgScaleBy(
   scaleX: number,
   scaleY = scaleX,
   anchor: Anchor = 'center',

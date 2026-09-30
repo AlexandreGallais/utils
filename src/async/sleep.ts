@@ -1,8 +1,13 @@
+function abortReason(signal: AbortSignal): Error {
+  const reason: unknown = signal.reason;
+  return reason instanceof Error ? reason : new Error(String(reason));
+}
+
 /**
  * Waits for a delay, cancellable with an `AbortSignal` that clears the timer.
  *
  * @param ms - The delay in milliseconds. Defaults to `0`.
- * @param signal - Cancels the wait.
+ * @param signal - The signal that cancels the wait.
  * @returns A promise resolved once the delay has elapsed.
  * @rejects {Error} With the signal's reason when `signal` is aborted.
  * @example
@@ -25,9 +30,4 @@ export async function sleep(ms = 0, signal?: AbortSignal): Promise<void> {
     }
     signal?.addEventListener('abort', onAbort, { once: true });
   });
-}
-
-function abortReason(signal: AbortSignal): Error {
-  const reason: unknown = signal.reason;
-  return reason instanceof Error ? reason : new Error(String(reason));
 }

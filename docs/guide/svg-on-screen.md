@@ -4,7 +4,7 @@ Two folders work on rendered `SVGGraphicsElement`s, whatever the groups and tran
 with the browser's own SVG API (`transform.baseVal`, `createSVGTransform`, `getScreenCTM`, `getBBox`):
 
 - `svg-transform` moves, turns, mirrors and scales elements, and finds their anchors;
-- `svg-shape` creates the `d` of gauges around elements: arcs, bands, ticks, pies and bars.
+- `svg-shape` creates the `d` of gauges around elements: arcs, ticks, pies and bars.
 
 ## Orders, applied one after the other
 
@@ -14,10 +14,10 @@ stay.
 
 ```ts
 applySvgTransforms(symbol, [
-  svgFlip(false), // not mirrored on screen
+  svgFlipTo(false), // not mirrored on screen
   svgRotateTo(0), // upright on screen
-  svgPlace(target), // its center on the center of the target, even in another group
-  svgTranslate(0, -10), // then 10 units up, along its own axes (upright now)
+  svgPlaceOn(target), // its center on the center of the target, even in another group
+  svgTranslateBy(0, -10), // then 10 units up, along its own axes (upright now)
 ]);
 ```
 
@@ -26,21 +26,21 @@ the same arguments as its function: only its own transform is updated, from what
 it. The other orders do not move, so put them in the order you need.
 
 ```ts
-const rotation = svgRotate(0, 'center', hub); // around the center of the hub, in another group
-applySvgTransforms(needle, [svgPlace(hub, 'center', 'bottom'), rotation]);
+const rotation = svgRotateBy(0, 'center', hub); // around the center of the hub, in another group
+applySvgTransforms(needle, [svgPlaceOn(hub, 'center', 'bottom'), rotation]);
 
 rotation.set(3, 'center', hub); // 3° from where it was drawn
 rotation.set(90, 'center', hub); // 90° from where it was drawn, not 93°
 ```
 
-| Order                                            | Effect                                                                       |
-| ------------------------------------------------ | ---------------------------------------------------------------------------- |
-| `svgRotate(angle, anchor?, reference?)`          | turns it by an angle from its position before the order, clockwise on screen |
-| `svgRotateTo(angle, anchor?, reference?)`        | turns it to an absolute angle on screen: `svgRotateTo(0)` straightens it     |
-| `svgFlip(isFlipped?, axis?, anchor?)`            | makes it mirrored or not, as seen on screen: `svgFlip(false)` unmirrors it   |
-| `svgScale(scaleX, scaleY?, anchor?)`             | enlarges it in its own axes, from an anchor: `'left'` grows to the right     |
-| `svgTranslate(dx, dy)`                           | moves it along its own axes: turned by 90°, "right" goes down                |
-| `svgPlace(reference, referenceAnchor?, anchor?)` | puts one of its anchors on an anchor of another element                      |
+| Order                                              | Effect                                                                       |
+| -------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `svgRotateBy(angle, anchor?, reference?)`          | turns it by an angle from its position before the order, clockwise on screen |
+| `svgRotateTo(angle, anchor?, reference?)`          | turns it to an absolute angle on screen: `svgRotateTo(0)` straightens it     |
+| `svgFlipTo(isFlipped?, axis?, anchor?)`            | makes it mirrored or not, as seen on screen: `svgFlipTo(false)` unmirrors it |
+| `svgScaleBy(scaleX, scaleY?, anchor?)`             | enlarges it in its own axes, from an anchor: `'left'` grows to the right     |
+| `svgTranslateBy(dx, dy)`                           | moves it along its own axes: turned by 90°, "right" goes down                |
+| `svgPlaceOn(reference, referenceAnchor?, anchor?)` | puts one of its anchors on an anchor of another element                      |
 
 The rotations turn around an anchor of the element itself, or of another element in any group.
 `clearSvgTransforms(element)` empties the list.
@@ -61,7 +61,7 @@ its coordinates, usually the `<path>` that receives it. Convert values with `rat
 ```ts
 const arc = { center: hub, radius: 40, startAngle: -135, sweepAngle: 270 };
 track.setAttribute('d', createSvgArcPath(track, arc)); // the track
-redZone.setAttribute('d', createSvgArcBandPath(redZone, { ...arc, startAngle: 81, sweepAngle: 54 }, 6)); // a threshold zone
+zone.setAttribute('d', createSvgArcPath(zone, { ...arc, startAngle: 81, sweepAngle: 54 })); // a threshold zone: a thick stroke
 majorTicks.setAttribute('d', createSvgArcTicksPath(majorTicks, arc, 6, 8)); // 7 ticks
 remaining.setAttribute('d', createSvgPiePath(remaining, { ...arc, startAngle: 0, sweepAngle: 360 * ratio(left, total) }));
 const labelPoint = getSvgArcPoint(labels, { ...arc, radius: 28 }, 0.5);

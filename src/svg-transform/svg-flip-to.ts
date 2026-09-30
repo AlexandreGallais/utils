@@ -5,7 +5,7 @@ import type { SvgTransformOrder } from './svg-transform-order';
 
 /**
  * An order of `applySvgTransforms` that makes the element mirrored or not, as seen on screen, around one of
- * its anchors: `svgFlip(false)` makes a mirrored text readable again.
+ * its anchors: `svgFlipTo(false)` makes a mirrored text readable again.
  *
  * @param isFlipped - Whether the element must look mirrored. Defaults to `true`.
  * @param axis - The mirror used when the state changes: `'horizontal'` swaps left and right, `'vertical'` top
@@ -13,11 +13,11 @@ import type { SvgTransformOrder } from './svg-transform-order';
  * @param anchor - The point of the element that stays in place. Defaults to `'center'`.
  * @returns The order, to change with `set(isFlipped, axis, anchor)`.
  * @example
- * const flip = svgFlip(false);
+ * const flip = svgFlipTo(false);
  * applySvgTransforms(valve, [flip]);
  * flip.set(true); // facing the other way, same place
  */
-export function svgFlip(
+export function svgFlipTo(
   isFlipped = true,
   axis: 'horizontal' | 'vertical' = 'horizontal',
   anchor: Anchor = 'center',

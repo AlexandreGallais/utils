@@ -1,6 +1,6 @@
-// Objects: picking, omitting, mapping values, shallow and deep equality.
+// Objects: picking, omitting, mapping values, emptiness and equality.
 
-export { shallowEqual } from './shallow-equal';
+export { isShallowEqual } from './is-shallow-equal';
 export { pick } from './pick';
 export { omit } from './omit';
 export { mapValues } from './map-values';

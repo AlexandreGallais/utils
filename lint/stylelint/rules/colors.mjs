@@ -1,6 +1,7 @@
 // Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced,
-// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style the
-// autofix applies (never disabled); `warning` = a style without autofix (disabled for one line, with a reason).
+// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style fixed
+// on save: the property order, the Prettier formatting (never disabled); `warning` = a choice to justify (disabled
+// for one line, with a reason). Notations are free.
 // Colors: notations, named colors, invalid hex, color functions.
 
 /**
@@ -11,24 +12,28 @@
 export default function colorsBlock() {
   return {
     rules: {
-      'alpha-value-notation': [
-        'percentage',
-        { exceptProperties: ['opacity', 'fill-opacity', 'flood-opacity', 'stop-opacity', 'stroke-opacity'] },
-      ],
-      'color-function-alias-notation': 'without-alpha',
-      'color-function-notation': 'modern',
+      // Off: a notation choice, not a mistake.
+      'alpha-value-notation': null,
+      // Off: a notation choice, not a mistake.
+      'color-function-alias-notation': null,
+      // Off: a notation choice, not a mistake.
+      'color-function-notation': null,
       'color-hex-alpha': null,
-      'color-hex-length': 'short',
+      // Off: a notation choice, not a mistake.
+      'color-hex-length': null,
       // Custom: colors come from variables or custom properties, not `red`.
       'color-named': ['never', { severity: 'warning' }],
       'color-no-hex': null,
       'color-no-invalid-hex': true,
       'function-url-no-scheme-relative': null,
-      'function-url-quotes': 'always',
+      // Off: a notation choice, not a mistake.
+      'function-url-quotes': null,
       'function-url-scheme-allowed-list': null,
       'function-url-scheme-disallowed-list': null,
-      'hue-degree-notation': 'angle',
-      'lightness-notation': 'percentage',
+      // Off: a notation choice, not a mistake.
+      'hue-degree-notation': null,
+      // Off: a notation choice, not a mistake.
+      'lightness-notation': null,
     },
   };
 }

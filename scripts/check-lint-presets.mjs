@@ -69,10 +69,11 @@ const STYLELINT_CASE = {
     '  // stylelint-disable-next-line color-no-invalid-hex -- an error cannot be disabled.',
     '  color: #ggg;',
     '  padding: 1.5rem;',
+    '  margin:0;',
     '}',
     '',
   ].join('\n'),
-  rules: ['local/disable-only-warnings', 'declaration-property-value-disallowed-list'],
+  rules: ['local/disable-only-warnings', 'declaration-property-value-disallowed-list', 'prettier/prettier'],
 };
 
 /**

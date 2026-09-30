@@ -1,5 +1,6 @@
 /**
- * Checks whether a value is neither `null` nor `undefined`. `isNotUndefined` lets `null` through.
+ * Checks whether a value is neither `null` nor `undefined`: the opposite of `isNullish`. `isNotUndefined` lets
+ * `null` through.
  *
  * @template T - The type of the value.
  * @param value - The value to check.
