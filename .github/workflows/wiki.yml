@@ -32,6 +32,8 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # The SVG specs run in Chromium (the `browser` project of Vitest): headless shell only, with its system libraries.
+      - run: pnpm exec playwright install --with-deps --only-shell chromium
       - run: pnpm wiki:build
         env:
           WIKI_BASE: /${{ github.event.repository.name }}/

@@ -284,7 +284,7 @@ pnpm only (`corepack enable` makes the pinned version available).
 
 ```sh
 pnpm install
-pnpm exec playwright install chromium   # once, for the benchmarks
+pnpm exec playwright install chromium   # once, for the SVG specs and the benchmarks
 pnpm test          # unit tests (watch: pnpm test:watch)
 pnpm coverage      # tests + coverage report (coverage/), 100 % required
 pnpm lint          # ESLint (in parallel), info rules off: errors fail (lint:strict: warnings too)
