@@ -1,4 +1,4 @@
-import { shuffle } from './shuffle.ts';
+import { shuffle } from './shuffle';
 
 describe(shuffle, () => {
   it('keeps the same items and leaves the input untouched', () => {

@@ -1,6 +1,6 @@
-import { moveTowards } from '../math/move-towards.ts';
-import { angleDifference } from './angle-difference.ts';
-import { normalizeAngle } from './normalize-angle.ts';
+import { moveTowards } from '../math';
+import { angleDifference } from './angle-difference';
+import { normalizeAngle } from './normalize-angle';
 
 /**
  * Turns an angle towards a target at a limited angular speed, along the shortest way around the circle: a

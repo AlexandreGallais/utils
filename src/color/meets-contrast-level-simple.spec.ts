@@ -1,4 +1,4 @@
-import { meetsContrastLevelSimple } from './meets-contrast-level-simple.ts';
+import { meetsContrastLevelSimple } from './meets-contrast-level-simple';
 
 describe(meetsContrastLevelSimple, () => {
   it('uses the normal text thresholds', () => {

@@ -1,4 +1,4 @@
-import { maxOf } from './max-of.ts';
+import { maxOf } from './max-of';
 
 describe(maxOf, () => {
   it('finds the largest value', () => {

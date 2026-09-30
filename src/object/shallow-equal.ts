@@ -1,4 +1,4 @@
-import { isObject } from '../guard/is-object.ts';
+import { isObject } from '../guard';
 
 /**
  * Compares two values at the first level: primitives with `Object.is`, objects and arrays by their own

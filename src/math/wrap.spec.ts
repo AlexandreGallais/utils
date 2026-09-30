@@ -1,4 +1,4 @@
-import { wrap } from './wrap.ts';
+import { wrap } from './wrap';
 
 describe(wrap, () => {
   it.for([

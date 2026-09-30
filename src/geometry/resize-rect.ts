@@ -1,7 +1,7 @@
-import type { Anchor } from './anchor.ts';
-import { getAnchorPoint } from './get-anchor-point.ts';
-import type { Rect } from './rect.ts';
-import type { Size } from './size.ts';
+import type { Anchor } from './anchor';
+import { getAnchorPoint } from './get-anchor-point';
+import type { Rect } from './rect';
+import type { Size } from './size';
 
 /**
  * Changes the size of a rectangle while one of its anchors stays in place: a bar shrinking towards its base,

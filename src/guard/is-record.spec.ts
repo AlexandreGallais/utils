@@ -1,4 +1,4 @@
-import { isRecord } from './is-record.ts';
+import { isRecord } from './is-record';
 
 class Point {
   public readonly x = 0;

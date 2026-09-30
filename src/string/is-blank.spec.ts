@@ -1,4 +1,4 @@
-import { isBlank } from './is-blank.ts';
+import { isBlank } from './is-blank';
 
 describe(isBlank, () => {
   it.for([

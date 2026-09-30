@@ -1,4 +1,4 @@
-import { scaleSvgElement } from './scale-svg-element.ts';
+import { scaleSvgElement } from './scale-svg-element';
 
 /**
  * Enlarges or shrinks an SVG element on screen, like `scaleSvgElement`.

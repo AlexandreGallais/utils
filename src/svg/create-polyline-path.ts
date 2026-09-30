@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { formatCoordinate } from './internal/format-coordinate.ts';
+import type { Point } from '../geometry';
+import { formatCoordinate } from './internal';
 
 /**
  * Builds the `d` attribute of a broken line through points: a trend line, a sparkline, an outline.

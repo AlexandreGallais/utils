@@ -1,4 +1,4 @@
-import { createIdentityMatrix } from './create-identity-matrix.ts';
+import { createIdentityMatrix } from './create-identity-matrix';
 
 describe(createIdentityMatrix, () => {
   it('creates the identity transform', () => {

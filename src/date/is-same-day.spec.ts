@@ -1,4 +1,4 @@
-import { isSameDay } from './is-same-day.ts';
+import { isSameDay } from './is-same-day';
 
 describe(isSameDay, () => {
   it('compares UTC days', () => {

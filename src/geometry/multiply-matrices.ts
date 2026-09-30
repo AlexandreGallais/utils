@@ -1,4 +1,4 @@
-import type { Matrix2D } from './matrix-2d.ts';
+import type { Matrix2D } from './matrix-2d';
 
 /**
  * Composes two transforms, in the order of an SVG `transform` list: `multiplyMatrices(m1, m2)` is

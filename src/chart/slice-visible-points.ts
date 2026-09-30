@@ -1,4 +1,4 @@
-import type { Point } from '../geometry/point.ts';
+import type { Point } from '../geometry';
 
 /**
  * Keeps the points of a time series inside a horizontal window, by binary search: `O(log n)` instead of a

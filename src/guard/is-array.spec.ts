@@ -1,4 +1,4 @@
-import { isArray } from './is-array.ts';
+import { isArray } from './is-array';
 
 describe(isArray, () => {
   it('accepts arrays only', () => {

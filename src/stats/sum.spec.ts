@@ -1,4 +1,4 @@
-import { sum } from './sum.ts';
+import { sum } from './sum';
 
 describe(sum, () => {
   it('adds the values', () => {

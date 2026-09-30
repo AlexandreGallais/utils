@@ -1,5 +1,5 @@
-import { createCirclePath } from './create-circle-path.ts';
-import { getSvgAnchorPointIn } from './get-svg-anchor-point-in.ts';
+import { createCirclePath } from './create-circle-path';
+import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
 
 /**
  * Draws a circle in a `<path>` around the center of an element, whatever groups each one is in: a ring

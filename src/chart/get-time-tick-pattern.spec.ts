@@ -1,4 +1,4 @@
-import { getTimeTickPattern } from './get-time-tick-pattern.ts';
+import { getTimeTickPattern } from './get-time-tick-pattern';
 
 describe(getTimeTickPattern, () => {
   it.for([

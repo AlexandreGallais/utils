@@ -1,4 +1,4 @@
-import { sampleSimple } from './sample-simple.ts';
+import { sampleSimple } from './sample-simple';
 
 describe(sampleSimple, () => {
   it('picks an item', () => {

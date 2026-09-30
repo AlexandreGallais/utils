@@ -1,4 +1,4 @@
-import { clamp } from '../math/clamp.ts';
+import { clamp } from '../math';
 
 /**
  * Computes the `stroke-dashoffset` that shows only the first part of a stroke, with

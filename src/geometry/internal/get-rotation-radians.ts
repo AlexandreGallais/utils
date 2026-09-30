@@ -1,4 +1,4 @@
-import type { Matrix2D } from '../matrix-2d.ts';
+import type { Matrix2D } from '../matrix-2d';
 
 /**
  * Reads the rotation of a transform, a mirrored transform being read as a horizontal flip applied before

@@ -1,4 +1,4 @@
-import { randomInt } from './random-int.ts';
+import { randomInt } from './random-int';
 
 /** Syllables whose combinations read like words of a Latin placeholder text. */
 const SYLLABLES = ['lo', 'rem', 'ip', 'sum', 'do', 'lor', 'sit', 'a', 'met', 'con', 'sec', 'te', 'tur', 'el', 'it'];

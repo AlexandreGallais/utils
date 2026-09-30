@@ -1,4 +1,4 @@
-import { createLoggerSimple } from './create-logger-simple.ts';
+import { createLoggerSimple } from './create-logger-simple';
 
 describe(createLoggerSimple, () => {
   it('writes to the console', () => {

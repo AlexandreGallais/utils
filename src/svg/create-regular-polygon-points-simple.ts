@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { createRegularPolygonPoints } from './create-regular-polygon-points.ts';
+import type { Point } from '../geometry';
+import { createRegularPolygonPoints } from './create-regular-polygon-points';
 
 /**
  * Computes the vertices of a regular polygon like `createRegularPolygonPoints`, the first vertex pointing up.

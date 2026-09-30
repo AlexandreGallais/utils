@@ -1,4 +1,4 @@
-import { easeInQuad } from './ease-in-quad.ts';
+import { easeInQuad } from './ease-in-quad';
 
 describe(easeInQuad, () => {
   it('starts at 0 and ends at 1', () => {

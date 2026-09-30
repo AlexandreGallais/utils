@@ -1,4 +1,4 @@
-import { randomBoolean } from './random-boolean.ts';
+import { randomBoolean } from './random-boolean';
 
 describe(randomBoolean, () => {
   it('draws true below the probability', () => {

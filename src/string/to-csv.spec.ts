@@ -1,4 +1,4 @@
-import { toCsv } from './to-csv.ts';
+import { toCsv } from './to-csv';
 
 describe(toCsv, () => {
   it('joins fields and lines', () => {

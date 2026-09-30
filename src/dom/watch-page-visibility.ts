@@ -1,4 +1,4 @@
-import { listen } from './listen.ts';
+import { listen } from './listen';
 
 /**
  * Follows whether the page is visible: calls back at once with the current state, then each time the tab is

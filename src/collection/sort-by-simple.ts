@@ -1,5 +1,5 @@
-import { sortBy } from './sort-by.ts';
-import type { SortKey } from './sort-key.ts';
+import { sortBy } from './sort-by';
+import type { SortKey } from './sort-key';
 
 /**
  * Sorts items by a key like `sortBy`, in ascending order.

@@ -1,7 +1,7 @@
-import { invertMatrix } from './invert-matrix.ts';
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Point } from './point.ts';
-import { transformDelta } from './transform-delta.ts';
+import { invertMatrix } from './invert-matrix';
+import type { Matrix2D } from './matrix-2d';
+import type { Point } from './point';
+import { transformDelta } from './transform-delta';
 
 /**
  * Converts a movement made on screen (a drag) into the local coordinates of a transformed element, so it can

@@ -1,4 +1,4 @@
-import { lerp } from './lerp.ts';
+import { lerp } from './lerp';
 
 /**
  * Moves a value towards a target with frame-rate independent exponential smoothing: about 63 % of the

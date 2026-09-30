@@ -1,8 +1,8 @@
 import { Component, computed, inject } from '@angular/core';
-import { UserListComponent } from '../../organisms/user-list/user-list.component';
-import { UsersStore } from '../../stores/users/users.store';
-import { formatCount } from '../../utils/text/format-count';
-import type { User } from '../../models/users/user';
+import { UserListComponent } from '../../organisms';
+import { UsersStore } from '../../stores';
+import { formatCount } from '../../utils';
+import type { User } from '../../models';
 
 /** Page: connects the organisms to the stores. */
 @Component({

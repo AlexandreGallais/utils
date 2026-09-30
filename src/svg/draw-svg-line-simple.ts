@@ -1,4 +1,4 @@
-import { drawSvgLine } from './draw-svg-line.ts';
+import { drawSvgLine } from './draw-svg-line';
 
 /**
  * Draws a straight line in a `<path>` between two elements, like `drawSvgLine`.

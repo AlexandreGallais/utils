@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { createArcPath } from './create-arc-path.ts';
+import type { Point } from '../geometry';
+import { createArcPath } from './create-arc-path';
 
 /** A full turn, in degrees. */
 const FULL_TURN = 360;

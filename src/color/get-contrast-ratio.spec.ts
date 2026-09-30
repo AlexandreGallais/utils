@@ -1,6 +1,6 @@
-import { getContrastRatio } from './get-contrast-ratio.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { getContrastRatio } from './get-contrast-ratio';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 const BLACK: Rgb = { r: 0, g: 0, b: 0 };
 

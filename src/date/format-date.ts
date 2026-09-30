@@ -1,5 +1,5 @@
-import type { DateParts } from './date-parts.ts';
-import { getDateParts } from './get-date-parts.ts';
+import type { DateParts } from './date-parts';
+import { getDateParts } from './get-date-parts';
 
 const YEAR_WIDTH = 4;
 const MILLISECOND_WIDTH = 3;

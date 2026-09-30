@@ -1,4 +1,4 @@
-import { randomText } from './random-text.ts';
+import { randomText } from './random-text';
 
 /**
  * Draws a placeholder text of a fixed length, like `randomText`.

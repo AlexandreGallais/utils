@@ -1,4 +1,4 @@
-import { downloadText } from './download-text.ts';
+import { downloadText } from './download-text';
 
 /**
  * Makes the browser save text as a file like `downloadText`.

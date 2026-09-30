@@ -1,4 +1,4 @@
-import { convertAngularVelocity } from './convert-angular-velocity.ts';
+import { convertAngularVelocity } from './convert-angular-velocity';
 
 describe(convertAngularVelocity, () => {
   it.for([

@@ -1,4 +1,4 @@
-import { smoothAngleTowards } from './smooth-angle-towards.ts';
+import { smoothAngleTowards } from './smooth-angle-towards';
 
 describe(smoothAngleTowards, () => {
   it('turns the short way through north', () => {

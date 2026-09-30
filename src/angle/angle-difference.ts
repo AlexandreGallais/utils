@@ -1,4 +1,4 @@
-import { wrap } from '../math/wrap.ts';
+import { wrap } from '../math';
 
 /** Half a turn, in degrees: the unit conversion factor between degrees and π radians. */
 const HALF_TURN = 180;

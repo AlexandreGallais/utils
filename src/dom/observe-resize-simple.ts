@@ -1,4 +1,4 @@
-import { observeResize } from './observe-resize.ts';
+import { observeResize } from './observe-resize';
 
 /**
  * Watches the size of an element like `observeResize`, measuring its content box.

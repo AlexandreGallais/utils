@@ -1,4 +1,4 @@
-import { kebabCase } from './kebab-case.ts';
+import { kebabCase } from './kebab-case';
 
 describe(kebabCase, () => {
   it.for([

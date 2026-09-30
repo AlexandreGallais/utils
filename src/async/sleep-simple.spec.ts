@@ -1,4 +1,4 @@
-import { sleepSimple } from './sleep-simple.ts';
+import { sleepSimple } from './sleep-simple';
 
 describe(sleepSimple, () => {
   beforeEach(() => {

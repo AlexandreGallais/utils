@@ -1,5 +1,5 @@
-import { getNamedColorValue } from './internal/get-named-color-value.ts';
-import type { Rgba } from './rgba.ts';
+import { getNamedColorValue } from './internal';
+import type { Rgba } from './rgba';
 
 /** Bit positions and mask of each channel in a `0xrrggbb` value. */
 const RED_SHIFT = 16;

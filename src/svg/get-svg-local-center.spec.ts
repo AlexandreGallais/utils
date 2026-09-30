@@ -1,5 +1,5 @@
-import { getSvgLocalCenter } from './get-svg-local-center.ts';
-import { asSvgElement, createFakeSvgElement } from './testing/fake-svg-element.ts';
+import { getSvgLocalCenter } from './get-svg-local-center';
+import { asSvgElement, createFakeSvgElement } from './testing';
 
 describe(getSvgLocalCenter, () => {
   it('returns the center of the bounding box', () => {

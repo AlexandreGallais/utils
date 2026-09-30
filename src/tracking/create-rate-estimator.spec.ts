@@ -1,4 +1,4 @@
-import { createRateEstimator } from './create-rate-estimator.ts';
+import { createRateEstimator } from './create-rate-estimator';
 
 describe(createRateEstimator, () => {
   it('returns NaN until the second sample', () => {

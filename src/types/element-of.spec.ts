@@ -1,4 +1,4 @@
-import type { ElementOf } from './element-of.ts';
+import type { ElementOf } from './element-of';
 
 describe('ElementOf', () => {
   it('reads the item type', () => {

@@ -1,5 +1,5 @@
-import { moveMatrix } from '../geometry/move-matrix.ts';
-import { updateScreenMatrix } from './internal/update-screen-matrix.ts';
+import { moveMatrix } from '../geometry';
+import { updateScreenMatrix } from './internal';
 
 /**
  * Moves an SVG element by an offset in screen pixels, whatever its rotation, flip and groups: 5 to the left

@@ -1,13 +1,13 @@
 // Statistics on arrays and typed arrays, without spreading them.
 
-export { maxOf } from './max-of.ts';
-export { mean } from './mean.ts';
-export { minOf } from './min-of.ts';
-export type { NumberList } from './number-list.ts';
-export { sum } from './sum.ts';
-export { quantile } from './quantile.ts';
-export { median } from './median.ts';
-export { standardDeviation } from './standard-deviation.ts';
-export { variance } from './variance.ts';
-export { varianceSimple } from './variance-simple.ts';
-export { standardDeviationSimple } from './standard-deviation-simple.ts';
+export { maxOf } from './max-of';
+export { mean } from './mean';
+export { minOf } from './min-of';
+export type { NumberList } from './number-list';
+export { sum } from './sum';
+export { quantile } from './quantile';
+export { median } from './median';
+export { standardDeviation } from './standard-deviation';
+export { variance } from './variance';
+export { varianceSimple } from './variance-simple';
+export { standardDeviationSimple } from './standard-deviation-simple';

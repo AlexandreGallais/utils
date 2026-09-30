@@ -1,4 +1,4 @@
-import { getRectCenter } from './get-rect-center.ts';
+import { getRectCenter } from './get-rect-center';
 
 describe(getRectCenter, () => {
   it.for([

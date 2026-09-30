@@ -1,5 +1,5 @@
-import { scaleRect } from './scale-rect.ts';
-import type { Rect } from './rect.ts';
+import { scaleRect } from './scale-rect';
+import type { Rect } from './rect';
 
 /**
  * Scales a rectangle like `scaleRect`, uniformly around its center: a bar that shrinks with a value.

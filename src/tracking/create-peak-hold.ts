@@ -1,5 +1,5 @@
-import { moveTowards } from '../math/move-towards.ts';
-import type { PeakHold } from './peak-hold.ts';
+import { moveTowards } from '../math';
+import type { PeakHold } from './peak-hold';
 
 /**
  * Creates a peak-hold indicator, like the marker of an audio level meter or the max needle of a gauge: the

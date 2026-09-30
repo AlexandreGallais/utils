@@ -1,4 +1,4 @@
-import { addDaysSimple } from './add-days-simple.ts';
+import { addDaysSimple } from './add-days-simple';
 
 describe(addDaysSimple, () => {
   it('adds local days', () => {

@@ -1,4 +1,4 @@
-import { splitDuration } from './split-duration.ts';
+import { splitDuration } from './split-duration';
 
 const TWO_DIGITS = 2;
 /** A `TimeSpan` fraction has 7 digits: ticks of 100 ns, that is 10 000 per millisecond. */

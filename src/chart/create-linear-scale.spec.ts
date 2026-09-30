@@ -1,4 +1,4 @@
-import { createLinearScale } from './create-linear-scale.ts';
+import { createLinearScale } from './create-linear-scale';
 
 describe(createLinearScale, () => {
   it('maps values to coordinates and back', () => {

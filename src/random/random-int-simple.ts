@@ -1,4 +1,4 @@
-import { randomInt } from './random-int.ts';
+import { randomInt } from './random-int';
 
 /**
  * Draws a random integer between two bounds, both included, like `randomInt`.

@@ -1,5 +1,5 @@
-import { clamp } from './clamp.ts';
-import { ratio } from './ratio.ts';
+import { clamp } from './clamp';
+import { ratio } from './ratio';
 
 /**
  * Divides a value by a total and clamps the result to [0, 1]: a progress or fill level.

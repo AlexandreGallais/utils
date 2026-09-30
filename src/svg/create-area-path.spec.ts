@@ -1,4 +1,4 @@
-import { createAreaPath } from './create-area-path.ts';
+import { createAreaPath } from './create-area-path';
 
 describe(createAreaPath, () => {
   it('closes the area down to the baseline', () => {

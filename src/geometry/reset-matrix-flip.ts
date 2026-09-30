@@ -1,7 +1,7 @@
-import { withFixedPoint } from './internal/with-fixed-point.ts';
-import { isMatrixFlipped } from './is-matrix-flipped.ts';
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Point } from './point.ts';
+import { withFixedPoint } from './internal';
+import { isMatrixFlipped } from './is-matrix-flipped';
+import type { Matrix2D } from './matrix-2d';
+import type { Point } from './point';
 
 /**
  * Cancels the mirroring of a transform without moving the element: the pivot stays at the same place on

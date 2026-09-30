@@ -1,4 +1,4 @@
-import { parseEnumValue } from './parse-enum-value.ts';
+import { parseEnumValue } from './parse-enum-value';
 
 enum Level {
   Low = 0,

@@ -1,4 +1,4 @@
-import { createSmoothPath } from './create-smooth-path.ts';
+import { createSmoothPath } from './create-smooth-path';
 
 describe(createSmoothPath, () => {
   it('passes through every point with cubic curves', () => {

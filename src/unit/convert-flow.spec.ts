@@ -1,4 +1,4 @@
-import { convertFlow } from './convert-flow.ts';
+import { convertFlow } from './convert-flow';
 
 describe(convertFlow, () => {
   it.for([

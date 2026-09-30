@@ -1,4 +1,4 @@
-import { roundToFractionDigits } from '../math/round-to-fraction-digits.ts';
+import { roundToFractionDigits } from '../math';
 
 const MINUTES_PER_DEGREE = 60;
 const SECONDS_PER_MINUTE = 60;

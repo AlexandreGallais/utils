@@ -1,4 +1,4 @@
-import { randomBetween } from './random-between.ts';
+import { randomBetween } from './random-between';
 
 describe(randomBetween, () => {
   it('maps the random source onto the interval', () => {

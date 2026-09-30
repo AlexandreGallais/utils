@@ -1,4 +1,4 @@
-import { formatDuration } from './format-duration.ts';
+import { formatDuration } from './format-duration';
 
 /**
  * Formats a duration like `formatDuration`, to the whole second.

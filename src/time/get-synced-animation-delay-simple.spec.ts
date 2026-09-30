@@ -1,4 +1,4 @@
-import { getSyncedAnimationDelaySimple } from './get-synced-animation-delay-simple.ts';
+import { getSyncedAnimationDelaySimple } from './get-synced-animation-delay-simple';
 
 describe(getSyncedAnimationDelaySimple, () => {
   it('stays within one period', () => {

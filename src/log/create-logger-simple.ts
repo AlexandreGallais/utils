@@ -1,5 +1,5 @@
-import { createLogger } from './create-logger.ts';
-import type { Logger } from './logger.ts';
+import { createLogger } from './create-logger';
+import type { Logger } from './logger';
 
 /**
  * Creates a logger like `createLogger`, writing everything to the console.

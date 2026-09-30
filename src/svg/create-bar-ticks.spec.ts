@@ -1,4 +1,4 @@
-import { createBarTicks } from './create-bar-ticks.ts';
+import { createBarTicks } from './create-bar-ticks';
 
 const VERTICAL = {
   min: 0,

@@ -1,7 +1,23 @@
-import { getAnchorPoint } from './get-anchor-point.ts';
-import type { PlaceRectOptions } from './place-rect-options.ts';
-import type { Rect } from './rect.ts';
-import type { Size } from './size.ts';
+import { getAnchorPoint } from './get-anchor-point';
+import type { Rect } from './rect';
+import type { Size } from './size';
+import type { Anchor } from './anchor';
+import type { Point } from './point';
+
+/** Where `placeRect` puts a box relative to a target box. */
+export interface PlaceRectOptions {
+  /** Point of the target box to attach to, such as `'top-right'`. */
+  readonly targetAnchor: Anchor;
+
+  /**
+   * Point of the placed box that lands on the target anchor; the same as `targetAnchor` when omitted, which
+   * places the box inside the target's corner. `'center'` centers it on the anchor, the opposite corner
+   * (`'bottom-left'` for `'top-right'`) puts it outside.
+   */
+  readonly selfAnchor?: Anchor;
+  /** Shift applied last, in screen directions (`y` grows downwards): a padding or a gap. */
+  readonly offset?: Point;
+}
 
 /**
  * Places a box of a given size relative to a target box: a badge on the top-right corner of a symbol, a

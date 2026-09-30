@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { formatCoordinate } from './internal/format-coordinate.ts';
+import type { Point } from '../geometry';
+import { formatCoordinate } from './internal';
 
 /**
  * Builds the `d` attribute of an arrow from one point to another, with a triangular head: a velocity or

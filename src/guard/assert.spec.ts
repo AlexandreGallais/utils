@@ -1,4 +1,4 @@
-import { assert } from './assert.ts';
+import { assert } from './assert';
 
 const checkAssert: (condition: unknown, message: string) => void = assert;
 

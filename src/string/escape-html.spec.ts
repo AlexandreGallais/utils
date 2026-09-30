@@ -1,4 +1,4 @@
-import { escapeHtml } from './escape-html.ts';
+import { escapeHtml } from './escape-html';
 
 describe(escapeHtml, () => {
   it.for([

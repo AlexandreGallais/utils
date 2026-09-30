@@ -1,4 +1,4 @@
-import { randomHexColorSimple } from './random-hex-color-simple.ts';
+import { randomHexColorSimple } from './random-hex-color-simple';
 
 describe(randomHexColorSimple, () => {
   it('returns a #rrggbb color', () => {

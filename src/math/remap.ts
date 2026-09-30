@@ -1,6 +1,6 @@
-import { clamp } from './clamp.ts';
-import { inverseLerp } from './inverse-lerp.ts';
-import { lerp } from './lerp.ts';
+import { clamp } from './clamp';
+import { inverseLerp } from './inverse-lerp';
+import { lerp } from './lerp';
 
 /**
  * Maps a value from an input range to an output range, such as a sensor reading to a gauge angle. Inverted

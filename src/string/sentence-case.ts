@@ -1,5 +1,5 @@
-import { capitalize } from './capitalize.ts';
-import { words } from './words.ts';
+import { capitalize } from './capitalize';
+import { words } from './words';
 
 /**
  * Converts an identifier to a human-readable sentence: words separated by spaces, the first capitalized,

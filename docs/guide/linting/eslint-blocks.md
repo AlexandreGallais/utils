@@ -1,65 +1,86 @@
-# ESLint blocks
+# Blocks and rules
 
-Each block is a function in `lint/eslint/` returning named flat config objects. Spread them in
-`defineConfig([…])`: the order matters, a later block overrides an earlier one (the profiles already use the
-right order). The blocks are grouped by **what they lint**, and the code rules by **concept**, whatever the
-plugin: `code/conditions` holds the rules of ESLint, SonarJS and Unicorn about conditions.
+Each block is a function in `lint/eslint/` returning named flat config objects. The presets spread them in
+the right order (a later block overrides an earlier one); a project only imports a preset.
 
-| Folder        | Files                    | Blocks                                                                                                          |
-| ------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| `setup/`      | —                        | `files` (shared globs), `javascript` (linter options, globals), `typescript` (parser, types)                    |
-| `code/`       | JS + TS                  | one block per concept (below), plus `imports`, `file-names`, `jsdoc`, `regexp`, `prettier`, `eslint-directives` |
-| `templates/`  | HTML (Angular templates) | `angular-template`, `angular-accessibility`, `angular-i18n`                                                     |
-| `frameworks/` | TS                       | `angular`, `angular-i18n`, `ngrx-signals`, `rxjs`, `storybook`                                                  |
-| `tests/`      | specs, benchmarks        | `vitest`                                                                                                        |
-| `node/`       | configs, scripts         | `tooling`: Node APIs and default exports allowed                                                                |
-| `project/`    | depends                  | `app` (locked rules), `architecture` (atomic design), `compat` (browsers), `one-function-per-file`              |
+## Rules, by concept
 
-The concepts of `code/`: `conditions`, `loops`, `functions`, `classes`, `objects-and-collections`, `arrays`,
-`strings`, `regular-expressions`, `numbers`, `types`, `variables`, `async`, `errors`, `modules`, `naming`,
-`comments`, `complexity`, `dead-code`, `security`, `browser-apis`, `node-apis`, `test-code`, `modern-syntax`,
-`formatting`, `other-frameworks`. Each concept file exports two configs: `code/<concept>` for every code file
-(core, SonarJS and Unicorn rules, under `// ---- Plugin ----` headers) and `code/<concept>/typescript` for the
-TypeScript files (typescript-eslint rules, and the core rules they replace turned off).
+`lint/eslint/rules/` holds the rules of ESLint, typescript-eslint, SonarJS and import-x, **one file per concept**, so
+that a rule is found by what it checks, not by its plugin. Each concept file exports two configs:
+`rules/<concept>` for every JavaScript and TypeScript file, and `rules/<concept>/typescript` for the
+TypeScript files (the typescript-eslint rules, and the core rules they replace turned off).
 
-Every rule, its setting and its reason is listed in the [rule reference](/lint-rules/), generated from these
-files.
+| Concept                                        | What it checks                                                         |
+| ---------------------------------------------- | ---------------------------------------------------------------------- |
+| `async`                                        | Promises, async / await, timers: nothing floating, nothing forgotten.  |
+| `browser-apis`                                 | DOM, events, web APIs and the console.                                 |
+| `classes`                                      | Constructors, members, accessors, `this`, inheritance.                 |
+| `comments`                                     | Warning comments (TODO), comment style.                                |
+| `complexity`                                   | Size and nesting limits (warnings).                                    |
+| `conditions`                                   | if / else, ternaries, booleans, equality, exhaustive switches.         |
+| `dead-code`                                    | Unused variables, unreachable code, useless statements.                |
+| `errors`                                       | Throwing `Error` instances, catching, rejecting.                       |
+| `functions`                                    | Declarations, parameters, return values, callbacks.                    |
+| `loops`                                        | `for`, `for…of`, `while`, iteration.                                   |
+| `modern-syntax`                                | Spread, destructuring, template literals, `const`.                     |
+| `modules`                                      | import / export, no `require`, private `internal/` folders.            |
+| `naming`                                       | The naming convention (camelCase, PascalCase types, UPPER_CASE).       |
+| `numbers`                                      | Magic numbers, `NaN`, parsing, precision.                              |
+| `objects-and-collections`, `arrays`, `strings` | Methods and literals of each data type.                                |
+| `regular-expressions`                          | Valid, readable patterns with the `v` flag and named groups.           |
+| `security`                                     | `eval`, implied eval, sanitizer bypasses.                              |
+| `types`                                        | No `any`, no `!`, assertions, type definitions.                        |
+| `variables`                                    | Declarations, shadowing, globals.                                      |
+| `formatting`                                   | Prettier, and the few layout rules outside it.                         |
+| `imports`                                      | import-x: declared dependencies, **no cycle**, order, folder imports.  |
+| `file-names`                                   | Kebab-case files and folders (`local/`).                               |
+| `exports`                                      | One exported function or class per source file (`local/`).             |
+| `disable-comments`                             | The policy of the `eslint-disable` comments (`local/`).                |
+| `test-code`                                    | SonarJS test rules, and the relaxations specs and benchmarks need.     |
+| `node-apis`, `other-frameworks`                | SonarJS rules on Node APIs, and on frameworks not used here (all off). |
 
-## Profiles
+## SonarJS, in the same files
 
-One profile per file in `lint/profiles/`; a project imports one and passes its options:
+The SonarJS rules sit in the concept files too, under `// ---- SonarJS ----`: the **Sonar way** profile of
+SonarQube is on, the other rules are off (`Off: not in the Sonar way profile`). A SonarJS rule that duplicates a
+core rule stays off (`Off: duplicate of …`): the code already meets it, and a mistake gives one message, not
+two. The few SonarJS rules that measure differently (cognitive complexity instead of `complexity`) replace
+the core rule, which is off (`Off: replaced by sonarjs/…`). See [Standards and SonarQube](./standards.md).
 
-| Profile                         | For                                               | Adds                                      |
-| ------------------------------- | ------------------------------------------------- | ----------------------------------------- |
-| `eslint-core.mjs`               | any TypeScript project                            | setup, `code/`, `tests/`, `node/`         |
-| `eslint-typescript-library.mjs` | a TypeScript library (this repository, a SVG lib) | `code/jsdoc` on the public API            |
-| `eslint-angular-common.mjs`     | shared by the two Angular profiles                | `frameworks/`, `templates/`, architecture |
-| `eslint-angular-library.mjs`    | an Angular library of features                    | —                                         |
-| `eslint-angular-app.mjs`        | an Angular application                            | `project/app`, `project/compat`           |
-| `stylelint.mjs`                 | SCSS of a design system                           | every block of `lint/stylelint/`          |
+## Modes, library, frameworks
 
-## Cost
+These blocks sit in `lint/eslint/rules/` too; the presets choose them:
 
-Typed rules (typescript-eslint, `rxjs`) need the TypeScript program: they are the **high** cost of a lint.
-`import-x/no-cycle` follows every import (medium). The other blocks are cheap. See [Performance](./performance.md).
+| Block                | Added by                                                 | What it does                                                                                |
+| -------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `node`               | `typescript-node` (the root)                             | Node globals and modules, tool default exports, imports with extension, devDependencies.    |
+| `browser`            | every project preset, on `sourceFiles`                   | Browser globals, no Node module, folder imports without extension, no stray console.        |
+| `library`            | `angular-library`, `typescript-browser` with `isLibrary` | `any` and `void` free in a generic API.                                                     |
+| `angular-components` | `angular-library`, `angular-app`                         | Components, directives, pipes, services, signals, `inject()`, OnPush.                       |
+| `angular-templates`  | `angular-library`, `angular-app`                         | Control flow, bindings, complexity of the templates; accessibility and i18n off.            |
+| `storybook`          | `storybookPackageDirectory`                              | Only what breaks a story or lies in a test; default exports and PascalCase stories allowed. |
 
-## architecture: atomic design
+Screen-reader accessibility and `@angular/localize` are not used (simulators, texts translated with
+Transloco): their rules are listed and off, except what is odd anyway (`autofocus`, a positive `tabindex`:
+warnings).
 
-The layers of a design system library and of its features, by folder name. A layer imports only the layers
-below it; utils (pure functions) and models (shared types) are allowed everywhere; only `data-access` may use
-`HttpClient`.
+## The rules written here
 
-<<< @/../lint/eslint/project/architecture.mjs
+`lint/eslint/rules/local/` is a small plugin for what no plugin does the way the presets need:
 
-See [Atomic design](../css/atomic-design.md) for what goes in each layer.
+| Rule                            | What it checks                                                                           |
+| ------------------------------- | ---------------------------------------------------------------------------------------- |
+| `local/kebab-case-path`         | Kebab-case files and folders; dots separate words, dot folders are skipped.              |
+| `local/export-matches-filename` | One exported function or class per file, named after it (a warning); its types may stay. |
+| `local/import-folders`          | Imports through a folder's index: required in the sources, simplified on save (autofix). |
+| `local/disable-only-warnings`   | An `eslint-disable` names its rules, and only rules set to `warn`.                       |
+| `local/disable-reason`          | A reason after `--` (a warning).                                                         |
+| `local/disable-next-line-only`  | Only `eslint-disable-next-line`; no block or file disable, no inline config.             |
 
-## Angular: frameworks/ and templates/
+<<< @/../lint/eslint/rules/local/disable-only-warnings.mjs
 
-Angular is split in four so that a project enables what it needs. The template block turns the
-accessibility and i18n rules **off**, and the two dedicated blocks turn them **on**:
+## Remove a plugin
 
-<<< @/../lint/eslint/templates/angular-accessibility.mjs
-
-## code/security
-
-<<< @/../lint/eslint/code/security.mjs
+A project that does not want a plugin removes it after its preset, by keyword, with
+`setup/without-plugins.mjs`: `withoutPlugins(angularPreset({ … }), ['sonarjs'])`. The rules turned off because
+the removed plugin covered them come back on, so nothing is left unchecked.

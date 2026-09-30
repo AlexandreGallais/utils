@@ -1,4 +1,4 @@
-import { words } from './words.ts';
+import { words } from './words';
 
 /**
  * Converts a string to kebab-case: lowercase words joined with `-`, as in file names, CSS classes and URLs.

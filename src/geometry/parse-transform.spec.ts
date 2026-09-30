@@ -1,4 +1,4 @@
-import { parseTransform } from './parse-transform.ts';
+import { parseTransform } from './parse-transform';
 
 describe(parseTransform, () => {
   it.for([

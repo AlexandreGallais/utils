@@ -1,4 +1,4 @@
-import { convertSpeed } from './convert-speed.ts';
+import { convertSpeed } from './convert-speed';
 
 describe(convertSpeed, () => {
   it.for([

@@ -1,4 +1,4 @@
-import type { Scale } from './scale.ts';
+import type { Scale } from './scale';
 
 /** Base of the logarithm: each power of ten takes the same length. */
 const BASE = 10;

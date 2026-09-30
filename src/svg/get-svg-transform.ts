@@ -1,5 +1,5 @@
-import type { Matrix2D } from '../geometry/matrix-2d.ts';
-import { parseTransform } from '../geometry/parse-transform.ts';
+import type { Matrix2D } from '../geometry';
+import { parseTransform } from '../geometry';
 
 /**
  * Reads the `transform` attribute of an SVG element as a matrix, from its local coordinates to its parent's.

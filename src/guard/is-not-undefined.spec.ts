@@ -1,4 +1,4 @@
-import { isNotUndefined } from './is-not-undefined.ts';
+import { isNotUndefined } from './is-not-undefined';
 
 describe(isNotUndefined, () => {
   it('excludes undefined only', () => {

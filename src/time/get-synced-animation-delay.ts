@@ -1,4 +1,4 @@
-import { getAnimationPhase } from './get-animation-phase.ts';
+import { getAnimationPhase } from './get-animation-phase';
 
 /**
  * Computes the negative `animation-delay` that puts a CSS animation in phase with every other one of the

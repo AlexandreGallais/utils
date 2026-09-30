@@ -1,4 +1,4 @@
-import { trainCase } from './train-case.ts';
+import { trainCase } from './train-case';
 
 describe(trainCase, () => {
   it.for([

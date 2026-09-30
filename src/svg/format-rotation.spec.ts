@@ -1,4 +1,4 @@
-import { formatRotation } from './format-rotation.ts';
+import { formatRotation } from './format-rotation';
 
 describe(formatRotation, () => {
   it('writes a rotation around the center', () => {

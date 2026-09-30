@@ -1,7 +1,6 @@
-import { createPiePath } from './create-pie-path.ts';
-import { drawSvgPie } from './draw-svg-pie.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createGaugeScene } from './testing/gauge-scene.ts';
+import { createPiePath } from './create-pie-path';
+import { drawSvgPie } from './draw-svg-pie';
+import { asSvgElement, createGaugeScene } from './testing';
 
 describe(drawSvgPie, () => {
   it('draws a slice joined to the center of the element', () => {

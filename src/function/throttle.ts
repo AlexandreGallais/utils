@@ -1,4 +1,4 @@
-import type { RateLimitedFunction } from './rate-limited-function.ts';
+import type { RateLimitedFunction } from './rate-limited-function';
 
 /**
  * Limits a function to one call per interval: the first call runs immediately, the next ones are coalesced

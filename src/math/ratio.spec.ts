@@ -1,4 +1,4 @@
-import { ratio } from './ratio.ts';
+import { ratio } from './ratio';
 
 describe(ratio, () => {
   it.for([

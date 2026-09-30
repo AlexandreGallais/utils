@@ -1,4 +1,4 @@
-import { standardDeviationSimple } from './standard-deviation-simple.ts';
+import { standardDeviationSimple } from './standard-deviation-simple';
 
 describe(standardDeviationSimple, () => {
   it('divides by n', () => {

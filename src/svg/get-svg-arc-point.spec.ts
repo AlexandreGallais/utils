@@ -1,6 +1,5 @@
-import { getSvgArcPoint } from './get-svg-arc-point.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createGaugeScene } from './testing/gauge-scene.ts';
+import { getSvgArcPoint } from './get-svg-arc-point';
+import { asSvgElement, createGaugeScene } from './testing';
 
 describe(getSvgArcPoint, () => {
   it.for([

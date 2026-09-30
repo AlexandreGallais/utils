@@ -1,6 +1,6 @@
-import type { Anchor } from './anchor.ts';
-import type { Point } from './point.ts';
-import type { Rect } from './rect.ts';
+import type { Anchor } from './anchor';
+import type { Point } from './point';
+import type { Rect } from './rect';
 
 /** Middle of a side. */
 const MIDDLE = 0.5;

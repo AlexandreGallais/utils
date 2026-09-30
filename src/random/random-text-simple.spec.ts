@@ -1,4 +1,4 @@
-import { randomTextSimple } from './random-text-simple.ts';
+import { randomTextSimple } from './random-text-simple';
 
 describe(randomTextSimple, () => {
   it('has the requested length', () => {

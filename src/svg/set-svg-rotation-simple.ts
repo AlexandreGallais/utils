@@ -1,4 +1,4 @@
-import { setSvgRotation } from './set-svg-rotation.ts';
+import { setSvgRotation } from './set-svg-rotation';
 
 /**
  * Orients an SVG element to an absolute angle on screen, like `setSvgRotation`.

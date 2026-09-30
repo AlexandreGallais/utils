@@ -1,4 +1,4 @@
-import { isEnumValueCached } from './is-enum-value-cached.ts';
+import { isEnumValueCached } from './is-enum-value-cached';
 
 enum Direction {
   Up = 0,

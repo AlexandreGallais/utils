@@ -1,4 +1,4 @@
-import { clipPolyline } from './clip-polyline.ts';
+import { clipPolyline } from './clip-polyline';
 
 describe(clipPolyline, () => {
   const rect = { x: 0, y: 0, width: 10, height: 10 };

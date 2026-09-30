@@ -1,4 +1,4 @@
-import { isValidDate } from './is-valid-date.ts';
+import { isValidDate } from './is-valid-date';
 
 /** A timestamp in milliseconds, possibly negative, as text. */
 const TIMESTAMP_PATTERN = /^-?\d+$/v;

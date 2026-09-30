@@ -1,4 +1,4 @@
-import { generateScaleValues } from './generate-scale-values.ts';
+import { generateScaleValues } from './generate-scale-values';
 
 describe(generateScaleValues, () => {
   it('lists major and minor values without duplicates', () => {

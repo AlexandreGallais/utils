@@ -1,4 +1,4 @@
-import { isObject } from './is-object.ts';
+import { isObject } from './is-object';
 
 class Point {
   public readonly x = 0;

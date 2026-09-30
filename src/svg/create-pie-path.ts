@@ -1,7 +1,7 @@
-import type { Point } from '../geometry/point.ts';
-import { createArcPath } from './create-arc-path.ts';
-import { createCirclePath } from './create-circle-path.ts';
-import { formatCoordinate } from './internal/format-coordinate.ts';
+import type { Point } from '../geometry';
+import { createArcPath } from './create-arc-path';
+import { createCirclePath } from './create-circle-path';
+import { formatCoordinate } from './internal';
 
 /** A full turn, in degrees. */
 const FULL_TURN = 360;

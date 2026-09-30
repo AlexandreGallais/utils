@@ -1,5 +1,5 @@
-import { getSvgScreenBox } from './get-svg-screen-box.ts';
-import { asSvgElement, createFakeSvgElementIn } from './testing/fake-svg-element.ts';
+import { getSvgScreenBox } from './get-svg-screen-box';
+import { asSvgElement, createFakeSvgElementIn } from './testing';
 
 describe(getSvgScreenBox, () => {
   it('returns the visible upright box', () => {

@@ -1,4 +1,4 @@
-import { moveAngleTowards } from './move-angle-towards.ts';
+import { moveAngleTowards } from './move-angle-towards';
 
 describe(moveAngleTowards, () => {
   it.for([

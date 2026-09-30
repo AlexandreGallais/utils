@@ -1,4 +1,4 @@
-import { titleCase } from './title-case.ts';
+import { titleCase } from './title-case';
 
 describe(titleCase, () => {
   it.for([

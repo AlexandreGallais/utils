@@ -1,4 +1,5 @@
-import type { AngularVelocityUnit } from './angular-velocity-unit.ts';
+/** An angular velocity unit: revolutions per minute, degrees per second, radians per second. */
+export type AngularVelocityUnit = 'deg/s' | 'rad/s' | 'rpm';
 
 const DEGREES_PER_TURN = 360;
 const SECONDS_PER_MINUTE = 60;

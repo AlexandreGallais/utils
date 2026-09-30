@@ -1,4 +1,4 @@
-import { assertValidFractionDigits } from '../internal/assert-valid-fraction-digits.ts';
+import { assertValidFractionDigits } from '../internal';
 
 /**
  * Formatters by number of fraction digits. Creating an `Intl.NumberFormat` costs far more than formatting

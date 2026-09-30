@@ -1,4 +1,4 @@
-import { words } from './words.ts';
+import { words } from './words';
 
 /**
  * Converts a string to CONSTANT_CASE: uppercase words joined with `_`, as in constants and environment

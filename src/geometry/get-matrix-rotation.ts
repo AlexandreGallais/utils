@@ -1,6 +1,6 @@
-import { normalizeAngle } from '../angle/normalize-angle.ts';
-import { getRotationRadians } from './internal/get-rotation-radians.ts';
-import type { Matrix2D } from './matrix-2d.ts';
+import { normalizeAngle } from '../angle';
+import { getRotationRadians } from './internal';
+import type { Matrix2D } from './matrix-2d';
 
 /** Half a turn, in degrees. */
 const HALF_TURN = 180;

@@ -17,16 +17,5 @@
     "lint/**/*.mjs",
     "examples/*/src/**/*.ts",
     "examples/*/*.config.mjs"
-  ],
-  "ignoreDependencies": [
-    "@double-great/stylelint-a11y",
-    "stylelint-config-recess-order",
-    "stylelint-config-standard",
-    "stylelint-config-standard-scss",
-    "stylelint-declaration-strict-value",
-    "stylelint-high-performance-animation",
-    "stylelint-order",
-    "stylelint-plugin-logical-css",
-    "stylelint-prettier"
   ]
 }

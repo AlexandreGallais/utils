@@ -1,4 +1,4 @@
-import { rangeSimple } from './range-simple.ts';
+import { rangeSimple } from './range-simple';
 
 describe(rangeSimple, () => {
   it('counts by one', () => {

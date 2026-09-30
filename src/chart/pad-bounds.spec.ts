@@ -1,4 +1,4 @@
-import { padBounds } from './pad-bounds.ts';
+import { padBounds } from './pad-bounds';
 
 describe(padBounds, () => {
   it('adds a fraction of the range on each side', () => {

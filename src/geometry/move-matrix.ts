@@ -1,4 +1,4 @@
-import type { Matrix2D } from './matrix-2d.ts';
+import type { Matrix2D } from './matrix-2d';
 
 /**
  * Moves an element by an offset in the parent (screen) coordinates, whatever its rotation, flip or scale:

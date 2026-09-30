@@ -1,5 +1,5 @@
-import type { Point } from './point.ts';
-import type { Rect } from './rect.ts';
+import type { Point } from './point';
+import type { Rect } from './rect';
 
 /**
  * Checks whether a point lies inside a rectangle, edges included: a hit test for a click or a hover.

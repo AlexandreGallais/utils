@@ -1,4 +1,4 @@
-import { randomBetweenSimple } from './random-between-simple.ts';
+import { randomBetweenSimple } from './random-between-simple';
 
 describe(randomBetweenSimple, () => {
   it('stays within the interval', () => {

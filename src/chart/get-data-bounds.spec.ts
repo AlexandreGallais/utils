@@ -1,4 +1,4 @@
-import { getDataBounds } from './get-data-bounds.ts';
+import { getDataBounds } from './get-data-bounds';
 
 describe(getDataBounds, () => {
   it('returns the extent of the points', () => {

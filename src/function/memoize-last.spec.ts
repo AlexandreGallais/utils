@@ -1,4 +1,4 @@
-import { memoizeLast } from './memoize-last.ts';
+import { memoizeLast } from './memoize-last';
 
 describe(memoizeLast, () => {
   it('reuses the result for the same arguments', () => {

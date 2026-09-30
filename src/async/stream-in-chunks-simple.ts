@@ -1,4 +1,4 @@
-import { streamInChunks } from './stream-in-chunks.ts';
+import { streamInChunks } from './stream-in-chunks';
 
 /**
  * Delivers a list chunk by chunk with a pause between chunks, like `streamInChunks`, for `for await`.

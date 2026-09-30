@@ -1,4 +1,4 @@
-import { interpolate } from './interpolate.ts';
+import { interpolate } from './interpolate';
 
 describe(interpolate, () => {
   it('replaces the placeholders', () => {

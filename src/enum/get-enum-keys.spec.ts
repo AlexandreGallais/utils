@@ -1,4 +1,4 @@
-import { getEnumKeys } from './get-enum-keys.ts';
+import { getEnumKeys } from './get-enum-keys';
 
 enum Direction {
   Up = 0,

@@ -1,4 +1,4 @@
-import { getWcagLevel } from './get-wcag-level.ts';
+import { getWcagLevel } from './get-wcag-level';
 
 const WHITE = { r: 255, g: 255, b: 255 };
 

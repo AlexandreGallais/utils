@@ -1,4 +1,4 @@
-import { parseDate } from './parse-date.ts';
+import { parseDate } from './parse-date';
 
 describe(parseDate, () => {
   it.for([

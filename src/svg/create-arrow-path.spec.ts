@@ -1,4 +1,4 @@
-import { createArrowPath } from './create-arrow-path.ts';
+import { createArrowPath } from './create-arrow-path';
 
 describe(createArrowPath, () => {
   it('draws a horizontal arrow', () => {

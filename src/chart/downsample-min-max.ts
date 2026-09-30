@@ -1,4 +1,4 @@
-import type { Point } from '../geometry/point.ts';
+import type { Point } from '../geometry';
 
 /**
  * Reduces a long series to at most two points per bucket, its lowest and highest, so that a line drawn

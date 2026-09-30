@@ -1,4 +1,4 @@
-import { LruCache } from './lru-cache.ts';
+import { LruCache } from './lru-cache';
 
 describe(LruCache, () => {
   it('evicts the least recently used entry', () => {

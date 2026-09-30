@@ -1,5 +1,5 @@
-import { getSvgTransform } from './get-svg-transform.ts';
-import { asSvgElement, createFakeSvgElement } from './testing/fake-svg-element.ts';
+import { getSvgTransform } from './get-svg-transform';
+import { asSvgElement, createFakeSvgElement } from './testing';
 
 const BOX = { x: 0, y: 0, width: 10, height: 10 };
 

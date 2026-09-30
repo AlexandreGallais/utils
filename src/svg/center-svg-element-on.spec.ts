@@ -1,6 +1,5 @@
-import { centerSvgElementOn } from './center-svg-element-on.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { centerSvgElementOn } from './center-svg-element-on';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(centerSvgElementOn, () => {
   it('puts the visible center on the screen point', () => {

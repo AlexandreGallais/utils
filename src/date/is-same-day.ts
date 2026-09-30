@@ -1,4 +1,4 @@
-import { differenceInCalendarDays } from './difference-in-calendar-days.ts';
+import { differenceInCalendarDays } from './difference-in-calendar-days';
 
 /**
  * Checks whether two dates fall on the same calendar day, in local time or UTC: group log entries by day,

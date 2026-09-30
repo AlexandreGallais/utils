@@ -1,4 +1,4 @@
-import { headingToCardinalSimple } from './heading-to-cardinal-simple.ts';
+import { headingToCardinalSimple } from './heading-to-cardinal-simple';
 
 describe(headingToCardinalSimple, () => {
   it.for([

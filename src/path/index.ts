@@ -1,3 +1,3 @@
 // URL paths.
 
-export { joinPath } from './join-path.ts';
+export { joinPath } from './join-path';

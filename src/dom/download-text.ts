@@ -1,4 +1,4 @@
-import { downloadBlob } from './download-blob.ts';
+import { downloadBlob } from './download-blob';
 
 /**
  * Makes the browser save text generated in the page as a file: a CSV export, a JSON configuration, a log.

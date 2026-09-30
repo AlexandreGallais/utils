@@ -1,6 +1,6 @@
-import { invertMatrix } from './invert-matrix.ts';
-import { multiplyMatrices } from './multiply-matrices.ts';
-import { createRotationMatrix } from './create-rotation-matrix.ts';
+import { invertMatrix } from './invert-matrix';
+import { multiplyMatrices } from './multiply-matrices';
+import { createRotationMatrix } from './create-rotation-matrix';
 
 describe(invertMatrix, () => {
   it('inverts a scale and a translation', () => {

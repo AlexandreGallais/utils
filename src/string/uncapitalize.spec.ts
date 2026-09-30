@@ -1,4 +1,4 @@
-import { uncapitalize } from './uncapitalize.ts';
+import { uncapitalize } from './uncapitalize';
 
 describe(uncapitalize, () => {
   it.for([

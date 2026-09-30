@@ -1,5 +1,5 @@
-import { Clock } from './clock.ts';
-import type { ClockTick } from './clock-tick.ts';
+import { Clock } from './clock';
+import type { ClockTick } from './clock-tick';
 
 describe(Clock, () => {
   let time: number;

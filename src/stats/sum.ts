@@ -1,4 +1,4 @@
-import type { NumberList } from './number-list.ts';
+import type { NumberList } from './number-list';
 
 /**
  * Adds up a list of numbers.

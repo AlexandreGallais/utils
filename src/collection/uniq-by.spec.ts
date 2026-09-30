@@ -1,4 +1,4 @@
-import { uniqBy } from './uniq-by.ts';
+import { uniqBy } from './uniq-by';
 
 interface User {
   id: string;

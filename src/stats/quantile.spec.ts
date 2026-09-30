@@ -1,4 +1,4 @@
-import { quantile } from './quantile.ts';
+import { quantile } from './quantile';
 
 describe(quantile, () => {
   it.for([

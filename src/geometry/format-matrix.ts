@@ -1,5 +1,5 @@
-import { roundToFractionDigits } from '../math/round-to-fraction-digits.ts';
-import type { Matrix2D } from './matrix-2d.ts';
+import { roundToFractionDigits } from '../math';
+import type { Matrix2D } from './matrix-2d';
 
 /**
  * Formats a matrix as the value of an SVG `transform` attribute (or a CSS `transform` with commas). Values

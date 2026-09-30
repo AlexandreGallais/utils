@@ -1,4 +1,4 @@
-import { lerp } from './lerp.ts';
+import { lerp } from './lerp';
 
 /** A point of a lookup table: an input and its output. */
 type TablePoint = readonly [x: number, y: number];

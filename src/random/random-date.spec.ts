@@ -1,4 +1,4 @@
-import { randomDate } from './random-date.ts';
+import { randomDate } from './random-date';
 
 describe(randomDate, () => {
   const start = new Date('2026-01-01T00:00:00Z');

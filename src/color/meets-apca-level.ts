@@ -1,6 +1,6 @@
-import type { ApcaLevel } from './apca-level.ts';
-import { getApcaContrast } from './get-apca-contrast.ts';
-import type { Rgb } from './rgb.ts';
+import type { ApcaLevel } from './apca-level';
+import { getApcaContrast } from './get-apca-contrast';
+import type { Rgb } from './rgb';
 
 /** Minimum absolute APCA contrast (`Lc`) of each use. */
 const MIN_CONTRAST: Readonly<Record<ApcaLevel, number>> = {

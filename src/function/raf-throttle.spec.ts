@@ -1,4 +1,4 @@
-import { rafThrottle } from './raf-throttle.ts';
+import { rafThrottle } from './raf-throttle';
 
 describe(rafThrottle, () => {
   let frameCallbacks: Map<number, FrameRequestCallback>;

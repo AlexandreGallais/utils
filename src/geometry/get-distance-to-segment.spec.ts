@@ -1,4 +1,4 @@
-import { getDistanceToSegment } from './get-distance-to-segment.ts';
+import { getDistanceToSegment } from './get-distance-to-segment';
 
 describe(getDistanceToSegment, () => {
   const start = { x: 0, y: 0 };

@@ -1,7 +1,7 @@
-import { getContrastRatio } from './get-contrast-ratio.ts';
-import { getContrastWithWhite } from './get-contrast-with-white.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { getContrastRatio } from './get-contrast-ratio';
+import { getContrastWithWhite } from './get-contrast-with-white';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 const BLACK: Rgb = { r: 0, g: 0, b: 0 };
 

@@ -1,4 +1,4 @@
-import { scaleRectSimple } from './scale-rect-simple.ts';
+import { scaleRectSimple } from './scale-rect-simple';
 
 describe(scaleRectSimple, () => {
   it('scales around the center', () => {

@@ -1,4 +1,4 @@
-import { lerpPoint } from './lerp-point.ts';
+import { lerpPoint } from './lerp-point';
 
 describe(lerpPoint, () => {
   it.for([

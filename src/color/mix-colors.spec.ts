@@ -1,6 +1,6 @@
-import { mixColors } from './mix-colors.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { mixColors } from './mix-colors';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 const BLACK: Rgb = { r: 0, g: 0, b: 0 };
 

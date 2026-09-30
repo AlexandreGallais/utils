@@ -1,4 +1,4 @@
-import { TimeoutError } from './timeout-error.ts';
+import { TimeoutError } from './timeout-error';
 
 /**
  * Races a promise against a delay. The underlying operation is not cancelled on timeout: give it an

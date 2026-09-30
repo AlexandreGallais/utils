@@ -1,4 +1,4 @@
-import { getAnchorPoint } from './get-anchor-point.ts';
+import { getAnchorPoint } from './get-anchor-point';
 
 const BOX = { x: 10, y: 20, width: 100, height: 50 };
 

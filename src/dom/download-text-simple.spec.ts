@@ -1,5 +1,5 @@
-import { assert } from '../guard/assert.ts';
-import { downloadTextSimple } from './download-text-simple.ts';
+import { assert } from '../guard';
+import { downloadTextSimple } from './download-text-simple';
 
 describe(downloadTextSimple, () => {
   afterEach(() => {

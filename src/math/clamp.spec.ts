@@ -1,4 +1,4 @@
-import { clamp } from './clamp.ts';
+import { clamp } from './clamp';
 
 describe(clamp, () => {
   it.for([

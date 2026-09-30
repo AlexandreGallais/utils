@@ -1,4 +1,4 @@
-import { rotatePoint } from './rotate-point.ts';
+import { rotatePoint } from './rotate-point';
 
 describe(rotatePoint, () => {
   it.for([

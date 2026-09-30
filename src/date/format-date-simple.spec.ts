@@ -1,4 +1,4 @@
-import { formatDateSimple } from './format-date-simple.ts';
+import { formatDateSimple } from './format-date-simple';
 
 describe(formatDateSimple, () => {
   it('formats in local time', () => {

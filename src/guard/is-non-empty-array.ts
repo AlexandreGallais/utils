@@ -1,4 +1,4 @@
-import type { NonEmptyArray } from '../types/non-empty-array.ts';
+import type { NonEmptyArray } from '../types';
 
 /**
  * Checks that an array has at least one item, and narrows it so that its first item is typed as defined.

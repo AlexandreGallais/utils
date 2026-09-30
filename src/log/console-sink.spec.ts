@@ -1,4 +1,4 @@
-import { consoleSink } from './console-sink.ts';
+import { consoleSink } from './console-sink';
 
 describe(consoleSink, () => {
   afterEach(() => {

@@ -1,10 +1,10 @@
 // A small scoped logger with a replaceable output.
 
-export { consoleSink } from './console-sink.ts';
-export { createLogger } from './create-logger.ts';
-export type { LogEntry } from './log-entry.ts';
-export type { LogLevel } from './log-level.ts';
-export type { LogSink } from './log-sink.ts';
-export type { Logger } from './logger.ts';
-export type { LoggerOptions } from './logger-options.ts';
-export { createLoggerSimple } from './create-logger-simple.ts';
+export { consoleSink } from './console-sink';
+export { createLogger } from './create-logger';
+export type { LogEntry } from './log-entry';
+export type { LogLevel } from './log-level';
+export type { LogSink } from './create-logger';
+export type { Logger } from './logger';
+export type { LoggerOptions } from './create-logger';
+export { createLoggerSimple } from './create-logger-simple';

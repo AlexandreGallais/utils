@@ -1,7 +1,7 @@
-import { fitRect } from './fit-rect.ts';
-import type { FittedRect } from './fitted-rect.ts';
-import type { Rect } from './rect.ts';
-import type { Size } from './size.ts';
+import { fitRect } from './fit-rect';
+import type { FittedRect } from './fitted-rect';
+import type { Rect } from './rect';
+import type { Size } from './size';
 
 /** Alignment factor of the middle, on both axes. */
 const CENTER = 0.5;

@@ -1,8 +1,6 @@
-import { getMatrixRotation } from '../../geometry/get-matrix-rotation.ts';
-import { isMatrixFlipped } from '../../geometry/is-matrix-flipped.ts';
-import { transformRect } from '../../geometry/transform-rect.ts';
-import { createFakeSvgElementIn } from './fake-svg-element.ts';
-import type { FakeSvgElementInGroup } from './fake-svg-element.ts';
+import { getMatrixRotation, isMatrixFlipped, transformRect } from '../../geometry';
+import { createFakeSvgElementIn } from './fake-svg-element';
+import type { FakeSvgElementInGroup } from './fake-svg-element';
 
 /** A parent group that is moved, rotated by 30°, scaled by 2 and mirrored: the worst case for visual helpers. */
 const TWISTED_PARENT = { a: 1.7320508075688772, b: 1, c: 0.5, d: -0.8660254037844386, e: 50, f: 20 };

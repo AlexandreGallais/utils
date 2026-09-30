@@ -1,4 +1,4 @@
-import type { Entries } from './entries.ts';
+import type { Entries } from './entries';
 
 describe('Entries', () => {
   it('pairs each key with its value type', () => {

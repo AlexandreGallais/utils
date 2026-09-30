@@ -1,4 +1,4 @@
-import type { RateLimitedFunction } from './rate-limited-function.ts';
+import type { RateLimitedFunction } from './rate-limited-function';
 
 /**
  * Delays a function until calls have stopped for a while, then runs it once with the latest arguments.

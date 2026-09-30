@@ -1,4 +1,4 @@
-import { floorToStep } from './floor-to-step.ts';
+import { floorToStep } from './floor-to-step';
 
 describe(floorToStep, () => {
   it.for([

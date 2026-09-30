@@ -1,5 +1,5 @@
-import { convertSvgPoint } from './convert-svg-point.ts';
-import { asSvgElement, createFakeSvgElementIn } from './testing/fake-svg-element.ts';
+import { convertSvgPoint } from './convert-svg-point';
+import { asSvgElement, createFakeSvgElementIn } from './testing';
 
 describe(convertSvgPoint, () => {
   it('keeps the same screen position', () => {

@@ -1,4 +1,4 @@
-import type { AnyFunction } from './any-function.ts';
+import type { AnyFunction } from './any-function';
 
 describe('AnyFunction', () => {
   it('accepts functions only', () => {

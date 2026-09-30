@@ -1,6 +1,6 @@
-import { isFiniteNumber } from '../guard/is-finite-number.ts';
-import { createStorageItem } from './create-storage-item.ts';
-import { MemoryStorage } from './testing/memory-storage.ts';
+import { isFiniteNumber } from '../guard';
+import { createStorageItem } from './create-storage-item';
+import { MemoryStorage } from './testing';
 
 function isTheme(value: unknown): value is 'day' | 'night' {
   return value === 'day' || value === 'night';

@@ -1,4 +1,4 @@
-import { parseDateFormat } from './parse-date-format.ts';
+import { parseDateFormat } from './parse-date-format';
 
 /**
  * Reads a date written in a known pattern like `parseDateFormat`, in local time.

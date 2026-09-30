@@ -1,7 +1,7 @@
-import { composeMatrix } from './compose-matrix.ts';
-import type { Rect } from './rect.ts';
-import { createRotationMatrix } from './create-rotation-matrix.ts';
-import { transformRect } from './transform-rect.ts';
+import { composeMatrix } from './compose-matrix';
+import type { Rect } from './rect';
+import { createRotationMatrix } from './create-rotation-matrix';
+import { transformRect } from './transform-rect';
 
 function rounded(rect: Rect): Rect {
   return {

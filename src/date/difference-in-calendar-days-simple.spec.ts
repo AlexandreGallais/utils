@@ -1,4 +1,4 @@
-import { differenceInCalendarDaysSimple } from './difference-in-calendar-days-simple.ts';
+import { differenceInCalendarDaysSimple } from './difference-in-calendar-days-simple';
 
 describe(differenceInCalendarDaysSimple, () => {
   it('counts local days', () => {

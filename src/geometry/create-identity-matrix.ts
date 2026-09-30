@@ -1,4 +1,4 @@
-import type { Matrix2D } from './matrix-2d.ts';
+import type { Matrix2D } from './matrix-2d';
 
 /**
  * Creates the identity transform: points are left unchanged. The starting point of a transform built step

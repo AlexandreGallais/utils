@@ -1,4 +1,4 @@
-import { getSyncedAnimationDelay } from './get-synced-animation-delay.ts';
+import { getSyncedAnimationDelay } from './get-synced-animation-delay';
 
 /**
  * Computes the negative CSS `animation-delay` that puts an animation in phase with the others, like `getSyncedAnimationDelay`.

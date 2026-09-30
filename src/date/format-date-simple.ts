@@ -1,4 +1,4 @@
-import { formatDate } from './format-date.ts';
+import { formatDate } from './format-date';
 
 /**
  * Formats a date like `formatDate`, in local time.

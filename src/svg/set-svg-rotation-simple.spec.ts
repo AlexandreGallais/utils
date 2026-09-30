@@ -1,6 +1,5 @@
-import { setSvgRotationSimple } from './set-svg-rotation-simple.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { setSvgRotationSimple } from './set-svg-rotation-simple';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(setSvgRotationSimple, () => {
   it('sets the angle around the center', () => {

@@ -1,4 +1,4 @@
-import type { Rect } from './rect.ts';
+import type { Rect } from './rect';
 
 /**
  * Computes the smallest rectangle enclosing two rectangles, such as the area to redraw after an element

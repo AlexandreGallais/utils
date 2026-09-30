@@ -1,4 +1,4 @@
-import { moveMatrix } from './move-matrix.ts';
+import { moveMatrix } from './move-matrix';
 
 describe(moveMatrix, () => {
   it('moves in the parent coordinates whatever the rotation', () => {

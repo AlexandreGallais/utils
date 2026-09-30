@@ -1,5 +1,5 @@
-import { createSeededRandom } from './create-seeded-random.ts';
-import { randomText } from './random-text.ts';
+import { createSeededRandom } from './create-seeded-random';
+import { randomText } from './random-text';
 
 describe(randomText, () => {
   it('stays within the length bounds', () => {

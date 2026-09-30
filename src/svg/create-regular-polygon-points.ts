@@ -1,5 +1,5 @@
-import { polarToCartesian } from '../geometry/polar-to-cartesian.ts';
-import type { Point } from '../geometry/point.ts';
+import { polarToCartesian } from '../geometry';
+import type { Point } from '../geometry';
 
 const FULL_TURN = 360;
 const MIN_SIDES = 3;

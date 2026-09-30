@@ -1,6 +1,6 @@
-import { centerMatrixOn } from './center-matrix-on.ts';
-import { parseTransform } from './parse-transform.ts';
-import { transformPoint } from './transform-point.ts';
+import { centerMatrixOn } from './center-matrix-on';
+import { parseTransform } from './parse-transform';
+import { transformPoint } from './transform-point';
 
 describe(centerMatrixOn, () => {
   it('draws the pivot on the target, keeping the rotation', () => {

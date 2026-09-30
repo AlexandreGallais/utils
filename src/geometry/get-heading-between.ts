@@ -1,6 +1,5 @@
-import { normalizeAngle } from '../angle/normalize-angle.ts';
-import { radiansToDegrees } from '../angle/radians-to-degrees.ts';
-import type { Point } from './point.ts';
+import { normalizeAngle, radiansToDegrees } from '../angle';
+import type { Point } from './point';
 
 /**
  * Computes the heading from one point to another, in the library's angle convention (0° up, clockwise), the

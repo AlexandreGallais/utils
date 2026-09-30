@@ -1,4 +1,4 @@
-import { createArrowPathSimple } from './create-arrow-path-simple.ts';
+import { createArrowPathSimple } from './create-arrow-path-simple';
 
 describe(createArrowPathSimple, () => {
   it('draws a square head', () => {

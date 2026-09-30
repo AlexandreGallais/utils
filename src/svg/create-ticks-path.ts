@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { formatCoordinate } from './internal/format-coordinate.ts';
+import type { Point } from '../geometry';
+import { formatCoordinate } from './internal';
 
 /** A tick line: from `start` to `end`. */
 interface TickLine {

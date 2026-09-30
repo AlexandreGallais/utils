@@ -1,4 +1,4 @@
-import { listen } from './listen.ts';
+import { listen } from './listen';
 
 /**
  * Follows a CSS media query, such as `(prefers-reduced-motion: reduce)` or `(max-width: 600px)`: calls back

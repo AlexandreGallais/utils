@@ -1,5 +1,5 @@
-import { getDateParts } from './get-date-parts.ts';
-import type { DateParts } from './date-parts.ts';
+import { getDateParts } from './get-date-parts';
+import type { DateParts } from './date-parts';
 
 /**
  * Splits a date into readable fields like `getDateParts`, in local time.

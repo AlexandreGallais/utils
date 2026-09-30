@@ -1,4 +1,4 @@
-import { getNiceTicks } from './get-nice-ticks.ts';
+import { getNiceTicks } from './get-nice-ticks';
 
 /** Approximate number of ticks: readable on a small chart, enough to read values. */
 const TICK_COUNT = 5;

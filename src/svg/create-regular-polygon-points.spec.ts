@@ -1,5 +1,5 @@
-import { createRegularPolygonPoints } from './create-regular-polygon-points.ts';
-import { formatPoints } from './format-points.ts';
+import { createRegularPolygonPoints } from './create-regular-polygon-points';
+import { formatPoints } from './format-points';
 
 describe(createRegularPolygonPoints, () => {
   it('starts at the top and goes clockwise', () => {

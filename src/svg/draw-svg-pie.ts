@@ -1,6 +1,6 @@
-import { createPiePath } from './create-pie-path.ts';
-import { getSvgAnchorPointIn } from './get-svg-anchor-point-in.ts';
-import type { SvgArc } from './svg-arc.ts';
+import { createPiePath } from './create-pie-path';
+import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
+import type { SvgArc } from './svg-arc';
 
 /**
  * Draws a pie slice joined to the center of an element in a `<path>`, whatever groups each one is in: a

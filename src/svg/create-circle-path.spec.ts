@@ -1,4 +1,4 @@
-import { createCirclePath } from './create-circle-path.ts';
+import { createCirclePath } from './create-circle-path';
 
 describe(createCirclePath, () => {
   it('draws a closed circle from the top', () => {

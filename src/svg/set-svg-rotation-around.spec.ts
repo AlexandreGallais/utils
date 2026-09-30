@@ -1,7 +1,5 @@
-import { setSvgRotationAround } from './set-svg-rotation-around.ts';
-import { asSvgElement, createFakeSvgElementIn } from './testing/fake-svg-element.ts';
-import { describeOnScreen } from './testing/scene.ts';
-import { screenPoint } from './testing/screen-point.ts';
+import { setSvgRotationAround } from './set-svg-rotation-around';
+import { asSvgElement, createFakeSvgElementIn, describeOnScreen, screenPoint } from './testing';
 
 const IDENTITY = { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 };
 

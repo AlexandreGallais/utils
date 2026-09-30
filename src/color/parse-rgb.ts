@@ -1,9 +1,5 @@
-import { parseAlpha } from './internal/parse-alpha.ts';
-import { parseArguments } from './internal/parse-arguments.ts';
-import { parseFunctionArguments } from './internal/parse-function-arguments.ts';
-import { parseNumberOrPercentage } from './internal/parse-number-or-percentage.ts';
-import { toByte } from './internal/to-byte.ts';
-import type { Rgba } from './rgba.ts';
+import { parseAlpha, parseArguments, parseFunctionArguments, parseNumberOrPercentage, toByte } from './internal';
+import type { Rgba } from './rgba';
 
 /** Highest value of an 8-bit color channel. */
 const MAX_CHANNEL = 255;

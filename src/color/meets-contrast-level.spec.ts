@@ -1,5 +1,5 @@
-import { meetsContrastLevel } from './meets-contrast-level.ts';
-import type { Rgb } from './rgb.ts';
+import { meetsContrastLevel } from './meets-contrast-level';
+import type { Rgb } from './rgb';
 
 const BLACK: Rgb = { r: 0, g: 0, b: 0 };
 

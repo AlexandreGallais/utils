@@ -1,4 +1,4 @@
-import { transformDelta } from './transform-delta.ts';
+import { transformDelta } from './transform-delta';
 
 describe(transformDelta, () => {
   it('ignores the translation', () => {

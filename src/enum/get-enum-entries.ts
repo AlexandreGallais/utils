@@ -1,4 +1,4 @@
-import type { EnumObject } from './enum-object.ts';
+import type { EnumObject } from './enum-object';
 
 /**
  * Lists the members of an enum as `[name, value]` pairs, without the reverse mapping of numeric enums: to

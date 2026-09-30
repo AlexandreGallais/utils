@@ -1,4 +1,4 @@
-import { downsampleMinMax } from './downsample-min-max.ts';
+import { downsampleMinMax } from './downsample-min-max';
 
 function toPoints(values: readonly number[]): { x: number; y: number }[] {
   return values.map((y, x) => ({ x, y }));

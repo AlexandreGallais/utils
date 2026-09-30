@@ -1,5 +1,5 @@
-import { getMatrixRotation } from './get-matrix-rotation.ts';
-import { parseTransform } from './parse-transform.ts';
+import { getMatrixRotation } from './get-matrix-rotation';
+import { parseTransform } from './parse-transform';
 
 describe(getMatrixRotation, () => {
   it.for([

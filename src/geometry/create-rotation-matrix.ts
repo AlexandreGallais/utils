@@ -1,6 +1,6 @@
-import { degreesToRadians } from '../angle/degrees-to-radians.ts';
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Point } from './point.ts';
+import { degreesToRadians } from '../angle';
+import type { Matrix2D } from './matrix-2d';
+import type { Point } from './point';
 
 /**
  * Creates a rotation around a center, like SVG `rotate(angle cx cy)`: clockwise on screen for a positive

@@ -1,7 +1,7 @@
-import { getContrastWithBlack } from './get-contrast-with-black.ts';
-import { getContrastWithWhite } from './get-contrast-with-white.ts';
-import { parseColorOrThrow } from './parse-color-or-throw.ts';
-import type { Rgb } from './rgb.ts';
+import { getContrastWithBlack } from './get-contrast-with-black';
+import { getContrastWithWhite } from './get-contrast-with-white';
+import { parseColorOrThrow } from './parse-color-or-throw';
+import type { Rgb } from './rgb';
 
 /**
  * Picks black or white, whichever contrasts most with a background: the readable text color over it.

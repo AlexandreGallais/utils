@@ -1,5 +1,5 @@
-import type { AlarmState } from './alarm-state.ts';
-import { updateAlarmState } from './update-alarm-state.ts';
+import type { AlarmState } from './alarm-state';
+import { updateAlarmState } from './update-alarm-state';
 
 describe(updateAlarmState, () => {
   it.for([

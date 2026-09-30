@@ -1,4 +1,4 @@
-import { createPolylinePathSimple } from './create-polyline-path-simple.ts';
+import { createPolylinePathSimple } from './create-polyline-path-simple';
 
 describe(createPolylinePathSimple, () => {
   it('draws an open line', () => {

@@ -1,4 +1,4 @@
-import { createLatestRunner } from './create-latest-runner.ts';
+import { createLatestRunner } from './create-latest-runner';
 
 /** Lets pending promise callbacks run, as a real async task would. */
 async function nextTask(): Promise<void> {

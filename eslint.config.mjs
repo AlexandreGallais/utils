@@ -1,53 +1,48 @@
-// Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced.
-// TypeScript utility library (one exported function per file). The rules come from the themed blocks of lint/
-// (see the "Linting" guide of the wiki); this file only adds what is specific to this repository.
+// Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced,
+// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style the
+// autofix applies (never disabled); `warn` = a style without autofix (disabled for one line, with a reason);
+// `info` = a suggestion, shown in blue in the editor only (lint/eslint/setup/info-rules.mjs).
+// TypeScript utility library, analysed by SonarQube where it is copied. The rules come from the typescript-node
+// and typescript-browser presets of lint/ (see the "Linting" guide of the wiki).
 
 import { defineConfig, globalIgnores } from 'eslint/config';
-import oneFunctionPerFileBlock from './lint/eslint/project/one-function-per-file.mjs';
-import typescriptLibraryProfile from './lint/profiles/eslint-typescript-library.mjs';
+import { typescriptBrowserPreset, typescriptNodePreset } from './lint/index.mjs';
+
+// A single package: the root (Node mode: scripts, benchmarks, tool configs) and the library (src/, browser mode)
+// share this file. In a workspace, the root config is its own file, imported by each project's config.
+const rootConfig = typescriptNodePreset({
+  tsconfigRootDirectory: import.meta.dirname,
+  overrides: [
+    {
+      name: 'utils/lint-configs',
+      // ESLint configs list every rule explicitly and repeat the same file globs.
+      files: ['eslint.config.mjs', 'lint/**/*.mjs'],
+      rules: {
+        'max-lines': ['off'],
+        'max-lines-per-function': ['off'],
+        'sonarjs/max-lines': ['off'],
+        'sonarjs/max-lines-per-function': ['off'],
+      },
+    },
+  ],
+});
 
 export default defineConfig([
-  // Build outputs, caches and dependencies (same folders as .gitignore).
-  globalIgnores(['**/node_modules/', 'dist/', 'coverage/', 'docs/.vitepress/cache/', 'docs/.vitepress/dist/']),
-  ...typescriptLibraryProfile({
-    tsconfigRootDirectory: import.meta.dirname,
-    developmentDependencyFiles: [
-      '**/*.spec.ts',
-      '**/testing/**',
-      '**/*.bench.ts',
-      '**/*.mjs',
-      '**/*.mts',
-      // `**` skips dot folders: the wiki config needs its own pattern.
-      'docs/.vitepress/*.mts',
-    ],
-    apiFiles: ['src/**/*.ts'],
-    ignoredApiFiles: ['src/**/*.spec.ts', 'src/**/testing/**'],
+  // Outputs, caches and dependencies (same folders as .gitignore).
+  globalIgnores([
+    '**/node_modules/',
+    'dist/',
+    'coverage/',
+    'docs/.vitepress/cache/',
+    'docs/.vitepress/dist/',
+    'transfer/',
+  ]),
+  ...typescriptBrowserPreset({
+    rootConfig,
+    sourceFiles: ['src/**/*.ts'],
+    developmentDependencyFiles: ['**/*.spec.ts', '**/testing/**'],
+    isLibrary: true,
+    storybookPackageDirectory: undefined,
+    overrides: [],
   }),
-  // The wiki config lives in `docs/.vitepress/`, a folder name imposed by VitePress.
-  {
-    files: ['docs/.vitepress/*.mts'],
-    rules: {
-      // Off: VitePress requires the `.vitepress` folder name.
-      'check-file/folder-naming-convention': ['off'],
-    },
-  },
-  // Entry points: src/index.ts re-exports every folder, each folder's index.ts re-exports its public functions.
-  {
-    files: ['src/index.ts', 'src/*/index.ts'],
-    rules: {
-      'check-file/no-index': ['off'],
-      'import-x/max-dependencies': ['off'],
-    },
-  },
-  ...oneFunctionPerFileBlock(),
-  // ESLint configs list every rule explicitly and repeat the same file globs.
-  {
-    files: ['eslint.config.mjs', 'lint/**/*.mjs'],
-    rules: {
-      'import-x/max-dependencies': ['off'],
-      'sonarjs/max-lines': ['off'],
-      'sonarjs/max-lines-per-function': ['off'],
-      'sonarjs/no-duplicate-string': ['off'],
-    },
-  },
 ]);

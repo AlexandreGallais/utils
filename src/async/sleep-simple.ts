@@ -1,4 +1,4 @@
-import { sleep } from './sleep.ts';
+import { sleep } from './sleep';
 
 /**
  * Waits for a delay like `sleep`, without cancellation.

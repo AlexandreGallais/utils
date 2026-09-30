@@ -1,4 +1,4 @@
-import type { Point } from '../geometry/point.ts';
+import type { Point } from '../geometry';
 
 /**
  * Finds the point of a series closest to a horizontal position, by binary search: the sample under the

@@ -1,6 +1,5 @@
-import { drawSvgLineSimple } from './draw-svg-line-simple.ts';
-import { asSvgElement, createFakeSvgElementIn } from './testing/fake-svg-element.ts';
-import { createGaugeScene } from './testing/gauge-scene.ts';
+import { drawSvgLineSimple } from './draw-svg-line-simple';
+import { asSvgElement, createFakeSvgElementIn, createGaugeScene } from './testing';
 
 describe(drawSvgLineSimple, () => {
   it('joins the centers', () => {

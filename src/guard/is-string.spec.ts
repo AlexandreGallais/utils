@@ -1,4 +1,4 @@
-import { isString } from './is-string.ts';
+import { isString } from './is-string';
 
 describe(isString, () => {
   it('accepts strings only', () => {

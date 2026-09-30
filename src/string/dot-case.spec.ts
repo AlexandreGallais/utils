@@ -1,4 +1,4 @@
-import { dotCase } from './dot-case.ts';
+import { dotCase } from './dot-case';
 
 describe(dotCase, () => {
   it.for([

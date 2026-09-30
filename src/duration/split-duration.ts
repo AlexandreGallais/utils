@@ -1,4 +1,4 @@
-import type { DurationParts } from './duration-parts.ts';
+import type { DurationParts } from './duration-parts';
 
 const MS_PER_SECOND = 1000;
 const MS_PER_MINUTE = 60_000;

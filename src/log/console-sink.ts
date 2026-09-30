@@ -1,4 +1,4 @@
-import type { LogEntry } from './log-entry.ts';
+import type { LogEntry } from './log-entry';
 
 /** `HH:MM:SS.mmm` of an ISO timestamp: characters 11 to 23. */
 const TIME_START = 11;

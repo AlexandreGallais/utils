@@ -1,5 +1,5 @@
-import type { Rgba } from './rgba.ts';
-import { toRgbString } from './to-rgb-string.ts';
+import type { Rgba } from './rgba';
+import { toRgbString } from './to-rgb-string';
 
 const RED: Rgba = { r: 255, g: 0, b: 0, a: 1 };
 

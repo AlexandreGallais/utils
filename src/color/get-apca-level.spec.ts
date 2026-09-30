@@ -1,4 +1,4 @@
-import { getApcaLevel } from './get-apca-level.ts';
+import { getApcaLevel } from './get-apca-level';
 
 const WHITE = { r: 255, g: 255, b: 255 };
 

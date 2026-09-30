@@ -1,6 +1,6 @@
-// Turns plugins off by keyword, after a profile: `withoutPlugins(angularAppProfile({…}), ['unicorn'])`. Removes
+// Turns plugins off by keyword, after a preset: `withoutPlugins(angularPreset({…}), ['sonarjs'])`. Removes
 // the plugin and all its rules from every config, and turns back on the rules that were off only because
-// the removed plugin covered them (`// Off: duplicate of unicorn/…`), so nothing is left unchecked.
+// the removed plugin covered them (`// Off: duplicate of sonarjs/…`), so nothing is left unchecked.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -45,11 +45,11 @@ function readDuplicates() {
 }
 
 /**
- * Removes plugins from a profile.
+ * Removes plugins from a preset.
  *
- * @param {import('eslint').Linter.Config[]} configs - The configs of a profile.
+ * @param {import('eslint').Linter.Config[]} configs - The configs of a preset.
  * @param {string[]} plugins - The plugin keys to remove, as written before the `/` of their rules, such as
- *   `unicorn`, `sonarjs`, `regexp`, `jsdoc`, `vitest`, `import-x`, `check-file`, `rxjs-x`, `boundaries`.
+ *   `sonarjs`, `storybook`, `import-x`, `@angular-eslint`, `@angular-eslint/template`, `prettier`.
  * @returns {import('eslint').Linter.Config[]} The configs without these plugins.
  */
 export default function withoutPlugins(configs, plugins) {

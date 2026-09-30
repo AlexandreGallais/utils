@@ -1,6 +1,6 @@
-import { lighten } from './lighten.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { lighten } from './lighten';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 /**
  * Makes a color darker by lowering its HSL lightness, keeping its hue and saturation (Sass `darken`): the

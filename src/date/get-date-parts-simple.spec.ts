@@ -1,4 +1,4 @@
-import { getDatePartsSimple } from './get-date-parts-simple.ts';
+import { getDatePartsSimple } from './get-date-parts-simple';
 
 describe(getDatePartsSimple, () => {
   it('reads local time', () => {

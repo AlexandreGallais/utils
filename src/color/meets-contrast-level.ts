@@ -1,6 +1,6 @@
-import type { ContrastLevel } from './contrast-level.ts';
-import { getContrastRatio } from './get-contrast-ratio.ts';
-import type { Rgb } from './rgb.ts';
+import type { ContrastLevel } from './contrast-level';
+import { getContrastRatio } from './get-contrast-ratio';
+import type { Rgb } from './rgb';
 
 /** WCAG 2.x minimum contrast ratios. Large text is at least 18pt, or 14pt bold. */
 const AA_NORMAL_TEXT = 4.5;

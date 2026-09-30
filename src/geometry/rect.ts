@@ -1,5 +1,5 @@
-import type { Point } from './point.ts';
-import type { Size } from './size.ts';
+import type { Point } from './point';
+import type { Size } from './size';
 
 /**
  * An axis-aligned rectangle: its top-left corner and its size, like an SVG `<rect>`, a `viewBox` or a

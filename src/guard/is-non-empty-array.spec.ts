@@ -1,5 +1,5 @@
-import type { NonEmptyArray } from '../types/non-empty-array.ts';
-import { isNonEmptyArray } from './is-non-empty-array.ts';
+import type { NonEmptyArray } from '../types';
+import { isNonEmptyArray } from './is-non-empty-array';
 
 describe(isNonEmptyArray, () => {
   it('checks the length', () => {

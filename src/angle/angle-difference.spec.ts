@@ -1,4 +1,4 @@
-import { angleDifference } from './angle-difference.ts';
+import { angleDifference } from './angle-difference';
 
 describe(angleDifference, () => {
   it.for([

@@ -1,5 +1,5 @@
-import type { Matrix2D } from '../matrix-2d.ts';
-import type { Point } from '../point.ts';
+import type { Matrix2D } from '../matrix-2d';
+import type { Point } from '../point';
 
 /**
  * Replaces the linear part of a transform (rotation, scale, flip, skew) while keeping one local point at

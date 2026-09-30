@@ -1,4 +1,4 @@
-import { isDefined } from './is-defined.ts';
+import { isDefined } from './is-defined';
 
 describe(isDefined, () => {
   it('excludes null and undefined', () => {

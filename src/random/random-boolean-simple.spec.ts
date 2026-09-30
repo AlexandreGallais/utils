@@ -1,4 +1,4 @@
-import { randomBooleanSimple } from './random-boolean-simple.ts';
+import { randomBooleanSimple } from './random-boolean-simple';
 
 describe(randomBooleanSimple, () => {
   it('draws both values', () => {

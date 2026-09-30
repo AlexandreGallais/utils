@@ -1,5 +1,5 @@
-import { getSvgMatrixBetween } from './get-svg-matrix-between.ts';
-import { asSvgElement, createFakeSvgElement, createFakeSvgElementIn } from './testing/fake-svg-element.ts';
+import { getSvgMatrixBetween } from './get-svg-matrix-between';
+import { asSvgElement, createFakeSvgElement, createFakeSvgElementIn } from './testing';
 
 const BOX = { x: 0, y: 0, width: 10, height: 10 };
 const IDENTITY = { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 };

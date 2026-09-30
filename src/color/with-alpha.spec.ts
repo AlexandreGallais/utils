@@ -1,4 +1,4 @@
-import { withAlpha } from './with-alpha.ts';
+import { withAlpha } from './with-alpha';
 
 describe(withAlpha, () => {
   it.for([

@@ -1,5 +1,5 @@
-import { createFpsMeter } from './create-fps-meter.ts';
-import type { FpsMeter } from './fps-meter.ts';
+import { createFpsMeter } from './create-fps-meter';
+import type { FpsMeter } from './fps-meter';
 
 /** Frames averaged: one second at 60 Hz. */
 const WINDOW_SIZE = 60;

@@ -1,4 +1,5 @@
-import type { PressureUnit } from './pressure-unit.ts';
+/** A pressure unit: bars, pascals, hectopascals, kilopascals, pounds per square inch. */
+export type PressureUnit = 'bar' | 'hPa' | 'kPa' | 'Pa' | 'psi';
 
 const PASCALS_PER_BAR = 100_000;
 const PASCALS_PER_HECTOPASCAL = 100;

@@ -1,5 +1,5 @@
-import { degreesToRadians } from './degrees-to-radians.ts';
-import { radiansToDegrees } from './radians-to-degrees.ts';
+import { degreesToRadians } from './degrees-to-radians';
+import { radiansToDegrees } from './radians-to-degrees';
 
 describe(radiansToDegrees, () => {
   it.for([

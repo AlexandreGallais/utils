@@ -1,4 +1,4 @@
-import type { Matrix2D } from './matrix-2d.ts';
+import type { Matrix2D } from './matrix-2d';
 
 /**
  * Computes the inverse transform: it brings points from the transformed (screen) space back into the local

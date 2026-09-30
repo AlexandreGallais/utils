@@ -1,4 +1,4 @@
-import { createPolylinePath } from './create-polyline-path.ts';
+import { createPolylinePath } from './create-polyline-path';
 
 const TRIANGLE = [
   { x: 0, y: 10 },

@@ -1,4 +1,4 @@
-import { convertTemperature } from './convert-temperature.ts';
+import { convertTemperature } from './convert-temperature';
 
 describe(convertTemperature, () => {
   it.for([

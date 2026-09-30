@@ -1,5 +1,5 @@
-import { parseNamedColor } from './parse-named-color.ts';
-import type { Rgba } from './rgba.ts';
+import { parseNamedColor } from './parse-named-color';
+import type { Rgba } from './rgba';
 
 const RED: Rgba = { r: 255, g: 0, b: 0, a: 1 };
 

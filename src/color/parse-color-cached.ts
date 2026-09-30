@@ -1,5 +1,5 @@
-import { parseColor } from './parse-color.ts';
-import type { Rgba } from './rgba.ts';
+import { parseColor } from './parse-color';
+import type { Rgba } from './rgba';
 
 /** Entries kept before the cache is cleared: bounds the memory used by arbitrary inputs. */
 const CACHE_SIZE = 512;

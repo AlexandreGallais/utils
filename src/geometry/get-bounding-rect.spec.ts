@@ -1,4 +1,4 @@
-import { getBoundingRect } from './get-bounding-rect.ts';
+import { getBoundingRect } from './get-bounding-rect';
 
 describe(getBoundingRect, () => {
   it('encloses every point', () => {

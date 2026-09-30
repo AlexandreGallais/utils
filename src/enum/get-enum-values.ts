@@ -1,5 +1,5 @@
-import type { EnumObject } from './enum-object.ts';
-import { getEnumEntries } from './get-enum-entries.ts';
+import type { EnumObject } from './enum-object';
+import { getEnumEntries } from './get-enum-entries';
 
 /**
  * Lists the values of an enum. The names that TypeScript adds to a numeric enum for its reverse mapping

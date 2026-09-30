@@ -1,4 +1,4 @@
-import { isSameDaySimple } from './is-same-day-simple.ts';
+import { isSameDaySimple } from './is-same-day-simple';
 
 describe(isSameDaySimple, () => {
   it('compares local days', () => {

@@ -1,4 +1,4 @@
-import { formatHeadingSimple } from './format-heading-simple.ts';
+import { formatHeadingSimple } from './format-heading-simple';
 
 describe(formatHeadingSimple, () => {
   it('rounds to the whole degree', () => {

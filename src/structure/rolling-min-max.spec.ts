@@ -1,5 +1,5 @@
-import { createSeededRandom } from '../random/create-seeded-random.ts';
-import { RollingMinMax } from './rolling-min-max.ts';
+import { createSeededRandom } from '../random';
+import { RollingMinMax } from './rolling-min-max';
 
 describe(RollingMinMax, () => {
   it('follows the minimum and maximum of the window', () => {

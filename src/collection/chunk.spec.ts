@@ -1,4 +1,4 @@
-import { chunk } from './chunk.ts';
+import { chunk } from './chunk';
 
 describe(chunk, () => {
   it('splits into chunks of the given size', () => {

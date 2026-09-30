@@ -1,6 +1,5 @@
-import { placeSvgElementSimple } from './place-svg-element-simple.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { placeSvgElementSimple } from './place-svg-element-simple';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(placeSvgElementSimple, () => {
   it('centers the element on the reference', () => {

@@ -1,4 +1,4 @@
-import { createArcTicks } from './create-arc-ticks.ts';
+import { createArcTicks } from './create-arc-ticks';
 
 const OPTIONS = {
   center: { x: 50, y: 50 },

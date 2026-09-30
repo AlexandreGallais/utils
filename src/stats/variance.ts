@@ -1,4 +1,4 @@
-import type { NumberList } from './number-list.ts';
+import type { NumberList } from './number-list';
 
 /**
  * Computes the variance of a list of numbers in one pass with Welford's algorithm, numerically stable even

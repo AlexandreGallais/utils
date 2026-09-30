@@ -1,4 +1,4 @@
-import { streamInChunks } from './stream-in-chunks.ts';
+import { streamInChunks } from './stream-in-chunks';
 
 describe(streamInChunks, () => {
   beforeEach(() => {

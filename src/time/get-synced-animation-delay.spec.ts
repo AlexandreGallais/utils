@@ -1,4 +1,4 @@
-import { getSyncedAnimationDelay } from './get-synced-animation-delay.ts';
+import { getSyncedAnimationDelay } from './get-synced-animation-delay';
 
 describe(getSyncedAnimationDelay, () => {
   it.for([

@@ -1,4 +1,4 @@
-import { scaleRect } from './scale-rect.ts';
+import { scaleRect } from './scale-rect';
 
 describe(scaleRect, () => {
   it('scales towards the anchor', () => {

@@ -1,4 +1,4 @@
-import { randomInt } from './random-int.ts';
+import { randomInt } from './random-int';
 
 describe(randomInt, () => {
   it('includes both bounds', () => {

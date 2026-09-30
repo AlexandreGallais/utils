@@ -1,4 +1,4 @@
-import { degreesToRadians } from './degrees-to-radians.ts';
+import { degreesToRadians } from './degrees-to-radians';
 
 describe(degreesToRadians, () => {
   it.for([

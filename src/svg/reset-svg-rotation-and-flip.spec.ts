@@ -1,6 +1,5 @@
-import { resetSvgRotationAndFlip } from './reset-svg-rotation-and-flip.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { resetSvgRotationAndFlip } from './reset-svg-rotation-and-flip';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(resetSvgRotationAndFlip, () => {
   it('shows the element upright and unmirrored, at the same place', () => {

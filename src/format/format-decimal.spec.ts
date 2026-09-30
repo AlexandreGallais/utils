@@ -1,4 +1,4 @@
-import { formatDecimal } from './format-decimal.ts';
+import { formatDecimal } from './format-decimal';
 
 describe(formatDecimal, () => {
   it.for([

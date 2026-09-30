@@ -1,4 +1,4 @@
-import { randomHexColor } from './random-hex-color.ts';
+import { randomHexColor } from './random-hex-color';
 
 describe(randomHexColor, () => {
   it('covers the whole color space', () => {

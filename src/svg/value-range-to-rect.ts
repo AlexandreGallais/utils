@@ -1,6 +1,6 @@
-import type { Rect } from '../geometry/rect.ts';
-import type { BarScale } from './bar-scale.ts';
-import { valueToBarPosition } from './value-to-bar-position.ts';
+import type { Rect } from '../geometry';
+import type { BarScale } from './bar-scale';
+import { valueToBarPosition } from './value-to-bar-position';
 
 /**
  * Computes the part of a bar gauge between two values, across its whole thickness: a threshold zone (8 to

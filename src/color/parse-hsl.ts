@@ -1,11 +1,6 @@
-import { clamp } from '../math/clamp.ts';
-import { wrap } from '../math/wrap.ts';
-import { hslToRgb } from './internal/hsl-to-rgb.ts';
-import { parseAlpha } from './internal/parse-alpha.ts';
-import { parseArguments } from './internal/parse-arguments.ts';
-import { parseFunctionArguments } from './internal/parse-function-arguments.ts';
-import { parseNumberOrPercentage } from './internal/parse-number-or-percentage.ts';
-import type { Rgba } from './rgba.ts';
+import { clamp, wrap } from '../math';
+import { hslToRgb, parseAlpha, parseArguments, parseFunctionArguments, parseNumberOrPercentage } from './internal';
+import type { Rgba } from './rgba';
 
 /** Divisor turning a CSS percentage into a fraction. */
 const PERCENT = 100;

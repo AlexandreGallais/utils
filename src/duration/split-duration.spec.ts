@@ -1,4 +1,4 @@
-import { splitDuration } from './split-duration.ts';
+import { splitDuration } from './split-duration';
 
 describe(splitDuration, () => {
   it('splits a duration into its parts', () => {

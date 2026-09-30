@@ -1,4 +1,4 @@
-import { isUndefined } from './is-undefined.ts';
+import { isUndefined } from './is-undefined';
 
 describe(isUndefined, () => {
   it('accepts undefined only', () => {

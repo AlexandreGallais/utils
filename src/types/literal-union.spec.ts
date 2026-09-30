@@ -1,4 +1,4 @@
-import type { LiteralUnion } from './literal-union.ts';
+import type { LiteralUnion } from './literal-union';
 
 describe('LiteralUnion', () => {
   it('accepts the literals and the base type', () => {

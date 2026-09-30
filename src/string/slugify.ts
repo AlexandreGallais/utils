@@ -1,5 +1,5 @@
-import { kebabCase } from './kebab-case.ts';
-import { removeDiacritics } from './remove-diacritics.ts';
+import { kebabCase } from './kebab-case';
+import { removeDiacritics } from './remove-diacritics';
 
 /**
  * Turns a text into a URL- and id-friendly slug: accents removed, lower-case words joined with `-`.

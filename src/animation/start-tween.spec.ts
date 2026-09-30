@@ -1,6 +1,6 @@
-import { linear } from './linear.ts';
-import { startTween } from './start-tween.ts';
-import { FakeTickSource } from './testing/fake-tick-source.ts';
+import { linear } from './linear';
+import { startTween } from './start-tween';
+import { FakeTickSource } from './testing';
 
 describe(startTween, () => {
   let clock: FakeTickSource;

@@ -1,4 +1,4 @@
-import { isEnumValue } from './is-enum-value.ts';
+import { isEnumValue } from './is-enum-value';
 
 enum Direction {
   Up = 0,

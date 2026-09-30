@@ -1,4 +1,4 @@
-import { words } from './words.ts';
+import { words } from './words';
 
 describe(words, () => {
   it.for([

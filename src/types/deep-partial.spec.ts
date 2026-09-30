@@ -1,4 +1,4 @@
-import type { DeepPartial } from './deep-partial.ts';
+import type { DeepPartial } from './deep-partial';
 
 interface Settings {
   readonly chart: { readonly grid: { readonly step: number }; readonly series: { readonly id: string }[] };

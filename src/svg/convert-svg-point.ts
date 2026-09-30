@@ -1,6 +1,6 @@
-import type { Point } from '../geometry/point.ts';
-import { transformPoint } from '../geometry/transform-point.ts';
-import { getSvgMatrixBetween } from './get-svg-matrix-between.ts';
+import type { Point } from '../geometry';
+import { transformPoint } from '../geometry';
+import { getSvgMatrixBetween } from './get-svg-matrix-between';
 
 /**
  * Converts a point from the coordinates of one SVG element to those of another, whatever groups and

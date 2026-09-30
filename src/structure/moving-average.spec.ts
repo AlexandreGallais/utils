@@ -1,4 +1,4 @@
-import { MovingAverage } from './moving-average.ts';
+import { MovingAverage } from './moving-average';
 
 describe(MovingAverage, () => {
   let average: MovingAverage;

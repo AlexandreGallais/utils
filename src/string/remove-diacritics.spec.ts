@@ -1,4 +1,4 @@
-import { removeDiacritics } from './remove-diacritics.ts';
+import { removeDiacritics } from './remove-diacritics';
 
 describe(removeDiacritics, () => {
   it.for([

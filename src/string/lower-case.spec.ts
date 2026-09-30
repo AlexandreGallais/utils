@@ -1,4 +1,4 @@
-import { lowerCase } from './lower-case.ts';
+import { lowerCase } from './lower-case';
 
 describe(lowerCase, () => {
   it.for([

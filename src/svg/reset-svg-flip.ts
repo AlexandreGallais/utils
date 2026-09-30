@@ -1,6 +1,6 @@
-import { resetMatrixFlip } from '../geometry/reset-matrix-flip.ts';
-import { getSvgLocalCenter } from './get-svg-local-center.ts';
-import { updateScreenMatrix } from './internal/update-screen-matrix.ts';
+import { resetMatrixFlip } from '../geometry';
+import { getSvgLocalCenter } from './get-svg-local-center';
+import { updateScreenMatrix } from './internal';
 
 /**
  * Unmirrors an SVG element on screen without moving it: its center stays in place, its rotation and size are kept. Works whatever its groups: the result is judged on screen.

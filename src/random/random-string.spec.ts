@@ -1,5 +1,5 @@
-import { createSeededRandom } from './create-seeded-random.ts';
-import { randomString } from './random-string.ts';
+import { createSeededRandom } from './create-seeded-random';
+import { randomString } from './random-string';
 
 describe(randomString, () => {
   it('draws letters and digits of a fixed length', () => {

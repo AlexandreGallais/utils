@@ -1,4 +1,4 @@
-import { downsampleLttb } from './downsample-lttb.ts';
+import { downsampleLttb } from './downsample-lttb';
 
 function toPoints(values: readonly number[]): { x: number; y: number }[] {
   return values.map((y, x) => ({ x, y }));

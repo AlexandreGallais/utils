@@ -1,4 +1,4 @@
-import { toLinear } from './to-linear.ts';
+import { toLinear } from './to-linear';
 
 describe(toLinear, () => {
   it.for([

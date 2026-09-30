@@ -1,4 +1,4 @@
-import { isMatrixFlipped } from './is-matrix-flipped.ts';
+import { isMatrixFlipped } from './is-matrix-flipped';
 
 describe(isMatrixFlipped, () => {
   it.for([

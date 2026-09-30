@@ -1,4 +1,4 @@
-import { parseTimeSpan } from './parse-time-span.ts';
+import { parseTimeSpan } from './parse-time-span';
 
 describe(parseTimeSpan, () => {
   it('parses the constant format with days and ticks', () => {

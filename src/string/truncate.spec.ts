@@ -1,4 +1,4 @@
-import { truncate } from './truncate.ts';
+import { truncate } from './truncate';
 
 describe(truncate, () => {
   it.for([

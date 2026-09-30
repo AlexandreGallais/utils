@@ -1,4 +1,4 @@
-import { words } from './words.ts';
+import { words } from './words';
 
 /**
  * Converts a string to upper-case words separated by spaces, whatever its case style: unlike

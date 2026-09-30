@@ -1,4 +1,4 @@
-import { assert } from './assert.ts';
+import { assert } from './assert';
 
 /**
  * Throws when a condition is false, like `assert`, with a standard message and a strict boolean condition.

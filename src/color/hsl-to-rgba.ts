@@ -1,6 +1,6 @@
-import type { Hsl } from './hsl.ts';
-import { hslToRgb } from './internal/hsl-to-rgb.ts';
-import type { Rgba } from './rgba.ts';
+import type { Hsl } from './hsl';
+import { hslToRgb } from './internal';
+import type { Rgba } from './rgba';
 
 /** Degrees in a full turn of the hue wheel. */
 const FULL_TURN = 360;

@@ -1,4 +1,4 @@
-import { keyBy } from './key-by.ts';
+import { keyBy } from './key-by';
 
 interface User {
   id: string;

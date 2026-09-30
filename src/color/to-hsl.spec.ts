@@ -1,4 +1,4 @@
-import { toHsl } from './to-hsl.ts';
+import { toHsl } from './to-hsl';
 
 describe(toHsl, () => {
   it.for([

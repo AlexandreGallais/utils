@@ -1,7 +1,6 @@
-import { invertMatrix } from '../geometry/invert-matrix.ts';
-import type { Matrix2D } from '../geometry/matrix-2d.ts';
-import { multiplyMatrices } from '../geometry/multiply-matrices.ts';
-import { getScreenMatrix } from './internal/get-screen-matrix.ts';
+import { invertMatrix, multiplyMatrices } from '../geometry';
+import type { Matrix2D } from '../geometry';
+import { getScreenMatrix } from './internal';
 
 /**
  * Computes the matrix that converts coordinates of one SVG element into coordinates of another, whatever

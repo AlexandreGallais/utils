@@ -1,4 +1,5 @@
-import type { SpeedUnit } from './speed-unit.ts';
+/** A speed unit: knots, metres per second, kilometres per hour, miles per hour. */
+export type SpeedUnit = 'km/h' | 'kn' | 'm/s' | 'mph';
 
 const SECONDS_PER_HOUR = 3600;
 const METRES_PER_KILOMETRE = 1000;

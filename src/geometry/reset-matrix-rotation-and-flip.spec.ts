@@ -1,6 +1,6 @@
-import { composeMatrix } from './compose-matrix.ts';
-import { resetMatrixRotationAndFlip } from './reset-matrix-rotation-and-flip.ts';
-import { transformPoint } from './transform-point.ts';
+import { composeMatrix } from './compose-matrix';
+import { resetMatrixRotationAndFlip } from './reset-matrix-rotation-and-flip';
+import { transformPoint } from './transform-point';
 
 describe(resetMatrixRotationAndFlip, () => {
   it('keeps the pivot in place', () => {

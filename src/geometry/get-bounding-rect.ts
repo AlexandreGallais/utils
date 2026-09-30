@@ -1,5 +1,5 @@
-import type { Point } from './point.ts';
-import type { Rect } from './rect.ts';
+import type { Point } from './point';
+import type { Rect } from './rect';
 
 /**
  * Computes the smallest axis-aligned rectangle containing every point, in one pass.

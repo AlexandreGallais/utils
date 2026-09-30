@@ -1,4 +1,4 @@
-import type { Rgb } from './rgb.ts';
+import type { Rgb } from './rgb';
 
 /** An sRGB color with an opacity channel. */
 export interface Rgba extends Rgb {

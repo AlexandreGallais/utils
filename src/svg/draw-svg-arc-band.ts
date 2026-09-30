@@ -1,6 +1,6 @@
-import { createRingSectorPath } from './create-ring-sector-path.ts';
-import { getSvgAnchorPointIn } from './get-svg-anchor-point-in.ts';
-import type { SvgArc } from './svg-arc.ts';
+import { createRingSectorPath } from './create-ring-sector-path';
+import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
+import type { SvgArc } from './svg-arc';
 
 /**
  * Draws a band along an arc in a `<path>`, as a filled shape centered on the radius, around the center of an

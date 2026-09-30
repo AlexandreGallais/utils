@@ -1,4 +1,4 @@
-import { easeInOutCubic } from './ease-in-out-cubic.ts';
+import { easeInOutCubic } from './ease-in-out-cubic';
 
 describe(easeInOutCubic, () => {
   it('starts at 0 and ends at 1', () => {

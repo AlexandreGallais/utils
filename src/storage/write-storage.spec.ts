@@ -1,5 +1,5 @@
-import { MemoryStorage } from './testing/memory-storage.ts';
-import { writeStorage } from './write-storage.ts';
+import { MemoryStorage } from './testing';
+import { writeStorage } from './write-storage';
 
 describe(writeStorage, () => {
   let storage: MemoryStorage;

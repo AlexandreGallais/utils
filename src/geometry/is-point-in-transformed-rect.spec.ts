@@ -1,6 +1,6 @@
-import { isPointInTransformedRect } from './is-point-in-transformed-rect.ts';
-import { createRotationMatrix } from './create-rotation-matrix.ts';
-import { createScaleMatrix } from './create-scale-matrix.ts';
+import { isPointInTransformedRect } from './is-point-in-transformed-rect';
+import { createRotationMatrix } from './create-rotation-matrix';
+import { createScaleMatrix } from './create-scale-matrix';
 
 const RECT = { x: -20, y: -10, width: 40, height: 20 };
 

@@ -1,5 +1,5 @@
-import { createLogger } from './create-logger.ts';
-import type { LogEntry } from './log-entry.ts';
+import { createLogger } from './create-logger';
+import type { LogEntry } from './log-entry';
 
 describe(createLogger, () => {
   let entries: LogEntry[];

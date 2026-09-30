@@ -1,5 +1,10 @@
-import type { Rect } from '../geometry/rect.ts';
-import type { BarDirection } from './bar-direction.ts';
+import type { Rect } from '../geometry';
+
+/**
+ * Direction in which the values of a bar gauge grow: `'up'` fills from the bottom, `'down'` from the top,
+ * `'right'` from the left, `'left'` from the right.
+ */
+export type BarDirection = 'down' | 'left' | 'right' | 'up';
 
 /** Maps the values of a bar gauge onto its drawing area. */
 export interface BarScale {

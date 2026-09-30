@@ -1,4 +1,4 @@
-import { setSvgRotationAround } from './set-svg-rotation-around.ts';
+import { setSvgRotationAround } from './set-svg-rotation-around';
 
 /**
  * Orients an SVG element to an absolute angle on screen around another element, like

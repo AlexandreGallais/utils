@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { formatCoordinate } from './internal/format-coordinate.ts';
+import type { Point } from '../geometry';
+import { formatCoordinate } from './internal';
 
 /**
  * Builds a `transform` attribute that rotates an element around a point, such as a gauge needle updated at

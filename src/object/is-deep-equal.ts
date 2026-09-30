@@ -1,4 +1,4 @@
-import { isObject } from '../guard/is-object.ts';
+import { isObject } from '../guard';
 
 /** Pairs already being compared, to stop on circular references. */
 type Visited = WeakMap<object, WeakSet<object>>;

@@ -1,4 +1,4 @@
-import { getArcLength } from './get-arc-length.ts';
+import { getArcLength } from './get-arc-length';
 
 describe(getArcLength, () => {
   it.for([

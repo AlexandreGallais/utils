@@ -1,4 +1,4 @@
-import { normalizeAngle } from './normalize-angle.ts';
+import { normalizeAngle } from './normalize-angle';
 
 /** Half a turn, in degrees. */
 const HALF_TURN = 180;

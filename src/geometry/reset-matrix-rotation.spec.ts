@@ -1,8 +1,8 @@
-import { getMatrixRotation } from './get-matrix-rotation.ts';
-import { isMatrixFlipped } from './is-matrix-flipped.ts';
-import { parseTransform } from './parse-transform.ts';
-import { resetMatrixRotation } from './reset-matrix-rotation.ts';
-import { transformPoint } from './transform-point.ts';
+import { getMatrixRotation } from './get-matrix-rotation';
+import { isMatrixFlipped } from './is-matrix-flipped';
+import { parseTransform } from './parse-transform';
+import { resetMatrixRotation } from './reset-matrix-rotation';
+import { transformPoint } from './transform-point';
 
 const CENTER = { x: 10, y: 10 };
 

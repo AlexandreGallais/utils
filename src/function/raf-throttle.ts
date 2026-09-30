@@ -1,4 +1,4 @@
-import type { RateLimitedFunction } from './rate-limited-function.ts';
+import type { RateLimitedFunction } from './rate-limited-function';
 
 /**
  * Limits a function to one call per animation frame, with the latest arguments: a value pushed 1 000 times

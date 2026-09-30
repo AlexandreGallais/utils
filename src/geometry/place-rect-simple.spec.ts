@@ -1,4 +1,4 @@
-import { placeRectSimple } from './place-rect-simple.ts';
+import { placeRectSimple } from './place-rect-simple';
 
 describe(placeRectSimple, () => {
   it.for([

@@ -1,6 +1,5 @@
-import { drawSvgArcTicks } from './draw-svg-arc-ticks.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createGaugeScene } from './testing/gauge-scene.ts';
+import { drawSvgArcTicks } from './draw-svg-arc-ticks';
+import { asSvgElement, createGaugeScene } from './testing';
 
 describe(drawSvgArcTicks, () => {
   it('draws count + 1 ticks from the radius towards the center', () => {

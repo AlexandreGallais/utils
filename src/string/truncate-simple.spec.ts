@@ -1,4 +1,4 @@
-import { truncateSimple } from './truncate-simple.ts';
+import { truncateSimple } from './truncate-simple';
 
 describe(truncateSimple, () => {
   it('ends with an ellipsis', () => {

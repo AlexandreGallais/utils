@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { UsersApi } from '../../data-access/users/users.api';
-import type { User } from '../../models/users/user';
+import { UsersApi } from '../../data-access';
+import type { User } from '../../models';
 
 /** State of the users screen. */
 interface UsersState {

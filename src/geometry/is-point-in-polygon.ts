@@ -1,4 +1,4 @@
-import type { Point } from './point.ts';
+import type { Point } from './point';
 
 /**
  * Checks whether a point is inside a polygon (even-odd ray casting), to hit-test a clicked zone of a

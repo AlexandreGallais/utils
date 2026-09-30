@@ -1,4 +1,4 @@
-import { zoomBounds } from './zoom-bounds.ts';
+import { zoomBounds } from './zoom-bounds';
 
 describe(zoomBounds, () => {
   const bounds = { minX: 0, maxX: 100, minY: 0, maxY: 10 };

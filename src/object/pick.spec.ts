@@ -1,4 +1,4 @@
-import { pick } from './pick.ts';
+import { pick } from './pick';
 
 class WithInheritedGetter {
   private readonly value = true;

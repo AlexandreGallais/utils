@@ -1,6 +1,6 @@
-import { degreesToRadians } from '../angle/degrees-to-radians.ts';
-import type { DecomposedTransform } from './decomposed-transform.ts';
-import type { Matrix2D } from './matrix-2d.ts';
+import { degreesToRadians } from '../angle';
+import type { DecomposedTransform } from './decomposed-transform';
+import type { Matrix2D } from './matrix-2d';
 
 /**
  * Builds a matrix from readable steps, the inverse of `decomposeMatrix`: the same as the SVG transform

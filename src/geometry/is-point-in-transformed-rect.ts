@@ -1,9 +1,9 @@
-import { invertMatrix } from './invert-matrix.ts';
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Point } from './point.ts';
-import { isPointInRect } from './is-point-in-rect.ts';
-import type { Rect } from './rect.ts';
-import { transformPoint } from './transform-point.ts';
+import { invertMatrix } from './invert-matrix';
+import type { Matrix2D } from './matrix-2d';
+import type { Point } from './point';
+import { isPointInRect } from './is-point-in-rect';
+import type { Rect } from './rect';
+import { transformPoint } from './transform-point';
 
 /**
  * Checks whether a point hits a rectangle drawn with a transform (rotated, flipped, scaled): the click test

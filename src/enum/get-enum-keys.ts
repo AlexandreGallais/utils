@@ -1,5 +1,5 @@
-import type { EnumObject } from './enum-object.ts';
-import { getEnumEntries } from './get-enum-entries.ts';
+import type { EnumObject } from './enum-object';
+import { getEnumEntries } from './get-enum-entries';
 
 /**
  * Lists the member names of an enum, without the reverse mapping of numeric enums.

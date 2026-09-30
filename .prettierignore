@@ -6,3 +6,4 @@ docs/lint-rules/
 docs/.vitepress/generated/
 docs/.vitepress/cache/
 docs/.vitepress/dist/
+transfer/

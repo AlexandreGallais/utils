@@ -1,5 +1,5 @@
-import type { EnumObject } from './enum-object.ts';
-import { getEnumEntries } from './get-enum-entries.ts';
+import type { EnumObject } from './enum-object';
+import { getEnumEntries } from './get-enum-entries';
 
 /**
  * Reads a member of an enum from a value that went through text: a query parameter, a storage entry, an

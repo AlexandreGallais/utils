@@ -1,4 +1,4 @@
-import { mean } from './mean.ts';
+import { mean } from './mean';
 
 describe(mean, () => {
   it('averages the values', () => {

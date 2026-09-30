@@ -1,4 +1,4 @@
-import { getWheelZoomFactor } from './get-wheel-zoom-factor.ts';
+import { getWheelZoomFactor } from './get-wheel-zoom-factor';
 
 describe(getWheelZoomFactor, () => {
   it('zooms in upwards and out downwards', () => {

@@ -1,4 +1,4 @@
-import { listen } from './listen.ts';
+import { listen } from './listen';
 
 describe(listen, () => {
   it('calls the listener until the cleanup runs', () => {

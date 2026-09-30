@@ -1,4 +1,4 @@
-import { getReadableTextColorCached } from './get-readable-text-color-cached.ts';
+import { getReadableTextColorCached } from './get-readable-text-color-cached';
 
 describe(getReadableTextColorCached, () => {
   it.for([

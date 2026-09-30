@@ -1,6 +1,6 @@
-import { lerp } from '../math/lerp.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { lerp } from '../math';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 /**
  * Interpolates linearly between two colors, opacity included: use it for a color gradient along a gauge.

@@ -1,7 +1,6 @@
-import { createArcPath } from './create-arc-path.ts';
-import { drawSvgArc } from './draw-svg-arc.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createGaugeScene } from './testing/gauge-scene.ts';
+import { createArcPath } from './create-arc-path';
+import { drawSvgArc } from './draw-svg-arc';
+import { asSvgElement, createGaugeScene } from './testing';
 
 describe(drawSvgArc, () => {
   it('draws the arc around the element, in the coordinates of the path', () => {

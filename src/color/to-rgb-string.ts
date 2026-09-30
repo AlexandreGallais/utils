@@ -1,8 +1,7 @@
-import { clamp } from '../math/clamp.ts';
-import { roundToFractionDigits } from '../math/round-to-fraction-digits.ts';
-import { toByte } from './internal/to-byte.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { clamp, roundToFractionDigits } from '../math';
+import { toByte } from './internal';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 /** Decimals kept for the alpha channel. */
 const ALPHA_FRACTION_DIGITS = 3;

@@ -1,4 +1,4 @@
-import { randomDate } from './random-date.ts';
+import { randomDate } from './random-date';
 
 /**
  * Draws a date between two others like `randomDate`.

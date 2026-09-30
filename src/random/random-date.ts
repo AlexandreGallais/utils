@@ -1,4 +1,4 @@
-import { randomInt } from './random-int.ts';
+import { randomInt } from './random-int';
 
 /**
  * Draws a date between two others, to the millisecond, for test data such as event timestamps.

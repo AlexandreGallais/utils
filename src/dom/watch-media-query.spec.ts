@@ -1,4 +1,4 @@
-import { watchMediaQuery } from './watch-media-query.ts';
+import { watchMediaQuery } from './watch-media-query';
 
 describe(watchMediaQuery, () => {
   afterEach(() => {

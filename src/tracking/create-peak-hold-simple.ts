@@ -1,5 +1,5 @@
-import { createPeakHold } from './create-peak-hold.ts';
-import type { PeakHold } from './peak-hold.ts';
+import { createPeakHold } from './create-peak-hold';
+import type { PeakHold } from './peak-hold';
 
 /**
  * Creates a peak-hold indicator like `createPeakHold`, whose peak drops at once to the current value after the hold time.

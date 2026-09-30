@@ -1,4 +1,4 @@
-import { memoize } from './memoize.ts';
+import { memoize } from './memoize';
 
 describe(memoize, () => {
   it('runs once per key', () => {

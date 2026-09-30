@@ -1,4 +1,4 @@
-import type { DeepReadonly } from './deep-readonly.ts';
+import type { DeepReadonly } from './deep-readonly';
 
 describe('DeepReadonly', () => {
   it('makes every depth read-only', () => {

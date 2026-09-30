@@ -1,4 +1,4 @@
-import { interpolateTable } from './interpolate-table.ts';
+import { interpolateTable } from './interpolate-table';
 
 const TANK = [
   [0, 0],

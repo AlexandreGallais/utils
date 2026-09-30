@@ -1,4 +1,4 @@
-import { pluralize } from './pluralize.ts';
+import { pluralize } from './pluralize';
 
 describe(pluralize, () => {
   it.for([

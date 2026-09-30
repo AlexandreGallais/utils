@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { createSmoothPath } from './create-smooth-path.ts';
+import type { Point } from '../geometry';
+import { createSmoothPath } from './create-smooth-path';
 
 /**
  * Builds the `d` attribute of a smooth curve through points like `createSmoothPath`.

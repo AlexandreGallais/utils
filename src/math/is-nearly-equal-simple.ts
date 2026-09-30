@@ -1,4 +1,4 @@
-import { isNearlyEqual } from './is-nearly-equal.ts';
+import { isNearlyEqual } from './is-nearly-equal';
 
 /** Tolerance: far above the float noise of usual values, far below any meaningful difference. */
 const EPSILON = 1e-9;

@@ -1,4 +1,4 @@
-import { extractNumber } from './extract-number.ts';
+import { extractNumber } from './extract-number';
 
 describe(extractNumber, () => {
   it.for([

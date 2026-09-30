@@ -1,4 +1,4 @@
-import type { Rect } from './rect.ts';
+import type { Rect } from './rect';
 
 /** Values of a `viewBox`, separated by spaces and/or commas. */
 const SEPARATOR_PATTERN = /[\s,]+/v;

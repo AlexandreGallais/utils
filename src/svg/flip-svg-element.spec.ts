@@ -1,7 +1,6 @@
-import { flipSvgElement } from './flip-svg-element.ts';
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { flipSvgElement } from './flip-svg-element';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(flipSvgElement, () => {
   it.for(['horizontal', 'vertical'] as const)('mirrors %s on screen without moving', (axis) => {

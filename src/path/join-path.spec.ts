@@ -1,4 +1,4 @@
-import { joinPath } from './join-path.ts';
+import { joinPath } from './join-path';
 
 describe(joinPath, () => {
   it.for([

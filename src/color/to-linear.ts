@@ -1,4 +1,4 @@
-import { clamp } from '../math/clamp.ts';
+import { clamp } from '../math';
 
 /** Number of distinct 8-bit channel values: the size of the per-channel lookup tables. */
 const CHANNEL_VALUES = 256;

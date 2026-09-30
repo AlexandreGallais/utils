@@ -1,6 +1,6 @@
-import { formatDecimal } from '../format/format-decimal.ts';
-import { roundToFractionDigits } from '../math/round-to-fraction-digits.ts';
-import { normalizeAngle } from './normalize-angle.ts';
+import { formatDecimal } from '../format';
+import { roundToFractionDigits } from '../math';
+import { normalizeAngle } from './normalize-angle';
 
 /** Degrees in a full turn. */
 const FULL_TURN = 360;

@@ -1,4 +1,4 @@
-import { transformPoint } from './transform-point.ts';
+import { transformPoint } from './transform-point';
 
 describe(transformPoint, () => {
   it.for([

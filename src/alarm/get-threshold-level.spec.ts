@@ -1,4 +1,4 @@
-import { getThresholdLevel } from './get-threshold-level.ts';
+import { getThresholdLevel } from './get-threshold-level';
 
 type Level = 'alarm' | 'normal' | 'warning';
 

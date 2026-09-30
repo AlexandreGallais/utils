@@ -1,4 +1,4 @@
-import { getNiceTicks } from './get-nice-ticks.ts';
+import { getNiceTicks } from './get-nice-ticks';
 
 describe(getNiceTicks, () => {
   it.for([

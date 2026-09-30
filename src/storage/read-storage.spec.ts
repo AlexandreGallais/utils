@@ -1,7 +1,6 @@
-import { isFiniteNumber } from '../guard/is-finite-number.ts';
-import { isRecord } from '../guard/is-record.ts';
-import { readStorage } from './read-storage.ts';
-import { MemoryStorage } from './testing/memory-storage.ts';
+import { isFiniteNumber, isRecord } from '../guard';
+import { readStorage } from './read-storage';
+import { MemoryStorage } from './testing';
 
 function isNumber(value: unknown): value is number {
   return typeof value === 'number';

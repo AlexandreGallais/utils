@@ -1,4 +1,4 @@
-import { sentenceCase } from './sentence-case.ts';
+import { sentenceCase } from './sentence-case';
 
 describe(sentenceCase, () => {
   it.for([

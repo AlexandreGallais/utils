@@ -1,6 +1,6 @@
-import type { FittedRect } from './fitted-rect.ts';
-import type { Rect } from './rect.ts';
-import type { Size } from './size.ts';
+import type { FittedRect } from './fitted-rect';
+import type { Rect } from './rect';
+import type { Size } from './size';
 
 /**
  * Scales and places a content in a container while keeping its aspect ratio, like SVG `preserveAspectRatio`

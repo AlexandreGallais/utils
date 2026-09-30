@@ -1,6 +1,6 @@
-import { smoothTowards } from '../math/smooth-towards.ts';
-import { angleDifference } from './angle-difference.ts';
-import { normalizeAngle } from './normalize-angle.ts';
+import { smoothTowards } from '../math';
+import { angleDifference } from './angle-difference';
+import { normalizeAngle } from './normalize-angle';
 
 /**
  * Smooths an angle towards a target like `smoothTowards`, but along the shortest way around the circle: a

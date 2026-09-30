@@ -1,4 +1,4 @@
-import { pascalCase } from './pascal-case.ts';
+import { pascalCase } from './pascal-case';
 
 describe(pascalCase, () => {
   it.for([

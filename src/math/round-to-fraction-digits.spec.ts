@@ -1,5 +1,5 @@
-import { formatDecimal } from '../format/format-decimal.ts';
-import { roundToFractionDigits } from './round-to-fraction-digits.ts';
+import { formatDecimal } from '../format';
+import { roundToFractionDigits } from './round-to-fraction-digits';
 
 describe(roundToFractionDigits, () => {
   it.for([

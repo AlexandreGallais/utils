@@ -1,4 +1,4 @@
-import type { AlarmState } from './alarm-state.ts';
+import type { AlarmState } from './alarm-state';
 
 /** The state of an alarm on and not seen yet. */
 const ACTIVE_UNACKNOWLEDGED = 'active-unacknowledged';

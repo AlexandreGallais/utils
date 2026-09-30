@@ -1,4 +1,4 @@
-import { retry } from './retry.ts';
+import { retry } from './retry';
 
 /**
  * Retries an async operation like `retry`, with the standard delays.

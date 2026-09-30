@@ -1,5 +1,5 @@
-import type { EnumObject } from './enum-object.ts';
-import { getEnumEntries } from './get-enum-entries.ts';
+import type { EnumObject } from './enum-object';
+import { getEnumEntries } from './get-enum-entries';
 
 /**
  * Finds the member name of an enum value, for string enums too (TypeScript only generates the reverse

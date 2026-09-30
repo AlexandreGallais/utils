@@ -1,5 +1,5 @@
-import type { Point } from './point.ts';
-import type { Rect } from './rect.ts';
+import type { Point } from './point';
+import type { Rect } from './rect';
 
 /**
  * Cuts a segment to the part inside a rectangle (Liang–Barsky algorithm), to draw a line that leaves a

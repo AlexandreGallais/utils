@@ -1,4 +1,4 @@
-import { hasSignificantChange } from './has-significant-change.ts';
+import { hasSignificantChange } from './has-significant-change';
 
 describe(hasSignificantChange, () => {
   it.for([

@@ -2,7 +2,8 @@
 
 import path from 'node:path';
 import { escapeCell, escapeText, summaryOf } from './markdown.mjs';
-import { dependenciesOf, toKebabCase } from './read-sources.mjs';
+import { toKebabCase } from './read-sources.mjs';
+import { dependenciesOf } from './resolve-imports.mjs';
 
 const REPOSITORY_URL = 'https://github.com/AlexandreGallais/utils/blob/main/';
 const THROWS_PATTERN = /^\{(?<type>[^\}]+)\} (?<condition>.*)$/v;
@@ -184,7 +185,7 @@ function renderSource(entry, context) {
     ...renderLinks('Used by', context.usedBy.get(entry.name) ?? [], entry.folder),
   ];
   if (needs.length > 0) {
-    lines.push('### Files to copy', '', `\`${entry.file}\`, then:`, '');
+    lines.push('### Files it needs', '', `\`${entry.file}\` imports, directly or not:`, '');
     for (const dependency of needs) {
       lines.push(`- [\`${dependency}\`](${REPOSITORY_URL}${dependency})`);
     }

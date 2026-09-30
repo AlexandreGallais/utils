@@ -1,4 +1,4 @@
-import { slugify } from './slugify.ts';
+import { slugify } from './slugify';
 
 describe(slugify, () => {
   it.for([

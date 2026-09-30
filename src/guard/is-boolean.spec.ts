@@ -1,4 +1,4 @@
-import { isBoolean } from './is-boolean.ts';
+import { isBoolean } from './is-boolean';
 
 describe(isBoolean, () => {
   it('accepts booleans only', () => {

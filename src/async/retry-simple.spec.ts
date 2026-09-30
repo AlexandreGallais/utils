@@ -1,4 +1,4 @@
-import { retrySimple } from './retry-simple.ts';
+import { retrySimple } from './retry-simple';
 
 describe(retrySimple, () => {
   it('returns the first success', async () => {

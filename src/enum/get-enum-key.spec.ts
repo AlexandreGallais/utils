@@ -1,4 +1,4 @@
-import { getEnumKey } from './get-enum-key.ts';
+import { getEnumKey } from './get-enum-key';
 
 enum Status {
   Idle = 'idle',

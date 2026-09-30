@@ -1,4 +1,4 @@
-import { createPiePath } from './create-pie-path.ts';
+import { createPiePath } from './create-pie-path';
 
 describe(createPiePath, () => {
   it('draws a slice joined to the center', () => {

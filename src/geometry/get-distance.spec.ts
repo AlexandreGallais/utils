@@ -1,4 +1,4 @@
-import { getDistance } from './get-distance.ts';
+import { getDistance } from './get-distance';
 
 describe(getDistance, () => {
   it.for([

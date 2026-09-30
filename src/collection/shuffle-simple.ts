@@ -1,4 +1,4 @@
-import { shuffle } from './shuffle.ts';
+import { shuffle } from './shuffle';
 
 /**
  * Returns the items in a random order like `shuffle`.

@@ -1,4 +1,4 @@
-import { words } from './words.ts';
+import { words } from './words';
 
 /**
  * Converts a string to dot.case: lower-case words joined with `.`, as in translation keys and property paths.

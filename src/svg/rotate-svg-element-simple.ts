@@ -1,4 +1,4 @@
-import { rotateSvgElement } from './rotate-svg-element.ts';
+import { rotateSvgElement } from './rotate-svg-element';
 
 /**
  * Turns an SVG element on itself by an angle, clockwise on screen, like `rotateSvgElement`.

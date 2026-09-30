@@ -1,5 +1,5 @@
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Point } from './point.ts';
+import type { Matrix2D } from './matrix-2d';
+import type { Point } from './point';
 
 /**
  * Moves an element so that one of its local points lands on a target in the parent coordinates, keeping its

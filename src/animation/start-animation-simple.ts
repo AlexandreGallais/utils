@@ -1,5 +1,5 @@
-import type { TickSource } from '../time/tick-source.ts';
-import { startAnimation } from './start-animation.ts';
+import type { TickSource } from '../time';
+import { startAnimation } from './start-animation';
 
 /**
  * Runs a callback at each tick of a clock with the progress of an animation, like `startAnimation`.

@@ -1,4 +1,4 @@
-import { median } from './median.ts';
+import { median } from './median';
 
 describe(median, () => {
   it.for([

@@ -1,4 +1,4 @@
-import { getWheelZoomFactor } from './get-wheel-zoom-factor.ts';
+import { getWheelZoomFactor } from './get-wheel-zoom-factor';
 
 /** Zoom per pixel of scroll: a usual mouse notch (~100 px) zooms by about 20 %. */
 const SENSITIVITY = 0.002;

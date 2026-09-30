@@ -1,4 +1,4 @@
-import { minOf } from './min-of.ts';
+import { minOf } from './min-of';
 
 describe(minOf, () => {
   it('finds the smallest value', () => {

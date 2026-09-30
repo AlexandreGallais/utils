@@ -1,4 +1,4 @@
-import { isBlinkOn } from './is-blink-on.ts';
+import { isBlinkOn } from './is-blink-on';
 
 describe(isBlinkOn, () => {
   it.for([

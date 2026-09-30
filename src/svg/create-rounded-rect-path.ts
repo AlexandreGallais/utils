@@ -1,5 +1,5 @@
-import type { Rect } from '../geometry/rect.ts';
-import { formatCoordinate } from './internal/format-coordinate.ts';
+import type { Rect } from '../geometry';
+import { formatCoordinate } from './internal';
 
 /**
  * Builds the `d` attribute of a rectangle with rounded corners: a path, unlike `<rect rx>`, can be combined

@@ -1,4 +1,4 @@
-import { parseColorCached } from './parse-color-cached.ts';
+import { parseColorCached } from './parse-color-cached';
 
 describe(parseColorCached, () => {
   it('parses like parseColor', () => {

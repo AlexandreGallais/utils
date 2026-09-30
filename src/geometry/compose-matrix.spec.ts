@@ -1,4 +1,4 @@
-import { composeMatrix } from './compose-matrix.ts';
+import { composeMatrix } from './compose-matrix';
 
 const NEUTRAL = { translateX: 0, translateY: 0, rotation: 0, scaleX: 1, scaleY: 1, skewX: 0 };
 

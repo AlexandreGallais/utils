@@ -1,4 +1,4 @@
-import { withTimeout } from './with-timeout.ts';
+import { withTimeout } from './with-timeout';
 
 /**
  * Rejects when a promise takes too long like `withTimeout`, with a standard message.

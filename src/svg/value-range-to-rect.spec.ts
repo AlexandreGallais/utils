@@ -1,5 +1,5 @@
-import type { BarScale } from './bar-scale.ts';
-import { valueRangeToRect } from './value-range-to-rect.ts';
+import type { BarScale } from './bar-scale';
+import { valueRangeToRect } from './value-range-to-rect';
 
 const RECT = { x: 10, y: 20, width: 100, height: 200 };
 

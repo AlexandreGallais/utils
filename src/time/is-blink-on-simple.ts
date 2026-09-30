@@ -1,4 +1,4 @@
-import { isBlinkOn } from './is-blink-on.ts';
+import { isBlinkOn } from './is-blink-on';
 
 /** Fraction of the period spent on: half. */
 const DUTY_CYCLE = 0.5;

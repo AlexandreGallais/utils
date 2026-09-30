@@ -1,4 +1,4 @@
-import { formatHeading } from './format-heading.ts';
+import { formatHeading } from './format-heading';
 
 /**
  * Formats a heading like `formatHeading`, to the whole degree: `'005°'`.

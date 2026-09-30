@@ -1,6 +1,6 @@
-import type { Anchor } from '../geometry/anchor.ts';
-import { createPolylinePath } from './create-polyline-path.ts';
-import { getSvgAnchorPointIn } from './get-svg-anchor-point-in.ts';
+import type { Anchor } from '../geometry';
+import { createPolylinePath } from './create-polyline-path';
+import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
 
 /**
  * Draws a straight line in a `<path>` from an anchor of one element to an anchor of another, whatever

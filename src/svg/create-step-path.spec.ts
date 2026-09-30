@@ -1,4 +1,4 @@
-import { createStepPath } from './create-step-path.ts';
+import { createStepPath } from './create-step-path';
 
 const POINTS = [
   { x: 0, y: 10 },

@@ -1,4 +1,4 @@
-import { getGradientColor } from './get-gradient-color.ts';
+import { getGradientColor } from './get-gradient-color';
 
 const HEAT = [
   { offset: 0, color: { r: 0, g: 128, b: 255 } },

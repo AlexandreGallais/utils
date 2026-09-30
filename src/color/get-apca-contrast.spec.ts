@@ -1,4 +1,4 @@
-import { getApcaContrast } from './get-apca-contrast.ts';
+import { getApcaContrast } from './get-apca-contrast';
 
 const BLACK = { r: 0, g: 0, b: 0 };
 const WHITE = { r: 255, g: 255, b: 255 };

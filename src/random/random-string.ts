@@ -1,4 +1,4 @@
-import { randomInt } from './random-int.ts';
+import { randomInt } from './random-int';
 
 /**
  * Draws a string of random characters, to fill a form or a table in tests: identifiers, codes, oversized

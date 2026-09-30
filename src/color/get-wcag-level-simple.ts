@@ -1,6 +1,6 @@
-import { getWcagLevel } from './get-wcag-level.ts';
-import type { ContrastLevel } from './contrast-level.ts';
-import type { Rgb } from './rgb.ts';
+import { getWcagLevel } from './get-wcag-level';
+import type { ContrastLevel } from './contrast-level';
+import type { Rgb } from './rgb';
 
 /**
  * Finds the highest WCAG 2 level a text and background pair reaches like `getWcagLevel`, for normal-size text.

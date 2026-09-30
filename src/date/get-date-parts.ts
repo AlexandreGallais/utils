@@ -1,4 +1,4 @@
-import type { DateParts } from './date-parts.ts';
+import type { DateParts } from './date-parts';
 
 const MS_PER_DAY = 86_400_000;
 /** `Date#getDay()` numbers Sunday 0; ISO numbers it 7. */

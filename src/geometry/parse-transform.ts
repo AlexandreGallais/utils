@@ -1,10 +1,10 @@
-import { degreesToRadians } from '../angle/degrees-to-radians.ts';
-import { createIdentityMatrix } from './create-identity-matrix.ts';
-import type { Matrix2D } from './matrix-2d.ts';
-import { multiplyMatrices } from './multiply-matrices.ts';
-import { createRotationMatrix } from './create-rotation-matrix.ts';
-import { createScaleMatrix } from './create-scale-matrix.ts';
-import { createTranslationMatrix } from './create-translation-matrix.ts';
+import { degreesToRadians } from '../angle';
+import { createIdentityMatrix } from './create-identity-matrix';
+import type { Matrix2D } from './matrix-2d';
+import { multiplyMatrices } from './multiply-matrices';
+import { createRotationMatrix } from './create-rotation-matrix';
+import { createScaleMatrix } from './create-scale-matrix';
+import { createTranslationMatrix } from './create-translation-matrix';
 
 const SEPARATOR_PATTERN = /[\s,]+/v;
 const SEPARATORS_PATTERN = /[\s,]+/gv;

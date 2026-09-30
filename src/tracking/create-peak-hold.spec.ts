@@ -1,4 +1,4 @@
-import { createPeakHold } from './create-peak-hold.ts';
+import { createPeakHold } from './create-peak-hold';
 
 describe(createPeakHold, () => {
   it('holds the highest value, then jumps to the current value', () => {

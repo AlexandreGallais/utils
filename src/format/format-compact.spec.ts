@@ -1,4 +1,4 @@
-import { formatCompact } from './format-compact.ts';
+import { formatCompact } from './format-compact';
 
 describe(formatCompact, () => {
   it.for([

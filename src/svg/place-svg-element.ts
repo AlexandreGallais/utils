@@ -1,6 +1,6 @@
-import type { Anchor } from '../geometry/anchor.ts';
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { moveSvgElement } from './move-svg-element.ts';
+import type { Anchor } from '../geometry';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { moveSvgElement } from './move-svg-element';
 
 /**
  * Moves an SVG element so that one of its 9 anchors lands on one of the 9 anchors of another element, as

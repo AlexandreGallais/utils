@@ -1,4 +1,4 @@
-import { retry } from './retry.ts';
+import { retry } from './retry';
 
 describe(retry, () => {
   beforeEach(() => {

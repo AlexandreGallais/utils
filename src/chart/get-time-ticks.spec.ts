@@ -1,4 +1,4 @@
-import { getTimeTicks } from './get-time-ticks.ts';
+import { getTimeTicks } from './get-time-ticks';
 
 const NOON = Date.UTC(2026, 0, 15, 12, 0, 0);
 

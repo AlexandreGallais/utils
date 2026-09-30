@@ -1,4 +1,4 @@
-import type { DataBounds } from './data-bounds.ts';
+import type { DataBounds } from './data-bounds';
 
 /**
  * Adds a margin around a chart window, as a fraction of its range, so that the extreme points are not drawn

@@ -26,6 +26,8 @@ minimumReleaseAgeExclude:
   - '@typescript-eslint/utils@8.71.0'
   - '@typescript-eslint/visitor-keys@8.71.0'
   - typescript-eslint@8.71.0
-  - eslint-plugin-jsdoc@65.0.0
   - eslint-plugin-storybook@10.6.1
   - sass@1.105.1
+
+# `VAR=value command` in the package.json scripts works on Windows too (ESLINT_INFO_RULES=off).
+shellEmulator: true

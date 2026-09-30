@@ -1,4 +1,4 @@
-import { snapToGrid } from './snap-to-grid.ts';
+import { snapToGrid } from './snap-to-grid';
 
 describe(snapToGrid, () => {
   it.for([

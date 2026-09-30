@@ -1,4 +1,4 @@
-import { getWheelZoomFactorSimple } from './get-wheel-zoom-factor-simple.ts';
+import { getWheelZoomFactorSimple } from './get-wheel-zoom-factor-simple';
 
 describe(getWheelZoomFactorSimple, () => {
   it('zooms in when scrolling up', () => {

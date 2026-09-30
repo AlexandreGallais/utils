@@ -1,6 +1,6 @@
-import { isArrayOf } from './is-array-of.ts';
-import { isNumber } from './is-number.ts';
-import { isString } from './is-string.ts';
+import { isArrayOf } from './is-array-of';
+import { isNumber } from './is-number';
+import { isString } from './is-string';
 
 describe(isArrayOf, () => {
   it('checks every item', () => {

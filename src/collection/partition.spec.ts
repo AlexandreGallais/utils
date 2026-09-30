@@ -1,5 +1,5 @@
-import { isString } from '../guard/is-string.ts';
-import { partition } from './partition.ts';
+import { isString } from '../guard';
+import { partition } from './partition';
 
 describe(partition, () => {
   it('splits the items in one pass', () => {

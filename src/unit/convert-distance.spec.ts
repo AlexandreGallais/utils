@@ -1,4 +1,4 @@
-import { convertDistance } from './convert-distance.ts';
+import { convertDistance } from './convert-distance';
 
 describe(convertDistance, () => {
   it.for([

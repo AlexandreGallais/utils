@@ -1,4 +1,4 @@
-import { sample } from './sample.ts';
+import { sample } from './sample';
 
 /**
  * Picks a random item like `sample`.

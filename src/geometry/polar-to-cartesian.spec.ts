@@ -1,4 +1,4 @@
-import { polarToCartesian } from './polar-to-cartesian.ts';
+import { polarToCartesian } from './polar-to-cartesian';
 
 const CENTER = { x: 50, y: 50 };
 

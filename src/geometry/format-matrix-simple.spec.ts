@@ -1,4 +1,4 @@
-import { formatMatrixSimple } from './format-matrix-simple.ts';
+import { formatMatrixSimple } from './format-matrix-simple';
 
 describe(formatMatrixSimple, () => {
   it('writes six decimals', () => {

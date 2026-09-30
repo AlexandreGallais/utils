@@ -1,6 +1,6 @@
-import { meetsContrastLevel } from './meets-contrast-level.ts';
-import type { ContrastLevel } from './contrast-level.ts';
-import type { Rgb } from './rgb.ts';
+import { meetsContrastLevel } from './meets-contrast-level';
+import type { ContrastLevel } from './contrast-level';
+import type { Rgb } from './rgb';
 
 /**
  * Checks whether two colors reach a WCAG 2 contrast level like `meetsContrastLevel`, for normal-size text.

@@ -1,6 +1,6 @@
-import { composeMatrix } from './compose-matrix.ts';
-import { screenDeltaToLocal } from './screen-delta-to-local.ts';
-import { transformDelta } from './transform-delta.ts';
+import { composeMatrix } from './compose-matrix';
+import { screenDeltaToLocal } from './screen-delta-to-local';
+import { transformDelta } from './transform-delta';
 
 describe(screenDeltaToLocal, () => {
   it('mirrors the movement of a flipped element', () => {

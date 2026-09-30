@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { createStepPath } from './create-step-path.ts';
+import type { Point } from '../geometry';
+import { createStepPath } from './create-step-path';
 
 /**
  * Builds the `d` attribute of a staircase line like `createStepPath`, each value held until the next point.

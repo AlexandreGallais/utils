@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { getRectCenter } from '../geometry/get-rect-center.ts';
+import type { Point } from '../geometry';
+import { getRectCenter } from '../geometry';
 
 /**
  * Finds the center of the drawn content of an SVG element, in its local coordinates (before its own

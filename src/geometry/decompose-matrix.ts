@@ -1,6 +1,6 @@
-import { radiansToDegrees } from '../angle/radians-to-degrees.ts';
-import type { DecomposedTransform } from './decomposed-transform.ts';
-import type { Matrix2D } from './matrix-2d.ts';
+import { radiansToDegrees } from '../angle';
+import type { DecomposedTransform } from './decomposed-transform';
+import type { Matrix2D } from './matrix-2d';
 
 /**
  * Splits a matrix into readable steps: translation, rotation, scales and skew. A flip (mirror) shows as a

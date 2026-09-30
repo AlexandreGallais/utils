@@ -1,4 +1,4 @@
-import { wrap } from '../math/wrap.ts';
+import { wrap } from '../math';
 
 /** A full turn, in degrees. */
 const FULL_TURN = 360;

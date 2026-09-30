@@ -1,4 +1,4 @@
-import { withTimeoutSimple } from './with-timeout-simple.ts';
+import { withTimeoutSimple } from './with-timeout-simple';
 
 describe(withTimeoutSimple, () => {
   it('resolves in time', async () => {

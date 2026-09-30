@@ -1,4 +1,4 @@
-import { flipSvgElement } from './flip-svg-element.ts';
+import { flipSvgElement } from './flip-svg-element';
 
 /**
  * Mirrors an SVG element on screen without moving it, like `flipSvgElement`.

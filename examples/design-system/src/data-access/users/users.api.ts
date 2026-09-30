@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import type { User } from '../../models/users/user';
+import type { User } from '../../models';
 
 /** Access to the users of the back end: the only layer allowed to use HttpClient. */
 @Service()

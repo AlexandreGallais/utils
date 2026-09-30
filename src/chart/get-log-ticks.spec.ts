@@ -1,4 +1,4 @@
-import { getLogTicks } from './get-log-ticks.ts';
+import { getLogTicks } from './get-log-ticks';
 
 describe(getLogTicks, () => {
   it.for([

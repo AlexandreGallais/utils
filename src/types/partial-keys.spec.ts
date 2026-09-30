@@ -1,4 +1,4 @@
-import type { PartialKeys } from './partial-keys.ts';
+import type { PartialKeys } from './partial-keys';
 
 describe('PartialKeys', () => {
   it('makes the given keys optional only', () => {

@@ -1,4 +1,4 @@
-import { createScaleMatrix } from './create-scale-matrix.ts';
+import { createScaleMatrix } from './create-scale-matrix';
 
 describe(createScaleMatrix, () => {
   it('scales uniformly', () => {

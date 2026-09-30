@@ -1,9 +1,7 @@
-import type { Anchor } from '../geometry/anchor.ts';
-import { invertMatrix } from '../geometry/invert-matrix.ts';
-import type { Point } from '../geometry/point.ts';
-import { transformPoint } from '../geometry/transform-point.ts';
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { getScreenMatrix } from './internal/get-screen-matrix.ts';
+import type { Anchor, Point } from '../geometry';
+import { invertMatrix, transformPoint } from '../geometry';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { getScreenMatrix } from './internal';
 
 /**
  * Finds one of the 9 anchors of an SVG element, as seen on screen, in the coordinates of another element:

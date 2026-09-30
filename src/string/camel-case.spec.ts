@@ -1,4 +1,4 @@
-import { camelCase } from './camel-case.ts';
+import { camelCase } from './camel-case';
 
 describe(camelCase, () => {
   it.for([

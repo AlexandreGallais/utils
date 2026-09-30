@@ -1,5 +1,5 @@
-import { formatMatrix } from './format-matrix.ts';
-import { createRotationMatrix } from './create-rotation-matrix.ts';
+import { formatMatrix } from './format-matrix';
+import { createRotationMatrix } from './create-rotation-matrix';
 
 describe(formatMatrix, () => {
   it('formats the six values', () => {

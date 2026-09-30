@@ -1,4 +1,4 @@
-import { differenceInCalendarDays } from './difference-in-calendar-days.ts';
+import { differenceInCalendarDays } from './difference-in-calendar-days';
 
 /**
  * Counts the calendar days between two dates like `differenceInCalendarDays`, in local time.

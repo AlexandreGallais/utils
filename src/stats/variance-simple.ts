@@ -1,5 +1,5 @@
-import { variance } from './variance.ts';
-import type { NumberList } from './number-list.ts';
+import { variance } from './variance';
+import type { NumberList } from './number-list';
 
 /**
  * Computes the variance of a whole set of values like `variance`.

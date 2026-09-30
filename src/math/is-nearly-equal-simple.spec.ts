@@ -1,4 +1,4 @@
-import { isNearlyEqualSimple } from './is-nearly-equal-simple.ts';
+import { isNearlyEqualSimple } from './is-nearly-equal-simple';
 
 describe(isNearlyEqualSimple, () => {
   it('ignores float noise', () => {

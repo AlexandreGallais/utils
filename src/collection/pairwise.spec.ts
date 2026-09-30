@@ -1,4 +1,4 @@
-import { pairwise } from './pairwise.ts';
+import { pairwise } from './pairwise';
 
 describe(pairwise, () => {
   it('lists the consecutive pairs', () => {

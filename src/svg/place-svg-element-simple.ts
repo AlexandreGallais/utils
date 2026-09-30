@@ -1,4 +1,4 @@
-import { placeSvgElement } from './place-svg-element.ts';
+import { placeSvgElement } from './place-svg-element';
 
 /**
  * Centers an SVG element on another one, as seen on screen, like `placeSvgElement`.

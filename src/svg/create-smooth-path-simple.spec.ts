@@ -1,5 +1,5 @@
-import { createSmoothPathSimple } from './create-smooth-path-simple.ts';
-import { createSmoothPath } from './create-smooth-path.ts';
+import { createSmoothPathSimple } from './create-smooth-path-simple';
+import { createSmoothPath } from './create-smooth-path';
 
 describe(createSmoothPathSimple, () => {
   it('uses a tension of 1', () => {

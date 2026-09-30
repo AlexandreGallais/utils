@@ -1,4 +1,4 @@
-import { range } from './range.ts';
+import { range } from './range';
 
 describe(range, () => {
   it.for([

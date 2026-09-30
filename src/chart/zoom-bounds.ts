@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import type { DataBounds } from './data-bounds.ts';
+import type { Point } from '../geometry';
+import type { DataBounds } from './data-bounds';
 
 /**
  * Zooms a chart window around a fixed data point, such as the value under the mouse wheel: that point stays

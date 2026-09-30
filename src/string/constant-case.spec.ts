@@ -1,4 +1,4 @@
-import { constantCase } from './constant-case.ts';
+import { constantCase } from './constant-case';
 
 describe(constantCase, () => {
   it.for([

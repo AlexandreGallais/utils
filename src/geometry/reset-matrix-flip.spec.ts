@@ -1,8 +1,8 @@
-import { getMatrixRotation } from './get-matrix-rotation.ts';
-import { isMatrixFlipped } from './is-matrix-flipped.ts';
-import { parseTransform } from './parse-transform.ts';
-import { resetMatrixFlip } from './reset-matrix-flip.ts';
-import { transformPoint } from './transform-point.ts';
+import { getMatrixRotation } from './get-matrix-rotation';
+import { isMatrixFlipped } from './is-matrix-flipped';
+import { parseTransform } from './parse-transform';
+import { resetMatrixFlip } from './reset-matrix-flip';
+import { transformPoint } from './transform-point';
 
 const IDENTITY = { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 };
 

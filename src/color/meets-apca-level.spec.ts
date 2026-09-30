@@ -1,5 +1,5 @@
-import type { ApcaLevel } from './apca-level.ts';
-import { meetsApcaLevel } from './meets-apca-level.ts';
+import type { ApcaLevel } from './apca-level';
+import { meetsApcaLevel } from './meets-apca-level';
 
 const WHITE = { r: 255, g: 255, b: 255 };
 const GRAY = { r: 136, g: 136, b: 136 };

@@ -1,6 +1,5 @@
-import { scaleSvgElementSimple } from './scale-svg-element-simple.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { scaleSvgElementSimple } from './scale-svg-element-simple';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(scaleSvgElementSimple, () => {
   it('shrinks around the center', () => {

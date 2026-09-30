@@ -1,4 +1,4 @@
-import { sortedIndexBy } from './sorted-index-by.ts';
+import { sortedIndexBy } from './sorted-index-by';
 
 function getTime(item: { readonly time: number }): number {
   return item.time;

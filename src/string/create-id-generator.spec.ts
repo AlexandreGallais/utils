@@ -1,4 +1,4 @@
-import { createIdGenerator } from './create-id-generator.ts';
+import { createIdGenerator } from './create-id-generator';
 
 describe(createIdGenerator, () => {
   it('generates increasing ids with the prefix', () => {

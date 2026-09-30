@@ -1,4 +1,4 @@
-import { randomString } from './random-string.ts';
+import { randomString } from './random-string';
 
 /**
  * Draws a string of random letters and digits of a fixed length, like `randomString`.

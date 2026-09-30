@@ -1,4 +1,4 @@
-import { sliceVisiblePointsSimple } from './slice-visible-points-simple.ts';
+import { sliceVisiblePointsSimple } from './slice-visible-points-simple';
 
 describe(sliceVisiblePointsSimple, () => {
   it('keeps the neighbours', () => {

@@ -1,4 +1,4 @@
-import { placeRect } from './place-rect.ts';
+import { placeRect } from './place-rect';
 
 const TARGET = { x: 100, y: 50, width: 40, height: 20 };
 const BADGE = { width: 10, height: 10 };

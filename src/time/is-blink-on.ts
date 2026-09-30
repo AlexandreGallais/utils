@@ -1,4 +1,4 @@
-import { getAnimationPhase } from './get-animation-phase.ts';
+import { getAnimationPhase } from './get-animation-phase';
 
 /**
  * Tells whether a blinking element is visible at a given time. Every element computing its state from the

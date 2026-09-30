@@ -1,5 +1,5 @@
-import { degreesToRadians } from '../angle/degrees-to-radians.ts';
-import type { Point } from './point.ts';
+import { degreesToRadians } from '../angle';
+import type { Point } from './point';
 
 /**
  * Computes the point at a given distance and angle from a center. Angle convention of the library for SVG:

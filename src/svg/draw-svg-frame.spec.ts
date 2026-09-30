@@ -1,6 +1,5 @@
-import { drawSvgFrame } from './draw-svg-frame.ts';
-import { asSvgElement, createFakeSvgElementIn } from './testing/fake-svg-element.ts';
-import { createGaugeScene } from './testing/gauge-scene.ts';
+import { drawSvgFrame } from './draw-svg-frame';
+import { asSvgElement, createFakeSvgElementIn, createGaugeScene } from './testing';
 
 describe(drawSvgFrame, () => {
   it('frames the visible box with a margin, in the coordinates of the path', () => {

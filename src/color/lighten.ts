@@ -1,7 +1,7 @@
-import { hslToRgba } from './hsl-to-rgba.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
-import { toHsl } from './to-hsl.ts';
+import { hslToRgba } from './hsl-to-rgba';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
+import { toHsl } from './to-hsl';
 
 /**
  * Makes a color lighter by raising its HSL lightness, keeping its hue and saturation (Sass `lighten`): the

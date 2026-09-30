@@ -1,8 +1,7 @@
-import type { Anchor } from '../geometry/anchor.ts';
-import { multiplyMatrices } from '../geometry/multiply-matrices.ts';
-import { createScaleMatrix } from '../geometry/create-scale-matrix.ts';
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { updateScreenMatrix } from './internal/update-screen-matrix.ts';
+import type { Anchor } from '../geometry';
+import { multiplyMatrices, createScaleMatrix } from '../geometry';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { updateScreenMatrix } from './internal';
 
 /**
  * Enlarges or shrinks an SVG element on screen, around one of its 9 anchors that stays in place, whatever

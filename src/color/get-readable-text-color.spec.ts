@@ -1,5 +1,5 @@
-import { getReadableTextColor } from './get-readable-text-color.ts';
-import type { Rgb } from './rgb.ts';
+import { getReadableTextColor } from './get-readable-text-color';
+import type { Rgb } from './rgb';
 
 const BLACK: Rgb = { r: 0, g: 0, b: 0 };
 

@@ -1,4 +1,4 @@
-import { snakeCase } from './snake-case.ts';
+import { snakeCase } from './snake-case';
 
 describe(snakeCase, () => {
   it.for([

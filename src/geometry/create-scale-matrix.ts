@@ -1,5 +1,5 @@
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Point } from './point.ts';
+import type { Matrix2D } from './matrix-2d';
+import type { Point } from './point';
 
 /**
  * Creates a scaling around a center, like SVG `scale(sx sy)`. A negative factor flips: `createScaleMatrix(-1, 1, { x: 0, y: 0 })`

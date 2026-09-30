@@ -1,4 +1,4 @@
-import { parseHex } from './parse-hex.ts';
+import { parseHex } from './parse-hex';
 
 describe(parseHex, () => {
   it.for([

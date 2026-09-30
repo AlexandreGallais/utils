@@ -1,4 +1,4 @@
-import { processInChunksSimple } from './process-in-chunks-simple.ts';
+import { processInChunksSimple } from './process-in-chunks-simple';
 
 describe(processInChunksSimple, () => {
   it('processes every item', async () => {

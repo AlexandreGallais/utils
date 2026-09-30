@@ -1,4 +1,4 @@
-import { meanAngle } from './mean-angle.ts';
+import { meanAngle } from './mean-angle';
 
 describe(meanAngle, () => {
   it.for([

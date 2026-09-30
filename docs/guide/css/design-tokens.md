@@ -26,8 +26,9 @@ Semantic tokens, and a dark theme that only changes them:
 ## Naming
 
 `--<category>-<name>`, kebab-case: `--color-text-muted`, `--space-inline`, `--radius-control`,
-`--font-size-title`, `--z-overlay`, `--duration-fast`. The `design-tokens` Stylelint block enforces the
-categories (`custom-property-pattern`).
+`--font-size-title`, `--z-overlay`, `--duration-fast`. Stylelint checks that custom properties are kebab-case
+(`custom-property-pattern`, a warning). Sizes in `rem` are whole steps (`1rem`, `2rem`); the small ones are in
+`px` (`4px`, `8px`): a `0.25rem` is a warning.
 
 - Scales use steps with room between them (`100`, `200`, `300`…) so that a value can be inserted later.
 - Colors in `oklch()`: perceptually uniform, so `--color-blue-500` and `--color-red-500` have the same
@@ -45,8 +46,8 @@ categories (`custom-property-pattern`).
 }
 ```
 
-The `design-tokens` block of Stylelint refuses a raw color, spacing, radius, shadow, font or z-index outside
-the token files, so a forgotten `#3366cc` never reaches the code review.
+A raw color, spacing, radius, shadow, font or z-index belongs in the token files only. Stylelint warns about a
+named color (`red`); the review checks the raw values, so that a forgotten `#3366cc` never reaches `main`.
 
 ## Component tokens: an API for parents
 

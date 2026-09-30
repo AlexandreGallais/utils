@@ -1,4 +1,4 @@
-import { formatViewBox } from './format-view-box.ts';
+import { formatViewBox } from './format-view-box';
 
 describe(formatViewBox, () => {
   it.for([

@@ -1,10 +1,5 @@
-// Styles of a design system library, linted with the profile of lint/profiles/.
+// The SCSS of the example Angular library, linted with the SCSS preset of lint/.
 
-import stylelintProfile, { DESIGN_SYSTEM_LAYERS } from '../../lint/profiles/stylelint.mjs';
+import { scssPreset } from '../../lint/stylelint/index.mjs';
 
-export default stylelintProfile({
-  tokenFiles: ['**/tokens/**'],
-  layerNames: DESIGN_SYSTEM_LAYERS,
-  isAccessible: true,
-  usesLogicalProperties: false,
-});
+export default scssPreset({ overrides: [] });

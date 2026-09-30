@@ -1,4 +1,4 @@
-import { valueToAngle } from './value-to-angle.ts';
+import { valueToAngle } from './value-to-angle';
 
 describe(valueToAngle, () => {
   it.for([

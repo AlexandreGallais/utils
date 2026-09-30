@@ -1,4 +1,4 @@
-import { createRectPath } from './create-rect-path.ts';
+import { createRectPath } from './create-rect-path';
 
 describe(createRectPath, () => {
   it('draws the rectangle clockwise', () => {

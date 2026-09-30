@@ -1,4 +1,4 @@
-import { getScaleFactor } from '../internal/get-scale-factor.ts';
+import { getScaleFactor } from '../internal';
 
 /** From 2^53 on, a double has no fractional part left to round. */
 const MAX_EXACT_INTEGER = Number.MAX_SAFE_INTEGER + 1;

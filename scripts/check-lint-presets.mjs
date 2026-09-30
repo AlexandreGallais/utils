@@ -1,73 +1,78 @@
 // Checks the lint presets of lint/ on the example design system (examples/design-system): the example passes
-// its profiles, compiles, and each block catches the mistake it is made for (files written for the check,
-// then removed).
+// its presets, compiles, and each block catches the mistake it is made for (files written for the check, then
+// removed). The example configs of lint/examples/ load.
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { ESLint } from 'eslint';
 import { defineConfig } from 'eslint/config';
 import { compile } from 'sass';
 import stylelint from 'stylelint';
 import withoutPlugins from '../lint/eslint/setup/without-plugins.mjs';
-import angularAppProfile from '../lint/profiles/eslint-angular-app.mjs';
+import { angularAppPreset, typescriptNodePreset } from '../lint/index.mjs';
 import { checkSonarWay } from './lint-presets/check-sonar-way.mjs';
 
+// Like `pnpm lint`: the info rules (editor suggestions) are off.
+process.env.ESLINT_INFO_RULES = 'off';
+
 const EXAMPLE_DIRECTORY = path.resolve('examples/design-system');
+const EXAMPLE_CONFIGS_DIRECTORY = path.resolve('lint/examples');
 const LAYER_ORDER = '@layer reset, tokens, base, layout, components, utilities, overrides;';
-const ESCAPE_HATCH = [
-  '// eslint-disable-next-line @typescript-eslint/no-explicit-any -- a constructor type needs `any[]` (contravariance).',
-  'export type AnyConstructor = new (...parameters: any[]) => object;',
-  '',
-].join('\n');
+/** An `any` in a type: free in a library, a warning to justify in an application. */
+const ESCAPE_HATCH = 'export type AnyConstructor = new (...parameters: any[]) => object;\n';
 
 /** Mistakes each ESLint block must catch: file written in the example, expected rule. */
 const ESLINT_CASES = [
   {
-    file: 'src/atoms/button/violation-layer.ts',
-    code: "import { SearchFieldComponent } from '../../molecules/search-field/search-field.component';\n\nexport const FIELD = SearchFieldComponent;\n",
-    rule: 'boundaries/dependencies',
-  },
-  {
-    file: 'src/atoms/button/violation-http.ts',
-    code: "import { HttpClient } from '@angular/common/http';\n\nexport const CLIENT = HttpClient;\n",
-    rule: 'boundaries/dependencies',
-  },
-  {
-    file: 'src/utils/text/violation-html.ts',
-    code: '/**\n * Shows HTML.\n *\n * @param element - Target.\n * @param html - Markup.\n */\nexport function show(element: HTMLElement, html: string): void {\n  element.innerHTML = html;\n}\n',
-    rule: 'no-unsanitized/property',
+    file: 'src/organisms/user-list/violation-deep-import.ts',
+    code: "import { ButtonComponent } from '../../atoms/button/button.component';\n\nexport const BUTTON = ButtonComponent;\n",
+    rule: 'local/import-folders',
   },
   {
     file: 'src/atoms/button/violation.html',
-    code: '<img ngSrc="logo.png" width="10" height="10" />\n',
-    rule: '@angular-eslint/template/alt-text',
+    code: '<input type="search" autofocus />\n',
+    rule: '@angular-eslint/template/no-autofocus',
+  },
+  {
+    file: 'src/utils/text/violationName.ts',
+    code: 'export const VALUE = 1;\n',
+    rule: 'local/kebab-case-path',
+  },
+  {
+    file: 'src/utils/text/format-counts.ts',
+    code: 'export function formatCount(): string {\n  return "";\n}\n\nexport function formatTotal(): string {\n  return "";\n}\n',
+    rule: 'local/export-matches-filename',
+  },
+  {
+    file: 'src/utils/text/violation-error-disable.ts',
+    code: '// eslint-disable-next-line no-var -- an error cannot be disabled.\nvar value = 1;\n\nexport const VALUE = value;\n',
+    rule: 'local/disable-only-warnings',
+  },
+  {
+    file: 'src/utils/text/violation-no-reason.ts',
+    code: '// eslint-disable-next-line @typescript-eslint/no-magic-numbers\nexport const VALUE = 42;\n',
+    rule: 'local/disable-reason',
+  },
+  {
+    file: 'src/utils/text/violation-block-disable.ts',
+    code: '/* eslint-disable @typescript-eslint/no-magic-numbers -- a block disable. */\nexport const VALUE = 42;\n',
+    rule: 'local/disable-next-line-only',
   },
 ];
 
-/** Mistakes the Stylelint blocks must catch, all in one file of a component. */
+/** Mistakes the Stylelint preset must catch, all in one SCSS file of a component. */
 const STYLELINT_CASE = {
   file: 'src/atoms/button/violation.scss',
   code: [
-    '@layer widgets {',
-    '  .violation {',
-    '    margin: 12px;',
-    '    color: #fff;',
-    '    transition: width 1s;',
-    '',
-    '    &:focus {',
-    '      outline: none;',
-    '    }',
-    '  }',
+    '.violation {',
+    '  // stylelint-disable-next-line color-no-invalid-hex -- an error cannot be disabled.',
+    '  color: #ggg;',
+    '  padding: 1.5rem;',
     '}',
     '',
   ].join('\n'),
-  rules: [
-    'design-system/layer-name-allowed-list',
-    'scale-unlimited/declaration-strict-value',
-    'color-no-hex',
-    'a11y/no-outline-none',
-    'plugin/no-low-performance-animation-properties',
-  ],
+  rules: ['local/disable-only-warnings', 'declaration-property-value-disallowed-list'],
 };
 
 /**
@@ -99,7 +104,7 @@ function rulesOf(results) {
 }
 
 /**
- * Checks that the example passes its ESLint and Stylelint profiles and compiles with the layer order first.
+ * Checks that the example passes its ESLint and Stylelint presets and compiles with the layer order first.
  *
  * @returns {Promise<string[]>} The failures.
  */
@@ -142,26 +147,42 @@ async function checkEslintCases() {
 }
 
 /**
- * Builds the application profile for the example.
+ * Checks that the autofix of local/import-folders rewrites a deep import through the folder's index.
  *
- * @returns {import('eslint').Linter.Config[]} The configs.
+ * @returns {Promise<string[]>} The failures.
  */
-function createAppProfile() {
-  return angularAppProfile({
-    tsconfigRootDirectory: EXAMPLE_DIRECTORY,
-    developmentDependencyFiles: ['**/*.spec.ts'],
-    prefix: 'ds',
-    isAccessible: true,
-    isTranslated: false,
-    usesRxjs: true,
-    storybookPackageDirectory: undefined,
-    browsers: ['last 2 Chrome versions', 'last 2 Firefox versions'],
-    polyfills: [],
+function checkImportFix() {
+  const eslint = new ESLint({ cwd: EXAMPLE_DIRECTORY, fix: true });
+  const [deepImport] = ESLINT_CASES;
+  return withCaseFile(deepImport.file, deepImport.code, async (absolute) => {
+    const [result] = await eslint.lintFiles([absolute]);
+    return result?.output?.includes("from '../../atoms'") === true
+      ? []
+      : [`${deepImport.file}: the autofix did not import '../../atoms'`];
   });
 }
 
 /**
- * Checks that the example passes the application profile without Unicorn and SonarJS.
+ * Builds the application preset for the example.
+ *
+ * @returns {import('eslint').Linter.Config[]} The configs.
+ */
+function createAppPreset() {
+  const rootConfig = typescriptNodePreset({
+    tsconfigRootDirectory: EXAMPLE_DIRECTORY,
+    overrides: [],
+  });
+  return angularAppPreset({
+    rootConfig,
+    sourceFiles: ['src/**/*.ts'],
+    developmentDependencyFiles: ['**/*.spec.ts'],
+    prefix: 'ds',
+    overrides: [],
+  });
+}
+
+/**
+ * Checks that the example passes the application preset without SonarJS and import-x.
  *
  * @returns {Promise<string[]>} The failures.
  */
@@ -169,14 +190,14 @@ async function checkWithoutPlugins() {
   const eslint = new ESLint({
     cwd: EXAMPLE_DIRECTORY,
     overrideConfigFile: true,
-    overrideConfig: defineConfig(withoutPlugins(createAppProfile(), ['unicorn', 'sonarjs'])),
+    overrideConfig: defineConfig(withoutPlugins(createAppPreset(), ['sonarjs', 'import-x'])),
   });
   const reported = rulesOf(await eslint.lintFiles(['src']));
   return reported.length > 0 ? [`without plugins: ESLint reports ${reported.join(', ')}`] : [];
 }
 
 /**
- * Checks that a justified escape hatch passes in a library and is refused in an application.
+ * Checks that an `any` passes in a library and is a warning in an application.
  *
  * @returns {Promise<string[]>} The failures.
  */
@@ -185,24 +206,37 @@ function checkEscapeHatch() {
   const app = new ESLint({
     cwd: EXAMPLE_DIRECTORY,
     overrideConfigFile: true,
-    overrideConfig: defineConfig(createAppProfile()),
+    overrideConfig: defineConfig(createAppPreset()),
   });
   return withCaseFile('src/utils/text/escape-hatch.ts', ESCAPE_HATCH, async (absolute) => {
     const libraryRules = rulesOf(await library.lintFiles([absolute]));
     const appRules = rulesOf(await app.lintFiles([absolute]));
     const failures = [];
     if (libraryRules.length > 0) {
-      failures.push(`escape hatch: the library profile reports ${libraryRules.join(', ')}`);
+      failures.push(`escape hatch: the library preset reports ${libraryRules.join(', ')}`);
     }
-    if (!appRules.includes('@eslint-community/eslint-comments/no-restricted-disable')) {
-      failures.push(`escape hatch: the app profile reports ${appRules.join(', ') || 'nothing'}`);
+    if (!appRules.includes('@typescript-eslint/no-explicit-any')) {
+      failures.push(`escape hatch: the app preset reports ${appRules.join(', ') || 'nothing'}`);
     }
     return failures;
   });
 }
 
 /**
- * Checks that the Stylelint blocks catch their mistakes.
+ * Tells whether an ESLint or Stylelint config holds rules.
+ *
+ * @param {unknown} config - A flat config array (ESLint) or a config object (Stylelint).
+ * @returns {boolean} Whether it has at least one rule.
+ */
+function hasRules(config) {
+  if (Array.isArray(config)) {
+    return config.some((item) => Object.keys(item.rules ?? {}).length > 0);
+  }
+  return Object.keys(config?.rules ?? {}).length > 0;
+}
+
+/**
+ * Checks that the Stylelint preset catches its mistakes.
  *
  * @returns {Promise<string[]>} The failures.
  */
@@ -216,19 +250,32 @@ function checkStylelintCase() {
   });
 }
 
+/**
+ * Checks that every example config of lint/examples/ loads and holds rules.
+ *
+ * @returns {Promise<string[]>} The failures.
+ */
+async function checkExampleConfigs() {
+  const files = fs.readdirSync(EXAMPLE_CONFIGS_DIRECTORY).filter((file) => file.endsWith('.config.mjs'));
+  const modules = await Promise.all(
+    files.map((file) => import(pathToFileURL(path.join(EXAMPLE_CONFIGS_DIRECTORY, file)).href)),
+  );
+  return files.filter((_file, index) => !hasRules(modules[index]?.default)).map((file) => `${file}: no rules`);
+}
+
 const failures = [
   ...(await checkExample()),
   ...(await checkEslintCases()),
-  ...(await checkEscapeHatch()),
+  ...(await checkImportFix()),
   ...(await checkStylelintCase()),
+  ...(await checkEscapeHatch()),
   ...(await checkSonarWay()),
   ...(await checkWithoutPlugins()),
+  ...(await checkExampleConfigs()),
 ];
 if (failures.length > 0) {
-  // eslint-disable-next-line no-console -- a command-line script reports its result.
   console.error(failures.join('\n'));
   process.exitCode = 1;
 } else {
-  // eslint-disable-next-line no-console -- a command-line script reports its result.
   console.info('Lint presets: the example passes, and every block catches its mistake.');
 }

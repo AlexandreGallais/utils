@@ -1,4 +1,4 @@
-import { upperCase } from './upper-case.ts';
+import { upperCase } from './upper-case';
 
 describe(upperCase, () => {
   it.for([

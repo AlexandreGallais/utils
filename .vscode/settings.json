@@ -18,5 +18,355 @@
       "source.fixAll.markdownlint": "explicit"
     }
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.rules.customizations": [
+    {
+      "rule": "@angular-eslint/component-max-inline-declarations",
+      "severity": "info"
+    },
+    {
+      "rule": "@angular-eslint/no-empty-lifecycle-method",
+      "severity": "info"
+    },
+    {
+      "rule": "@angular-eslint/prefer-host-metadata-property",
+      "severity": "info"
+    },
+    {
+      "rule": "@angular-eslint/prefer-inject",
+      "severity": "info"
+    },
+    {
+      "rule": "@angular-eslint/prefer-output-emitter-ref",
+      "severity": "info"
+    },
+    {
+      "rule": "@angular-eslint/prefer-output-readonly",
+      "severity": "info"
+    },
+    {
+      "rule": "@angular-eslint/prefer-standalone",
+      "severity": "info"
+    },
+    {
+      "rule": "@angular-eslint/relative-url-prefix",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/adjacent-overload-signatures",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/class-methods-use-this",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/default-param-last",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/max-params",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/member-ordering",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-dynamic-delete",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-empty-function",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-empty-object-type",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-explicit-any",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-extraneous-class",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-invalid-void-type",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-namespace",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-assertion",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-redundant-type-constituents",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-shadow",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-this-alias",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-parameter-property-assignment",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-type-constraint",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-type-conversion",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-argument",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-assignment",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-call",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-function-type",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-member-access",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-return",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-type-assertion",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-useless-default-assignment",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-enum-initializers",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-find",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-for-of",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-literal-enum-member",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/prefer-nullish-coalescing",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/require-await",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/strict-boolean-expressions",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/triple-slash-reference",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/unified-signatures",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/use-unknown-in-catch-callback-variable",
+      "severity": "info"
+    },
+    {
+      "rule": "accessor-pairs",
+      "severity": "info"
+    },
+    {
+      "rule": "consistent-this",
+      "severity": "info"
+    },
+    {
+      "rule": "default-case-last",
+      "severity": "info"
+    },
+    {
+      "rule": "default-param-last",
+      "severity": "info"
+    },
+    {
+      "rule": "func-name-matching",
+      "severity": "info"
+    },
+    {
+      "rule": "func-style",
+      "severity": "info"
+    },
+    {
+      "rule": "grouped-accessor-pairs",
+      "severity": "info"
+    },
+    {
+      "rule": "guard-for-in",
+      "severity": "info"
+    },
+    {
+      "rule": "import-x/no-amd",
+      "severity": "info"
+    },
+    {
+      "rule": "import-x/no-commonjs",
+      "severity": "info"
+    },
+    {
+      "rule": "import-x/no-dynamic-require",
+      "severity": "info"
+    },
+    {
+      "rule": "import-x/no-mutable-exports",
+      "severity": "info"
+    },
+    {
+      "rule": "import-x/no-named-default",
+      "severity": "info"
+    },
+    {
+      "rule": "import-x/no-unassigned-import",
+      "severity": "info"
+    },
+    {
+      "rule": "local/disable-reason",
+      "severity": "info"
+    },
+    {
+      "rule": "max-classes-per-file",
+      "severity": "info"
+    },
+    {
+      "rule": "new-cap",
+      "severity": "info"
+    },
+    {
+      "rule": "no-alert",
+      "severity": "info"
+    },
+    {
+      "rule": "no-await-in-loop",
+      "severity": "info"
+    },
+    {
+      "rule": "no-continue",
+      "severity": "info"
+    },
+    {
+      "rule": "no-empty",
+      "severity": "info"
+    },
+    {
+      "rule": "no-empty-static-block",
+      "severity": "info"
+    },
+    {
+      "rule": "no-lone-blocks",
+      "severity": "info"
+    },
+    {
+      "rule": "no-multi-assign",
+      "severity": "info"
+    },
+    {
+      "rule": "no-multi-str",
+      "severity": "info"
+    },
+    {
+      "rule": "no-negated-condition",
+      "severity": "info"
+    },
+    {
+      "rule": "no-object-constructor",
+      "severity": "info"
+    },
+    {
+      "rule": "no-plusplus",
+      "severity": "info"
+    },
+    {
+      "rule": "no-restricted-properties",
+      "severity": "info"
+    },
+    {
+      "rule": "no-return-assign",
+      "severity": "info"
+    },
+    {
+      "rule": "no-sequences",
+      "severity": "info"
+    },
+    {
+      "rule": "no-useless-call",
+      "severity": "info"
+    },
+    {
+      "rule": "no-useless-concat",
+      "severity": "info"
+    },
+    {
+      "rule": "no-useless-constructor",
+      "severity": "info"
+    },
+    {
+      "rule": "no-useless-escape",
+      "severity": "info"
+    },
+    {
+      "rule": "no-void",
+      "severity": "info"
+    },
+    {
+      "rule": "prefer-named-capture-group",
+      "severity": "info"
+    },
+    {
+      "rule": "prefer-regex-literals",
+      "severity": "info"
+    },
+    {
+      "rule": "prefer-rest-params",
+      "severity": "info"
+    },
+    {
+      "rule": "preserve-caught-error",
+      "severity": "info"
+    },
+    {
+      "rule": "radix",
+      "severity": "info"
+    },
+    {
+      "rule": "require-unicode-regexp",
+      "severity": "info"
+    }
+  ]
 }

@@ -1,4 +1,4 @@
-import type { Awaitable } from './awaitable.ts';
+import type { Awaitable } from './awaitable';
 
 describe('Awaitable', () => {
   it('accepts a value or a promise', () => {

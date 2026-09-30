@@ -1,4 +1,4 @@
-import { isBetween } from './is-between.ts';
+import { isBetween } from './is-between';
 
 /**
  * Checks whether a value lies in an interval like `isBetween`, bounds included.

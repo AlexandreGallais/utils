@@ -1,4 +1,4 @@
-import type { Point } from './point.ts';
+import type { Point } from './point';
 
 /**
  * Computes the area of a simple polygon (shoelace formula): the surface of a zone of a synoptic, a tank

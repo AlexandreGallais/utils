@@ -1,4 +1,4 @@
-import type { Matrix2D } from '../../geometry/matrix-2d.ts';
+import type { Matrix2D } from '../../geometry';
 
 /**
  * Reads the matrix from the local coordinates of an element to screen pixels (the transforms of all its

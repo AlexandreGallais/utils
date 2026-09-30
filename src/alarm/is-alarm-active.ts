@@ -1,4 +1,4 @@
-import type { AlarmState } from './alarm-state.ts';
+import type { AlarmState } from './alarm-state';
 
 /**
  * Checks whether the condition of an alarm is on, acknowledged or not: the alarms to count in a banner or

@@ -1,4 +1,4 @@
-import type { NumberList } from './number-list.ts';
+import type { NumberList } from './number-list';
 
 /**
  * Computes a quantile (percentile) of a list of numbers, with linear interpolation between the two nearest

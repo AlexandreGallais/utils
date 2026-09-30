@@ -1,5 +1,5 @@
-import type { NumberList } from './number-list.ts';
-import { sum } from './sum.ts';
+import type { NumberList } from './number-list';
+import { sum } from './sum';
 
 /**
  * Computes the arithmetic mean of a list of numbers.

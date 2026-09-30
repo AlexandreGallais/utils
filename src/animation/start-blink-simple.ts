@@ -1,5 +1,5 @@
-import type { TickSource } from '../time/tick-source.ts';
-import { startBlink } from './start-blink.ts';
+import type { TickSource } from '../time';
+import { startBlink } from './start-blink';
 
 /**
  * Toggles a boolean on a shared clock like `startBlink`, on half of the period, back to on when stopped.

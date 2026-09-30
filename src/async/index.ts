@@ -1,20 +1,20 @@
 // Promises and long tasks: waiting, timeouts, retries, limited concurrency, non-blocking processing of long lists.
 
-export { sleep } from './sleep.ts';
-export { TimeoutError } from './timeout-error.ts';
-export { withTimeout } from './with-timeout.ts';
-export { yieldToMain } from './yield-to-main.ts';
-export { processInChunks } from './process-in-chunks.ts';
-export type { ProcessInChunksOptions } from './process-in-chunks-options.ts';
-export { streamInChunks } from './stream-in-chunks.ts';
-export { retry } from './retry.ts';
-export type { RetryOptions } from './retry-options.ts';
-export { mapConcurrent } from './map-concurrent.ts';
-export { createLatestRunner } from './create-latest-runner.ts';
-export type { LatestRunner } from './latest-runner.ts';
-export { sleepSimple } from './sleep-simple.ts';
-export { withTimeoutSimple } from './with-timeout-simple.ts';
-export { mapConcurrentSimple } from './map-concurrent-simple.ts';
-export { retrySimple } from './retry-simple.ts';
-export { processInChunksSimple } from './process-in-chunks-simple.ts';
-export { streamInChunksSimple } from './stream-in-chunks-simple.ts';
+export { sleep } from './sleep';
+export { TimeoutError } from './timeout-error';
+export { withTimeout } from './with-timeout';
+export { yieldToMain } from './yield-to-main';
+export { processInChunks } from './process-in-chunks';
+export type { ProcessInChunksOptions } from './process-in-chunks';
+export { streamInChunks } from './stream-in-chunks';
+export { retry } from './retry';
+export type { RetryOptions } from './retry';
+export { mapConcurrent } from './map-concurrent';
+export { createLatestRunner } from './create-latest-runner';
+export type { LatestRunner } from './create-latest-runner';
+export { sleepSimple } from './sleep-simple';
+export { withTimeoutSimple } from './with-timeout-simple';
+export { mapConcurrentSimple } from './map-concurrent-simple';
+export { retrySimple } from './retry-simple';
+export { processInChunksSimple } from './process-in-chunks-simple';
+export { streamInChunksSimple } from './stream-in-chunks-simple';

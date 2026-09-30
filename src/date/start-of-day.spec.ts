@@ -1,4 +1,4 @@
-import { startOfDay } from './start-of-day.ts';
+import { startOfDay } from './start-of-day';
 
 describe(startOfDay, () => {
   it('goes back to midnight in UTC', () => {

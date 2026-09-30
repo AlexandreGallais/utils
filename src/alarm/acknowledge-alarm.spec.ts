@@ -1,5 +1,5 @@
-import { acknowledgeAlarm } from './acknowledge-alarm.ts';
-import type { AlarmState } from './alarm-state.ts';
+import { acknowledgeAlarm } from './acknowledge-alarm';
+import type { AlarmState } from './alarm-state';
 
 describe(acknowledgeAlarm, () => {
   it.for([

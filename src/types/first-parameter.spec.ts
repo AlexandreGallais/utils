@@ -1,4 +1,4 @@
-import type { FirstParameter } from './first-parameter.ts';
+import type { FirstParameter } from './first-parameter';
 
 describe('FirstParameter', () => {
   it('reads the first parameter', () => {

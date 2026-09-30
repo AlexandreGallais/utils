@@ -1,5 +1,5 @@
-import { parseEnumValue } from './parse-enum-value.ts';
-import type { EnumObject } from './enum-object.ts';
+import { parseEnumValue } from './parse-enum-value';
+import type { EnumObject } from './enum-object';
 
 /**
  * Reads an enum value from untrusted data like `parseEnumValue`, accepting values only.

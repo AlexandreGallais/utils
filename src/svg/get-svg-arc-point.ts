@@ -1,7 +1,7 @@
-import { polarToCartesian } from '../geometry/polar-to-cartesian.ts';
-import type { Point } from '../geometry/point.ts';
-import { getSvgAnchorPointIn } from './get-svg-anchor-point-in.ts';
-import type { SvgArc } from './svg-arc.ts';
+import { polarToCartesian } from '../geometry';
+import type { Point } from '../geometry';
+import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
+import type { SvgArc } from './svg-arc';
 
 /**
  * Finds a point along an arc, in the coordinates of an element: where to put the label of a graduation or

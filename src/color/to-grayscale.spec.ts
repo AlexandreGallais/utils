@@ -1,5 +1,5 @@
-import { getRelativeLuminance } from './get-relative-luminance.ts';
-import { toGrayscale } from './to-grayscale.ts';
+import { getRelativeLuminance } from './get-relative-luminance';
+import { toGrayscale } from './to-grayscale';
 
 describe(toGrayscale, () => {
   it.for([

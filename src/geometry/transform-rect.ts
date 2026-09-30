@@ -1,6 +1,6 @@
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Rect } from './rect.ts';
-import { transformPoint } from './transform-point.ts';
+import type { Matrix2D } from './matrix-2d';
+import type { Rect } from './rect';
+import { transformPoint } from './transform-point';
 
 /**
  * Computes the axis-aligned box that a transformed rectangle occupies: the on-screen box of a symbol that

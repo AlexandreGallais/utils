@@ -1,4 +1,4 @@
-import { normalizeAngle } from './normalize-angle.ts';
+import { normalizeAngle } from './normalize-angle';
 
 describe(normalizeAngle, () => {
   it.for([

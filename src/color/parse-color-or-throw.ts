@@ -1,5 +1,5 @@
-import { parseColor } from './parse-color.ts';
-import type { Rgba } from './rgba.ts';
+import { parseColor } from './parse-color';
+import type { Rgba } from './rgba';
 
 /**
  * Parses any CSS color string, like `parseColor`, but throws instead of returning `undefined`. Each call

@@ -1,4 +1,5 @@
-import type { FlowUnit } from './flow-unit.ts';
+/** A volumetric flow unit: litres per second or minute, cubic metres per hour, US gallons per minute. */
+export type FlowUnit = 'gal/min' | 'L/min' | 'L/s' | 'm³/h';
 
 /** US liquid gallon (exact: 231 cubic inches). */
 const LITRES_PER_US_GALLON = 3.785411784;

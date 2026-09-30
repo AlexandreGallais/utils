@@ -1,5 +1,5 @@
-import { getThresholdLevelWithHysteresis } from './get-threshold-level-with-hysteresis.ts';
-import type { ThresholdScale } from './threshold-scale.ts';
+import { getThresholdLevelWithHysteresis } from './get-threshold-level-with-hysteresis';
+import type { ThresholdScale } from './threshold-scale';
 
 type Level = 'alarm' | 'normal' | 'warning';
 

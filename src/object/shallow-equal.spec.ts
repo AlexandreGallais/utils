@@ -1,4 +1,4 @@
-import { shallowEqual } from './shallow-equal.ts';
+import { shallowEqual } from './shallow-equal';
 
 describe(shallowEqual, () => {
   it.for([

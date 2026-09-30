@@ -1,5 +1,5 @@
-import type { EnumObject } from '../enum/enum-object.ts';
-import { randomEnumValue } from './random-enum-value.ts';
+import type { EnumObject } from '../enum';
+import { randomEnumValue } from './random-enum-value';
 
 /**
  * Draws one member of an enum like `randomEnumValue`.

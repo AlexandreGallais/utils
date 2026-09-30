@@ -1,5 +1,5 @@
-import { capitalize } from './capitalize.ts';
-import { words } from './words.ts';
+import { capitalize } from './capitalize';
+import { words } from './words';
 
 /**
  * Converts a string to camelCase: words joined, the first in lower case, the next ones capitalized.

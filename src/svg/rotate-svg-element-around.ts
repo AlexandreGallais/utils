@@ -1,8 +1,7 @@
-import type { Anchor } from '../geometry/anchor.ts';
-import { multiplyMatrices } from '../geometry/multiply-matrices.ts';
-import { createRotationMatrix } from '../geometry/create-rotation-matrix.ts';
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { updateScreenMatrix } from './internal/update-screen-matrix.ts';
+import type { Anchor } from '../geometry';
+import { multiplyMatrices, createRotationMatrix } from '../geometry';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { updateScreenMatrix } from './internal';
 
 /**
  * Turns an SVG element by an angle, clockwise on screen, around an anchor of another element, whatever

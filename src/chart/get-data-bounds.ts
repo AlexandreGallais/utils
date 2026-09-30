@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import type { DataBounds } from './data-bounds.ts';
+import type { Point } from '../geometry';
+import type { DataBounds } from './data-bounds';
 
 /**
  * Computes the extent of data points in one pass, to fit a chart to its data.

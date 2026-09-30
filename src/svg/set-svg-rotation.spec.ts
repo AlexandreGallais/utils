@@ -1,6 +1,5 @@
-import { setSvgRotation } from './set-svg-rotation.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { setSvgRotation } from './set-svg-rotation';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(setSvgRotation, () => {
   it('sets an absolute angle on screen without accumulating', () => {

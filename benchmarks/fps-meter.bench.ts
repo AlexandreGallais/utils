@@ -9,7 +9,6 @@ let _sink: unknown;
 function naiveFps(timestamps: number[], timestamp: number): number {
   timestamps.push(timestamp);
   if (timestamps.length > WINDOW_SIZE + 1) {
-    // eslint-disable-next-line unicorn/no-array-front-mutation -- the naive baseline this benchmark measures.
     timestamps.shift();
   }
   const [first = timestamp] = timestamps;

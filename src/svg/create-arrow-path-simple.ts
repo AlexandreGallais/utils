@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { createArrowPath } from './create-arrow-path.ts';
+import type { Point } from '../geometry';
+import { createArrowPath } from './create-arrow-path';
 
 /**
  * Builds the `d` attribute of an arrow like `createArrowPath`, with a head as wide as it is long.

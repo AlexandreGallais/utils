@@ -1,4 +1,4 @@
-import { processInChunks } from './process-in-chunks.ts';
+import { processInChunks } from './process-in-chunks';
 
 /**
  * Processes a long list in slices of 8 ms like `processInChunks`, giving the browser a turn between slices.

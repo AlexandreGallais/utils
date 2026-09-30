@@ -1,5 +1,5 @@
-import type { Point } from './point.ts';
-import type { Rect } from './rect.ts';
+import type { Point } from './point';
+import type { Rect } from './rect';
 
 /**
  * Computes the center of a rectangle, such as the rotation center of an SVG element from its bounding box.

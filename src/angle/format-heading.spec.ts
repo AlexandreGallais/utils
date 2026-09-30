@@ -1,4 +1,4 @@
-import { formatHeading } from './format-heading.ts';
+import { formatHeading } from './format-heading';
 
 describe(formatHeading, () => {
   it.for([

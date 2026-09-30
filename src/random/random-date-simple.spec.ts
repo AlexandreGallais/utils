@@ -1,4 +1,4 @@
-import { randomDateSimple } from './random-date-simple.ts';
+import { randomDateSimple } from './random-date-simple';
 
 describe(randomDateSimple, () => {
   it('stays within the interval', () => {

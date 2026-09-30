@@ -1,4 +1,4 @@
-import { observeIntersection } from './observe-intersection.ts';
+import { observeIntersection } from './observe-intersection';
 
 /**
  * Watches whether an element is on screen like `observeIntersection`, against the viewport.

@@ -1,5 +1,5 @@
-import { startAnimationSimple } from './start-animation-simple.ts';
-import { FakeTickSource } from './testing/fake-tick-source.ts';
+import { startAnimationSimple } from './start-animation-simple';
+import { FakeTickSource } from './testing';
 
 describe(startAnimationSimple, () => {
   it('reports a linear progress', () => {

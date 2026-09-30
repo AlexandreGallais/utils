@@ -1,4 +1,4 @@
-import { isDeepEqual } from './is-deep-equal.ts';
+import { isDeepEqual } from './is-deep-equal';
 
 class Point {
   public readonly x: number;

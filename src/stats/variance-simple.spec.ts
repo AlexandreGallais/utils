@@ -1,4 +1,4 @@
-import { varianceSimple } from './variance-simple.ts';
+import { varianceSimple } from './variance-simple';
 
 describe(varianceSimple, () => {
   it('divides by n', () => {

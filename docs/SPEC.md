@@ -303,7 +303,7 @@ Demandé après le premier lot ; la liste complète, avec les fichiers à copier
 
 ## Troisième lot
 
-Règles d'écriture formalisées d'abord (section « Writing a function » d'[`AGENTS.md`](https://github.com/AlexandreGallais/utils/blob/main/AGENTS.md), skill `add-function`, JSDoc vérifiée par `eslint-plugin-jsdoc` : phrases complètes, `@param name - …`, `@returns`, `@throws`, `@example`, tags `@cached` et `@rejects`). Le catalogue du README et [`FUNCTIONS.md`](https://github.com/AlexandreGallais/utils/blob/main/docs/FUNCTIONS.md) sont générés par `pnpm docs:catalog` (lancé par `pnpm check`).
+Règles d'écriture formalisées d'abord (section « Writing a function » d'[`AGENTS.md`](https://github.com/AlexandreGallais/utils/blob/main/AGENTS.md), skill `add-function`, JSDoc relue selon ces règles (vérifiée par `eslint-plugin-jsdoc` jusqu'au neuvième lot) : phrases complètes, `@param name - …`, `@returns`, `@throws`, `@example`, tags `@cached` et `@rejects`). Le catalogue du README et [`FUNCTIONS.md`](https://github.com/AlexandreGallais/utils/blob/main/docs/FUNCTIONS.md) sont générés par `pnpm docs:catalog` (lancé par `pnpm check`).
 
 ### Formats et chaînes
 
@@ -490,3 +490,67 @@ Règles d'écriture formalisées d'abord (section « Writing a function » d'[`A
 - **Couleur** : `#FFF`, `#ffff`, espaces, casse, `rgb(100%, 0%, 0%)`, `rgb(255 0 0 / 50%)`, strings invalides, cache plein
 - **Timers** (`sleep`, `throttle`, `debounce`, `rafThrottle`) : fake timers, annulation, `flush`
 - Couverture exigée : 100 % (lignes, branches, fonctions, instructions)
+
+## Neuvième lot : lint réduit, rangé par concept, désactivation réservée aux warnings
+
+- **Moins de plugins** : ESLint, typescript-eslint, import-x (+ résolveur TypeScript), Prettier, angular-eslint, SonarJS (optionnel), Storybook (optionnel, allégé). Retirés : Unicorn, JSDoc, regexp, Vitest, NgRx, RxJS, no-unsanitized, boundaries, check-file, compat, eslint-comments. Les règles cœur que ces plugins couvraient sont réactivées (`require-unicode-regexp` avec `v`, `prefer-named-capture-group`, `no-negated-condition`…).
+- **Rangement** : `lint/eslint/rules/<concept>.mjs` (ESLint + typescript-eslint + import-x), `sonarjs/<concept>.mjs` (mêmes concepts), `angular/`, `storybook/`, `local/` (règles écrites ici), `setup/`, `presets/`. Un projet n'importe qu'un preset (`presets/typescript.mjs` ou `presets/angular.mjs`) ; `lint/examples/` donne un `eslint.config.mjs` par type de projet.
+- **SonarJS = Sonar way** : les règles du profil par défaut de SonarQube sont actives, les autres coupées ; les limites de taille qui remplacent une règle cœur restent. Sans SonarJS, les règles cœur équivalentes (`complexity`, `max-depth`, `max-lines`, `max-lines-per-function`, `max-nested-callbacks`) prennent le relais.
+- **Désactivation** : une règle est un `warn` (exception légitime décrite par `// Warn:`, désactivable ligne par ligne avec une raison) ou une `error` (non désactivable). Règles maison : `local/disable-only-warnings` (lit la sévérité résolue de chaque règle, recopiée dans `settings` par les presets), `local/disable-reason` (warning sans raison), `local/disable-next-line-only`. Une application (`isApplication`) passe les échappatoires d'une lib (`any`, `!`, assertions) en erreur.
+- **Noms de fichiers** : `local/kebab-case-path` (fichiers et dossiers, points = séparateurs de mots) et `local/export-matches-filename` (une fonction ou classe exportée par fichier, nommée d'après lui, `button.component.ts` → `ButtonComponent` ; mode `all` pour ce dépôt).
+- **Architecture atomic design** refaite avec `import-x/no-restricted-paths` et `no-restricted-imports` (HttpClient réservé à `data-access`).
+- **Stylelint** remis à la config standard SCSS (`lint/stylelint/rules/base.mjs`, `presets/scss.mjs`), à reconstruire par concept.
+- **Wiki** : une seule barre latérale pour tout le site (guide, linting, CSS, API, règles), la spécification n'est plus publiée.
+- Performance : `pnpm lint` 28 s (32 s avant), 40 s sur un seul thread (51 s avant).
+
+## Dixième lot : erreur = vraie faute, warning = choix à justifier
+
+- **Principe** : une `error` est une vraie faute (bug, typage cassé, faille) ou un style que l'autofix applique, et ne se désactive jamais ; un `warn` est un style sans autofix ou une règle qui peut limiter un vrai besoin, désactivable ligne par ligne avec une raison. Classement fait d'après les métadonnées de chaque règle (`problem`, `fixable`), puis à la main (règles qui attrapent des bugs remises en erreur, exceptions `// Warn:`).
+- **Typage solide** : utiliser une valeur `any` (`no-unsafe-member-access`, `-call`, `-assignment`, `-argument`, `-return`) est une erreur. Écrire `any` ou `void` dans un type : libre dans une lib (`isLibrary: true`), warning ailleurs. L'ancien verrou « application » disparaît.
+- **Retirés** : `local/require-spec-file` (les specs relèvent du projet ; ici la couverture à 100 % les impose), le bloc d'architecture atomic design (pas de nommage de dossiers ni de règles d'import par couche), Stylelint (à refaire plus tard), `import-x/max-dependencies`.
+- **Imports** : option `importStyle` : `folders` (un voisin `./x` ou un dossier `../y` via son `index.ts`, sans extension, règle `local/import-folders`) ou `files` (le fichier avec son extension, pour ce dépôt dont les fichiers se copient seuls).
+- **`disabledRules`** : liste de règles coupées par le projet, visible dans sa config ; un nom inconnu lève une erreur.
+- **Doc** : page « Write the config » (chaque option expliquée), colonne « What it checks » dans la référence des règles (description de la règle elle-même).
+
+## Onzième lot : SonarJS toujours actif, presets par type de projet, niveau info
+
+- **SonarJS fusionné dans `rules/`** : il est toujours actif (SonarQube analyse tous les projets). Chaque fichier de concept a ses sections ESLint, typescript-eslint et SonarJS ; un doublon SonarJS d'une règle cœur reste coupé (la règle cœur est plus rapide), une règle SonarJS qui mesure autrement remplace la règle cœur (`Off: replaced by sonarjs/…`).
+- **Presets par type de projet** : `typescript-library`, `typescript-library-storybook` (lib SVG), `angular-library`, `angular-library-storybook`, `angular-app` (projets programmes). Les règles sont les mêmes partout ; un preset ajoute Angular ou Storybook et dit si le code est une lib (`any` et `void` libres) ou une application (warnings). Options restantes : `tsconfigRootDirectory`, `sourceFiles`, `developmentDependencyFiles`, `disabledRules`, `overrides`, et selon le preset `storybookPackageDirectory`, `prefix`, `isAccessible`, `isTranslated`.
+- **Imports sans extension, par dossier** : fixe dans les presets. Ce dépôt garde, par `overrides`, les imports de fichiers avec `.ts` (ses fichiers se copient seuls) et un seul nom exporté par fichier.
+- **Niveau `info`** : une suggestion (« on pourrait aussi écrire… »), soulignée en bleu dans l'éditeur, jamais bloquante. ESLint ne connaît que off/warn/error : un bloc écrit `['info']`, les presets le changent en `off` en ligne de commande (`ESLINT_INFO_RULES=off` dans `pnpm lint`) et en warning dans l'éditeur, que VS Code affiche en bleu grâce à `eslint.rules.customizations` écrit par `pnpm lint:editor`. Une règle dont dépend le profil Sonar way n'est jamais `info` (vérifié par `pnpm lint:presets`).
+
+## Douzième lot : config racine en mode Node, une config par projet
+
+- **Comme un workspace Angular** : une config racine (`typescript-node`, mode Node : configs d'outils, scripts, dépendances de dev, console) et une config par projet (lib, shell), qui importe la racine (`rootConfig`) et passe ses sources (`sourceFiles`) en mode navigateur (globales du navigateur, pas de module Node, imports de dossier sans extension, dépendances de dev seulement dans les specs et stories). Le reste du dossier du projet reste en mode Node.
+- **Presets** : `typescript-node` (racine), `typescript-browser` (lib TS pour le navigateur, `isLibrary`, Storybook en option), `angular-library` (Storybook en option), `angular-app`. Storybook est une option du projet, pas de la racine.
+- **Accessibilité et i18n** : règles coupées (simulateurs, pas de lecteur d'écran ; traductions avec Transloco), sauf ce qui est bizarre de toute façon : `autofocus` et `tabindex` positif en warning. Options `isAccessible` et `isTranslated` retirées.
+- **Rangement** : `lint/eslint/{presets, rules, setup}` ; Angular, Storybook, les modes et les règles maison (`rules/local/`) sont dans `rules/`, chaque fichier exporte une fonction nommée d'après lui.
+
+## Treizième lot : un export par fichier en warning, chemins simplifiés à la sauvegarde
+
+- **Exports** : dans les presets, seules les fonctions et classes exportées comptent ; leurs types et constantes restent dans le même fichier (un type « branded » `TotoId` et sa fonction `TotoId`). Deux fonctions exportées dans un fichier, ou une fonction qui ne porte pas le nom du fichier : un warning, pas une erreur. Une fonction peut être en PascalCase quand elle construit le type du même nom. Ce dépôt garde, par `overrides`, un seul nom exporté par fichier (types compris) en erreur : son catalogue et le copier-coller fichier par fichier en dépendent.
+- **« Path can be simplified »** : `local/import-folders` a un autofix. Quand l'index d'un dossier réexporte ce qu'un import prend (en suivant les `index.ts` imbriqués, `export *` et `export { a as b }`), l'import passe par lui à la sauvegarde ; un import par défaut devient le nom que l'index lui donne. Dans les sources : le dossier (`'../../atoms'`) ; en Node : le chemin de l'index avec son extension (`'./lint/index.mjs'`). `lint/index.mjs` réexporte les presets.
+- **import-x et son résolveur TypeScript** : gardés. 24 règles utilisées, dont les coûteuses à refaire (cycles, dépendances déclarées, ordre avec autofix), et le résolveur suit les alias de chemins des workspaces Angular.
+
+## Quatorzième lot : une lib copiée, pas publiée
+
+- **Imports par dossier** : `src/` n'importe plus les fichiers avec `.ts` mais un voisin (`./clamp`) ou un dossier (`../math`), à travers l'`index.ts` de chaque dossier (`internal/` et `testing/` en ont un aussi, non réexporté). Les imports ont été réécrits par l'autofix de `local/import-folders`. Le catalogue et le wiki suivent les `index.ts` jusqu'au fichier qui déclare chaque nom.
+- **Types avec leur fonction** : les 36 types utilisés par un seul fichier du même dossier (les `…Options`, les unités, les types de résultat) ont rejoint le fichier de leur fonction ; un type partagé garde son fichier. Une fonction ou classe exportée par fichier, en warning.
+- **Plus de build ni de publication** : la lib est copiée dossier par dossier dans les projets. Retirés : `vite build`, les déclarations, `size-limit`, `publint`, `attw`, les champs de publication du `package.json` (`private: true`). Il reste : catalogue, types, lint, format, knip, tests avec couverture à 100 %.
+- **Benchmarks dans Chromium** : Vitest en mode navigateur avec Playwright, page isolée (COOP/COEP) pour des timers précis à 5 µs. Chiffres mis à jour.
+- **`disabledRules` retiré** : on coupe une règle par `overrides`, dans la config relue.
+- **Versions** : tout à jour et figé exactement. TypeScript reste en 6.0.3 (typescript-eslint ne supporte pas la 7) et `@types/node` en 24.19.0 (Node 24).
+
+## Quinzième lot : tests et stories souples, niveaux relus, transfert par texte
+
+- **Specs, helpers de test, benchmarks, stories** : chaque warning y devient une info, ainsi que les règles qui empêchent de bidouiller (`any`, `!`, assertions dangereuses) ; les erreurs restent (bugs, style corrigé automatiquement), ainsi que SonarJS et les règles qui le remplacent, car SonarQube analyse aussi les specs. Seules les règles actives partout sont abaissées : rien n'est allumé dans les tests.
+- **Niveaux relus** : une vingtaine de warnings de pur style passent en info (constructeurs inutiles, `default-param-last`, contraintes de type inutiles, `prefer-standalone`…) ; `no-useless-catch` reste un warning (il remplace une règle Sonar way).
+- **Démo des niveaux** : `examples/lint-levels/levels.mjs` (info, warning, erreur), ignoré par `pnpm lint`. WebStorm n'a pas de niveau info : il les montre en warning.
+- **`pnpm transfer <dossiers>`** : un seul fichier texte (`transfer/<nom>.mjs`) qui recrée les dossiers avec `node <fichier> [destination]` ; un dossier de `src/` emmène les dossiers de `src/` qu'il importe. Pour recopier `lint/` et la lib là où on ne peut que coller du texte.
+
+## Seizième lot : Stylelint, config ESLint 8, CI par branche
+
+- **Stylelint pour le SCSS des projets Angular** : chaque règle du cœur, de stylelint-scss et de stylelint-order listée par concept (`lint/stylelint/rules/`), niveaux tirés de `stylelint-config-standard-scss` (le « recommended » = erreurs, l'autofix = erreurs, le reste du standard = warnings) puis les choix du projet : `rem` sans décimales, pas de couleur nommée, `!important`, `#id`, imbrication > 3, `::ng-deep` en warning ; sélecteurs de composants Angular acceptés ; ordre des propriétés (recess) corrigé à la sauvegarde. Même politique de désactivation que ESLint (`local/disable-only-warnings`). Formatage laissé à Prettier. Dépendances : stylelint, stylelint-scss, stylelint-order, stylelint-config-recess-order, postcss-scss.
+- **CI** : `pnpm lint` / `pnpm lint:css` échouent sur les erreurs ; `pnpm lint:strict` / `pnpm lint:css:strict` aussi sur les warnings, pour une MR vers `main`.
+- **`lint/legacy/angular-18.eslintrc.json`** : les mêmes règles ESLint pour un ancien projet Angular 18 sous ESLint 8 (format `.eslintrc.json`, commentaires gardés), généré depuis le preset d'application et vérifié avec ESLint 8.57, typescript-eslint 8 et angular-eslint 18 (12 réglages adaptés). Sans SonarJS, import-x, Prettier ni règles maison.
+- **Le dossier `lint/`** garde son nom : il contient maintenant `eslint/`, `stylelint/` et `legacy/`.

@@ -1,4 +1,4 @@
-import { moveItem } from './move-item.ts';
+import { moveItem } from './move-item';
 
 describe(moveItem, () => {
   it.for([

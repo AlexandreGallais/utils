@@ -1,4 +1,4 @@
-import { parseMatchedNumber } from './internal/parse-matched-number.ts';
+import { parseMatchedNumber } from './internal';
 
 /** Source of a signed decimal number, `.` or `,` as decimal separator: `-12`, `3.5`, `+0,25`, `.5`. */
 const NUMBER_SOURCE = String.raw`[+\-]?(?:\d+(?:[,.]\d+)?|[,.]\d+)`;

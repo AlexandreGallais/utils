@@ -1,5 +1,5 @@
-import type { DurationParts } from './duration-parts.ts';
-import { splitDuration } from './split-duration.ts';
+import type { DurationParts } from './duration-parts';
+import { splitDuration } from './split-duration';
 
 const MS_PER_SECOND = 1000;
 const MS_PER_MINUTE = 60_000;

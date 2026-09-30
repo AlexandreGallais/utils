@@ -1,5 +1,5 @@
-import { standardDeviation } from './standard-deviation.ts';
-import type { NumberList } from './number-list.ts';
+import { standardDeviation } from './standard-deviation';
+import type { NumberList } from './number-list';
 
 /**
  * Computes the standard deviation of a whole set of values like `standardDeviation`.

@@ -1,4 +1,4 @@
-import type { EnumLiteral } from './enum-literal.ts';
+import type { EnumLiteral } from './enum-literal';
 
 enum Status {
   Idle = 'idle',

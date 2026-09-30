@@ -1,4 +1,4 @@
-import { randomStringSimple } from './random-string-simple.ts';
+import { randomStringSimple } from './random-string-simple';
 
 describe(randomStringSimple, () => {
   it('draws letters and digits', () => {

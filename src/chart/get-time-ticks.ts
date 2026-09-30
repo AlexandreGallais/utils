@@ -1,4 +1,4 @@
-import type { TimeTicks } from './time-ticks.ts';
+import type { TimeTicks } from './time-ticks';
 
 /** Milliseconds per minute. */
 const MINUTE_MS = 60_000;

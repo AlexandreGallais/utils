@@ -1,4 +1,4 @@
-import { isEmpty } from './is-empty.ts';
+import { isEmpty } from './is-empty';
 
 describe(isEmpty, () => {
   it.for([null, undefined, '', [], {}, new Map(), new Set(), new Float64Array(0)])('finds %j empty', (value) => {

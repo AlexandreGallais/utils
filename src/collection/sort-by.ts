@@ -1,4 +1,4 @@
-import type { SortKey } from './sort-key.ts';
+import type { SortKey } from './sort-key';
 
 /** A key comparable with `<`, `undefined` for keys that sort last. */
 type ComparableKey = Exclude<SortKey, Date>;

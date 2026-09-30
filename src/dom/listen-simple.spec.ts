@@ -1,4 +1,4 @@
-import { listenSimple } from './listen-simple.ts';
+import { listenSimple } from './listen-simple';
 
 describe(listenSimple, () => {
   it('listens until the cleanup runs', () => {

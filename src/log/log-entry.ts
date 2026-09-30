@@ -1,4 +1,4 @@
-import type { LogLevel } from './log-level.ts';
+import type { LogLevel } from './log-level';
 
 /** A log entry, as handed to a `LogSink`. */
 export interface LogEntry {

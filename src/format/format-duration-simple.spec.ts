@@ -1,5 +1,5 @@
-import { formatDuration } from './format-duration.ts';
-import { formatDurationSimple } from './format-duration-simple.ts';
+import { formatDuration } from './format-duration';
+import { formatDurationSimple } from './format-duration-simple';
 
 describe(formatDurationSimple, () => {
   it('formats to the whole second', () => {

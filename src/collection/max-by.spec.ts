@@ -1,4 +1,4 @@
-import { maxBy } from './max-by.ts';
+import { maxBy } from './max-by';
 
 const SENSORS = [
   { id: 'a', temperature: 50 },

@@ -1,4 +1,4 @@
-import type { NonEmptyArray } from './non-empty-array.ts';
+import type { NonEmptyArray } from './non-empty-array';
 
 describe('NonEmptyArray', () => {
   it('requires a first item', () => {

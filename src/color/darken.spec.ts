@@ -1,4 +1,4 @@
-import { darken } from './darken.ts';
+import { darken } from './darken';
 
 describe(darken, () => {
   it('lowers the lightness', () => {

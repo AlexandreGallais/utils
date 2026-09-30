@@ -1,4 +1,4 @@
-import type { Simplify } from './simplify.ts';
+import type { Simplify } from './simplify';
 
 /**
  * Combines two object types, the properties of the second replacing those of the first (like an object

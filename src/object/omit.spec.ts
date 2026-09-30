@@ -1,4 +1,4 @@
-import { omit } from './omit.ts';
+import { omit } from './omit';
 
 describe(omit, () => {
   it('leaves the requested keys out', () => {

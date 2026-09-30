@@ -1,4 +1,4 @@
-import { isBetween } from './is-between.ts';
+import { isBetween } from './is-between';
 
 describe(isBetween, () => {
   it.for([

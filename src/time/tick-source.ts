@@ -1,4 +1,4 @@
-import type { ClockTick } from './clock-tick.ts';
+import type { ClockTick } from './clock-tick';
 
 /** A function called at each tick of a `TickSource`. */
 type TickListener = (tick: ClockTick) => void;

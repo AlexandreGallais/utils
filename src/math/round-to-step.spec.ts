@@ -1,4 +1,4 @@
-import { roundToStep } from './round-to-step.ts';
+import { roundToStep } from './round-to-step';
 
 describe(roundToStep, () => {
   it.for([

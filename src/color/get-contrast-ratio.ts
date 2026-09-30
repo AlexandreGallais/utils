@@ -1,6 +1,6 @@
-import { getRelativeLuminance } from './get-relative-luminance.ts';
-import { luminanceContrast } from './internal/luminance-contrast.ts';
-import type { Rgb } from './rgb.ts';
+import { getRelativeLuminance } from './get-relative-luminance';
+import { luminanceContrast } from './internal';
+import type { Rgb } from './rgb';
 
 /**
  * Computes the WCAG contrast ratio between two colors; their order does not matter.

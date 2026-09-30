@@ -1,4 +1,4 @@
-import { watchPageVisibility } from './watch-page-visibility.ts';
+import { watchPageVisibility } from './watch-page-visibility';
 
 describe(watchPageVisibility, () => {
   afterEach(() => {

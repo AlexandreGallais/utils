@@ -1,6 +1,6 @@
-import { lerp } from '../math/lerp.ts';
-import { angleDifference } from './angle-difference.ts';
-import { normalizeAngle } from './normalize-angle.ts';
+import { lerp } from '../math';
+import { angleDifference } from './angle-difference';
+import { normalizeAngle } from './normalize-angle';
 
 /**
  * Interpolates between two angles along the shortest path: a heading going from 350° to 10° passes

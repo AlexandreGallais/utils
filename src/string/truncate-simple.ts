@@ -1,4 +1,4 @@
-import { truncate } from './truncate.ts';
+import { truncate } from './truncate';
 
 /**
  * Shortens a text to a maximum length like `truncate`, ending with an ellipsis.

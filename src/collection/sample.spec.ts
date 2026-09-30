@@ -1,4 +1,4 @@
-import { sample } from './sample.ts';
+import { sample } from './sample';
 
 describe(sample, () => {
   it('picks the item matching the random source', () => {

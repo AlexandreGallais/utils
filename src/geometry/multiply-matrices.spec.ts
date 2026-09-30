@@ -1,5 +1,5 @@
-import { createIdentityMatrix } from './create-identity-matrix.ts';
-import { multiplyMatrices } from './multiply-matrices.ts';
+import { createIdentityMatrix } from './create-identity-matrix';
+import { multiplyMatrices } from './multiply-matrices';
 
 const TRANSLATE = { a: 1, b: 0, c: 0, d: 1, e: 100, f: 0 };
 const SCALE = { a: 2, b: 0, c: 0, d: 2, e: 0, f: 0 };

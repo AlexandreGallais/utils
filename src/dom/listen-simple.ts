@@ -1,5 +1,5 @@
-import type { EventMapOf } from './event-map-of.ts';
-import { listen } from './listen.ts';
+import type { EventMapOf } from './event-map-of';
+import { listen } from './listen';
 
 /**
  * Adds an event listener and returns the function that removes it, like `listen`, with the event type

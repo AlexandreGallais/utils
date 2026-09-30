@@ -1,4 +1,4 @@
-import { formatGeoCoordinate } from './format-geo-coordinate.ts';
+import { formatGeoCoordinate } from './format-geo-coordinate';
 
 describe(formatGeoCoordinate, () => {
   it.for([

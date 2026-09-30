@@ -1,7 +1,6 @@
-import type { Rect } from '../geometry/rect.ts';
-import { transformRect } from '../geometry/transform-rect.ts';
-import { getLocalBox } from './internal/get-local-box.ts';
-import { getScreenMatrix } from './internal/get-screen-matrix.ts';
+import type { Rect } from '../geometry';
+import { transformRect } from '../geometry';
+import { getLocalBox, getScreenMatrix } from './internal';
 
 /**
  * Measures the box an SVG element takes on screen, in pixels: the upright rectangle around what is seen,

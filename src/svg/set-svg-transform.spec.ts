@@ -1,5 +1,5 @@
-import { setSvgTransform } from './set-svg-transform.ts';
-import { asSvgElement, createFakeSvgElement } from './testing/fake-svg-element.ts';
+import { setSvgTransform } from './set-svg-transform';
+import { asSvgElement, createFakeSvgElement } from './testing';
 
 describe(setSvgTransform, () => {
   it('writes the matrix attribute', () => {

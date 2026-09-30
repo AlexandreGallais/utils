@@ -1,4 +1,4 @@
-import { NavigationHistory } from './navigation-history.ts';
+import { NavigationHistory } from './navigation-history';
 
 describe(NavigationHistory, () => {
   let history: NavigationHistory<string>;

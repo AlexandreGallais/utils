@@ -1,4 +1,4 @@
-import type { RequireKeys } from './require-keys.ts';
+import type { RequireKeys } from './require-keys';
 
 describe('RequireKeys', () => {
   it('requires the given keys only', () => {

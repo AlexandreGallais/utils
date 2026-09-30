@@ -1,4 +1,4 @@
-import { formatGeoCoordinate } from './format-geo-coordinate.ts';
+import { formatGeoCoordinate } from './format-geo-coordinate';
 
 /** Decimals of the minutes: a thousandth of a minute is about 2 m. */
 const MINUTE_DIGITS = 3;

@@ -1,4 +1,4 @@
-import { intersectionBy } from './intersection-by.ts';
+import { intersectionBy } from './intersection-by';
 
 describe(intersectionBy, () => {
   it('keeps the items whose key is in the other list', () => {

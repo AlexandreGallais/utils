@@ -1,8 +1,23 @@
-import { consoleSink } from './console-sink.ts';
-import type { LogEntry } from './log-entry.ts';
-import type { LogLevel } from './log-level.ts';
-import type { Logger } from './logger.ts';
-import type { LoggerOptions } from './logger-options.ts';
+import { consoleSink } from './console-sink';
+import type { LogEntry } from './log-entry';
+import type { LogLevel } from './log-level';
+import type { Logger } from './logger';
+
+/** Receives the entries of a logger and writes them somewhere: the console, a file, a server. */
+export type LogSink = (entry: LogEntry) => void;
+
+/** A function returning the current time, in milliseconds since the epoch. */
+type TimeSource = () => number;
+
+/** Settings of `createLogger`: minimum level, output and clock. */
+export interface LoggerOptions {
+  /** Entries below this level are dropped; `'info'` by default, `'silent'` drops everything. */
+  readonly level?: LogLevel;
+  /** Output of the entries; the console by default. */
+  readonly sink?: LogSink;
+  /** Clock of the timestamps, `Date.now` by default; replace it in tests. */
+  readonly now?: TimeSource;
+}
 
 /** Rank of each level: an entry is kept when its rank reaches the minimum level's. */
 const LEVEL_RANKS: Readonly<Record<LogLevel, number>> = {

@@ -1,4 +1,4 @@
-import { randomBoolean } from './random-boolean.ts';
+import { randomBoolean } from './random-boolean';
 
 /** Chance of `true`: one in two. */
 const EVEN_CHANCE = 0.5;

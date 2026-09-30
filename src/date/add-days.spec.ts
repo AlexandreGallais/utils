@@ -1,4 +1,4 @@
-import { addDays } from './add-days.ts';
+import { addDays } from './add-days';
 
 describe(addDays, () => {
   it('moves by UTC days, across months and years', () => {

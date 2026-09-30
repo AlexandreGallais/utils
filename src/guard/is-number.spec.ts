@@ -1,4 +1,4 @@
-import { isNumber } from './is-number.ts';
+import { isNumber } from './is-number';
 
 describe(isNumber, () => {
   it.for([

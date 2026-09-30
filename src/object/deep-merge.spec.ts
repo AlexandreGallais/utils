@@ -1,6 +1,5 @@
-import { assert } from '../guard/assert.ts';
-import { isRecord } from '../guard/is-record.ts';
-import { deepMerge } from './deep-merge.ts';
+import { assert, isRecord } from '../guard';
+import { deepMerge } from './deep-merge';
 
 describe(deepMerge, () => {
   const defaults = { grid: { step: 10, isVisible: true }, series: ['a', 'b'], title: 'Speed' };

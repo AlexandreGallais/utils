@@ -1,5 +1,5 @@
-import { remap } from '../math/remap.ts';
-import type { Scale } from './scale.ts';
+import { remap } from '../math';
+import type { Scale } from './scale';
 
 /**
  * Creates a linear scale for a chart axis, like d3's `scaleLinear`: data values in `domain` map to screen

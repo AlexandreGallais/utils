@@ -1,5 +1,5 @@
 import { Component, model, output } from '@angular/core';
-import { ButtonComponent } from '../../atoms/button/button.component';
+import { ButtonComponent } from '../../atoms';
 
 /** Molecule: a labelled text field and its search button. */
 @Component({

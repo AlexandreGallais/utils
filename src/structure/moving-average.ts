@@ -1,4 +1,4 @@
-import { sum } from '../stats/sum.ts';
+import { sum } from '../stats';
 
 /**
  * Simple moving average over the last N values, in O(1) per value: a running sum over a preallocated

@@ -1,6 +1,6 @@
-import type { DragHandlers } from './drag-handlers.ts';
-import { createFake } from './testing/create-fake.ts';
-import { trackPointerDrag } from './track-pointer-drag.ts';
+import type { DragHandlers } from './track-pointer-drag';
+import { createFake } from './testing';
+import { trackPointerDrag } from './track-pointer-drag';
 
 interface FakeElement extends EventTarget {
   captured: Set<number>;

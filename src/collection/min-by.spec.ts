@@ -1,4 +1,4 @@
-import { minBy } from './min-by.ts';
+import { minBy } from './min-by';
 
 const CONTACTS = [
   { id: 'a', distance: 5 },

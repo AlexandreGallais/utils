@@ -1,5 +1,5 @@
-import { createFakeSvgElementIn } from './fake-svg-element.ts';
-import type { FakeSvgElementInGroup } from './fake-svg-element.ts';
+import { createFakeSvgElementIn } from './fake-svg-element';
+import type { FakeSvgElementInGroup } from './fake-svg-element';
 
 /**
  * Creates a hub drawn at (100, 100) on screen, and a path in another group scaled by 2: the center of the

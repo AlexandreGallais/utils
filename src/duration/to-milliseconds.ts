@@ -1,4 +1,18 @@
-import type { DurationInput } from './duration-input.ts';
+/** A duration given as units, every field optional and possibly fractional or negative. */
+export interface DurationInput {
+  /** Weeks (7 days). */
+  readonly weeks?: number;
+  /** Days (24 hours). */
+  readonly days?: number;
+  /** Hours. */
+  readonly hours?: number;
+  /** Minutes. */
+  readonly minutes?: number;
+  /** Seconds. */
+  readonly seconds?: number;
+  /** Milliseconds. */
+  readonly milliseconds?: number;
+}
 
 const MS_PER_SECOND = 1000;
 const MS_PER_MINUTE = 60_000;

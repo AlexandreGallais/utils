@@ -1,8 +1,8 @@
-import { parseHex } from './parse-hex.ts';
-import { parseHsl } from './parse-hsl.ts';
-import { parseNamedColor } from './parse-named-color.ts';
-import { parseRgb } from './parse-rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { parseHex } from './parse-hex';
+import { parseHsl } from './parse-hsl';
+import { parseNamedColor } from './parse-named-color';
+import { parseRgb } from './parse-rgb';
+import type { Rgba } from './rgba';
 
 /**
  * Parses any CSS color string: hex with or without `#`, `rgb()`, `rgba()`, `hsl()`, `hsla()` or a named

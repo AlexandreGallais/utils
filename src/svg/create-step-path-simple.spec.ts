@@ -1,4 +1,4 @@
-import { createStepPathSimple } from './create-step-path-simple.ts';
+import { createStepPathSimple } from './create-step-path-simple';
 
 describe(createStepPathSimple, () => {
   it('holds each value until the next point', () => {

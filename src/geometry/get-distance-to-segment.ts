@@ -1,4 +1,4 @@
-import type { Point } from './point.ts';
+import type { Point } from './point';
 
 /**
  * Measures the shortest distance from a point to a segment, to hover or click a thin line (a trend curve, a

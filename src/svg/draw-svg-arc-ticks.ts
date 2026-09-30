@@ -1,7 +1,7 @@
-import { polarToCartesian } from '../geometry/polar-to-cartesian.ts';
-import { createTicksPath } from './create-ticks-path.ts';
-import { getSvgAnchorPointIn } from './get-svg-anchor-point-in.ts';
-import type { SvgArc } from './svg-arc.ts';
+import { polarToCartesian } from '../geometry';
+import { createTicksPath } from './create-ticks-path';
+import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
+import type { SvgArc } from './svg-arc';
 
 /**
  * Draws evenly spaced graduations along an arc in one `<path>`, around the center of an element, whatever

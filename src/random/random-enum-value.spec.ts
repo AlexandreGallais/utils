@@ -1,4 +1,4 @@
-import { randomEnumValue } from './random-enum-value.ts';
+import { randomEnumValue } from './random-enum-value';
 
 enum Status {
   Stopped = 0,

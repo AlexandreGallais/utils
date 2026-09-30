@@ -1,7 +1,6 @@
-import { createRingSectorPath } from './create-ring-sector-path.ts';
-import { drawSvgArcBand } from './draw-svg-arc-band.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createGaugeScene } from './testing/gauge-scene.ts';
+import { createRingSectorPath } from './create-ring-sector-path';
+import { drawSvgArcBand } from './draw-svg-arc-band';
+import { asSvgElement, createGaugeScene } from './testing';
 
 describe(drawSvgArcBand, () => {
   it('draws a band centered on the radius', () => {

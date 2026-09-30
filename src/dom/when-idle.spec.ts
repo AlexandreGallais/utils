@@ -1,4 +1,4 @@
-import { whenIdle } from './when-idle.ts';
+import { whenIdle } from './when-idle';
 
 describe(whenIdle, () => {
   afterEach(() => {

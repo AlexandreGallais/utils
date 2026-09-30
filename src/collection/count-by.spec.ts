@@ -1,4 +1,4 @@
-import { countBy } from './count-by.ts';
+import { countBy } from './count-by';
 
 interface User {
   id: string;

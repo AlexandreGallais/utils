@@ -1,4 +1,4 @@
-import { getRectIntersection } from './get-rect-intersection.ts';
+import { getRectIntersection } from './get-rect-intersection';
 
 const A = { x: 0, y: 0, width: 10, height: 10 };
 

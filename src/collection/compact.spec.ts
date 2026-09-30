@@ -1,4 +1,4 @@
-import { compact } from './compact.ts';
+import { compact } from './compact';
 
 describe(compact, () => {
   it('removes the falsy values', () => {

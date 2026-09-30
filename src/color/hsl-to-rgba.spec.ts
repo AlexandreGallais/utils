@@ -1,5 +1,5 @@
-import { hslToRgba } from './hsl-to-rgba.ts';
-import { toHsl } from './to-hsl.ts';
+import { hslToRgba } from './hsl-to-rgba';
+import { toHsl } from './to-hsl';
 
 describe(hslToRgba, () => {
   it.for([

@@ -1,5 +1,5 @@
-import { lerp } from '../math/lerp.ts';
-import type { Point } from './point.ts';
+import { lerp } from '../math';
+import type { Point } from './point';
 
 /**
  * Interpolates linearly between two points: the point at a fraction of the way from one to the other.

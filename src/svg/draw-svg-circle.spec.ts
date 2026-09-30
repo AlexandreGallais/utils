@@ -1,7 +1,6 @@
-import { createCirclePath } from './create-circle-path.ts';
-import { drawSvgCircle } from './draw-svg-circle.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createGaugeScene } from './testing/gauge-scene.ts';
+import { createCirclePath } from './create-circle-path';
+import { drawSvgCircle } from './draw-svg-circle';
+import { asSvgElement, createGaugeScene } from './testing';
 
 describe(drawSvgCircle, () => {
   it('draws a circle around the element', () => {

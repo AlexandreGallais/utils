@@ -1,6 +1,5 @@
-import { getSvgAnchorPointIn } from './get-svg-anchor-point-in.ts';
-import { asSvgElement, createFakeSvgElementIn } from './testing/fake-svg-element.ts';
-import { createGaugeScene } from './testing/gauge-scene.ts';
+import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
+import { asSvgElement, createFakeSvgElementIn, createGaugeScene } from './testing';
 
 describe(getSvgAnchorPointIn, () => {
   it('converts the anchor into the coordinates of the target', () => {

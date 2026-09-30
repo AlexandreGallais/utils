@@ -1,5 +1,5 @@
-import type { NumberList } from './number-list.ts';
-import { variance } from './variance.ts';
+import type { NumberList } from './number-list';
+import { variance } from './variance';
 
 /**
  * Computes the standard deviation of a list of numbers: how far values typically stray from their mean, in

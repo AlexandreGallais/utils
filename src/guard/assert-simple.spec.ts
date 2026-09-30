@@ -1,4 +1,4 @@
-import { assertSimple } from './assert-simple.ts';
+import { assertSimple } from './assert-simple';
 
 describe(assertSimple, () => {
   it('throws only for false', () => {

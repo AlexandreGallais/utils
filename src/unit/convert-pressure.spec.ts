@@ -1,4 +1,4 @@
-import { convertPressure } from './convert-pressure.ts';
+import { convertPressure } from './convert-pressure';
 
 describe(convertPressure, () => {
   it.for([

@@ -1,5 +1,5 @@
-import type { AlarmState } from './alarm-state.ts';
-import { isAlarmUnacknowledged } from './is-alarm-unacknowledged.ts';
+import type { AlarmState } from './alarm-state';
+import { isAlarmUnacknowledged } from './is-alarm-unacknowledged';
 
 describe(isAlarmUnacknowledged, () => {
   it.for([

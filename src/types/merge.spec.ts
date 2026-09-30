@@ -1,4 +1,4 @@
-import type { Merge } from './merge.ts';
+import type { Merge } from './merge';
 
 describe('Merge', () => {
   it('lets the second type win', () => {

@@ -1,4 +1,5 @@
-import type { TemperatureUnit } from './temperature-unit.ts';
+/** A temperature unit: degrees Celsius, degrees Fahrenheit, kelvins. */
+export type TemperatureUnit = 'C' | 'F' | 'K';
 
 /** 0 °C in kelvins. */
 const KELVIN_OFFSET = 273.15;

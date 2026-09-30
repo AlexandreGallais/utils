@@ -1,4 +1,4 @@
-import { applyHysteresis } from './apply-hysteresis.ts';
+import { applyHysteresis } from './apply-hysteresis';
 
 describe(applyHysteresis, () => {
   it.for([

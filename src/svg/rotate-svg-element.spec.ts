@@ -1,9 +1,7 @@
-import { invertMatrix } from '../geometry/invert-matrix.ts';
-import { transformPoint } from '../geometry/transform-point.ts';
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { rotateSvgElement } from './rotate-svg-element.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { invertMatrix, transformPoint } from '../geometry';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { rotateSvgElement } from './rotate-svg-element';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(rotateSvgElement, () => {
   it('turns clockwise on screen around its center, even in a mirrored group', () => {

@@ -1,4 +1,4 @@
-import { createRingSectorPath } from './create-ring-sector-path.ts';
+import { createRingSectorPath } from './create-ring-sector-path';
 
 const CENTER = { x: 50, y: 50 };
 

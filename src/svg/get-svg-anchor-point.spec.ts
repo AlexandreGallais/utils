@@ -1,5 +1,5 @@
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { asSvgElement, createFakeSvgElementIn } from './testing/fake-svg-element.ts';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { asSvgElement, createFakeSvgElementIn } from './testing';
 
 describe(getSvgAnchorPoint, () => {
   it('reads the anchors of the visible box', () => {

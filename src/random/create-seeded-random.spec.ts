@@ -1,4 +1,4 @@
-import { createSeededRandom } from './create-seeded-random.ts';
+import { createSeededRandom } from './create-seeded-random';
 
 describe(createSeededRandom, () => {
   it('replays the same sequence for the same seed', () => {

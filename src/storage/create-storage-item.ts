@@ -1,6 +1,6 @@
-import { readStorage } from './read-storage.ts';
-import type { StorageItem } from './storage-item.ts';
-import { writeStorage } from './write-storage.ts';
+import { readStorage } from './read-storage';
+import type { StorageItem } from './storage-item';
+import { writeStorage } from './write-storage';
 
 /**
  * Binds a typed value to one key of a web storage, with its fallback and guard declared once: a user

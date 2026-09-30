@@ -1,4 +1,4 @@
-import { linear } from './linear.ts';
+import { linear } from './linear';
 
 describe(linear, () => {
   it('starts at 0 and ends at 1', () => {

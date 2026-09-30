@@ -1,4 +1,4 @@
-import type { Simplify } from './simplify.ts';
+import type { Simplify } from './simplify';
 
 describe('Simplify', () => {
   it('flattens an intersection', () => {

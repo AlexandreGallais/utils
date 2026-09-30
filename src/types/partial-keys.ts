@@ -1,4 +1,4 @@
-import type { Simplify } from './simplify.ts';
+import type { Simplify } from './simplify';
 
 /**
  * Makes some properties optional: the input of a factory that fills them with defaults.

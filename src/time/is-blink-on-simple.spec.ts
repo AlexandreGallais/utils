@@ -1,4 +1,4 @@
-import { isBlinkOnSimple } from './is-blink-on-simple.ts';
+import { isBlinkOnSimple } from './is-blink-on-simple';
 
 describe(isBlinkOnSimple, () => {
   it('is on during the first half', () => {

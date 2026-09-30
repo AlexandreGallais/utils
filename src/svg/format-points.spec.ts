@@ -1,4 +1,4 @@
-import { formatPoints } from './format-points.ts';
+import { formatPoints } from './format-points';
 
 describe(formatPoints, () => {
   it('formats the pairs', () => {

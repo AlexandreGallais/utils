@@ -1,4 +1,4 @@
-import type { NumberList } from './number-list.ts';
+import type { NumberList } from './number-list';
 
 /**
  * Finds the largest number of a list, in one pass and without spreading it.

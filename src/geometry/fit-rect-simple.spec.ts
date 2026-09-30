@@ -1,5 +1,5 @@
-import { fitRectSimple } from './fit-rect-simple.ts';
-import { fitRect } from './fit-rect.ts';
+import { fitRectSimple } from './fit-rect-simple';
+import { fitRect } from './fit-rect';
 
 describe(fitRectSimple, () => {
   it('contains and centers', () => {

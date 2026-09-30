@@ -1,4 +1,4 @@
-import { mapConcurrentSimple } from './map-concurrent-simple.ts';
+import { mapConcurrentSimple } from './map-concurrent-simple';
 
 describe(mapConcurrentSimple, () => {
   it('keeps the order', async () => {

@@ -1,4 +1,4 @@
-import { easeInOutSine } from './ease-in-out-sine.ts';
+import { easeInOutSine } from './ease-in-out-sine';
 
 describe(easeInOutSine, () => {
   it('starts at 0 and ends at 1', () => {

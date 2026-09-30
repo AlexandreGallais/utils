@@ -1,4 +1,4 @@
-import type { Rgb } from './rgb.ts';
+import type { Rgb } from './rgb';
 
 /** APCA-W3 0.0.98G-4g constants (Myndex): screen luminance of the sRGB channels, with a plain 2.4 exponent. */
 const MAX_CHANNEL = 255;

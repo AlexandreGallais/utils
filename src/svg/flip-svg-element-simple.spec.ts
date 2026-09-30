@@ -1,6 +1,5 @@
-import { flipSvgElementSimple } from './flip-svg-element-simple.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { flipSvgElementSimple } from './flip-svg-element-simple';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(flipSvgElementSimple, () => {
   it('mirrors around the center', () => {

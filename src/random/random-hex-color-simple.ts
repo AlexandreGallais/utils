@@ -1,4 +1,4 @@
-import { randomHexColor } from './random-hex-color.ts';
+import { randomHexColor } from './random-hex-color';
 
 /**
  * Draws an opaque color like `randomHexColor`.

@@ -1,4 +1,4 @@
-import { addDays } from './add-days.ts';
+import { addDays } from './add-days';
 
 /**
  * Adds calendar days to a date like `addDays`, in local time (the clock time is kept across daylight saving changes).

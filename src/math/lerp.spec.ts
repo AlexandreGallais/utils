@@ -1,4 +1,4 @@
-import { lerp } from './lerp.ts';
+import { lerp } from './lerp';
 
 describe(lerp, () => {
   it.for([

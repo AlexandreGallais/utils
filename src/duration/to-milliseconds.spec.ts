@@ -1,4 +1,4 @@
-import { toMilliseconds } from './to-milliseconds.ts';
+import { toMilliseconds } from './to-milliseconds';
 
 describe(toMilliseconds, () => {
   it.for([

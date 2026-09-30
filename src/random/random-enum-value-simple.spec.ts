@@ -1,4 +1,4 @@
-import { randomEnumValueSimple } from './random-enum-value-simple.ts';
+import { randomEnumValueSimple } from './random-enum-value-simple';
 
 describe(randomEnumValueSimple, () => {
   it('draws a member', () => {

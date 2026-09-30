@@ -1,6 +1,6 @@
-import { sleep } from './sleep.ts';
-import { TimeoutError } from './timeout-error.ts';
-import { withTimeout } from './with-timeout.ts';
+import { sleep } from './sleep';
+import { TimeoutError } from './timeout-error';
+import { withTimeout } from './with-timeout';
 
 describe(withTimeout, () => {
   beforeEach(() => {

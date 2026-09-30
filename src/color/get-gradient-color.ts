@@ -1,6 +1,14 @@
-import type { ColorStop } from './color-stop.ts';
-import { mixColors } from './mix-colors.ts';
-import type { Rgba } from './rgba.ts';
+import { mixColors } from './mix-colors';
+import type { Rgba } from './rgba';
+import type { Rgb } from './rgb';
+
+/** A color at a position of a gradient, for `getGradientColor`. */
+export interface ColorStop {
+  /** Position of the stop, in the unit of the mapped value (such as a temperature). */
+  readonly offset: number;
+  /** Color at that position. */
+  readonly color: Rgb | Rgba;
+}
 
 /**
  * Reads the color of a multi-stop gradient at a value: a heat map, a temperature-colored pipe, a gauge

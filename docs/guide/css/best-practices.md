@@ -1,7 +1,8 @@
 # CSS best practices
 
-What makes the styles of a design system clean, predictable and cheap to maintain. Most items are enforced by
-the Stylelint blocks; the others are reviewed.
+What makes the styles of a design system clean, predictable and cheap to maintain. [Stylelint](../linting/stylelint.md)
+reports the mistakes and warns about what is not clean (`!important`, `#id`, deep nesting, `::ng-deep`, a `rem`
+with decimals); the review checks the rest.
 
 ## Structure
 

@@ -1,4 +1,4 @@
-import { sortBy } from './sort-by.ts';
+import { sortBy } from './sort-by';
 
 const ALARMS = [
   { id: 'a', priority: 2 },

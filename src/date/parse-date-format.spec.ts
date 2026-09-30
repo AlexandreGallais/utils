@@ -1,4 +1,4 @@
-import { parseDateFormat } from './parse-date-format.ts';
+import { parseDateFormat } from './parse-date-format';
 
 describe(parseDateFormat, () => {
   it.for([

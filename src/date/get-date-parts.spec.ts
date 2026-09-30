@@ -1,4 +1,4 @@
-import { getDateParts } from './get-date-parts.ts';
+import { getDateParts } from './get-date-parts';
 
 describe(getDateParts, () => {
   it('reads every field in UTC', () => {

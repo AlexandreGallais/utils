@@ -1,5 +1,5 @@
-import { valueToBarPosition } from './value-to-bar-position.ts';
-import type { BarScale } from './bar-scale.ts';
+import { valueToBarPosition } from './value-to-bar-position';
+import type { BarScale } from './bar-scale';
 
 /**
  * Converts a value to a position along a bar gauge like `valueToBarPosition`, stopping at the ends of the bar.

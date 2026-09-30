@@ -1,4 +1,4 @@
-import { assertValidFractionDigits } from '../internal/assert-valid-fraction-digits.ts';
+import { assertValidFractionDigits } from '../internal';
 
 /** Angular `DecimalPipe` defaults when a part of `digitsInfo` is omitted. */
 const DEFAULT_MIN_INTEGER_DIGITS = 1;

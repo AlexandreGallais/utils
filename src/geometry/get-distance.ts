@@ -1,4 +1,4 @@
-import type { Point } from './point.ts';
+import type { Point } from './point';
 
 /**
  * Computes the straight-line (Euclidean) distance between two points.

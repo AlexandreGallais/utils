@@ -1,0 +1,96 @@
+// Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced,
+// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style the
+// autofix applies (never disabled); `warning` = a style without autofix (disabled for one line, with a reason).
+// SCSS (stylelint-scss): `@use`, variables, mixins, placeholders, operators.
+
+import scssPlugins from 'stylelint-scss';
+
+/**
+ * Scss rules.
+ *
+ * @returns {import('stylelint').Config} The block, for composeStylelint.
+ */
+export default function scssBlock() {
+  return {
+    plugins: scssPlugins,
+    rules: {
+      'scss/at-each-key-value-single-line': null,
+      'scss/at-else-closing-brace-newline-after': 'always-last-in-chain',
+      'scss/at-else-closing-brace-space-after': 'always-intermediate',
+      'scss/at-else-empty-line-before': 'never',
+      'scss/at-else-if-parentheses-space-before': 'always',
+      'scss/at-extend-no-missing-placeholder': true,
+      'scss/at-function-named-arguments': null,
+      'scss/at-function-parentheses-space-before': 'never',
+      'scss/at-function-pattern': ['^(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$', { severity: 'warning' }],
+      'scss/at-if-closing-brace-newline-after': 'always-last-in-chain',
+      'scss/at-if-closing-brace-space-after': 'always-intermediate',
+      'scss/at-if-no-null': true,
+      'scss/at-import-partial-extension-allowed-list': null,
+      'scss/at-import-partial-extension-disallowed-list': null,
+      'scss/at-mixin-argumentless-call-parentheses': 'never',
+      'scss/at-mixin-named-arguments': null,
+      'scss/at-mixin-no-risky-nesting-selector': null,
+      'scss/at-mixin-parentheses-space-before': 'never',
+      'scss/at-mixin-pattern': ['^(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$', { severity: 'warning' }],
+      'scss/at-root-no-redundant': null,
+      'scss/at-rule-conditional-no-parentheses': true,
+      'scss/at-rule-no-unknown': true,
+      'scss/at-use-no-redundant-alias': null,
+      'scss/at-use-no-unnamespaced': null,
+      'scss/block-no-redundant-nesting': null,
+      'scss/comment-no-empty': true,
+      'scss/comment-no-loud': null,
+      'scss/declaration-nested-properties': null,
+      'scss/declaration-nested-properties-no-divided-groups': true,
+      'scss/declaration-property-value-no-unknown': null,
+      'scss/dimension-no-non-numeric-values': null,
+      'scss/dollar-variable-colon-newline-after': null,
+      'scss/dollar-variable-colon-space-after': 'always-single-line',
+      'scss/dollar-variable-colon-space-before': 'never',
+      'scss/dollar-variable-default': null,
+      'scss/dollar-variable-empty-line-after': null,
+      'scss/dollar-variable-empty-line-before': [
+        'always',
+        { except: ['after-dollar-variable', 'first-nested'], ignore: ['after-comment', 'inside-single-line-block'] },
+      ],
+      'scss/dollar-variable-first-in-block': null,
+      'scss/dollar-variable-no-missing-interpolation': true,
+      'scss/dollar-variable-no-namespaced-assignment': null,
+      'scss/dollar-variable-pattern': ['^(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$', { severity: 'warning' }],
+      'scss/double-slash-comment-empty-line-before': [
+        'always',
+        { except: ['first-nested'], ignore: ['between-comments', 'stylelint-commands'] },
+      ],
+      'scss/double-slash-comment-inline': null,
+      'scss/double-slash-comment-whitespace-inside': 'always',
+      'scss/function-calculation-no-interpolation': null,
+      'scss/function-color-channel': null,
+      'scss/function-color-relative': null,
+      'scss/function-disallowed-list': null,
+      'scss/function-no-unknown': null,
+      'scss/function-quote-no-quoted-strings-inside': true,
+      'scss/function-unquote-no-unquoted-strings-inside': true,
+      'scss/load-no-partial-leading-underscore': true,
+      'scss/load-partial-extension': 'never',
+      'scss/map-keys-quotes': null,
+      'scss/media-feature-value-dollar-variable': null,
+      'scss/no-dollar-variables': null,
+      'scss/no-duplicate-dollar-variables': null,
+      'scss/no-duplicate-load-rules': null,
+      'scss/no-duplicate-mixins': true,
+      'scss/no-global-function-names': true,
+      'scss/no-unused-private-members': null,
+      'scss/operator-no-newline-after': true,
+      'scss/operator-no-newline-before': true,
+      'scss/operator-no-unspaced': true,
+      'scss/partial-no-import': null,
+      'scss/percent-placeholder-pattern': ['^(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$', { severity: 'warning' }],
+      'scss/property-no-unknown': null,
+      'scss/selector-class-pattern': null,
+      'scss/selector-nest-combinators': null,
+      'scss/selector-no-redundant-nesting-selector': null,
+      'scss/selector-no-union-class-name': null,
+    },
+  };
+}

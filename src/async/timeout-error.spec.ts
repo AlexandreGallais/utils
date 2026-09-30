@@ -1,4 +1,4 @@
-import { TimeoutError } from './timeout-error.ts';
+import { TimeoutError } from './timeout-error';
 
 describe(TimeoutError, () => {
   it('is named TimeoutError', () => {

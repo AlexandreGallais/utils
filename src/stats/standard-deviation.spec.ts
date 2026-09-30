@@ -1,4 +1,4 @@
-import { standardDeviation } from './standard-deviation.ts';
+import { standardDeviation } from './standard-deviation';
 
 describe(standardDeviation, () => {
   it('computes the population and sample standard deviations', () => {

@@ -1,5 +1,5 @@
-import { parseColorCached } from './parse-color-cached.ts';
-import type { Rgba } from './rgba.ts';
+import { parseColorCached } from './parse-color-cached';
+import type { Rgba } from './rgba';
 
 /**
  * Parses any CSS color string with the cache of `parseColorCached`, but throws instead of returning

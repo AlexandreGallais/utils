@@ -1,4 +1,4 @@
-import { getNiceTicksSimple } from './get-nice-ticks-simple.ts';
+import { getNiceTicksSimple } from './get-nice-ticks-simple';
 
 describe(getNiceTicksSimple, () => {
   it('gives about five ticks', () => {

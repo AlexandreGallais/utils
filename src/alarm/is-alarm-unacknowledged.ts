@@ -1,4 +1,4 @@
-import type { AlarmState } from './alarm-state.ts';
+import type { AlarmState } from './alarm-state';
 
 /**
  * Checks whether an alarm waits for an acknowledgement: the states that blink (with `isBlinkOn` or

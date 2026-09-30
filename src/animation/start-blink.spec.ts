@@ -1,5 +1,5 @@
-import { startBlink } from './start-blink.ts';
-import { FakeTickSource } from './testing/fake-tick-source.ts';
+import { startBlink } from './start-blink';
+import { FakeTickSource } from './testing';
 
 describe(startBlink, () => {
   let clock: FakeTickSource;

@@ -1,4 +1,4 @@
-import { measureDuration } from './measure-duration.ts';
+import { measureDuration } from './measure-duration';
 
 /**
  * Runs a function and measures how long it took, like `measureDuration`.

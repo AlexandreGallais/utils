@@ -1,4 +1,4 @@
-import type { UnionToIntersection } from './union-to-intersection.ts';
+import type { UnionToIntersection } from './union-to-intersection';
 
 describe('UnionToIntersection', () => {
   it('intersects the members', () => {

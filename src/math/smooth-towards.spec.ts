@@ -1,4 +1,4 @@
-import { smoothTowards } from './smooth-towards.ts';
+import { smoothTowards } from './smooth-towards';
 
 describe(smoothTowards, () => {
   it('covers about 63 % of the distance per time constant', () => {

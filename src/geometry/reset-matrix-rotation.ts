@@ -1,7 +1,6 @@
-import { getRotationRadians } from './internal/get-rotation-radians.ts';
-import { withFixedPoint } from './internal/with-fixed-point.ts';
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Point } from './point.ts';
+import { getRotationRadians, withFixedPoint } from './internal';
+import type { Matrix2D } from './matrix-2d';
+import type { Point } from './point';
 
 /**
  * Cancels the rotation of a transform without moving the element: the pivot (typically its center) stays at

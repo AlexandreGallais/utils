@@ -1,4 +1,4 @@
-import { getPolygonCentroid } from './get-polygon-centroid.ts';
+import { getPolygonCentroid } from './get-polygon-centroid';
 
 describe(getPolygonCentroid, () => {
   it('finds the centroid of a triangle', () => {

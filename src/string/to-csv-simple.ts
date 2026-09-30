@@ -1,4 +1,4 @@
-import { toCsv } from './to-csv.ts';
+import { toCsv } from './to-csv';
 
 /**
  * Builds CSV text from rows like `toCsv`, safe to open in a spreadsheet.

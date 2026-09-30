@@ -1,4 +1,4 @@
-import { formatDuration } from './format-duration.ts';
+import { formatDuration } from './format-duration';
 
 describe(formatDuration, () => {
   it.for([

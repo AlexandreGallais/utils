@@ -1,8 +1,45 @@
-import { polarToCartesian } from '../geometry/polar-to-cartesian.ts';
-import type { ArcTick } from './arc-tick.ts';
-import type { ArcTicksOptions } from './arc-ticks-options.ts';
-import { generateScaleValues } from './internal/generate-scale-values.ts';
-import { valueToAngle } from './value-to-angle.ts';
+import { polarToCartesian } from '../geometry';
+import type { Point } from '../geometry';
+import { generateScaleValues } from './internal';
+import { valueToAngle } from './value-to-angle';
+
+/** Geometry and scale of the graduations built by `createArcTicks`. */
+export interface ArcTicksOptions {
+  /** Center of the gauge. */
+  readonly center: Point;
+  /** Angle of `min`, in degrees (library convention: 0° up, clockwise). */
+  readonly startAngle: number;
+  /** Angle of `max`, in degrees. */
+  readonly endAngle: number;
+  /** Value at the start of the scale. */
+  readonly min: number;
+  /** Value at the end of the scale, greater than `min`. */
+  readonly max: number;
+  /** Interval between major graduations, from `min`. */
+  readonly majorStep: number;
+  /** Interval between minor graduations, from `min`; no minor graduation when omitted. */
+  readonly minorStep?: number;
+  /** Radius where major ticks start (towards the center). */
+  readonly innerRadius: number;
+  /** Radius where every tick ends (towards the outside). */
+  readonly outerRadius: number;
+  /** Radius where minor ticks start, so they are shorter; `innerRadius` when omitted. */
+  readonly minorInnerRadius?: number;
+}
+
+/** A graduation of a round gauge, returned by `createArcTicks`. */
+export interface ArcTick {
+  /** Value of the graduation. */
+  readonly value: number;
+  /** Angle of the graduation, in degrees (library convention: 0° up, clockwise). */
+  readonly angle: number;
+  /** Inner end of the tick line. */
+  readonly start: Point;
+  /** Outer end of the tick line. */
+  readonly end: Point;
+  /** Whether the graduation is on a major step (longer tick, usually labelled). */
+  readonly isMajor: boolean;
+}
 
 /**
  * Computes the graduations of a round gauge: major ticks every `majorStep`, shorter minor ticks every

@@ -1,4 +1,4 @@
-import { escapeRegExp } from './escape-reg-exp.ts';
+import { escapeRegExp } from './escape-reg-exp';
 
 describe(escapeRegExp, () => {
   it.for(['1+1=2?', '(a|b)[c]{d}', String.raw`C:\path\file.txt`, 'price: $5.00 ^_^', 'a-b & c', 'plain'])(

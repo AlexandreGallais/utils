@@ -1,4 +1,4 @@
-import { findNearestPoint } from './find-nearest-point.ts';
+import { findNearestPoint } from './find-nearest-point';
 
 describe(findNearestPoint, () => {
   const series = [0, 10, 20, 30].map((x) => ({ x, y: x * 2 }));

@@ -5,6 +5,5 @@
  * @returns The properties, typed as the full object.
  */
 export function createFake<T extends object>(properties: Partial<T> = {}): T {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- test double: only the listed properties are read.
   return properties as T;
 }

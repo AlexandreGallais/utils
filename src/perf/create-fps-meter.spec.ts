@@ -1,4 +1,4 @@
-import { createFpsMeter } from './create-fps-meter.ts';
+import { createFpsMeter } from './create-fps-meter';
 
 describe(createFpsMeter, () => {
   it('averages the frame rate over the window', () => {

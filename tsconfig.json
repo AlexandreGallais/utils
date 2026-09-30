@@ -10,9 +10,7 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    /* Relative imports name the `.ts` file; emitted declarations point to `.js` (valid for every resolution mode). */
-    "allowImportingTsExtensions": true,
-    "rewriteRelativeImportExtensions": true,
+    /* Nothing is emitted: the library is copied into the projects, never built nor published. */
     "noEmit": true,
 
     "strict": true,

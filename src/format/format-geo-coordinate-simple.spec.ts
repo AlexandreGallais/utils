@@ -1,4 +1,4 @@
-import { formatGeoCoordinateSimple } from './format-geo-coordinate-simple.ts';
+import { formatGeoCoordinateSimple } from './format-geo-coordinate-simple';
 
 describe(formatGeoCoordinateSimple, () => {
   it('formats degrees and decimal minutes', () => {

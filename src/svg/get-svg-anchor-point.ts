@@ -1,7 +1,6 @@
-import type { Anchor } from '../geometry/anchor.ts';
-import { getAnchorPoint } from '../geometry/get-anchor-point.ts';
-import type { Point } from '../geometry/point.ts';
-import { getSvgScreenBox } from './get-svg-screen-box.ts';
+import type { Anchor, Point } from '../geometry';
+import { getAnchorPoint } from '../geometry';
+import { getSvgScreenBox } from './get-svg-screen-box';
 
 /**
  * Finds one of the 9 anchors of an SVG element as seen on screen (corners, middles of the sides, center of

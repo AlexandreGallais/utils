@@ -1,4 +1,4 @@
-import { extractNumbers } from './extract-numbers.ts';
+import { extractNumbers } from './extract-numbers';
 
 describe(extractNumbers, () => {
   it('extracts every number', () => {

@@ -1,4 +1,4 @@
-import { range } from './range.ts';
+import { range } from './range';
 
 /**
  * Lists the integers from `start` to `end` (excluded) like `range`.

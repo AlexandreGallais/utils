@@ -1,4 +1,4 @@
-import { startOfDay } from './start-of-day.ts';
+import { startOfDay } from './start-of-day';
 
 /**
  * Returns the midnight that starts the day of a date like `startOfDay`, in local time.

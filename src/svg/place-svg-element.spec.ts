@@ -1,7 +1,6 @@
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { placeSvgElement } from './place-svg-element.ts';
-import { asSvgElement, createFakeSvgElementIn } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen, isSamePoint } from './testing/scene.ts';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { placeSvgElement } from './place-svg-element';
+import { asSvgElement, createFakeSvgElementIn, createTwistedElement, describeOnScreen, isSamePoint } from './testing';
 
 describe(placeSvgElement, () => {
   it.for([

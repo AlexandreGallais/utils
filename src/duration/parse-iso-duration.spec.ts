@@ -1,4 +1,4 @@
-import { parseIsoDuration } from './parse-iso-duration.ts';
+import { parseIsoDuration } from './parse-iso-duration';
 
 describe(parseIsoDuration, () => {
   it.for([

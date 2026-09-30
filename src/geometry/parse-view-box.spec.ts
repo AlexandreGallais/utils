@@ -1,4 +1,4 @@
-import { parseViewBox } from './parse-view-box.ts';
+import { parseViewBox } from './parse-view-box';
 
 describe(parseViewBox, () => {
   it.for([

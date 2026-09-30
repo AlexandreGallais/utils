@@ -1,4 +1,4 @@
-import { resizeRect } from './resize-rect.ts';
+import { resizeRect } from './resize-rect';
 
 const BAR = { x: 0, y: 0, width: 20, height: 100 };
 

@@ -1,4 +1,4 @@
-import { createArcPath } from './create-arc-path.ts';
+import { createArcPath } from './create-arc-path';
 
 const CENTER = { x: 50, y: 50 };
 

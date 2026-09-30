@@ -1,5 +1,5 @@
-import { valueToBarPositionSimple } from './value-to-bar-position-simple.ts';
-import { valueToBarPosition } from './value-to-bar-position.ts';
+import { valueToBarPositionSimple } from './value-to-bar-position-simple';
+import { valueToBarPosition } from './value-to-bar-position';
 
 describe(valueToBarPositionSimple, () => {
   it('clamps to the bar', () => {

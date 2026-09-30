@@ -1,5 +1,5 @@
-import { memoize } from './memoize.ts';
-import type { MemoizedFunction } from './memoized-function.ts';
+import { memoize } from './memoize';
+import type { MemoizedFunction } from './memoized-function';
 
 /** Entries kept before the oldest ones are evicted. */
 const MAX_SIZE = 1000;

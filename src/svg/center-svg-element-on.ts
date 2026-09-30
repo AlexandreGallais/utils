@@ -1,6 +1,6 @@
-import type { Point } from '../geometry/point.ts';
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { moveSvgElement } from './move-svg-element.ts';
+import type { Point } from '../geometry';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { moveSvgElement } from './move-svg-element';
 
 /**
  * Moves an SVG element so that the center of what is seen lands on a screen point: recenters a symbol or a

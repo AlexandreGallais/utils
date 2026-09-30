@@ -1,4 +1,4 @@
-import { downloadBlob } from './download-blob.ts';
+import { downloadBlob } from './download-blob';
 
 describe(downloadBlob, () => {
   afterEach(() => {

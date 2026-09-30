@@ -1,4 +1,4 @@
-import { normalizeWheelDelta } from './normalize-wheel-delta.ts';
+import { normalizeWheelDelta } from './normalize-wheel-delta';
 
 /** Pixels per page when the browser scrolls by pages: about a screen height. */
 const PAGE_HEIGHT_PX = 800;

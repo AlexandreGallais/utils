@@ -1,4 +1,4 @@
-import { words } from './words.ts';
+import { words } from './words';
 
 /**
  * Converts a string to snake_case: lowercase words joined with `_`, as in database columns and JSON keys.

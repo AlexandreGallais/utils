@@ -1,5 +1,5 @@
-import type { EnumObject } from './enum-object.ts';
-import { getEnumValues } from './get-enum-values.ts';
+import type { EnumObject } from './enum-object';
+import { getEnumValues } from './get-enum-values';
 
 /**
  * Checks whether a value is one of the values of a TypeScript enum (or of a `const` object used as one).

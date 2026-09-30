@@ -1,4 +1,4 @@
-import { projectPoints } from './project-points.ts';
+import { projectPoints } from './project-points';
 
 describe(projectPoints, () => {
   const rect = { x: 10, y: 20, width: 200, height: 100 };

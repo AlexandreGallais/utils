@@ -1,4 +1,4 @@
-import { zip } from './zip.ts';
+import { zip } from './zip';
 
 describe(zip, () => {
   it('pairs the items by position', () => {

@@ -39,10 +39,8 @@ const SEVERITIES = new Map([
  * @returns The setting, such as `error` or `error, with options`.
  */
 function settingOf(value) {
-  const [severity, ...rest] = [value].flat();
-  // Stylelint values are normalised by read-lint-blocks as `[true, option]`.
-  const options = rest.filter((option) => option !== true);
-  const level = severity === true ? 'on' : (SEVERITIES.get(severity) ?? String(severity));
+  const [severity, ...options] = [value].flat();
+  const level = SEVERITIES.get(severity) ?? String(severity);
   if (options.length === 0) {
     return level;
   }
@@ -52,43 +50,39 @@ function settingOf(value) {
 }
 
 /**
- * Builds the page path of a block, such as `eslint/code/conditions`.
+ * Builds the page path of a block, such as `eslint/rules/conditions`.
  *
- * @param tool - `eslint` or `stylelint`.
  * @param file - The block file.
  * @returns The path, without extension.
  */
-export function blockPagePath(tool, file) {
-  const relative = path.relative(path.join('lint', tool), file).replace(/\.mjs$/v, '');
-  return `${tool}/${relative.split(path.sep).join('/')}`;
+export function blockPagePath(file) {
+  const relative = path.relative('lint', file).replace(/\.mjs$/v, '');
+  return relative.split(path.sep).join('/');
 }
 
 /**
  * Renders the page of one block.
  *
- * @param tool - `eslint` or `stylelint`.
  * @param block - The block, with its rules.
  * @returns The page content.
  */
-export function renderBlockPage(tool, block) {
-  const active = block.rules.filter(({ value }) => ![0, 'off', null, false].includes([value].flat()[0]));
+export function renderBlockPage(block) {
+  const active = block.rules.filter(({ value }) => ![0, 'off'].includes([value].flat()[0]));
   const lines = [
-    `# ${blockPagePath(tool, block.file)}`,
+    `# ${blockPagePath(block.file)}`,
     '',
     escapeText(block.description),
     '',
     `**${block.rules.length} rules**, ${active.length} on. Source: [\`${block.file}\`](https://github.com/AlexandreGallais/utils/blob/main/${block.file}).`,
     '',
+    '| Rule | Setting | Files | What it checks | Why |',
+    '| --- | --- | --- | --- | --- |',
   ];
-  if ((block.extends ?? []).length > 0) {
-    const presets = block.extends.map((name) => `\`${name}\``).join(', ');
-    lines.push(`Extends ${presets}: their rules apply too.`, '');
-  }
-  lines.push('| Rule | Setting | Files | Why |', '| --- | --- | --- | --- |');
-  for (const { rule, value, files, reason, url } of block.rules) {
+  for (const { rule, value, files, reason, url, description } of block.rules) {
     const name = url === undefined ? `\`${rule}\`` : `[\`${rule}\`](${url})`;
     const why = reason === '' ? '—' : escapeCell(reason);
-    lines.push(`| ${name} | ${escapeCell(settingOf(value))} | ${filesLabel(files)} | ${why} |`);
+    const what = description === '' ? '—' : escapeCell(description);
+    lines.push(`| ${name} | ${escapeCell(settingOf(value))} | ${filesLabel(files)} | ${what} | ${why} |`);
   }
   return `${lines.join('\n')}\n`;
 }
@@ -96,53 +90,44 @@ export function renderBlockPage(tool, block) {
 /**
  * Renders the index of every block.
  *
- * @param blocks - The ESLint and Stylelint blocks.
+ * @param blocks - The ESLint blocks.
  * @returns The page content.
  */
 export function renderLintIndex(blocks) {
   const lines = [
     '# Lint rules',
     '',
-    'Every rule of every block of `lint/`, generated from the sources: its setting, the reason written above it',
-    '(`Custom:` a project choice, `Off:` disabled on purpose, `Deprecated:` replaced) and a link to its',
-    'documentation. A rule without reason (—) keeps the default setting of its plugin. Search a rule name with',
-    '<kbd>Ctrl</kbd> <kbd>K</kbd>.',
+    'Every rule of every ESLint and Stylelint block of `lint/`, generated from the sources: its setting, what it checks (as the',
+    'rule describes itself), the reason written above it (`Custom:` a project choice, `Off:` disabled on purpose,',
+    '`Deprecated:` replaced, `Warn:` the exception that justifies disabling it) and a link to its documentation.',
+    'An `error` is a real mistake or a style the autofix applies: it cannot be disabled. A `warn` is a style',
+    'without autofix: it may be disabled for one line, with a reason. Search a rule name with <kbd>Ctrl</kbd>',
+    '<kbd>K</kbd>.',
     '',
+    '| Block | Rules | What it covers |',
+    '| --- | --- | --- |',
   ];
-  for (const tool of ['eslint', 'stylelint']) {
-    lines.push(
-      `## ${tool === 'eslint' ? 'ESLint' : 'Stylelint'}`,
-      '',
-      '| Block | Rules | What it covers |',
-      '| --- | --- | --- |',
-    );
-    const toolBlocks = blocks[tool];
-    for (const block of toolBlocks) {
-      const page = blockPagePath(tool, block.file);
-      lines.push(`| [${page}](./${page}.md) | ${block.rules.length} | ${escapeCell(block.description)} |`);
-    }
-    lines.push('');
+  for (const block of blocks) {
+    const page = blockPagePath(block.file);
+    lines.push(`| [${page}](./${page}.md) | ${block.rules.length} | ${escapeCell(block.description)} |`);
   }
-  return lines.join('\n');
+  return `${lines.join('\n')}\n`;
 }
 
 /**
- * Builds the sidebar of the rule reference, grouped by tool and folder.
+ * Builds the sidebar of the rule reference, grouped by folder.
  *
- * @param blocks - The ESLint and Stylelint blocks.
+ * @param blocks - The ESLint blocks.
  * @returns The sidebar items.
  */
 export function createLintSidebar(blocks) {
   const groups = new Map();
-  for (const tool of ['eslint', 'stylelint']) {
-    const toolBlocks = blocks[tool];
-    for (const block of toolBlocks) {
-      const page = blockPagePath(tool, block.file);
-      const group = page.split('/').slice(0, -1).join('/');
-      const items = groups.get(group) ?? [];
-      items.push({ text: page.split('/').at(-1), link: `/lint-rules/${page}` });
-      groups.set(group, items);
-    }
+  for (const block of blocks) {
+    const page = blockPagePath(block.file);
+    const group = page.split('/').slice(0, -1).join('/');
+    const items = groups.get(group) ?? [];
+    items.push({ text: page.split('/').at(-1), link: `/lint-rules/${page}` });
+    groups.set(group, items);
   }
   return [
     { text: 'Overview', link: '/lint-rules/' },

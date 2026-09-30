@@ -1,8 +1,7 @@
-import { invertMatrix } from '../geometry/invert-matrix.ts';
-import { transformPoint } from '../geometry/transform-point.ts';
-import { getSvgScreenBox } from './get-svg-screen-box.ts';
-import { createPolylinePath } from './create-polyline-path.ts';
-import { getScreenMatrix } from './internal/get-screen-matrix.ts';
+import { invertMatrix, transformPoint } from '../geometry';
+import { getSvgScreenBox } from './get-svg-screen-box';
+import { createPolylinePath } from './create-polyline-path';
+import { getScreenMatrix } from './internal';
 
 /**
  * Draws a frame around what an element shows on screen, with a margin, in a `<path>`, whatever groups each

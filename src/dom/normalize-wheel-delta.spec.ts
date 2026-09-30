@@ -1,4 +1,4 @@
-import { normalizeWheelDelta } from './normalize-wheel-delta.ts';
+import { normalizeWheelDelta } from './normalize-wheel-delta';
 
 describe(normalizeWheelDelta, () => {
   it.for([

@@ -1,4 +1,4 @@
-import { isPointInPolygon } from './is-point-in-polygon.ts';
+import { isPointInPolygon } from './is-point-in-polygon';
 
 const SQUARE = [
   { x: 0, y: 0 },

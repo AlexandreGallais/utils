@@ -1,6 +1,12 @@
-import { isNearlyEqual } from '../../math/is-nearly-equal.ts';
-import { roundToFractionDigits } from '../../math/round-to-fraction-digits.ts';
-import type { ScaleValue } from './scale-value.ts';
+import { isNearlyEqual, roundToFractionDigits } from '../../math';
+
+/** A graduation value of a scale. */
+export interface ScaleValue {
+  /** The value. */
+  readonly value: number;
+  /** Whether it is on a major step (labelled, longer tick). */
+  readonly isMajor: boolean;
+}
 
 /** Relative tolerance that decides whether a minor value falls on a major one. */
 const COINCIDENCE_TOLERANCE = 1e-9;

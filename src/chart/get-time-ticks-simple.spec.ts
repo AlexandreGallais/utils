@@ -1,4 +1,4 @@
-import { getTimeTicksSimple } from './get-time-ticks-simple.ts';
+import { getTimeTicksSimple } from './get-time-ticks-simple';
 
 describe(getTimeTicksSimple, () => {
   it('gives a round step', () => {

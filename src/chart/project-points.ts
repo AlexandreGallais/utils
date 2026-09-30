@@ -1,6 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import type { Rect } from '../geometry/rect.ts';
-import type { DataBounds } from './data-bounds.ts';
+import type { Point, Rect } from '../geometry';
+import type { DataBounds } from './data-bounds';
 
 /**
  * Converts data points to screen coordinates: `bounds` is stretched over `rect` and the y axis is flipped so

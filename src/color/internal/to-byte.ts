@@ -1,4 +1,4 @@
-import { clamp } from '../../math/clamp.ts';
+import { clamp } from '../../math';
 
 /** Highest value of an 8-bit color channel. */
 const MAX_CHANNEL = 255;

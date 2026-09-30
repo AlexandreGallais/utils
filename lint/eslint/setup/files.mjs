@@ -1,4 +1,7 @@
-// Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced.
+// Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced,
+// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style the
+// autofix applies (never disabled); `warn` = a style without autofix (disabled for one line, with a reason);
+// `info` = a suggestion, shown in blue in the editor only (lint/eslint/setup/info-rules.mjs).
 // File globs shared by the blocks: change them here to lint other extensions.
 
 /** Every JavaScript and TypeScript file: sources, specs, tool configs, scripts. */

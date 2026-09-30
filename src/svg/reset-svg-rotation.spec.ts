@@ -1,6 +1,5 @@
-import { resetSvgRotation } from './reset-svg-rotation.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { resetSvgRotation } from './reset-svg-rotation';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(resetSvgRotation, () => {
   it('straightens on screen without moving, keeping the flip', () => {

@@ -1,5 +1,5 @@
-import { isRecord } from '../guard/is-record.ts';
-import type { DeepPartial } from '../types/deep-partial.ts';
+import { isRecord } from '../guard';
+import type { DeepPartial } from '../types';
 
 /**
  * Applies a partial patch to nested settings, such as saved user preferences over the defaults: plain

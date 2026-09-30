@@ -1,5 +1,5 @@
-import { capitalize } from './capitalize.ts';
-import { words } from './words.ts';
+import { capitalize } from './capitalize';
+import { words } from './words';
 
 /**
  * Converts a string to Train-Case: capitalized words joined with `-`, as in HTTP header names.

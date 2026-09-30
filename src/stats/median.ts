@@ -1,5 +1,5 @@
-import type { NumberList } from './number-list.ts';
-import { quantile } from './quantile.ts';
+import type { NumberList } from './number-list';
+import { quantile } from './quantile';
 
 /** The median is the 50 % quantile. */
 const HALF = 0.5;

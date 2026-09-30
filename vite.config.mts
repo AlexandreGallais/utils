@@ -1,27 +1,8 @@
-// Learn more about Vite library mode at https://vite.dev/guide/build#library-mode
-// and Vitest configuration options at https://vitest.dev/config/
+// Vitest: the specs, with a 100 % coverage threshold. Learn more at https://vitest.dev/config/
 
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  build: {
-    target: 'es2024',
-    lib: {
-      entry: 'src/index.ts',
-      formats: ['es'],
-    },
-    // Readable output: consumers minify; source maps point to the TypeScript sources.
-    minify: false,
-    sourcemap: true,
-    rolldownOptions: {
-      output: {
-        // One file per module: consumers' bundlers tree-shake at the file level.
-        preserveModules: true,
-        preserveModulesRoot: 'src',
-        entryFileNames: '[name].js',
-      },
-    },
-  },
   test: {
     globals: true,
     include: ['src/**/*.spec.ts'],

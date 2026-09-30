@@ -1,6 +1,5 @@
-import { clamp } from '../math/clamp.ts';
-import { inverseLerp } from '../math/inverse-lerp.ts';
-import type { BarScale } from './bar-scale.ts';
+import { clamp, inverseLerp } from '../math';
+import type { BarScale } from './bar-scale';
 
 /**
  * Converts a value to a coordinate along a bar gauge: a `y` for an `'up'` or `'down'` bar, an `x` for a

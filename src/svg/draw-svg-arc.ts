@@ -1,6 +1,6 @@
-import { createArcPath } from './create-arc-path.ts';
-import { getSvgAnchorPointIn } from './get-svg-anchor-point-in.ts';
-import type { SvgArc } from './svg-arc.ts';
+import { createArcPath } from './create-arc-path';
+import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
+import type { SvgArc } from './svg-arc';
 
 /**
  * Draws an arc in a `<path>` around the center of an element, whatever groups and transforms each one is

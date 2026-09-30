@@ -1,4 +1,4 @@
-import { memoizeSimple } from './memoize-simple.ts';
+import { memoizeSimple } from './memoize-simple';
 
 describe(memoizeSimple, () => {
   it('calls once per key', () => {

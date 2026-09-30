@@ -1,4 +1,4 @@
-import { matchesShortcut } from './matches-shortcut.ts';
+import { matchesShortcut } from './matches-shortcut';
 
 function keyEvent(
   key: string,

@@ -1,4 +1,4 @@
-import type { Rect } from './rect.ts';
+import type { Rect } from './rect';
 
 /**
  * Computes the overlapping area of two rectangles; use it as a collision or visibility test too.

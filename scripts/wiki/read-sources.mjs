@@ -6,8 +6,6 @@ import { parseJsdoc } from './parse-jsdoc.mjs';
 
 const SOURCE_DIRECTORY = 'src';
 const EXPORT_PATTERN = /^export (?<isType>type )?\{ (?<name>\w+) \} from '\.\/(?<file>[\w\-.\/]+)';$/gmv;
-const DECLARATION_PATTERN = /^export (?:declare )?(?:async )?(?<kind>class|enum|function\*?|interface|type) /mv;
-const IMPORT_PATTERN = /^import (?:type )?\{[^\}]*\} from '(?<specifier>\.[^']+)';$/gmv;
 const DESCRIPTION_PATTERN = /^\/\/ (?<description>.+)$/mv;
 const JSDOC_START = '/**';
 const JSDOC_END = '*/';
@@ -58,36 +56,6 @@ export function toKebabCase(name) {
 }
 
 /**
- * Lists the local files a source file imports directly.
- *
- * @param file - Path of the source file.
- * @returns The imported files, relative to the repository.
- */
-export function directDependenciesOf(file) {
-  const source = fs.readFileSync(file, 'utf8');
-  return [...source.matchAll(IMPORT_PATTERN)].map(({ groups }) => path.join(path.dirname(file), groups.specifier));
-}
-
-/**
- * Lists the local files a source file imports, transitively.
- *
- * @param file - Path of the source file.
- * @param seen - Files already collected.
- * @returns The dependencies, relative to the repository, sorted.
- */
-export function dependenciesOf(file, seen = new Set()) {
-  const source = fs.readFileSync(file, 'utf8');
-  for (const { groups } of source.matchAll(IMPORT_PATTERN)) {
-    const dependency = path.join(path.dirname(file), groups.specifier);
-    if (!seen.has(dependency)) {
-      seen.add(dependency);
-      dependenciesOf(dependency, seen);
-    }
-  }
-  return [...seen].toSorted();
-}
-
-/**
  * Reads the declaration of an export: the signature of a function or a class, the whole of a type.
  *
  * @param source - Content of the file.
@@ -106,13 +74,18 @@ function readDeclaration(source, start, kind) {
 }
 
 /**
- * Reads the documentation of the export of a file.
+ * Reads the documentation of an export of a file (a file may export a function and the types that go with it).
  *
  * @param source - Content of the file.
+ * @param name - The exported name.
  * @returns The kind, the declaration, the description and the tags of the export.
  */
-function readExport(source) {
-  const match = DECLARATION_PATTERN.exec(source);
+function readExport(source, name) {
+  const declaration = new RegExp(
+    String.raw`^export (?:declare )?(?:async )?(?:abstract )?(?<kind>class|enum|function\*?|interface|type) ${name}\b`,
+    'mv',
+  );
+  const match = declaration.exec(source);
   if (!match?.groups) {
     return { kind: 'type', declaration: '', description: '', tags: [] };
   }
@@ -138,9 +111,10 @@ function readFolder(folder) {
   const index = fs.readFileSync(path.join(SOURCE_DIRECTORY, folder, 'index.ts'), 'utf8');
   const exports = [...index.matchAll(EXPORT_PATTERN)]
     .map(({ groups }) => {
-      const file = path.join(SOURCE_DIRECTORY, folder, groups.file);
+      const file = `${path.join(SOURCE_DIRECTORY, folder, groups.file)}.ts`;
       const source = fs.readFileSync(file, 'utf8');
-      return { name: groups.name, folder, file, slug: toKebabCase(groups.name), source, ...readExport(source) };
+      const exported = readExport(source, groups.name);
+      return { name: groups.name, folder, file, slug: toKebabCase(groups.name), source, ...exported };
     })
     .toSorted((a, b) => a.name.localeCompare(b.name, 'en'));
   const description = DESCRIPTION_PATTERN.exec(index)?.groups?.description ?? '';
@@ -153,10 +127,14 @@ function readFolder(folder) {
  * @returns The folders, sorted by name.
  */
 export function readFolders() {
-  return fs
-    .readdirSync(SOURCE_DIRECTORY, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && fs.existsSync(path.join(SOURCE_DIRECTORY, entry.name, 'index.ts')))
-    .map((entry) => entry.name)
-    .toSorted()
-    .map((folder) => readFolder(folder));
+  return (
+    fs
+      .readdirSync(SOURCE_DIRECTORY, { withFileTypes: true })
+      // src/internal/ has an index.ts too, but it is private to the library.
+      .filter((entry) => entry.isDirectory() && entry.name !== 'internal')
+      .filter((entry) => fs.existsSync(path.join(SOURCE_DIRECTORY, entry.name, 'index.ts')))
+      .map((entry) => entry.name)
+      .toSorted()
+      .map((folder) => readFolder(folder))
+  );
 }

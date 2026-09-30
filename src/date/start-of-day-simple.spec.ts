@@ -1,4 +1,4 @@
-import { startOfDaySimple } from './start-of-day-simple.ts';
+import { startOfDaySimple } from './start-of-day-simple';
 
 describe(startOfDaySimple, () => {
   it('goes back to local midnight', () => {

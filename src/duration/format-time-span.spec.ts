@@ -1,5 +1,5 @@
-import { formatTimeSpan } from './format-time-span.ts';
-import { parseTimeSpan } from './parse-time-span.ts';
+import { formatTimeSpan } from './format-time-span';
+import { parseTimeSpan } from './parse-time-span';
 
 describe(formatTimeSpan, () => {
   it.for([

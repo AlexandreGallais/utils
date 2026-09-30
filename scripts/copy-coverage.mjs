@@ -6,5 +6,4 @@ const COVERAGE_DIRECTORY = 'coverage';
 const TARGET_DIRECTORY = 'docs/.vitepress/dist/coverage';
 
 fs.cpSync(COVERAGE_DIRECTORY, TARGET_DIRECTORY, { recursive: true });
-// eslint-disable-next-line no-console -- a command-line script reports its result.
 console.info(`${COVERAGE_DIRECTORY} copied to ${TARGET_DIRECTORY}.`);

@@ -1,7 +1,6 @@
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { scaleSvgElement } from './scale-svg-element.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { scaleSvgElement } from './scale-svg-element';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(scaleSvgElement, () => {
   it('grows on screen around the anchor', () => {

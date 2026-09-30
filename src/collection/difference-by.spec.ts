@@ -1,4 +1,4 @@
-import { differenceBy } from './difference-by.ts';
+import { differenceBy } from './difference-by';
 
 describe(differenceBy, () => {
   it('keeps the items whose key is not excluded', () => {

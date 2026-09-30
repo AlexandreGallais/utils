@@ -1,4 +1,4 @@
-import type { Matrix2D } from './matrix-2d.ts';
+import type { Matrix2D } from './matrix-2d';
 
 /**
  * Creates a translation, like SVG `translate(tx ty)`.

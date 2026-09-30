@@ -1,7 +1,24 @@
-import type { ClockTick } from '../time/clock-tick.ts';
-import type { TickSource } from '../time/tick-source.ts';
-import type { AnimationOptions } from './animation-options.ts';
-import { linear } from './linear.ts';
+import type { ClockTick, TickSource } from '../time';
+import { linear } from './linear';
+import type { EasingFunction } from './easing-function';
+
+/** Called at each frame of an animation. */
+type FrameCallback = (progress: number, elapsedMs: number, tick: ClockTick) => void;
+
+/** Called when an animation ends. */
+type CompleteCallback = () => void;
+
+/** Duration, curve and callbacks of `startAnimation`. */
+export interface AnimationOptions {
+  /** Length of the animation in milliseconds of simulated time; `Infinity` for an endless animation. */
+  readonly durationMs: number;
+  /** Curve applied to the progress; `linear` when omitted. */
+  readonly easing?: EasingFunction;
+  /** Called at each tick with the eased progress (0 to 1), the elapsed time and the tick. */
+  readonly onFrame: FrameCallback;
+  /** Called once when the animation reaches its end (not when it is stopped before). */
+  readonly onComplete?: CompleteCallback;
+}
 
 /**
  * Runs an animation on a shared clock: `onFrame` receives the eased progress and the elapsed time at every

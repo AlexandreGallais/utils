@@ -1,5 +1,5 @@
-import { getHeadingBetween } from './get-heading-between.ts';
-import { polarToCartesian } from './polar-to-cartesian.ts';
+import { getHeadingBetween } from './get-heading-between';
+import { polarToCartesian } from './polar-to-cartesian';
 
 const CENTER = { x: 50, y: 50 };
 

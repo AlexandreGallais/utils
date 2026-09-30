@@ -1,4 +1,4 @@
-import type { Point } from './point.ts';
+import type { Point } from './point';
 
 /** `6·A = 3·(2·A)`: the factor between the doubled area and the denominator of the centroid. */
 const CENTROID_FACTOR = 3;

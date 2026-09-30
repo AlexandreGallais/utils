@@ -1,4 +1,4 @@
-import { parseDateFormatSimple } from './parse-date-format-simple.ts';
+import { parseDateFormatSimple } from './parse-date-format-simple';
 
 describe(parseDateFormatSimple, () => {
   it('reads local time', () => {

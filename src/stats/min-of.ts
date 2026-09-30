@@ -1,4 +1,4 @@
-import type { NumberList } from './number-list.ts';
+import type { NumberList } from './number-list';
 
 /**
  * Finds the smallest number of a list, in one pass and without spreading it.

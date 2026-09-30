@@ -1,4 +1,4 @@
-import { createRegularPolygonPointsSimple } from './create-regular-polygon-points-simple.ts';
+import { createRegularPolygonPointsSimple } from './create-regular-polygon-points-simple';
 
 describe(createRegularPolygonPointsSimple, () => {
   it('starts at the top', () => {

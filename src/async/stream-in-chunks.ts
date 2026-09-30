@@ -1,5 +1,5 @@
-import { chunk } from '../collection/chunk.ts';
-import { sleep } from './sleep.ts';
+import { chunk } from '../collection';
+import { sleep } from './sleep';
 
 /**
  * Delivers a list progressively: the first chunk at once, then one chunk every `intervalMs`. Iterate it with

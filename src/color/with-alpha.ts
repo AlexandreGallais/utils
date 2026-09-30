@@ -1,6 +1,6 @@
-import { clamp } from '../math/clamp.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { clamp } from '../math';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 /**
  * Gives a color another opacity, for a translucent fill or a disabled state built from a theme color.

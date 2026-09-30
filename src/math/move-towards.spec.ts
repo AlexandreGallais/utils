@@ -1,4 +1,4 @@
-import { moveTowards } from './move-towards.ts';
+import { moveTowards } from './move-towards';
 
 describe(moveTowards, () => {
   it.for([

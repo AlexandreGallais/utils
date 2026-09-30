@@ -1,4 +1,4 @@
-import type { EventMapOf } from './event-map-of.ts';
+import type { EventMapOf } from './event-map-of';
 
 /**
  * Adds an event listener and returns the function that removes it, with the event type inferred from the

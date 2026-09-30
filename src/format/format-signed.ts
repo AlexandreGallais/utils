@@ -1,4 +1,4 @@
-import { formatDecimal } from './format-decimal.ts';
+import { formatDecimal } from './format-decimal';
 
 /**
  * Formats a number with an explicit sign, like `formatDecimal` otherwise: a variation, a trend, a deviation

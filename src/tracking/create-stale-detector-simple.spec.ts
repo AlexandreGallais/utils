@@ -1,4 +1,4 @@
-import { createStaleDetectorSimple } from './create-stale-detector-simple.ts';
+import { createStaleDetectorSimple } from './create-stale-detector-simple';
 
 describe(createStaleDetectorSimple, () => {
   it('is fresh right after an update', () => {

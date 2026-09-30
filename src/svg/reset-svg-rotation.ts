@@ -1,6 +1,6 @@
-import { resetMatrixRotation } from '../geometry/reset-matrix-rotation.ts';
-import { getSvgLocalCenter } from './get-svg-local-center.ts';
-import { updateScreenMatrix } from './internal/update-screen-matrix.ts';
+import { resetMatrixRotation } from '../geometry';
+import { getSvgLocalCenter } from './get-svg-local-center';
+import { updateScreenMatrix } from './internal';
 
 /**
  * Straightens an SVG element on screen (upright) without moving it: its center stays in place, its flip and size are kept. Works whatever its groups: the result is judged on screen.

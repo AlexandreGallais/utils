@@ -1,4 +1,4 @@
-import { inverseLerp } from './inverse-lerp.ts';
+import { inverseLerp } from './inverse-lerp';
 
 /**
  * Divides a value by a total, safely: the same as `inverseLerp(0, total, value)`. Not clamped.

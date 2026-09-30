@@ -1,4 +1,4 @@
-import type { Mutable } from './mutable.ts';
+import type { Mutable } from './mutable';
 
 describe('Mutable', () => {
   it('removes readonly', () => {

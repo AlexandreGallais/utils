@@ -1,6 +1,6 @@
-import { easeInQuad } from './ease-in-quad.ts';
-import { startAnimation } from './start-animation.ts';
-import { FakeTickSource } from './testing/fake-tick-source.ts';
+import { easeInQuad } from './ease-in-quad';
+import { startAnimation } from './start-animation';
+import { FakeTickSource } from './testing';
 
 describe(startAnimation, () => {
   let clock: FakeTickSource;

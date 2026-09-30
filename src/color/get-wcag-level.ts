@@ -1,6 +1,6 @@
-import type { ContrastLevel } from './contrast-level.ts';
-import { meetsContrastLevel } from './meets-contrast-level.ts';
-import type { Rgb } from './rgb.ts';
+import type { ContrastLevel } from './contrast-level';
+import { meetsContrastLevel } from './meets-contrast-level';
+import type { Rgb } from './rgb';
 
 /**
  * Finds the highest WCAG 2.x level a text and background pair reaches, to show a badge in a theme editor

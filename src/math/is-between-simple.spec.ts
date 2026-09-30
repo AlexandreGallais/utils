@@ -1,4 +1,4 @@
-import { isBetweenSimple } from './is-between-simple.ts';
+import { isBetweenSimple } from './is-between-simple';
 
 describe(isBetweenSimple, () => {
   it('includes the bounds', () => {

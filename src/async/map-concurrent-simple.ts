@@ -1,4 +1,4 @@
-import { mapConcurrent } from './map-concurrent.ts';
+import { mapConcurrent } from './map-concurrent';
 
 /**
  * Maps a list with an async function, at most `concurrency` calls at a time, like `mapConcurrent`, without cancellation.

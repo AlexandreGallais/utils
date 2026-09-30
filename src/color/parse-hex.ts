@@ -1,4 +1,4 @@
-import type { Rgba } from './rgba.ts';
+import type { Rgba } from './rgba';
 
 /** Highest value of an 8-bit color channel. */
 const MAX_CHANNEL = 255;
@@ -63,7 +63,6 @@ export function parseHex(input: string): Rgba | undefined {
  * @returns The digit's value in [0, 15], or `-1` when it is not a hex digit.
  */
 function hexDigit(text: string, index: number): number {
-  // eslint-disable-next-line unicorn/prefer-code-point -- hex digits are ASCII; `charCodeAt` returns a number, no `undefined` to handle.
   const code = text.charCodeAt(index);
   if (code >= CODE_0 && code <= CODE_9) {
     return code - CODE_0;

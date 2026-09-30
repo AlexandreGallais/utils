@@ -1,6 +1,6 @@
-import { withFixedPoint } from './internal/with-fixed-point.ts';
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Point } from './point.ts';
+import { withFixedPoint } from './internal';
+import type { Matrix2D } from './matrix-2d';
+import type { Point } from './point';
 
 /**
  * Resets the rotation, the flips and the skew of a transform while keeping its size and the place of the

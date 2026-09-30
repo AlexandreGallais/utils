@@ -1,4 +1,4 @@
-import { sortBySimple } from './sort-by-simple.ts';
+import { sortBySimple } from './sort-by-simple';
 
 describe(sortBySimple, () => {
   it('sorts in ascending order', () => {

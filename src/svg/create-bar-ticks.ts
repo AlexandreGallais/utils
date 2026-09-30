@@ -1,7 +1,39 @@
-import type { BarTick } from './bar-tick.ts';
-import type { BarTicksOptions } from './bar-ticks-options.ts';
-import { generateScaleValues } from './internal/generate-scale-values.ts';
-import { valueToBarPosition } from './value-to-bar-position.ts';
+import type { Point } from '../geometry';
+import { generateScaleValues } from './internal';
+import { valueToBarPosition } from './value-to-bar-position';
+import type { BarScale } from './bar-scale';
+
+/** A graduation of a bar gauge, returned by `createBarTicks`. */
+export interface BarTick {
+  /** Value of the graduation. */
+  readonly value: number;
+  /** Coordinate along the bar: a `y` for a vertical bar, an `x` for a horizontal one. */
+  readonly position: number;
+  /** End of the tick line on the aligned edge of the bar. */
+  readonly start: Point;
+  /** Other end of the tick line, towards the inside of the bar. */
+  readonly end: Point;
+  /** Whether the graduation is on a major step (longer tick, usually labelled). */
+  readonly isMajor: boolean;
+}
+
+/** Scale, steps and tick lengths of the graduations built by `createBarTicks`. */
+export interface BarTicksOptions extends BarScale {
+  /** Interval between major graduations, from `min`. */
+  readonly majorStep: number;
+  /** Interval between minor graduations, from `min`; no minor graduation when omitted. */
+  readonly minorStep?: number;
+  /** Length of major ticks, across the bar; the whole thickness of the bar when omitted. */
+  readonly majorLength?: number;
+  /** Length of minor ticks, across the bar; half the major length when omitted. */
+  readonly minorLength?: number;
+
+  /**
+   * Edge the ticks start from: `'start'` is the left edge of a vertical bar or the top edge of a horizontal
+   * one, `'end'` the opposite edge.
+   */
+  readonly align?: 'end' | 'start';
+}
 
 /**
  * Computes the graduations of a bar gauge: major ticks every `majorStep`, shorter minor ticks every

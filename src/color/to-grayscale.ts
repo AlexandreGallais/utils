@@ -1,7 +1,7 @@
-import { getRelativeLuminance } from './get-relative-luminance.ts';
-import { toByte } from './internal/to-byte.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { getRelativeLuminance } from './get-relative-luminance';
+import { toByte } from './internal';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 /** Highest value of an 8-bit color channel. */
 const MAX_CHANNEL = 255;

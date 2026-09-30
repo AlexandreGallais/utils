@@ -1,4 +1,4 @@
-import { mapConcurrent } from './map-concurrent.ts';
+import { mapConcurrent } from './map-concurrent';
 
 async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {

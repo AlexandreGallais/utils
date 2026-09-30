@@ -1,4 +1,4 @@
-import { clampedRatio } from './clamped-ratio.ts';
+import { clampedRatio } from './clamped-ratio';
 
 describe(clampedRatio, () => {
   it.for([

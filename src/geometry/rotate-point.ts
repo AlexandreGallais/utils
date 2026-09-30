@@ -1,5 +1,5 @@
-import { degreesToRadians } from '../angle/degrees-to-radians.ts';
-import type { Point } from './point.ts';
+import { degreesToRadians } from '../angle';
+import type { Point } from './point';
 
 /**
  * Rotates a point around a center, clockwise on screen for a positive angle (the y axis points down), like

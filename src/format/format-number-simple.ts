@@ -1,4 +1,4 @@
-import { formatNumber } from './format-number.ts';
+import { formatNumber } from './format-number';
 
 /**
  * Formats a number like `formatNumber`, in the house format: every digit in a row and a point before the

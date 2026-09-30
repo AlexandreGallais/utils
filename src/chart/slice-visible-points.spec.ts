@@ -1,4 +1,4 @@
-import { sliceVisiblePoints } from './slice-visible-points.ts';
+import { sliceVisiblePoints } from './slice-visible-points';
 
 describe(sliceVisiblePoints, () => {
   const series = [0, 10, 20, 30, 40].map((x) => ({ x, y: x / 10 }));

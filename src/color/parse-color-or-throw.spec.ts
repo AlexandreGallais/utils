@@ -1,5 +1,5 @@
-import { parseColorOrThrow } from './parse-color-or-throw.ts';
-import type { Rgba } from './rgba.ts';
+import { parseColorOrThrow } from './parse-color-or-throw';
+import type { Rgba } from './rgba';
 
 const RED: Rgba = { r: 255, g: 0, b: 0, a: 1 };
 

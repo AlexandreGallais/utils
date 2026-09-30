@@ -1,4 +1,4 @@
-import type { FpsMeter } from './fps-meter.ts';
+import type { FpsMeter } from './fps-meter';
 
 /** Milliseconds per second. */
 const MS_PER_SECOND = 1000;

@@ -1,4 +1,4 @@
-import { parseColorOrThrowCached } from './parse-color-or-throw-cached.ts';
+import { parseColorOrThrowCached } from './parse-color-or-throw-cached';
 
 describe(parseColorOrThrowCached, () => {
   it('returns the same frozen color for the same input', () => {

@@ -1,4 +1,4 @@
-import { getRectUnion } from './get-rect-union.ts';
+import { getRectUnion } from './get-rect-union';
 
 describe(getRectUnion, () => {
   it.for([

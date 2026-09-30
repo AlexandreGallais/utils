@@ -1,4 +1,4 @@
-import { variance } from './variance.ts';
+import { variance } from './variance';
 
 const VALUES = [2, 4, 4, 4, 5, 5, 7, 9];
 

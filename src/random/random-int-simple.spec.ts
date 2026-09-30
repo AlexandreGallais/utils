@@ -1,4 +1,4 @@
-import { randomIntSimple } from './random-int-simple.ts';
+import { randomIntSimple } from './random-int-simple';
 
 describe(randomIntSimple, () => {
   it('stays within the bounds', () => {

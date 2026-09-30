@@ -1,6 +1,6 @@
-import { toByte } from './internal/to-byte.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import { toByte } from './internal';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 /** Number of distinct 8-bit channel values: the size of the per-channel lookup tables. */
 const CHANNEL_VALUES = 256;

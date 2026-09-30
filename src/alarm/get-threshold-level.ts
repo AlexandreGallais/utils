@@ -1,4 +1,4 @@
-import type { ThresholdScale } from './threshold-scale.ts';
+import type { ThresholdScale } from './threshold-scale';
 
 /**
  * Finds the level of a value on a threshold scale: which color or alarm state a gauge shows. A value on a

@@ -1,4 +1,4 @@
-import { getWcagLevelSimple } from './get-wcag-level-simple.ts';
+import { getWcagLevelSimple } from './get-wcag-level-simple';
 
 describe(getWcagLevelSimple, () => {
   it('rates normal text', () => {

@@ -1,4 +1,4 @@
-import { createRoundedRectPath } from './create-rounded-rect-path.ts';
+import { createRoundedRectPath } from './create-rounded-rect-path';
 
 describe(createRoundedRectPath, () => {
   it('rounds the four corners', () => {

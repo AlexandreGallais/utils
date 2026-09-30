@@ -1,4 +1,4 @@
-import { insetRect } from './inset-rect.ts';
+import { insetRect } from './inset-rect';
 
 const RECT = { x: 0, y: 0, width: 100, height: 50 };
 

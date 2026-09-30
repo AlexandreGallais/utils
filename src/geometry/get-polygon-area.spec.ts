@@ -1,4 +1,4 @@
-import { getPolygonArea } from './get-polygon-area.ts';
+import { getPolygonArea } from './get-polygon-area';
 
 describe(getPolygonArea, () => {
   it.for([

@@ -1,4 +1,4 @@
-import { invalidFractionDigitsError } from './invalid-fraction-digits-error.ts';
+import { invalidFractionDigitsError } from './invalid-fraction-digits-error';
 
 /** Highest value accepted by `Intl.NumberFormat` for `maximumFractionDigits`. */
 const MAX_FRACTION_DIGITS = 100;

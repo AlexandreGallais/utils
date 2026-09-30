@@ -1,4 +1,4 @@
-import { randomBetween } from './random-between.ts';
+import { randomBetween } from './random-between';
 
 /**
  * Draws a random number in an interval like `randomBetween`.

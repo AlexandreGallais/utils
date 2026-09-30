@@ -1,4 +1,4 @@
-import { formatList } from './format-list.ts';
+import { formatList } from './format-list';
 
 describe(formatList, () => {
   it('joins with the rules of the locale', () => {

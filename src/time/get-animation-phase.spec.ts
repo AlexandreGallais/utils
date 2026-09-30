@@ -1,4 +1,4 @@
-import { getAnimationPhase } from './get-animation-phase.ts';
+import { getAnimationPhase } from './get-animation-phase';
 
 describe(getAnimationPhase, () => {
   it.for([

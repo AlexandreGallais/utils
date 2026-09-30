@@ -1,5 +1,5 @@
-import { roundToStep } from '../math/round-to-step.ts';
-import type { Point } from './point.ts';
+import { roundToStep } from '../math';
+import type { Point } from './point';
 
 /**
  * Moves a point to the nearest intersection of a grid, to align shapes dragged in an editor or a synoptic,

@@ -1,6 +1,6 @@
-import { isRecord } from '../guard/is-record.ts';
-import { createVersionedStorageItem } from './create-versioned-storage-item.ts';
-import { MemoryStorage } from './testing/memory-storage.ts';
+import { isRecord } from '../guard';
+import { createVersionedStorageItem } from './create-versioned-storage-item';
+import { MemoryStorage } from './testing';
 
 interface View {
   readonly zoom: number;

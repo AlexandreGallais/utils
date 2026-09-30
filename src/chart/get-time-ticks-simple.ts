@@ -1,5 +1,5 @@
-import { getTimeTicks } from './get-time-ticks.ts';
-import type { TimeTicks } from './time-ticks.ts';
+import { getTimeTicks } from './get-time-ticks';
+import type { TimeTicks } from './time-ticks';
 
 /** Approximate number of ticks: readable on a small chart, enough to read times. */
 const TICK_COUNT = 5;

@@ -1,4 +1,4 @@
-import { roundToFractionDigits } from '../round-to-fraction-digits.ts';
+import { roundToFractionDigits } from '../round-to-fraction-digits';
 
 /** Relative tolerance that snaps `value / step` to an integer: float noise, not a real fraction. */
 const STEP_QUOTIENT_TOLERANCE = 1e-9;

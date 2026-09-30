@@ -1,6 +1,6 @@
-import type { Hsl } from './hsl.ts';
-import type { Rgb } from './rgb.ts';
-import type { Rgba } from './rgba.ts';
+import type { Hsl } from './hsl';
+import type { Rgb } from './rgb';
+import type { Rgba } from './rgba';
 
 /** Highest value of an 8-bit color channel. */
 const MAX_CHANNEL = 255;

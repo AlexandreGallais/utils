@@ -1,7 +1,7 @@
-import { polarToCartesian } from '../geometry/polar-to-cartesian.ts';
-import type { Point } from '../geometry/point.ts';
-import { createArcPath } from './create-arc-path.ts';
-import { formatCoordinate } from './internal/format-coordinate.ts';
+import { polarToCartesian } from '../geometry';
+import type { Point } from '../geometry';
+import { createArcPath } from './create-arc-path';
+import { formatCoordinate } from './internal';
 
 const FULL_TURN = 360;
 const HALF_TURN = 180;

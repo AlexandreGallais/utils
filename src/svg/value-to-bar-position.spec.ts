@@ -1,5 +1,5 @@
-import type { BarScale } from './bar-scale.ts';
-import { valueToBarPosition } from './value-to-bar-position.ts';
+import type { BarScale } from './bar-scale';
+import { valueToBarPosition } from './value-to-bar-position';
 
 const RECT = { x: 10, y: 20, width: 100, height: 200 };
 

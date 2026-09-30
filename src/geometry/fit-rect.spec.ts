@@ -1,4 +1,4 @@
-import { fitRect } from './fit-rect.ts';
+import { fitRect } from './fit-rect';
 
 const SQUARE = { x: 0, y: 0, width: 100, height: 100 };
 const WIDE = { width: 200, height: 100 };

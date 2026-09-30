@@ -1,4 +1,4 @@
-import { ceilToStep } from './ceil-to-step.ts';
+import { ceilToStep } from './ceil-to-step';
 
 describe(ceilToStep, () => {
   it.for([

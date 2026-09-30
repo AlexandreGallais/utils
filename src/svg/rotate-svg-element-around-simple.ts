@@ -1,4 +1,4 @@
-import { rotateSvgElementAround } from './rotate-svg-element-around.ts';
+import { rotateSvgElementAround } from './rotate-svg-element-around';
 
 /**
  * Turns an SVG element by an angle around another element, like `rotateSvgElementAround`.

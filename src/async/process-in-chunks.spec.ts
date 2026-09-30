@@ -1,4 +1,4 @@
-import { processInChunks } from './process-in-chunks.ts';
+import { processInChunks } from './process-in-chunks';
 
 describe(processInChunks, () => {
   let time: number;

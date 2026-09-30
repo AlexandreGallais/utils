@@ -1,4 +1,4 @@
-import { headingToCardinal } from './heading-to-cardinal.ts';
+import { headingToCardinal } from './heading-to-cardinal';
 
 /** Points of the compass rose: N, NE, E, SE, S, SW, W, NW. */
 const COMPASS_POINTS = 8;

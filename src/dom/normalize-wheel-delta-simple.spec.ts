@@ -1,4 +1,4 @@
-import { normalizeWheelDeltaSimple } from './normalize-wheel-delta-simple.ts';
+import { normalizeWheelDeltaSimple } from './normalize-wheel-delta-simple';
 
 describe(normalizeWheelDeltaSimple, () => {
   it('converts pages with 800 px', () => {

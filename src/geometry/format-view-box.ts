@@ -1,4 +1,4 @@
-import type { Rect } from './rect.ts';
+import type { Rect } from './rect';
 
 /**
  * Formats a rectangle as the value of an SVG `viewBox` attribute.

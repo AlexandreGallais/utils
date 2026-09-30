@@ -1,4 +1,4 @@
-import type { Rect } from '../../geometry/rect.ts';
+import type { Rect } from '../../geometry';
 
 /**
  * Reads the bounding box of an element in its local coordinates, as a plain rectangle.

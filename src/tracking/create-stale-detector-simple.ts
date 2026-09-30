@@ -1,5 +1,5 @@
-import { createStaleDetector } from './create-stale-detector.ts';
-import type { StaleDetector } from './stale-detector.ts';
+import { createStaleDetector } from './create-stale-detector';
+import type { StaleDetector } from './stale-detector';
 
 /**
  * Creates a detector for values that stopped refreshing, like `createStaleDetector`.

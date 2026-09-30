@@ -1,4 +1,4 @@
-import { remap } from './remap.ts';
+import { remap } from './remap';
 
 describe(remap, () => {
   it('maps between ranges', () => {

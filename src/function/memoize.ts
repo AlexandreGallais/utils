@@ -1,4 +1,4 @@
-import type { MemoizedFunction } from './memoized-function.ts';
+import type { MemoizedFunction } from './memoized-function';
 
 /**
  * Caches the results of a pure function by key: a call with an already seen key returns the stored result

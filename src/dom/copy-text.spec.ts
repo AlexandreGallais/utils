@@ -1,4 +1,4 @@
-import { copyText } from './copy-text.ts';
+import { copyText } from './copy-text';
 
 describe(copyText, () => {
   afterEach(() => {

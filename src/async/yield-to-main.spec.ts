@@ -1,4 +1,4 @@
-import { yieldToMain } from './yield-to-main.ts';
+import { yieldToMain } from './yield-to-main';
 
 describe(yieldToMain, () => {
   afterEach(() => {

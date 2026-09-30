@@ -1,9 +1,8 @@
-import { invertMatrix } from '../../geometry/invert-matrix.ts';
-import type { Matrix2D } from '../../geometry/matrix-2d.ts';
-import { multiplyMatrices } from '../../geometry/multiply-matrices.ts';
-import { getSvgTransform } from '../get-svg-transform.ts';
-import { setSvgTransform } from '../set-svg-transform.ts';
-import { getScreenMatrix } from './get-screen-matrix.ts';
+import { invertMatrix, multiplyMatrices } from '../../geometry';
+import type { Matrix2D } from '../../geometry';
+import { getSvgTransform } from '../get-svg-transform';
+import { setSvgTransform } from '../set-svg-transform';
+import { getScreenMatrix } from './get-screen-matrix';
 
 /**
  * Changes how an element is drawn on screen, and writes the matching `transform` attribute: the change is

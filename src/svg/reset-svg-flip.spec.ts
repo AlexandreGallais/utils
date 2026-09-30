@@ -1,6 +1,5 @@
-import { resetSvgFlip } from './reset-svg-flip.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen } from './testing/scene.ts';
+import { resetSvgFlip } from './reset-svg-flip';
+import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
 
 describe(resetSvgFlip, () => {
   it('unmirrors on screen without moving, keeping the rotation', () => {

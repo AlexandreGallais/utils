@@ -1,4 +1,4 @@
-import { once } from './once.ts';
+import { once } from './once';
 
 describe(once, () => {
   it('runs on the first call only and returns its result', () => {

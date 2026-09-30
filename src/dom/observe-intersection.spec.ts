@@ -1,6 +1,5 @@
-import { observeIntersection } from './observe-intersection.ts';
-import { createFake } from './testing/create-fake.ts';
-import { FakeObserver } from './testing/fake-observer.ts';
+import { observeIntersection } from './observe-intersection';
+import { createFake, FakeObserver } from './testing';
 
 describe(observeIntersection, () => {
   beforeEach(() => {

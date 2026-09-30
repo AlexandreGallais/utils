@@ -1,4 +1,4 @@
-import { RingBuffer } from './ring-buffer.ts';
+import { RingBuffer } from './ring-buffer';
 
 describe(RingBuffer, () => {
   let buffer: RingBuffer<number>;

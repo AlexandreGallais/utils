@@ -1,6 +1,6 @@
-import type { Point } from '../../geometry/point.ts';
-import { transformPoint } from '../../geometry/transform-point.ts';
-import type { FakeSvgElementInGroup } from './fake-svg-element.ts';
+import type { Point } from '../../geometry';
+import { transformPoint } from '../../geometry';
+import type { FakeSvgElementInGroup } from './fake-svg-element';
 
 /**
  * Computes where a local point of a fake element is drawn on screen, rounded to hide float noise.

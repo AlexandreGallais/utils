@@ -1,5 +1,5 @@
-import type { Rgb } from './rgb.ts';
-import { toLinear } from './to-linear.ts';
+import type { Rgb } from './rgb';
+import { toLinear } from './to-linear';
 
 /** Contribution of each linear channel to the luminance (ITU-R BT.709 primaries, used by WCAG). */
 const RED_WEIGHT = 0.2126;

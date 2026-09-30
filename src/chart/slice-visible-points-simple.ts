@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { sliceVisiblePoints } from './slice-visible-points.ts';
+import type { Point } from '../geometry';
+import { sliceVisiblePoints } from './slice-visible-points';
 
 /**
  * Keeps the points of a time series inside a horizontal window like `sliceVisiblePoints`, ready to draw a line to the edges.

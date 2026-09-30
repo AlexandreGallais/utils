@@ -1,5 +1,5 @@
-import type { Point } from '../geometry/point.ts';
-import { createPolylinePath } from './create-polyline-path.ts';
+import type { Point } from '../geometry';
+import { createPolylinePath } from './create-polyline-path';
 
 /**
  * Builds the `d` attribute of an open broken line like `createPolylinePath`.

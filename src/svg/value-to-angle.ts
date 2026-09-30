@@ -1,4 +1,4 @@
-import { remap } from '../math/remap.ts';
+import { remap } from '../math';
 
 /**
  * Converts a value to the angle of a round gauge's needle: `min` sits at `startAngle`, `max` at `endAngle`

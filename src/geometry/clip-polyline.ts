@@ -1,6 +1,6 @@
-import { clipSegment } from './clip-segment.ts';
-import type { Point } from './point.ts';
-import type { Rect } from './rect.ts';
+import { clipSegment } from './clip-segment';
+import type { Point } from './point';
+import type { Rect } from './rect';
 
 /**
  * Cuts a broken line to the parts inside a rectangle, such as a chart series zoomed in: each part is a

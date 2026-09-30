@@ -1,4 +1,4 @@
-import { padBoundsSimple } from './pad-bounds-simple.ts';
+import { padBoundsSimple } from './pad-bounds-simple';
 
 describe(padBoundsSimple, () => {
   it('adds 5 % on each side', () => {

@@ -1,4 +1,4 @@
-import { clipSegment } from './clip-segment.ts';
+import { clipSegment } from './clip-segment';
 
 describe(clipSegment, () => {
   const rect = { x: 0, y: 0, width: 10, height: 10 };

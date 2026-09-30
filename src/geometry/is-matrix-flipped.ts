@@ -1,4 +1,4 @@
-import type { Matrix2D } from './matrix-2d.ts';
+import type { Matrix2D } from './matrix-2d';
 
 /**
  * Checks whether a transform mirrors the element (an odd number of flips), whatever its rotation.

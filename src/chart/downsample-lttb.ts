@@ -1,4 +1,4 @@
-import type { Point } from '../geometry/point.ts';
+import type { Point } from '../geometry';
 
 /** Fewest points kept: the first, the last and one in between. */
 const MIN_TARGET_COUNT = 3;

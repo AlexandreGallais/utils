@@ -1,5 +1,5 @@
-import { padBounds } from './pad-bounds.ts';
-import type { DataBounds } from './data-bounds.ts';
+import { padBounds } from './pad-bounds';
+import type { DataBounds } from './data-bounds';
 
 /** Margin on each side, as a fraction of the range. */
 const MARGIN_RATIO = 0.05;

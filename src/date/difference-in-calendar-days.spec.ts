@@ -1,4 +1,4 @@
-import { differenceInCalendarDays } from './difference-in-calendar-days.ts';
+import { differenceInCalendarDays } from './difference-in-calendar-days';
 
 describe(differenceInCalendarDays, () => {
   it('counts the UTC day boundaries', () => {

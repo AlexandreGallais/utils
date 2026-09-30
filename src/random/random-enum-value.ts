@@ -1,5 +1,5 @@
-import type { EnumObject } from '../enum/enum-object.ts';
-import { getEnumValues } from '../enum/get-enum-values.ts';
+import type { EnumObject } from '../enum';
+import { getEnumValues } from '../enum';
 
 /**
  * Draws one member of an enum, for test data covering every state.

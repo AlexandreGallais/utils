@@ -1,4 +1,4 @@
-import { formatCompact } from './format-compact.ts';
+import { formatCompact } from './format-compact';
 
 /**
  * Formats a number in short form like `formatCompact`, always the same way: `1.2K`, `3.4M`.

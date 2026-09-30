@@ -1,4 +1,4 @@
-import { formatSigned } from './format-signed.ts';
+import { formatSigned } from './format-signed';
 
 describe(formatSigned, () => {
   it.for([

@@ -1,4 +1,4 @@
-import { createLogScale } from './create-log-scale.ts';
+import { createLogScale } from './create-log-scale';
 
 describe(createLogScale, () => {
   it('gives each power of ten the same length', () => {

@@ -1,4 +1,4 @@
-import { createStarPoints } from './create-star-points.ts';
+import { createStarPoints } from './create-star-points';
 
 describe(createStarPoints, () => {
   it('alternates tips and notches, the first tip up', () => {

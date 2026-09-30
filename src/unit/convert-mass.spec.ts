@@ -1,4 +1,4 @@
-import { convertMass } from './convert-mass.ts';
+import { convertMass } from './convert-mass';
 
 describe(convertMass, () => {
   it.for([

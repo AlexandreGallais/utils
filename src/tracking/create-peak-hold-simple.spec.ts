@@ -1,4 +1,4 @@
-import { createPeakHoldSimple } from './create-peak-hold-simple.ts';
+import { createPeakHoldSimple } from './create-peak-hold-simple';
 
 describe(createPeakHoldSimple, () => {
   it('drops at once after the hold', () => {

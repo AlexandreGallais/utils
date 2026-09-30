@@ -1,5 +1,5 @@
-import type { Rgb } from '../rgb.ts';
-import { toByte } from './to-byte.ts';
+import type { Rgb } from '../rgb';
+import { toByte } from './to-byte';
 
 /** Highest value of an 8-bit color channel. */
 const MAX_CHANNEL = 255;

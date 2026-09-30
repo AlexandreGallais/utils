@@ -1,4 +1,4 @@
-import { createCleanupStack } from './create-cleanup-stack.ts';
+import { createCleanupStack } from './create-cleanup-stack';
 
 describe(createCleanupStack, () => {
   it('runs the cleanups in reverse order, once', () => {

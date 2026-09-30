@@ -1,5 +1,5 @@
-import { formatMatrix } from './format-matrix.ts';
-import type { Matrix2D } from './matrix-2d.ts';
+import { formatMatrix } from './format-matrix';
+import type { Matrix2D } from './matrix-2d';
 
 /** Decimals written: a millionth of a unit, invisible at any zoom level. */
 const FRACTION_DIGITS = 6;

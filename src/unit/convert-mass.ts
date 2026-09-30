@@ -1,4 +1,5 @@
-import type { MassUnit } from './mass-unit.ts';
+/** A mass unit: grams, kilograms, metric tonnes, pounds (avoirdupois). */
+export type MassUnit = 'g' | 'kg' | 'lb' | 't';
 
 /** Avoirdupois pound (exact). */
 const KILOGRAMS_PER_POUND = 0.45359237;

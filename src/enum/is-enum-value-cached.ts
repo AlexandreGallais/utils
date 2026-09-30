@@ -1,5 +1,5 @@
-import type { EnumObject } from './enum-object.ts';
-import { getEnumValues } from './get-enum-values.ts';
+import type { EnumObject } from './enum-object';
+import { getEnumValues } from './get-enum-values';
 
 /** Values of each enum object; entries disappear with their enum. */
 const cache = new WeakMap<object, ReadonlySet<unknown>>();

@@ -1,4 +1,4 @@
-import { toEnumValue } from './to-enum-value.ts';
+import { toEnumValue } from './to-enum-value';
 
 enum Mode {
   Day = 'day',

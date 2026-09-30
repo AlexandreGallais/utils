@@ -1,4 +1,4 @@
-import { paginate } from './paginate.ts';
+import { paginate } from './paginate';
 
 const LETTERS = ['a', 'b', 'c', 'd', 'e'];
 

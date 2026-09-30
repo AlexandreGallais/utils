@@ -1,4 +1,4 @@
-import { shuffleSimple } from './shuffle-simple.ts';
+import { shuffleSimple } from './shuffle-simple';
 
 describe(shuffleSimple, () => {
   it('keeps the same items', () => {

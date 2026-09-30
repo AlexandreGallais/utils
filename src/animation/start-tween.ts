@@ -1,8 +1,30 @@
-import { lerp } from '../math/lerp.ts';
-import type { TickSource } from '../time/tick-source.ts';
-import { easeOutQuad } from './ease-out-quad.ts';
-import { startAnimation } from './start-animation.ts';
-import type { TweenOptions } from './tween-options.ts';
+import { lerp } from '../math';
+import type { TickSource } from '../time';
+import { easeOutQuad } from './ease-out-quad';
+import { startAnimation } from './start-animation';
+import type { EasingFunction } from './easing-function';
+
+/** Receives the animated value. */
+type ValueCallback = (value: number) => void;
+
+/** Called when the tween ends. */
+type CompleteCallback = () => void;
+
+/** Values, duration, curve and callbacks of `startTween`. */
+export interface TweenOptions {
+  /** Value at the start. */
+  readonly from: number;
+  /** Value at the end. */
+  readonly to: number;
+  /** Length of the tween in milliseconds of simulated time. */
+  readonly durationMs: number;
+  /** Curve of the movement; `easeOutQuad` when omitted. */
+  readonly easing?: EasingFunction;
+  /** Called at each tick with the current value. */
+  readonly onUpdate: ValueCallback;
+  /** Called once when the value reaches `to`. */
+  readonly onComplete?: CompleteCallback;
+}
 
 /**
  * Animates a number from one value to another on a shared clock: a position, an opacity, a needle angle.

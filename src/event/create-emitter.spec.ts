@@ -1,4 +1,4 @@
-import { createEmitter } from './create-emitter.ts';
+import { createEmitter } from './create-emitter';
 
 interface Events extends Record<string, unknown> {
   alarm: { id: string };

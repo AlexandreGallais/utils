@@ -1,6 +1,5 @@
-import { moveSvgElement } from './move-svg-element.ts';
-import { asSvgElement } from './testing/fake-svg-element.ts';
-import { createTwistedElement, describeOnScreen, isSamePoint } from './testing/scene.ts';
+import { moveSvgElement } from './move-svg-element';
+import { asSvgElement, createTwistedElement, describeOnScreen, isSamePoint } from './testing';
 
 describe(moveSvgElement, () => {
   it('moves by screen pixels whatever the parent transforms', () => {

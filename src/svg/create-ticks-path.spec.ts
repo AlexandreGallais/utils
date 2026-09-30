@@ -1,4 +1,4 @@
-import { createTicksPath } from './create-ticks-path.ts';
+import { createTicksPath } from './create-ticks-path';
 
 describe(createTicksPath, () => {
   it('joins every tick into one path', () => {

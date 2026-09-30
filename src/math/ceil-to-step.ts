@@ -1,4 +1,4 @@
-import { snapToStep } from './internal/snap-to-step.ts';
+import { snapToStep } from './internal';
 
 /**
  * Rounds a number up to a multiple of a step, without float noise: `ceilToStep(0.3, 0.1)` is `0.3`, not

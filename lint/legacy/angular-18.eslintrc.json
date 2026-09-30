@@ -1,0 +1,1103 @@
+// ESLint 8 config (old format, .eslintrc.json) of an Angular 18 application, with the rules and the levels of the
+// flat configs of lint/eslint/ (angular-app preset): an error is a real mistake or a style the autofix applies,
+// a warning a good practice without autofix, an info a suggestion (off here: ESLint 8 has no info level).
+// Specs relax the warnings and the hacks (`any`, `!`) like the flat configs do.
+// Needs: eslint 8.57, @typescript-eslint/parser and @typescript-eslint/eslint-plugin 8, and
+// @angular-eslint/eslint-plugin, @angular-eslint/eslint-plugin-template, @angular-eslint/template-parser 18.
+// Not included (their plugins are not installed): SonarJS, import-x, Prettier and the local rules (file names,
+// one export per file, folder imports, disable comments only on warnings).
+// Generated from lint/eslint/ (2026-09-30); comments are allowed in .eslintrc.json.
+{
+  "root": true,
+  "reportUnusedDisableDirectives": true,
+  "ignorePatterns": ["dist/", "coverage/", ".angular/", "node_modules/"],
+  "env": { "browser": true, "es2022": true },
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": { "projectService": true, "ecmaVersion": "latest", "sourceType": "module" },
+      "plugins": ["@typescript-eslint", "@angular-eslint", "@angular-eslint/template"],
+      // Lints the inline templates of the components with the *.html rules.
+      "processor": "@angular-eslint/template/extract-inline-html",
+      "rules": {
+        // ---- Errors: a real mistake, or a style the autofix applies. Never disabled.
+        "@angular-eslint/consistent-component-styles": ["error", "string"],
+        "@angular-eslint/contextual-decorator": ["error"],
+        "@angular-eslint/contextual-lifecycle": ["error"],
+        "@angular-eslint/no-async-lifecycle-method": ["error"],
+        "@angular-eslint/no-attribute-decorator": ["error"],
+        "@angular-eslint/no-duplicates-in-metadata-arrays": ["error"],
+        "@angular-eslint/no-input-rename": ["error", { "allowedNames": [] }],
+        "@angular-eslint/no-lifecycle-call": ["error"],
+        "@angular-eslint/no-output-native": ["error"],
+        "@angular-eslint/no-output-rename": ["error"],
+        // Custom: OnPush on every component (not the default before Angular 22).
+        "@angular-eslint/prefer-on-push-component-change-detection": ["error"],
+        "@angular-eslint/sort-lifecycle-methods": ["error"],
+        "@angular-eslint/use-lifecycle-interface": ["error"],
+        "@angular-eslint/use-pipe-transform-interface": ["error"],
+        "@typescript-eslint/array-type": ["error"],
+        "@typescript-eslint/await-thenable": ["error"],
+        "@typescript-eslint/ban-ts-comment": ["error"],
+        "@typescript-eslint/ban-tslint-comment": ["error"],
+        "@typescript-eslint/class-literal-property-style": ["error"],
+        "@typescript-eslint/consistent-generic-constructors": ["error"],
+        "@typescript-eslint/consistent-indexed-object-style": ["error"],
+        "@typescript-eslint/consistent-type-assertions": ["error"],
+        "@typescript-eslint/consistent-type-definitions": ["error"],
+        "@typescript-eslint/consistent-type-exports": ["error"],
+        "@typescript-eslint/consistent-type-imports": ["error"],
+        "@typescript-eslint/dot-notation": [
+          "error",
+          {
+            "allowIndexSignaturePropertyAccess": false,
+            "allowKeywords": true,
+            "allowPattern": "",
+            "allowPrivateClassPropertyAccess": false,
+            "allowProtectedClassPropertyAccess": false
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": ["error"],
+        "@typescript-eslint/explicit-member-accessibility": ["error"],
+        // Custom: `foo(): void` style; pass members as callbacks through `() => api.foo()`.
+        "@typescript-eslint/method-signature-style": ["error", "method"],
+        "@typescript-eslint/no-array-constructor": ["error"],
+        "@typescript-eslint/no-array-delete": ["error"],
+        "@typescript-eslint/no-base-to-string": ["error"],
+        "@typescript-eslint/no-confusing-void-expression": ["error"],
+        "@typescript-eslint/no-dupe-class-members": ["error"],
+        "@typescript-eslint/no-duplicate-enum-values": ["error"],
+        "@typescript-eslint/no-duplicate-type-constituents": ["error"],
+        "@typescript-eslint/no-floating-promises": ["error"],
+        "@typescript-eslint/no-for-in-array": ["error"],
+        "@typescript-eslint/no-generated-empty-object-type": ["error"],
+        "@typescript-eslint/no-implied-eval": ["error"],
+        "@typescript-eslint/no-import-type-side-effects": ["error"],
+        "@typescript-eslint/no-inferrable-types": ["error"],
+        "@typescript-eslint/no-misused-new": ["error"],
+        "@typescript-eslint/no-misused-promises": ["error"],
+        "@typescript-eslint/no-misused-spread": ["error"],
+        "@typescript-eslint/no-mixed-enums": ["error"],
+        "@typescript-eslint/no-redeclare": ["error", { "ignoreDeclarationMerge": false }],
+        "@typescript-eslint/no-require-imports": ["error"],
+        "@typescript-eslint/no-restricted-types": ["error"],
+        "@typescript-eslint/no-unnecessary-boolean-literal-compare": ["error"],
+        "@typescript-eslint/no-unnecessary-qualifier": ["error"],
+        "@typescript-eslint/no-unnecessary-template-expression": ["error"],
+        "@typescript-eslint/no-unnecessary-type-arguments": ["error"],
+        "@typescript-eslint/no-unnecessary-type-assertion": ["error"],
+        "@typescript-eslint/no-unnecessary-type-parameters": ["error"],
+        // Using an `any` value breaks the typing: an error, never disabled.
+        "@typescript-eslint/no-unsafe-argument": ["error"],
+        // Off: Angular types `fixture.nativeElement` and `debugElement` as `any`.
+        "@typescript-eslint/no-unsafe-assignment": ["error"],
+        // Using an `any` value breaks the typing: an error, never disabled.
+        "@typescript-eslint/no-unsafe-call": ["error"],
+        "@typescript-eslint/no-unsafe-declaration-merging": ["error"],
+        "@typescript-eslint/no-unsafe-enum-assignment": ["error"],
+        "@typescript-eslint/no-unsafe-enum-comparison": ["error"],
+        // Using an `any` value breaks the typing: an error, never disabled.
+        "@typescript-eslint/no-unsafe-member-access": ["error"],
+        // Using an `any` value breaks the typing: an error, never disabled.
+        "@typescript-eslint/no-unsafe-return": ["error"],
+        "@typescript-eslint/no-unsafe-unary-minus": ["error"],
+        "@typescript-eslint/no-unused-expressions": [
+          "error",
+          { "allowShortCircuit": false, "allowTaggedTemplates": false, "allowTernary": false }
+        ],
+        "@typescript-eslint/no-unused-private-class-members": ["error"],
+        // `_` prefix = intentionally unused.
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_",
+            "varsIgnorePattern": "^_",
+            "caughtErrorsIgnorePattern": "^_",
+            "destructuredArrayIgnorePattern": "^_"
+          }
+        ],
+        // Hoisted function declarations may be used before their definition.
+        "@typescript-eslint/no-use-before-define": ["error", { "functions": false }],
+        "@typescript-eslint/no-useless-constructor": ["error"],
+        "@typescript-eslint/no-useless-empty-export": ["error"],
+        "@typescript-eslint/no-wrapper-object-types": ["error"],
+        "@typescript-eslint/only-throw-error": ["error"],
+        "@typescript-eslint/parameter-properties": ["error"],
+        "@typescript-eslint/prefer-as-const": ["error"],
+        "@typescript-eslint/prefer-destructuring": ["error"],
+        "@typescript-eslint/prefer-function-type": ["error"],
+        "@typescript-eslint/prefer-includes": ["error"],
+        "@typescript-eslint/prefer-namespace-keyword": ["error"],
+        "@typescript-eslint/prefer-optional-chain": ["error"],
+        "@typescript-eslint/prefer-promise-reject-errors": ["error"],
+        "@typescript-eslint/prefer-readonly": ["error"],
+        "@typescript-eslint/prefer-reduce-type-parameter": ["error"],
+        "@typescript-eslint/prefer-regexp-exec": ["error"],
+        "@typescript-eslint/prefer-return-this-type": ["error"],
+        "@typescript-eslint/prefer-string-starts-ends-with": ["error"],
+        "@typescript-eslint/promise-function-async": ["error"],
+        "@typescript-eslint/related-getter-setter-pairs": ["error"],
+        "@typescript-eslint/require-array-sort-compare": ["error"],
+        "@typescript-eslint/restrict-plus-operands": ["error"],
+        "@typescript-eslint/restrict-template-expressions": ["error"],
+        "@typescript-eslint/return-await": ["error"],
+        "@typescript-eslint/strict-void-return": ["error"],
+        // Custom: a `default` case covers the remaining members.
+        "@typescript-eslint/switch-exhaustiveness-check": ["error", { "considerDefaultExhaustiveForUnions": true }],
+        // Off: `expect(mock.method).toHaveBeenCalled()` passes a method unbound on purpose.
+        "@typescript-eslint/unbound-method": ["error"],
+        // Custom: a bare `return;` is allowed; `forEach` callbacks must not return a value.
+        "array-callback-return": ["error", { "allowImplicit": true, "checkForEach": true, "allowVoid": false }],
+        // Braces on every block: smaller diffs, the only option safe with Prettier.
+        "curly": ["error", "all"],
+        "eqeqeq": ["error", "always"],
+        "for-direction": ["error"],
+        "logical-assignment-operators": ["error", "always"],
+        "no-async-promise-executor": ["error"],
+        "no-caller": ["error"],
+        "no-case-declarations": ["error"],
+        "no-compare-neg-zero": ["error"],
+        "no-cond-assign": ["error", "except-parens"],
+        "no-constant-binary-expression": ["error"],
+        // `while (true)` is allowed.
+        "no-constant-condition": ["error", { "checkLoops": false }],
+        "no-constructor-return": ["error"],
+        "no-control-regex": ["error"],
+        "no-debugger": ["error"],
+        "no-div-regex": ["error"],
+        "no-dupe-else-if": ["error"],
+        "no-duplicate-case": ["error"],
+        "no-else-return": ["error", { "allowElseIf": true }],
+        "no-empty-character-class": ["error"],
+        "no-empty-pattern": ["error", { "allowObjectPatternsAsParameters": false }],
+        "no-eval": ["error", { "allowIndirect": false }],
+        "no-ex-assign": ["error"],
+        "no-extend-native": ["error", { "exceptions": [] }],
+        "no-extra-bind": ["error"],
+        "no-extra-boolean-cast": ["error", {}],
+        "no-global-assign": ["error", { "exceptions": [] }],
+        "no-implicit-coercion": [
+          "error",
+          { "allow": [], "boolean": true, "disallowTemplateShorthand": false, "number": true, "string": true }
+        ],
+        "no-invalid-regexp": ["error", {}],
+        "no-irregular-whitespace": [
+          "error",
+          {
+            "skipComments": false,
+            "skipJSXText": false,
+            "skipRegExps": false,
+            "skipStrings": true,
+            "skipTemplates": false
+          }
+        ],
+        "no-iterator": ["error"],
+        "no-lonely-if": ["error"],
+        "no-loss-of-precision": ["error"],
+        "no-misleading-character-class": ["error"],
+        "no-new-func": ["error"],
+        "no-new-wrappers": ["error"],
+        "no-nonoctal-decimal-escape": ["error"],
+        "no-promise-executor-return": ["error", { "allowVoid": false }],
+        "no-proto": ["error"],
+        "no-prototype-builtins": ["error"],
+        "no-regex-spaces": ["error"],
+        "no-script-url": ["error"],
+        "no-self-assign": ["error", { "props": true }],
+        "no-self-compare": ["error"],
+        "no-shadow-restricted-names": ["error"],
+        "no-sparse-arrays": ["error"],
+        "no-template-curly-in-string": ["error"],
+        "no-unexpected-multiline": ["error"],
+        "no-unmodified-loop-condition": ["error"],
+        "no-unneeded-ternary": ["error", { "defaultAssignment": true }],
+        // Kept: TypeScript only greys out dead code, `allowUnreachableCode: false` would also block the dev loop.
+        "no-unreachable": ["error"],
+        "no-unreachable-loop": ["error", { "ignore": [] }],
+        "no-unsafe-finally": ["error"],
+        "no-unsafe-optional-chaining": ["error", { "disallowArithmeticOperators": false }],
+        "no-unused-labels": ["error"],
+        "no-useless-backreference": ["error"],
+        "no-useless-computed-key": ["error", { "enforceForClassMembers": true }],
+        "no-useless-rename": ["error", { "ignoreDestructuring": false, "ignoreImport": false, "ignoreExport": false }],
+        "no-var": ["error"],
+        "object-shorthand": ["error", "always"],
+        // One declaration per statement (cleaner diffs).
+        "one-var": ["error", "never"],
+        "operator-assignment": ["error", "always"],
+        // Destructuring is reported only when every variable could be const.
+        "prefer-const": ["error", { "destructuring": "all", "ignoreReadBeforeAssign": false }],
+        "prefer-exponentiation-operator": ["error"],
+        "prefer-numeric-literals": ["error"],
+        "prefer-object-has-own": ["error"],
+        "prefer-object-spread": ["error"],
+        "prefer-spread": ["error"],
+        "prefer-template": ["error"],
+        "strict": ["error", "safe"],
+        "symbol-description": ["error"],
+        "use-isnan": ["error", { "enforceForIndexOf": false, "enforceForSwitchCase": true }],
+        "valid-typeof": ["error", { "requireStringLiterals": false }],
+        "yoda": ["error", "never", { "exceptRange": false, "onlyEquality": false }],
+        // ---- Warnings: a good practice without autofix. `// eslint-disable-next-line <rule> -- <reason>` when justified.
+        "@angular-eslint/component-class-suffix": ["warn", { "suffixes": ["Component"] }],
+        "@angular-eslint/component-selector": ["warn", { "type": "element", "prefix": "app", "style": "kebab-case" }],
+        "@angular-eslint/directive-class-suffix": ["warn", { "suffixes": ["Directive"] }],
+        "@angular-eslint/directive-selector": ["warn", { "type": "attribute", "prefix": "app", "style": "camelCase" }],
+        "@angular-eslint/no-forward-ref": ["warn"],
+        "@angular-eslint/no-inputs-metadata-property": ["warn"],
+        "@angular-eslint/no-output-on-prefix": ["warn"],
+        "@angular-eslint/no-outputs-metadata-property": ["warn"],
+        "@angular-eslint/no-pipe-impure": ["warn"],
+        "@angular-eslint/no-queries-metadata-property": ["warn"],
+        "@angular-eslint/use-component-selector": ["warn"],
+        "@angular-eslint/use-component-view-encapsulation": ["warn"],
+        // Warn: a method may implement an interface without using `this`.
+        "@typescript-eslint/class-methods-use-this": ["warn"],
+        // 7 = SonarQube default (S107). Warn: a size limit: a justified exception (a data table, a state machine) may pass.
+        "@typescript-eslint/max-params": ["warn", { "max": 7 }],
+        // Custom: the shared naming, plus PascalCase readonly properties (an enum exposed to a template) and PascalCase stores (\`export const UsersStore = signalStore(…)\` is used like a class). Warn: external names (JSON keys, HTTP headers) keep their spelling.
+        "@typescript-eslint/naming-convention": [
+          "warn",
+          { "selector": "default", "format": ["camelCase"], "leadingUnderscore": "allow" },
+          { "selector": "import", "format": ["camelCase", "PascalCase"] },
+          { "selector": "variable", "format": ["camelCase", "UPPER_CASE"], "leadingUnderscore": "allow" },
+          { "selector": "variable", "modifiers": ["destructured"], "format": null },
+          { "selector": "function", "format": ["camelCase", "PascalCase"] },
+          { "selector": "typeLike", "format": ["PascalCase"] },
+          { "selector": "interface", "format": ["PascalCase"], "custom": { "regex": "^I[A-Z]", "match": false } },
+          { "selector": "enumMember", "format": ["PascalCase"] },
+          {
+            "selector": [
+              "classProperty",
+              "objectLiteralProperty",
+              "typeProperty",
+              "classMethod",
+              "objectLiteralMethod",
+              "typeMethod",
+              "accessor",
+              "enumMember"
+            ],
+            "modifiers": ["requiresQuotes"],
+            "format": null
+          },
+          { "selector": "variable", "filter": { "regex": "Store$", "match": true }, "format": ["PascalCase"] },
+          {
+            "selector": "classProperty",
+            "modifiers": ["readonly"],
+            "format": ["camelCase", "PascalCase"],
+            "leadingUnderscore": "allow"
+          }
+        ],
+        // Warn: a deprecated API may have no replacement yet.
+        "@typescript-eslint/no-deprecated": ["warn"],
+        "@typescript-eslint/no-dynamic-delete": ["warn"],
+        "@typescript-eslint/no-empty-function": ["warn", { "allow": [] }],
+        "@typescript-eslint/no-empty-object-type": ["warn"],
+        // Off: a generic API may need `any`: `new (...parameters: any[]) => T`.
+        "@typescript-eslint/no-explicit-any": ["warn"],
+        // Angular classes are decorated (`@Component`, `@Injectable`…).
+        "@typescript-eslint/no-extraneous-class": ["warn", { "allowWithDecorator": true }],
+        // Off: a callback type may return `T | void`.
+        "@typescript-eslint/no-invalid-void-type": ["warn"],
+        // Custom: named constants for every number but the obvious ones (specs and benchmarks excepted, see below). Warn: a documented literal can read better than a constant.
+        "@typescript-eslint/no-magic-numbers": [
+          "warn",
+          {
+            "detectObjects": false,
+            "enforceConst": false,
+            "ignore": [-1, 0, 1, 2],
+            "ignoreArrayIndexes": false,
+            "ignoreEnums": true,
+            "ignoreNumericLiteralTypes": true,
+            "ignoreReadonlyClassProperties": true,
+            "ignoreTypeIndexes": true,
+            "ignoreDefaultValues": true
+          }
+        ],
+        "@typescript-eslint/no-namespace": ["warn"],
+        // Warn: a value the types cannot prove present.
+        "@typescript-eslint/no-non-null-assertion": ["warn"],
+        "@typescript-eslint/no-shadow": ["warn"],
+        "@typescript-eslint/no-this-alias": ["warn"],
+        // `while (true)` is allowed.
+        "@typescript-eslint/no-unnecessary-condition": ["warn", { "allowConstantLoopConditions": true }],
+        // Warn: generic or external code sometimes needs it.
+        "@typescript-eslint/no-unsafe-function-type": ["warn"],
+        // Warn: narrowing an external type sometimes needs an assertion.
+        "@typescript-eslint/no-unsafe-type-assertion": ["warn"],
+        // Off: fixtures are plain mutable objects.
+        "@typescript-eslint/prefer-readonly-parameter-types": [
+          "warn",
+          {
+            "ignoreInferredTypes": true,
+            "treatMethodsAsReadonly": true,
+            "allow": [
+              {
+                "from": "lib",
+                "name": [
+                  "AbortSignal",
+                  "AddEventListenerOptions",
+                  "ArrayLike",
+                  "Element",
+                  "EventTarget",
+                  "HTMLElement",
+                  "IntersectionObserverEntry",
+                  "IntersectionObserverInit",
+                  "Iterable",
+                  "PointerEvent",
+                  "PromiseLike",
+                  "RegExp",
+                  "ResizeObserverEntry",
+                  "ResizeObserverOptions",
+                  "Storage",
+                  "SVGElement",
+                  "SVGGraphicsElement"
+                ]
+              }
+            ]
+          }
+        ],
+        "@typescript-eslint/require-await": ["warn"],
+        // Custom: only numbers must be compared explicitly (`count > 0`).
+        "@typescript-eslint/strict-boolean-expressions": [
+          "warn",
+          { "allowNumber": false, "allowNullableBoolean": true, "allowNullableString": true }
+        ],
+        "@typescript-eslint/triple-slash-reference": ["warn"],
+        "@typescript-eslint/use-unknown-in-catch-callback-variable": ["warn"],
+        "block-scoped-var": ["warn"],
+        "guard-for-in": ["warn"],
+        // Warn: a size limit: a justified exception (a data table, a state machine) may pass.
+        "max-classes-per-file": ["warn", 1],
+        // Custom: decorators are capitalised calls (\`@Component()\`), not constructors.
+        "new-cap": [
+          "warn",
+          {
+            "capIsNew": false,
+            "capIsNewExceptions": [],
+            "newIsCap": true,
+            "newIsCapExceptions": [],
+            "properties": true
+          }
+        ],
+        "no-alert": ["warn"],
+        // Warn: some awaits must run one after the other (ordered writes, rate limits).
+        "no-await-in-loop": ["warn"],
+        // Warn: scripts and command-line tools report on the console.
+        "no-console": ["warn", {}],
+        "no-empty": ["warn", { "allowEmptyCatch": false }],
+        "no-empty-static-block": ["warn"],
+        "no-labels": ["warn", { "allowLoop": false, "allowSwitch": false }],
+        "no-loop-func": ["warn"],
+        "no-nested-ternary": ["warn"],
+        "no-new": ["warn"],
+        // Custom: parameters' properties cannot be mutated either; libraries must expose methods instead.
+        "no-param-reassign": ["warn", { "props": true }],
+        // `i++` only in `for` loops, `+= 1` elsewhere.
+        "no-plusplus": ["warn", { "allowForLoopAfterthoughts": true }],
+        // Custom: a sanitizer bypass is a security review, not a shortcut. Warn: a reviewed bypass (trusted, constant markup) may be justified with an eslint-disable comment.
+        "no-restricted-properties": [
+          "warn",
+          {
+            "property": "bypassSecurityTrustHtml",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          },
+          {
+            "property": "bypassSecurityTrustResourceUrl",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          },
+          {
+            "property": "bypassSecurityTrustScript",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          },
+          {
+            "property": "bypassSecurityTrustStyle",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          },
+          {
+            "property": "bypassSecurityTrustUrl",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          }
+        ],
+        // No assignment in `return`, even in parentheses.
+        "no-return-assign": ["warn", "always"],
+        "no-sequences": ["warn", { "allowInParentheses": true }],
+        "no-useless-catch": ["warn"],
+        // `void promise;` marks a promise as intentionally not awaited.
+        "no-void": ["warn", { "allowAsStatement": true }],
+        // Warn: a TODO may stay while a ticket tracks it.
+        "no-warning-comments": ["warn", { "location": "start", "terms": ["todo", "fixme", "xxx"] }],
+        "require-yield": ["warn"],
+        // ---- Info: suggestions. ESLint 8 has no info level: they are off; set one to "warn" to see it.
+        // Small components may stay inline; past 3 lines, template and styles go to their own files.
+        "@angular-eslint/component-max-inline-declarations": ["off", { "template": 3, "styles": 3, "animations": 15 }],
+        "@angular-eslint/no-empty-lifecycle-method": ["off"],
+        "@angular-eslint/prefer-output-readonly": ["off"],
+        "@angular-eslint/prefer-standalone": ["off"],
+        "@angular-eslint/relative-url-prefix": ["off"],
+        "@typescript-eslint/adjacent-overload-signatures": ["off"],
+        "@typescript-eslint/default-param-last": ["off"],
+        "@typescript-eslint/no-redundant-type-constituents": ["off"],
+        "@typescript-eslint/no-unnecessary-parameter-property-assignment": ["off"],
+        "@typescript-eslint/no-unnecessary-type-constraint": ["off"],
+        "@typescript-eslint/no-unnecessary-type-conversion": ["off"],
+        "@typescript-eslint/no-useless-default-assignment": ["off"],
+        "@typescript-eslint/prefer-enum-initializers": ["off"],
+        "@typescript-eslint/prefer-find": ["off"],
+        "@typescript-eslint/prefer-for-of": ["off"],
+        "@typescript-eslint/prefer-literal-enum-member": ["off"],
+        // Custom: `str || 'default'` stays allowed to also replace empty strings.
+        "@typescript-eslint/prefer-nullish-coalescing": ["off", { "ignorePrimitives": { "string": true } }],
+        "@typescript-eslint/unified-signatures": ["off"],
+        "accessor-pairs": [
+          "off",
+          { "enforceForTSTypes": false, "enforceForClassMembers": true, "getWithoutSet": false, "setWithoutGet": true }
+        ],
+        "default-case-last": ["off"],
+        "func-name-matching": ["off", "always"],
+        // Custom: named functions use `function foo()`, not `const foo = () =>`.
+        "func-style": [
+          "off",
+          "declaration",
+          { "allowArrowFunctions": false, "allowTypeAnnotation": false, "overrides": {} }
+        ],
+        "grouped-accessor-pairs": ["off", "anyOrder", { "enforceForTSTypes": false }],
+        "no-continue": ["off"],
+        "no-lone-blocks": ["off"],
+        // `a = b = 0` is allowed, `const a = (b = 0)` is not.
+        "no-multi-assign": ["off", { "ignoreNonDeclaration": true }],
+        "no-multi-str": ["off"],
+        "no-negated-condition": ["off"],
+        "no-object-constructor": ["off"],
+        "no-useless-call": ["off"],
+        "no-useless-concat": ["off"],
+        "no-useless-escape": ["off", { "allowRegexCharacters": [] }],
+        "prefer-named-capture-group": ["off"],
+        "prefer-regex-literals": ["off", { "disallowRedundantWrapping": true }],
+        "prefer-rest-params": ["off"],
+        "radix": ["off"],
+        // Off: tests exercise patterns with every flag, or none.
+        "require-unicode-regexp": ["off", { "requireFlag": "v" }],
+        // ---- Off: disabled on purpose, or replaced by another rule.
+        // Off: no input prefix to forbid (the rule does nothing without a list).
+        "@angular-eslint/no-input-prefix": ["off", { "prefixes": [] }],
+        // Off: pipe names are internal to the workspace; enable it in a library shared with other teams.
+        "@angular-eslint/pipe-prefix": ["off", { "prefixes": [] }],
+        // Off: the texts are translated with Transloco, not @angular/localize.
+        "@angular-eslint/require-localize-metadata": [
+          "off",
+          { "requireDescription": false, "requireMeaning": false, "requireCustomId": false }
+        ],
+        // Off: the texts are translated with Transloco, not @angular/localize.
+        "@angular-eslint/runtime-localize": ["off"],
+        // Off: root services use @Service (prefer-service-decorator); a bare @Injectable() is component-scoped.
+        "@angular-eslint/use-injectable-provided-in": ["off", { "allowProvidedInNull": false }],
+        // Off: TypeScript `noImplicitReturns` covers it.
+        "@typescript-eslint/consistent-return": ["off", { "treatUndefinedAsUnspecified": false }],
+        // Off: duplicate of explicit-function-return-type.
+        "@typescript-eslint/explicit-module-boundary-types": ["off"],
+        // Off: see core rule. If enabled, write `['error', 'always']` (ESLint 10 passes no default mode).
+        "@typescript-eslint/init-declarations": ["off"],
+        // Off: Angular fields initialise in order (`inject()` first), conflicting with its default order.
+        "@typescript-eslint/member-ordering": ["off"],
+        // Off: no-non-null-assertion forbids every `!`.
+        "@typescript-eslint/no-confusing-non-null-assertion": ["off"],
+        // Deprecated: replaced by no-empty-object-type.
+        "@typescript-eslint/no-empty-interface": ["off"],
+        // Off: no-non-null-assertion forbids every `!`.
+        "@typescript-eslint/no-extra-non-null-assertion": ["off"],
+        "@typescript-eslint/no-invalid-this": ["off", { "capIsConstructor": true }],
+        // Deprecated: the core rule supports TypeScript.
+        "@typescript-eslint/no-loop-func": ["off"],
+        // Deprecated: the core rule supports TypeScript.
+        "@typescript-eslint/no-loss-of-precision": ["off"],
+        // Off: replaced by sonarjs/void-use, like SonarQube.
+        "@typescript-eslint/no-meaningless-void-operator": ["off"],
+        // Off: no-non-null-assertion forbids every `!`.
+        "@typescript-eslint/no-non-null-asserted-nullish-coalescing": ["off"],
+        "@typescript-eslint/no-non-null-asserted-optional-chain": ["off"],
+        // Deprecated: use the core no-restricted-imports if needed.
+        "@typescript-eslint/no-restricted-imports": ["off"],
+        // Deprecated: replaced by consistent-type-definitions.
+        "@typescript-eslint/no-type-alias": ["off"],
+        // Deprecated: replaced by no-require-imports.
+        "@typescript-eslint/no-var-requires": ["off"],
+        // Off: asks for `x!`, forbidden by no-non-null-assertion.
+        "@typescript-eslint/non-nullable-type-assertion-style": ["off"],
+        // Deprecated: replaced by ban-ts-comment.
+        "@typescript-eslint/prefer-ts-expect-error": ["off"],
+        // Deprecated: replaced by eslint-plugin-perfectionist.
+        "@typescript-eslint/sort-type-constituents": ["off"],
+        // Deprecated: no replacement.
+        "@typescript-eslint/typedef": ["off"],
+        "array-bracket-newline": ["off"],
+        "array-bracket-spacing": ["off"],
+        "array-element-newline": ["off"],
+        // Off: breaks the prettier/prettier autofix (eslint-plugin-prettier docs).
+        "arrow-body-style": ["off", "as-needed"],
+        "arrow-parens": ["off"],
+        "arrow-spacing": ["off"],
+        "block-spacing": ["off"],
+        "brace-style": ["off"],
+        // Off: replaced by @typescript-eslint/naming-convention.
+        "camelcase": [
+          "off",
+          {
+            "allow": [],
+            "ignoreDestructuring": false,
+            "ignoreGlobals": false,
+            "ignoreImports": false,
+            "properties": "always"
+          }
+        ],
+        "capitalized-comments": ["off", "always"],
+        // Warn: a method may implement an interface without using `this`.
+        "class-methods-use-this": [
+          "off",
+          { "enforceForClassFields": true, "exceptMethods": [], "ignoreOverrideMethods": false }
+        ],
+        "comma-dangle": ["off"],
+        "comma-spacing": ["off"],
+        "comma-style": ["off"],
+        // Off: replaced by sonarjs/cognitive-complexity, like SonarQube.
+        "complexity": ["off", 20],
+        "computed-property-spacing": ["off"],
+        // Off: TypeScript `noImplicitReturns` covers it.
+        "consistent-return": ["off", { "treatUndefinedAsUnspecified": false }],
+        // Off: no-this-alias forbids aliasing `this` at all.
+        "consistent-this": ["off", "that"],
+        "constructor-super": ["off"],
+        // Off: @typescript-eslint/switch-exhaustiveness-check covers it.
+        "default-case": ["off", {}],
+        // Replaced by the TS version.
+        "default-param-last": ["off"],
+        "dot-location": ["off"],
+        // Replaced by the TS version.
+        "dot-notation": ["off", { "allowKeywords": true, "allowPattern": "" }],
+        "eol-last": ["off"],
+        "func-call-spacing": ["off"],
+        // Off: callbacks are arrow functions by convention.
+        "func-names": ["off", "always", {}],
+        "function-call-argument-newline": ["off"],
+        "function-paren-newline": ["off"],
+        "generator-star-spacing": ["off"],
+        "getter-return": ["off", { "allowImplicit": false }],
+        "id-denylist": ["off"],
+        "id-length": ["off", { "exceptionPatterns": [], "exceptions": [], "min": 2, "properties": "always" }],
+        "id-match": [
+          "off",
+          "^.+$",
+          { "classFields": false, "ignoreDestructuring": false, "onlyDeclarations": false, "properties": false }
+        ],
+        "implicit-arrow-linebreak": ["off"],
+        "indent": ["off"],
+        "indent-legacy": ["off"],
+        // Off: non-standard, forbids `let x: T;` assigned later.
+        "init-declarations": ["off", "always"],
+        "jsx-quotes": ["off"],
+        "key-spacing": ["off"],
+        "keyword-spacing": ["off"],
+        "linebreak-style": ["off"],
+        "lines-around-comment": ["off"],
+        // Off: replaced by sonarjs/nested-control-flow, like SonarQube.
+        "max-depth": ["off", 4],
+        "max-len": ["off"],
+        // Off: replaced by sonarjs/max-lines, like SonarQube.
+        "max-lines": ["off", 300],
+        // Off: replaced by sonarjs/max-lines-per-function, like SonarQube.
+        "max-lines-per-function": ["off", 50],
+        // Off: replaced by sonarjs/no-nested-functions, like SonarQube.
+        "max-nested-callbacks": ["off", 10],
+        // 7 = SonarQube default (S107). Warn: a size limit: a justified exception (a data table, a state machine) may pass.
+        "max-params": ["off", { "max": 7, "countThis": "never" }],
+        // Off: no SonarQube equivalent.
+        "max-statements": ["off", 10],
+        "max-statements-per-line": ["off"],
+        "multiline-ternary": ["off"],
+        "new-parens": ["off"],
+        "newline-per-chained-call": ["off"],
+        // Replaced by the TS version.
+        "no-array-constructor": ["off"],
+        // Off: colour parsing and formatting need bitwise math.
+        "no-bitwise": ["off", { "allow": [], "int32Hint": false }],
+        "no-class-assign": ["off"],
+        "no-confusing-arrow": ["off"],
+        "no-const-assign": ["off"],
+        "no-delete-var": ["off"],
+        "no-dupe-args": ["off"],
+        // Replaced by the TS version.
+        "no-dupe-class-members": ["off"],
+        "no-dupe-keys": ["off"],
+        // Off: `import type` lines are kept separate (consistent-type-imports).
+        "no-duplicate-imports": ["off", { "includeExports": false, "allowSeparateTypeImports": false }],
+        // Replaced by the TS version.
+        "no-empty-function": ["off", { "allow": [] }],
+        // Off: eqeqeq already forbids `== null`.
+        "no-eq-null": ["off"],
+        // Off: labels are forbidden by no-labels.
+        "no-extra-label": ["off"],
+        "no-extra-parens": ["off"],
+        "no-extra-semi": ["off"],
+        // Off: TypeScript `noFallthroughCasesInSwitch` covers it.
+        "no-fallthrough": ["off", { "allowEmptyCase": false, "reportUnusedFallthroughComment": false }],
+        "no-floating-decimal": ["off"],
+        "no-func-assign": ["off"],
+        "no-implicit-globals": ["off", { "lexicalBindings": false }],
+        // Replaced by the TS version.
+        "no-implied-eval": ["off"],
+        "no-import-assign": ["off"],
+        // Off: non-standard, end-of-line comments are fine.
+        "no-inline-comments": ["off", {}],
+        // Off: a function declared in a block is valid in a module; ESLint 8 cannot allow it.
+        "no-inner-declarations": ["off"],
+        // Off: the core rule misreads `this:` parameters; the TS version is off by choice.
+        "no-invalid-this": ["off", { "capIsConstructor": true }],
+        // Off: labels are forbidden by no-labels.
+        "no-label-var": ["off"],
+        // Replaced by the TS version.
+        "no-magic-numbers": [
+          "off",
+          {
+            "detectObjects": false,
+            "enforceConst": false,
+            "ignore": [],
+            "ignoreArrayIndexes": false,
+            "ignoreDefaultValues": false,
+            "ignoreClassFieldInitialValues": false,
+            "ignoreEnums": false,
+            "ignoreNumericLiteralTypes": false,
+            "ignoreReadonlyClassProperties": false,
+            "ignoreTypeIndexes": false
+          }
+        ],
+        "no-mixed-operators": ["off"],
+        "no-mixed-spaces-and-tabs": ["off"],
+        "no-multi-spaces": ["off"],
+        "no-multiple-empty-lines": ["off"],
+        "no-new-native-nonconstructor": ["off"],
+        "no-obj-calls": ["off"],
+        "no-octal": ["off"],
+        "no-octal-escape": ["off"],
+        // Replaced by the TS version (a type and a value may not share a name either).
+        "no-redeclare": ["off", { "builtinGlobals": true }],
+        "no-restricted-exports": ["off", {}],
+        "no-restricted-globals": ["off"],
+        // Off: no import to forbid in an application yet.
+        "no-restricted-imports": ["off"],
+        "no-restricted-syntax": ["off"],
+        "no-setter-return": ["off"],
+        // Replaced by the TS version.
+        "no-shadow": [
+          "off",
+          {
+            "allow": [],
+            "builtinGlobals": false,
+            "hoist": "functions",
+            "ignoreOnInitialization": false,
+            "ignoreTypeValueShadow": true,
+            "ignoreFunctionTypeParameterNameValueShadow": true
+          }
+        ],
+        "no-spaced-func": ["off"],
+        "no-tabs": ["off"],
+        "no-ternary": ["off"],
+        "no-this-before-super": ["off"],
+        // Replaced by the TS version.
+        "no-throw-literal": ["off"],
+        "no-trailing-spaces": ["off"],
+        "no-undef": ["off", { "typeof": false }],
+        "no-undef-init": ["off"],
+        "no-undefined": ["off"],
+        // Off: `_` prefix is allowed (private members, unused params).
+        "no-underscore-dangle": [
+          "off",
+          {
+            "allow": [],
+            "allowAfterSuper": false,
+            "allowAfterThis": false,
+            "allowAfterThisConstructor": false,
+            "allowFunctionParams": true,
+            "allowInArrayDestructuring": true,
+            "allowInObjectDestructuring": true,
+            "enforceInClassFields": false,
+            "enforceInMethodNames": false
+          }
+        ],
+        "no-unsafe-negation": ["off", { "enforceForOrderingRelations": false }],
+        // Replaced by the TS version.
+        "no-unused-expressions": [
+          "off",
+          {
+            "allowShortCircuit": false,
+            "allowTernary": false,
+            "allowTaggedTemplates": false,
+            "enforceForJSX": false,
+            "ignoreDirectives": false
+          }
+        ],
+        // Replaced by the TS version.
+        "no-unused-private-class-members": ["off"],
+        // Replaced by the TS version.
+        "no-unused-vars": [
+          "off",
+          {
+            "vars": "all",
+            "args": "after-used",
+            "ignoreRestSiblings": false,
+            "caughtErrors": "all",
+            "ignoreClassWithStaticInitBlock": false,
+            "ignoreUsingDeclarations": false,
+            "reportUsedIgnorePattern": false
+          }
+        ],
+        // Replaced by the TS version.
+        "no-use-before-define": [
+          "off",
+          {
+            "classes": true,
+            "functions": true,
+            "variables": true,
+            "allowNamedExports": false,
+            "enums": true,
+            "typedefs": true,
+            "ignoreTypeReferences": true
+          }
+        ],
+        // Replaced by the TS version.
+        "no-useless-constructor": ["off"],
+        // Off: replaced by sonarjs/no-redundant-jump, like SonarQube.
+        "no-useless-return": ["off"],
+        "no-whitespace-before-property": ["off"],
+        "no-with": ["off"],
+        "nonblock-statement-body-position": ["off"],
+        "object-curly-newline": ["off"],
+        "object-curly-spacing": ["off"],
+        "object-property-newline": ["off"],
+        "one-var-declaration-per-line": ["off"],
+        "operator-linebreak": ["off"],
+        "padded-blocks": ["off"],
+        // Off: breaks the prettier/prettier autofix (eslint-plugin-prettier docs).
+        "prefer-arrow-callback": ["off", { "allowNamedFunctions": false, "allowUnboundThis": true }],
+        // Replaced by the TS version.
+        "prefer-destructuring": ["off"],
+        // Replaced by the TS version.
+        "prefer-promise-reject-errors": ["off", { "allowEmptyReject": false }],
+        "quote-props": ["off"],
+        "quotes": ["off"],
+        // Off: false positives with async/await (removed from eslint:recommended).
+        "require-atomic-updates": ["off", { "allowProperties": false }],
+        // Replaced by the TS version.
+        "require-await": ["off"],
+        "rest-spread-spacing": ["off"],
+        "semi": ["off"],
+        "semi-spacing": ["off"],
+        "semi-style": ["off"],
+        "sort-imports": [
+          "off",
+          {
+            "allowSeparatedGroups": false,
+            "ignoreCase": false,
+            "ignoreDeclarationSort": false,
+            "ignoreMemberSort": false,
+            "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+          }
+        ],
+        "sort-keys": [
+          "off",
+          "asc",
+          {
+            "allowLineSeparatedGroups": false,
+            "caseSensitive": true,
+            "ignoreComputedKeys": false,
+            "minKeys": 2,
+            "natural": false
+          }
+        ],
+        "sort-vars": ["off", { "ignoreCase": false }],
+        "space-before-blocks": ["off"],
+        "space-before-function-paren": ["off"],
+        "space-in-parens": ["off"],
+        "space-infix-ops": ["off"],
+        "space-unary-ops": ["off"],
+        "switch-colon-spacing": ["off"],
+        "template-curly-spacing": ["off"],
+        "template-tag-spacing": ["off"],
+        // Off: formatting is Prettier's job.
+        "unicode-bom": ["off", "never"],
+        // Off: `var` is forbidden (no-var).
+        "vars-on-top": ["off"],
+        "wrap-iife": ["off"],
+        "wrap-regex": ["off"],
+        "yield-star-spacing": ["off"]
+      }
+    },
+    {
+      "files": ["*.spec.ts"],
+      "rules": {
+        // ---- Info: suggestions. ESLint 8 has no info level: they are off; set one to "warn" to see it.
+        // Warn: a method may implement an interface without using `this`.
+        "@typescript-eslint/class-methods-use-this": ["off"],
+        // 7 = SonarQube default (S107). Warn: a size limit: a justified exception (a data table, a state machine) may pass.
+        "@typescript-eslint/max-params": ["off", { "max": 7 }],
+        // Off: Angular fields initialise in order (`inject()` first), conflicting with its default order.
+        "@typescript-eslint/member-ordering": ["off"],
+        "@typescript-eslint/no-dynamic-delete": ["off"],
+        "@typescript-eslint/no-empty-function": ["off", { "allow": [] }],
+        "@typescript-eslint/no-empty-object-type": ["off"],
+        // Off: a generic API may need `any`: `new (...parameters: any[]) => T`.
+        "@typescript-eslint/no-explicit-any": ["off"],
+        // Off: a callback type may return `T | void`.
+        "@typescript-eslint/no-invalid-void-type": ["off"],
+        "@typescript-eslint/no-namespace": ["off"],
+        // Warn: a value the types cannot prove present.
+        "@typescript-eslint/no-non-null-assertion": ["off"],
+        "@typescript-eslint/no-shadow": ["off"],
+        "@typescript-eslint/no-this-alias": ["off"],
+        // Using an `any` value breaks the typing: an error, never disabled.
+        "@typescript-eslint/no-unsafe-argument": ["off"],
+        // Warn: generic or external code sometimes needs it.
+        "@typescript-eslint/no-unsafe-function-type": ["off"],
+        // Using an `any` value breaks the typing: an error, never disabled.
+        "@typescript-eslint/no-unsafe-return": ["off"],
+        "@typescript-eslint/require-await": ["off"],
+        // Custom: only numbers must be compared explicitly (`count > 0`).
+        "@typescript-eslint/strict-boolean-expressions": [
+          "off",
+          { "allowNumber": false, "allowNullableBoolean": true, "allowNullableString": true }
+        ],
+        "@typescript-eslint/triple-slash-reference": ["off"],
+        "@typescript-eslint/use-unknown-in-catch-callback-variable": ["off"],
+        "guard-for-in": ["off"],
+        // Warn: a size limit: a justified exception (a data table, a state machine) may pass.
+        "max-classes-per-file": ["off", 1],
+        "no-alert": ["off"],
+        // Warn: some awaits must run one after the other (ordered writes, rate limits).
+        "no-await-in-loop": ["off"],
+        "no-empty": ["off", { "allowEmptyCatch": false }],
+        "no-empty-static-block": ["off"],
+        // `i++` only in `for` loops, `+= 1` elsewhere.
+        "no-plusplus": ["off", { "allowForLoopAfterthoughts": true }],
+        // Custom: a sanitizer bypass is a security review, not a shortcut. Warn: a reviewed bypass (trusted, constant markup) may be justified with an eslint-disable comment.
+        "no-restricted-properties": [
+          "off",
+          {
+            "property": "bypassSecurityTrustHtml",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          },
+          {
+            "property": "bypassSecurityTrustResourceUrl",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          },
+          {
+            "property": "bypassSecurityTrustScript",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          },
+          {
+            "property": "bypassSecurityTrustStyle",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          },
+          {
+            "property": "bypassSecurityTrustUrl",
+            "message": "Bypassing the sanitizer allows XSS: sanitize the value or justify it in a comment."
+          }
+        ],
+        // No assignment in `return`, even in parentheses.
+        "no-return-assign": ["off", "always"],
+        "no-sequences": ["off", { "allowInParentheses": true }],
+        // `void promise;` marks a promise as intentionally not awaited.
+        "no-void": ["off", { "allowAsStatement": true }],
+        // ---- Off: disabled on purpose, or replaced by another rule.
+        // Custom: named constants for every number but the obvious ones (specs and benchmarks excepted, see below). Warn: a documented literal can read better than a constant.
+        "@typescript-eslint/no-magic-numbers": [
+          "off",
+          {
+            "detectObjects": false,
+            "enforceConst": false,
+            "ignore": [-1, 0, 1, 2],
+            "ignoreArrayIndexes": false,
+            "ignoreEnums": true,
+            "ignoreNumericLiteralTypes": true,
+            "ignoreReadonlyClassProperties": true,
+            "ignoreTypeIndexes": true,
+            "ignoreDefaultValues": true
+          }
+        ],
+        // Off: Angular types `fixture.nativeElement` and `debugElement` as `any`.
+        "@typescript-eslint/no-unsafe-assignment": ["off"],
+        // Using an `any` value breaks the typing: an error, never disabled.
+        "@typescript-eslint/no-unsafe-call": ["off"],
+        // Using an `any` value breaks the typing: an error, never disabled.
+        "@typescript-eslint/no-unsafe-member-access": ["off"],
+        // Warn: narrowing an external type sometimes needs an assertion.
+        "@typescript-eslint/no-unsafe-type-assertion": ["off"],
+        // Off: fixtures are plain mutable objects.
+        "@typescript-eslint/prefer-readonly-parameter-types": [
+          "off",
+          {
+            "ignoreInferredTypes": true,
+            "treatMethodsAsReadonly": true,
+            "allow": [
+              {
+                "from": "lib",
+                "name": [
+                  "AbortSignal",
+                  "AddEventListenerOptions",
+                  "ArrayLike",
+                  "Element",
+                  "EventTarget",
+                  "HTMLElement",
+                  "IntersectionObserverEntry",
+                  "IntersectionObserverInit",
+                  "Iterable",
+                  "PointerEvent",
+                  "PromiseLike",
+                  "RegExp",
+                  "ResizeObserverEntry",
+                  "ResizeObserverOptions",
+                  "Storage",
+                  "SVGElement",
+                  "SVGGraphicsElement"
+                ]
+              }
+            ]
+          }
+        ],
+        // Off: `expect(mock.method).toHaveBeenCalled()` passes a method unbound on purpose.
+        "@typescript-eslint/unbound-method": ["off"],
+        // Off: tests exercise patterns with every flag, or none.
+        "require-unicode-regexp": ["off", { "requireFlag": "v" }]
+      }
+    },
+    {
+      "files": ["*.html"],
+      "parser": "@angular-eslint/template-parser",
+      "plugins": ["@angular-eslint/template"],
+      "rules": {
+        // ---- Errors: a real mistake, or a style the autofix applies. Never disabled.
+        "@angular-eslint/template/attributes-order": [
+          "error",
+          {
+            "alphabetical": false,
+            "order": [
+              "STRUCTURAL_DIRECTIVE",
+              "TEMPLATE_REFERENCE",
+              "ATTRIBUTE_BINDING",
+              "INPUT_BINDING",
+              "TWO_WAY_BINDING",
+              "OUTPUT_BINDING"
+            ]
+          }
+        ],
+        "@angular-eslint/template/banana-in-box": ["error"],
+        "@angular-eslint/template/button-has-type": ["error"],
+        "@angular-eslint/template/conditional-complexity": ["error", { "maxComplexity": 5 }],
+        // The count covers the whole template: past 5 branches, split into child components.
+        "@angular-eslint/template/cyclomatic-complexity": ["error", { "maxComplexity": 5 }],
+        "@angular-eslint/template/eqeqeq": ["error", { "allowNullOrUndefined": false }],
+        "@angular-eslint/template/no-any": ["error"],
+        // Kept despite its accessibility tag: forbids the obsolete `<marquee>` and `<blink>`.
+        "@angular-eslint/template/no-distracting-elements": ["error"],
+        "@angular-eslint/template/no-duplicate-attributes": [
+          "error",
+          { "allowTwoWayDataBinding": true, "allowStylePrecedenceDuplicates": false, "ignore": [] }
+        ],
+        // Custom: `[style.width.px]` bindings stay allowed.
+        "@angular-eslint/template/no-inline-styles": ["error", { "allowBindToStyle": true }],
+        "@angular-eslint/template/no-interpolation-in-attributes": ["error"],
+        "@angular-eslint/template/no-negated-async": ["error"],
+        "@angular-eslint/template/prefer-control-flow": ["error"],
+        "@angular-eslint/template/prefer-ngsrc": ["error"],
+        "@angular-eslint/template/prefer-self-closing-tags": ["error"],
+        // ---- Warnings: a good practice without autofix. `// eslint-disable-next-line <rule> -- <reason>` when justified.
+        // Warn: `autofocus` moves the focus without warning; justify it where the focus must start there.
+        "@angular-eslint/template/no-autofocus": ["warn"],
+        // Warn: a positive `tabindex` breaks the natural keyboard order; justify it where it is needed.
+        "@angular-eslint/template/no-positive-tabindex": ["warn"],
+        // ---- Off: disabled on purpose, or replaced by another rule.
+        // Off: screen-reader accessibility is not required (simulators, no assistive technology).
+        "@angular-eslint/template/alt-text": ["off"],
+        // Off: screen-reader accessibility is not required (simulators, no assistive technology).
+        "@angular-eslint/template/click-events-have-key-events": [
+          "off",
+          { "ignoreWithDirectives": [], "requireKeyCode": false, "allowedKeyCodes": [] }
+        ],
+        // Off: screen-reader accessibility is not required (simulators, no assistive technology).
+        "@angular-eslint/template/elements-content": [
+          "off",
+          { "allowList": ["aria-label", "innerHtml", "innerHTML", "innerText", "outerHTML", "textContent", "title"] }
+        ],
+        // Off: the texts are translated with Transloco, not @angular/localize.
+        "@angular-eslint/template/i18n": [
+          "off",
+          {
+            "allowMarkupInContent": true,
+            "checkAttributes": true,
+            "checkId": true,
+            "checkDuplicateId": true,
+            "checkText": true,
+            "ignoreAttributes": [
+              "autocomplete",
+              "charset",
+              "class",
+              "color",
+              "colspan",
+              "dir",
+              "fill",
+              "for",
+              "formArrayName",
+              "formControlName",
+              "formGroupName",
+              "height",
+              "href",
+              "id",
+              "lang",
+              "list",
+              "name",
+              "ngClass",
+              "ngProjectAs",
+              "role",
+              "routerLink",
+              "routerLinkActive",
+              "src",
+              "stroke",
+              "stroke-width",
+              "style",
+              "svgIcon",
+              "tabindex",
+              "target",
+              "type",
+              "value",
+              "viewBox",
+              "width",
+              "xmlns"
+            ]
+          }
+        ],
+        // Off: screen-reader accessibility is not required (simulators, no assistive technology).
+        "@angular-eslint/template/interactive-supports-focus": ["off", { "allowList": ["form"] }],
+        // Off: screen-reader accessibility is not required (simulators, no assistive technology).
+        "@angular-eslint/template/label-has-associated-control": [
+          "off",
+          {
+            "controlComponents": ["input", "meter", "output", "progress", "select", "textarea"],
+            "labelComponents": [{ "inputs": ["for", "htmlFor"], "selector": "label" }],
+            "checkIds": false
+          }
+        ],
+        // Off: screen-reader accessibility is not required (simulators, no assistive technology).
+        "@angular-eslint/template/mouse-events-have-key-events": ["off"],
+        // Off: reading a signal is a call (`count()`); derived values belong in computed().
+        "@angular-eslint/template/no-call-expression": ["off", { "allowList": [] }],
+        // Off: screen-reader accessibility is not required (simulators, no assistive technology).
+        "@angular-eslint/template/role-has-required-aria": ["off"],
+        // Off: screen-reader accessibility is not required (simulators, no assistive technology).
+        "@angular-eslint/template/table-scope": ["off"],
+        // Off: `@for` requires `track`, and *ngFor is forbidden by prefer-control-flow.
+        "@angular-eslint/template/use-track-by-function": ["off", { "alias": [] }],
+        // Off: screen-reader accessibility is not required (simulators, no assistive technology).
+        "@angular-eslint/template/valid-aria": ["off"]
+      }
+    }
+  ]
+}

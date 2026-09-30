@@ -1,4 +1,4 @@
-import { createTranslationMatrix } from './create-translation-matrix.ts';
+import { createTranslationMatrix } from './create-translation-matrix';
 
 describe(createTranslationMatrix, () => {
   it('creates a translation', () => {

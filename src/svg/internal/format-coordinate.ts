@@ -1,4 +1,4 @@
-import { roundToFractionDigits } from '../../math/round-to-fraction-digits.ts';
+import { roundToFractionDigits } from '../../math';
 
 /** A thousandth of a user unit is invisible, and keeps path strings short. */
 const COORDINATE_FRACTION_DIGITS = 3;

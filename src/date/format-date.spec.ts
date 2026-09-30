@@ -1,5 +1,5 @@
-import { formatDate } from './format-date.ts';
-import { parseDateFormat } from './parse-date-format.ts';
+import { formatDate } from './format-date';
+import { parseDateFormat } from './parse-date-format';
 
 const DATE = new Date('2026-09-05T04:03:02.001Z');
 

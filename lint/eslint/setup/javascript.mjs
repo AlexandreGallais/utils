@@ -1,6 +1,9 @@
-// Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced.
+// Comment prefixes: `Custom` = project choice (non-standard), `Off` = disabled on purpose, `Deprecated` = replaced,
+// `Warn` = the exception that justifies disabling a warning. Severity: `error` = a real mistake, or a style the
+// autofix applies (never disabled); `warn` = a style without autofix (disabled for one line, with a reason);
+// `info` = a suggestion, shown in blue in the editor only (lint/eslint/setup/info-rules.mjs).
 // Set-up of every JavaScript and TypeScript file: stale `eslint-disable` comments and inline configs are
-// errors, Node and modern globals are known. No rule here: the rules live in the blocks of code/.
+// errors, the modern JavaScript globals are known. No rule here: the rules live in the blocks of rules/.
 
 import globals from 'globals';
 import { CODE_FILES } from './files.mjs';
@@ -23,8 +26,8 @@ export default function javascriptSetupBlock() {
       name: 'setup/javascript',
       files: CODE_FILES,
       languageOptions: {
+        // Node or browser globals come with the mode: rules/node, rules/browser.
         globals: {
-          ...globals.node,
           ...globals.es2027,
         },
       },

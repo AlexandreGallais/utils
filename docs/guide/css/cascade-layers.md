@@ -18,7 +18,8 @@ the order of the layers is declared once, and each style goes in its layer.
 | `utilities`  | Single-purpose classes (`.visually-hidden`): they must win over components |
 | `overrides`  | Rare, justified exceptions (third-party widgets)                           |
 
-The `layers` Stylelint block refuses any other layer name, so the order stays the one agreed.
+No other layer name is allowed, so the order stays the one agreed: the review checks it (no Stylelint rule
+knows the layers of a project).
 
 ## Rules to know
 

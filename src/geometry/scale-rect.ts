@@ -1,6 +1,6 @@
-import type { Anchor } from './anchor.ts';
-import type { Rect } from './rect.ts';
-import { resizeRect } from './resize-rect.ts';
+import type { Anchor } from './anchor';
+import type { Rect } from './rect';
+import { resizeRect } from './resize-rect';
 
 /**
  * Scales a rectangle while one of its anchors stays in place: a fill level (`scaleRect(bar, 1, value / max,

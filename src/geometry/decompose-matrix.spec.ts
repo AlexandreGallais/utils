@@ -1,6 +1,6 @@
-import { composeMatrix } from './compose-matrix.ts';
-import { decomposeMatrix } from './decompose-matrix.ts';
-import type { DecomposedTransform } from './decomposed-transform.ts';
+import { composeMatrix } from './compose-matrix';
+import { decomposeMatrix } from './decompose-matrix';
+import type { DecomposedTransform } from './decomposed-transform';
 
 function round(value: number): number {
   return Math.round(value * 1e9) / 1e9 + 0;

@@ -1,4 +1,4 @@
-import { isPointInRect } from './is-point-in-rect.ts';
+import { isPointInRect } from './is-point-in-rect';
 
 const RECT = { x: 0, y: 0, width: 10, height: 10 };
 

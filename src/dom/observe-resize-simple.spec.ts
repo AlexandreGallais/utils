@@ -1,6 +1,5 @@
-import { observeResizeSimple } from './observe-resize-simple.ts';
-import { createFake } from './testing/create-fake.ts';
-import { FakeObserver } from './testing/fake-observer.ts';
+import { observeResizeSimple } from './observe-resize-simple';
+import { createFake, FakeObserver } from './testing';
 
 describe(observeResizeSimple, () => {
   beforeEach(() => {

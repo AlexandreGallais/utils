@@ -1,5 +1,5 @@
-import type { Matrix2D } from './matrix-2d.ts';
-import { createRotationMatrix } from './create-rotation-matrix.ts';
+import type { Matrix2D } from './matrix-2d';
+import { createRotationMatrix } from './create-rotation-matrix';
 
 function apply(matrix: Matrix2D, x: number, y: number): [number, number] {
   return [matrix.a * x + matrix.c * y + matrix.e, matrix.b * x + matrix.d * y + matrix.f];

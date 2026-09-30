@@ -1,4 +1,4 @@
-import { isFiniteNumber } from './is-finite-number.ts';
+import { isFiniteNumber } from './is-finite-number';
 
 describe(isFiniteNumber, () => {
   it.for([

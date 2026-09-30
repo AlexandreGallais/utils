@@ -1,4 +1,4 @@
-import { formatNumberSimple } from './format-number-simple.ts';
+import { formatNumberSimple } from './format-number-simple';
 
 describe(formatNumberSimple, () => {
   it.for([

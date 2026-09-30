@@ -1,4 +1,4 @@
-import { formatRelativeTime } from './format-relative-time.ts';
+import { formatRelativeTime } from './format-relative-time';
 
 describe(formatRelativeTime, () => {
   it.for([

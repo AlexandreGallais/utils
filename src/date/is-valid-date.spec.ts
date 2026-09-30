@@ -1,4 +1,4 @@
-import { isValidDate } from './is-valid-date.ts';
+import { isValidDate } from './is-valid-date';
 
 describe(isValidDate, () => {
   it.for([

@@ -1,4 +1,4 @@
-import { inverseLerp } from './inverse-lerp.ts';
+import { inverseLerp } from './inverse-lerp';
 
 describe(inverseLerp, () => {
   it.for([

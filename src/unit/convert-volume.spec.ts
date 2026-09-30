@@ -1,4 +1,4 @@
-import { convertVolume } from './convert-volume.ts';
+import { convertVolume } from './convert-volume';
 
 describe(convertVolume, () => {
   it.for([

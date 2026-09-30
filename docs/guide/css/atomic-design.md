@@ -23,9 +23,9 @@ Two more layers carry the features:
 ## The rule: import downwards only
 
 An atom never imports a molecule; only pages talk to the stores; only data-access talks to the back end. The
-`architecture` ESLint block enforces it on every import:
-
-<<< @/../lint/eslint/project/architecture.mjs
+lint does not force folder names nor who imports whom: the review checks it. The lint only asks that a
+relative import names a neighbour file or a folder (`local/import-folders`), so each layer exposes its public
+API through its `index.ts`, and `import-x/no-cycle` refuses import cycles.
 
 ## In an Angular library
 

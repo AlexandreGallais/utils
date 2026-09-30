@@ -1,4 +1,4 @@
-import { toCsvSimple } from './to-csv-simple.ts';
+import { toCsvSimple } from './to-csv-simple';
 
 describe(toCsvSimple, () => {
   it('separates with commas and neutralizes formulas', () => {

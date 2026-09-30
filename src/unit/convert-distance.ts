@@ -1,4 +1,5 @@
-import type { DistanceUnit } from './distance-unit.ts';
+/** A distance unit: metres, kilometres, nautical miles, feet, miles. */
+export type DistanceUnit = 'ft' | 'km' | 'm' | 'mi' | 'nmi';
 
 const METRES_PER_KILOMETRE = 1000;
 /** International nautical mile (exact). */

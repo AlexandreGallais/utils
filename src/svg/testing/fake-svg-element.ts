@@ -1,6 +1,5 @@
-import type { Matrix2D } from '../../geometry/matrix-2d.ts';
-import { multiplyMatrices } from '../../geometry/multiply-matrices.ts';
-import { parseTransform } from '../../geometry/parse-transform.ts';
+import type { Matrix2D } from '../../geometry';
+import { multiplyMatrices, parseTransform } from '../../geometry';
 
 /** A stand-in for a rendered SVG element in Node: a `transform` attribute and a fixed bounding box. */
 export interface FakeSvgElement {
@@ -42,7 +41,6 @@ export function createFakeSvgElement(
  * @returns The same object, typed as an `SVGGraphicsElement`.
  */
 export function asSvgElement(element: FakeSvgElement): SVGGraphicsElement {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- test double: only the members above are used.
   return element as unknown as SVGGraphicsElement;
 }
 

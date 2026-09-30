@@ -1,9 +1,7 @@
-import type { Anchor } from '../geometry/anchor.ts';
-import { getMatrixRotation } from '../geometry/get-matrix-rotation.ts';
-import { multiplyMatrices } from '../geometry/multiply-matrices.ts';
-import { createRotationMatrix } from '../geometry/create-rotation-matrix.ts';
-import { getSvgAnchorPoint } from './get-svg-anchor-point.ts';
-import { updateScreenMatrix } from './internal/update-screen-matrix.ts';
+import type { Anchor } from '../geometry';
+import { getMatrixRotation, multiplyMatrices, createRotationMatrix } from '../geometry';
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
+import { updateScreenMatrix } from './internal';
 
 /**
  * Orients an SVG element to an absolute angle on screen (0° upright), turning it around one of its 9

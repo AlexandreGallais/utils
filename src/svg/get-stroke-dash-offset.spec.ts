@@ -1,4 +1,4 @@
-import { getStrokeDashOffset } from './get-stroke-dash-offset.ts';
+import { getStrokeDashOffset } from './get-stroke-dash-offset';
 
 describe(getStrokeDashOffset, () => {
   it.for([

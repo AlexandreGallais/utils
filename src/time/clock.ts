@@ -1,5 +1,20 @@
-import type { ClockOptions } from './clock-options.ts';
-import type { ClockTick } from './clock-tick.ts';
+import type { ClockTick } from './clock-tick';
+
+/** A function returning the current time, in milliseconds. */
+type TimeSource = () => number;
+
+/** Settings of a `Clock`: tick source, period and time source. */
+export interface ClockOptions {
+  /**
+   * Tick source: `'frame'` ticks once per animation frame (`requestAnimationFrame`, for rendering),
+   * `'interval'` every `intervalMs` (`setInterval`, for logic, also in the background).
+   */
+  readonly mode?: 'frame' | 'interval';
+  /** Period of the `'interval'` mode, in milliseconds. */
+  readonly intervalMs?: number;
+  /** Time source, `performance.now` by default; replace it in tests. */
+  readonly now?: TimeSource;
+}
 
 /** Default period of the `'interval'` mode, in milliseconds. */
 const DEFAULT_INTERVAL_MS = 100;

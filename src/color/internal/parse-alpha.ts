@@ -1,5 +1,5 @@
-import { clamp } from '../../math/clamp.ts';
-import { parseNumberOrPercentage } from './parse-number-or-percentage.ts';
+import { clamp } from '../../math';
+import { parseNumberOrPercentage } from './parse-number-or-percentage';
 
 /**
  * Parses the alpha argument of a color function: a number in [0, 1] or a percentage.

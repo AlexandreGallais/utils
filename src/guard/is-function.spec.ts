@@ -1,4 +1,4 @@
-import { isFunction } from './is-function.ts';
+import { isFunction } from './is-function';
 
 class Point {
   public readonly x = 0;

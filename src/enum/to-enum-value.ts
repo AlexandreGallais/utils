@@ -1,5 +1,5 @@
-import type { EnumObject } from './enum-object.ts';
-import { isEnumValue } from './is-enum-value.ts';
+import type { EnumObject } from './enum-object';
+import { isEnumValue } from './is-enum-value';
 
 /**
  * Returns a value typed as a member of an enum: the value itself when it belongs to the enum, the fallback

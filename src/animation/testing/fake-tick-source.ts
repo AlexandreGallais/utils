@@ -1,5 +1,4 @@
-import type { ClockTick } from '../../time/clock-tick.ts';
-import type { TickSource } from '../../time/tick-source.ts';
+import type { ClockTick, TickSource } from '../../time';
 
 /** A `TickSource` for the specs: ticks are emitted by hand with `tick(deltaMs)`. */
 export class FakeTickSource implements TickSource {

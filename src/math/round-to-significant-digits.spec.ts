@@ -1,4 +1,4 @@
-import { roundToSignificantDigits } from './round-to-significant-digits.ts';
+import { roundToSignificantDigits } from './round-to-significant-digits';
 
 describe(roundToSignificantDigits, () => {
   it.for([

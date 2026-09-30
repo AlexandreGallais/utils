@@ -1,7 +1,7 @@
-import type { Anchor } from './anchor.ts';
-import { placeRect } from './place-rect.ts';
-import type { Rect } from './rect.ts';
-import type { Size } from './size.ts';
+import type { Anchor } from './anchor';
+import { placeRect } from './place-rect';
+import type { Rect } from './rect';
+import type { Size } from './size';
 
 /**
  * Places a box inside a corner or on a side of a target box, like `placeRect`: the top-right corner of the

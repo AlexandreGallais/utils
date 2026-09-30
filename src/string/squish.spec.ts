@@ -1,4 +1,4 @@
-import { squish } from './squish.ts';
+import { squish } from './squish';
 
 describe(squish, () => {
   it.for([

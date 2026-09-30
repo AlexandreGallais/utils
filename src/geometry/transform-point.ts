@@ -1,5 +1,5 @@
-import type { Matrix2D } from './matrix-2d.ts';
-import type { Point } from './point.ts';
+import type { Matrix2D } from './matrix-2d';
+import type { Point } from './point';
 
 /**
  * Applies a transform to a point, translation included: where a point of an element's local space lands.

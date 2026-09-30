@@ -1,4 +1,4 @@
-import { lerpAngle } from './lerp-angle.ts';
+import { lerpAngle } from './lerp-angle';
 
 describe(lerpAngle, () => {
   it.for([

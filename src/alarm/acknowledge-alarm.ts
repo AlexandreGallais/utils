@@ -1,4 +1,4 @@
-import type { AlarmState } from './alarm-state.ts';
+import type { AlarmState } from './alarm-state';
 
 /** The state after an acknowledgement, by current state. */
 const ACKNOWLEDGED: Readonly<Record<AlarmState, AlarmState>> = {

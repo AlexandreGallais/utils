@@ -1,4 +1,4 @@
-import { measureDuration } from './measure-duration.ts';
+import { measureDuration } from './measure-duration';
 
 describe(measureDuration, () => {
   it('returns the result and the elapsed time', () => {

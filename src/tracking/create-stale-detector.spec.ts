@@ -1,4 +1,4 @@
-import { createStaleDetector } from './create-stale-detector.ts';
+import { createStaleDetector } from './create-stale-detector';
 
 describe(createStaleDetector, () => {
   it('is stale until the first update', () => {

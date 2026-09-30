@@ -1,11 +1,11 @@
 // Alarms: threshold levels (with hysteresis) and the acknowledgement state machine of ISA-18.2, as pure functions.
 
-export { acknowledgeAlarm } from './acknowledge-alarm.ts';
-export type { AlarmState } from './alarm-state.ts';
-export { getThresholdLevel } from './get-threshold-level.ts';
-export { getThresholdLevelWithHysteresis } from './get-threshold-level-with-hysteresis.ts';
-export { isAlarmActive } from './is-alarm-active.ts';
-export { isAlarmUnacknowledged } from './is-alarm-unacknowledged.ts';
-export type { Threshold } from './threshold.ts';
-export type { ThresholdScale } from './threshold-scale.ts';
-export { updateAlarmState } from './update-alarm-state.ts';
+export { acknowledgeAlarm } from './acknowledge-alarm';
+export type { AlarmState } from './alarm-state';
+export { getThresholdLevel } from './get-threshold-level';
+export { getThresholdLevelWithHysteresis } from './get-threshold-level-with-hysteresis';
+export { isAlarmActive } from './is-alarm-active';
+export { isAlarmUnacknowledged } from './is-alarm-unacknowledged';
+export type { Threshold } from './threshold-scale';
+export type { ThresholdScale } from './threshold-scale';
+export { updateAlarmState } from './update-alarm-state';

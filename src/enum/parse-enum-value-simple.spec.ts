@@ -1,4 +1,4 @@
-import { parseEnumValueSimple } from './parse-enum-value-simple.ts';
+import { parseEnumValueSimple } from './parse-enum-value-simple';
 
 describe(parseEnumValueSimple, () => {
   it('accepts values only', () => {

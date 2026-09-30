@@ -1,5 +1,5 @@
-import { startBlinkSimple } from './start-blink-simple.ts';
-import { FakeTickSource } from './testing/fake-tick-source.ts';
+import { startBlinkSimple } from './start-blink-simple';
+import { FakeTickSource } from './testing';
 
 describe(startBlinkSimple, () => {
   it('blinks and rests on', () => {

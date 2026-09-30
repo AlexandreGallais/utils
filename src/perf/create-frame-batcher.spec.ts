@@ -1,4 +1,4 @@
-import { createFrameBatcher } from './create-frame-batcher.ts';
+import { createFrameBatcher } from './create-frame-batcher';
 
 describe(createFrameBatcher, () => {
   let frameCallbacks: Map<number, FrameRequestCallback>;

@@ -1,4 +1,4 @@
-import { mapValues } from './map-values.ts';
+import { mapValues } from './map-values';
 
 describe(mapValues, () => {
   it('maps every value, keeping the keys', () => {
