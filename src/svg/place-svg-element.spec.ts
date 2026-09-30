@@ -22,4 +22,16 @@ describe(placeSvgElement, () => {
     expect(isSamePoint(placed, target)).toBe(true);
     expect(describeOnScreen(element).rotation).toBe(before.rotation);
   });
+
+  it('takes the center anchors for null or undefined', () => {
+    const reference = asSvgElement(createTwistedElement('translate(30 5)'));
+    const omitted = createTwistedElement('rotate(10)');
+    const nulled = createTwistedElement('rotate(10)');
+    const explicit = createTwistedElement('rotate(10)');
+    placeSvgElement(asSvgElement(omitted), undefined, reference);
+    placeSvgElement(asSvgElement(nulled), null, reference, null);
+    placeSvgElement(asSvgElement(explicit), 'center', reference, 'center');
+    expect(describeOnScreen(omitted)).toStrictEqual(describeOnScreen(explicit));
+    expect(describeOnScreen(nulled)).toStrictEqual(describeOnScreen(explicit));
+  });
 });

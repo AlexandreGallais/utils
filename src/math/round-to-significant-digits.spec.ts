@@ -19,4 +19,9 @@ describe(roundToSignificantDigits, () => {
   it.for([0, 101, 1.5])('throws a RangeError for %s digits', (digits) => {
     expect(() => roundToSignificantDigits(1, digits)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(roundToSignificantDigits(123_456)).toStrictEqual(roundToSignificantDigits(123_456, 3));
+    expect(roundToSignificantDigits(123_456, null)).toStrictEqual(roundToSignificantDigits(123_456, 3));
+  });
 });

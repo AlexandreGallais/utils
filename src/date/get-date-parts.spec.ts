@@ -36,4 +36,13 @@ describe(getDateParts, () => {
   it('returns undefined for an invalid date', () => {
     expect(getDateParts(new Date('oops'), false)).toBeUndefined();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getDateParts(new Date('2026-09-29T14:30:05Z'))).toStrictEqual(
+      getDateParts(new Date('2026-09-29T14:30:05Z'), false),
+    );
+    expect(getDateParts(new Date('2026-09-29T14:30:05Z'), null)).toStrictEqual(
+      getDateParts(new Date('2026-09-29T14:30:05Z'), false),
+    );
+  });
 });

@@ -24,4 +24,9 @@ describe(downsampleMinMax, () => {
   it.for([0, -1, 1.5])('throws a RangeError for %s buckets', (bucketCount) => {
     expect(() => downsampleMinMax([], bucketCount)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(downsampleMinMax(undefined, 3)).toStrictEqual(downsampleMinMax([], 3));
+    expect(downsampleMinMax(null, 3)).toStrictEqual(downsampleMinMax([], 3));
+  });
 });

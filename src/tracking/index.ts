@@ -6,5 +6,3 @@ export { createStaleDetector } from './create-stale-detector';
 export type { PeakHold } from './peak-hold';
 export type { RateEstimator } from './create-rate-estimator';
 export type { StaleDetector } from './stale-detector';
-export { createStaleDetectorSimple } from './create-stale-detector-simple';
-export { createPeakHoldSimple } from './create-peak-hold-simple';

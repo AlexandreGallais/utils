@@ -20,4 +20,9 @@ describe(variance, () => {
     expect(variance([3], true)).toBeNaN();
     expect(variance([3], false)).toBe(0);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(variance([1, 2, 3, 4])).toStrictEqual(variance([1, 2, 3, 4], false));
+    expect(variance([1, 2, 3, 4], null)).toStrictEqual(variance([1, 2, 3, 4], false));
+  });
 });

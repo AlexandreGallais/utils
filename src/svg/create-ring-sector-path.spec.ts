@@ -20,4 +20,11 @@ describe(createRingSectorPath, () => {
       'M 50 10 A 40 40 0 1 1 50 90 A 40 40 0 1 1 50 10 Z M 50 20 A 30 30 0 1 1 50 80 A 30 30 0 1 1 50 20 Z',
     );
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createRingSectorPath(undefined, 5, 10)).toStrictEqual(createRingSectorPath({ x: 0, y: 0 }, 5, 10, 0, 360));
+    expect(createRingSectorPath(null, 5, 10, null, null)).toStrictEqual(
+      createRingSectorPath({ x: 0, y: 0 }, 5, 10, 0, 360),
+    );
+  });
 });

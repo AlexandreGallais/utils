@@ -26,6 +26,4 @@ export { isBlank } from './is-blank';
 export { squish } from './squish';
 export { pluralize } from './pluralize';
 export { toCsv } from './to-csv';
-export { truncateSimple } from './truncate-simple';
-export { toCsvSimple } from './to-csv-simple';
 export { createIdGenerator } from './create-id-generator';

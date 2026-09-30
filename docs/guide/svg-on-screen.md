@@ -14,16 +14,16 @@ Every element has 9 anchors on its visible box: `'top-left'`, `'top'`, `'top-rig
 ```ts
 placeSvgElement(badge, 'center', symbol, 'top-right'); // badge centered on the symbol's corner
 moveSvgElement(badge, -5, 5); // then 5 px left and 5 px down on screen
-placeSvgElementSimple(label, zone); // label centered on the zone
+placeSvgElement(label, null, zone); // label centered on the zone
 ```
 
 ## Turn, flip, scale in place
 
 ```ts
-rotateSvgElementSimple(fan, 30); // 30° more, clockwise on screen, around its center
+rotateSvgElement(fan, 30); // 30° more, clockwise on screen, around its center
 setSvgRotation(arrow, windDirection, 'center'); // absolute angle, at every frame
-setSvgRotationAroundSimple(needle, angle, hub); // needle turning around a hub in another group
-flipSvgElementSimple(valve, 'horizontal'); // mirrored, same place
+setSvgRotationAround(needle, angle, hub); // needle turning around a hub in another group
+flipSvgElement(valve); // mirrored, same place
 scaleSvgElement(icon, 1.5, 'bottom'); // grows upwards from its base
 ```
 

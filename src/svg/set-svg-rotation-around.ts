@@ -9,9 +9,9 @@ import { updateScreenMatrix } from './internal';
  * frame, around a hub drawn in another group.
  *
  * @param element - The element to orient.
- * @param angleDegrees - The wanted angle on screen, in degrees, clockwise from upright.
+ * @param angleDegrees - The wanted angle on screen, in degrees, clockwise from upright. Defaults to `0`.
  * @param pivot - The element giving the axis, such as the gauge hub.
- * @param pivotAnchor - The point of `pivot` used as axis, such as `'center'`.
+ * @param pivotAnchor - The point of `pivot` used as axis, such as `'center'`. Defaults to `'center'`.
  * @throws {TypeError} When an element is not rendered, a transform is flattened or a `transform` attribute
  * is invalid.
  * @example
@@ -19,12 +19,14 @@ import { updateScreenMatrix } from './internal';
  */
 export function setSvgRotationAround(
   element: SVGGraphicsElement,
-  angleDegrees: number,
+  angleDegrees: number | null | undefined,
   pivot: SVGGraphicsElement,
-  pivotAnchor: Anchor,
+  pivotAnchor?: Anchor | null,
 ): void {
-  const axis = getSvgAnchorPoint(pivot, pivotAnchor);
+  const resolvedAngleDegrees = angleDegrees ?? 0;
+  const resolvedPivotAnchor = pivotAnchor ?? 'center';
+  const axis = getSvgAnchorPoint(pivot, resolvedPivotAnchor);
   updateScreenMatrix(element, (screen) =>
-    multiplyMatrices(createRotationMatrix(angleDegrees - getMatrixRotation(screen), axis), screen),
+    multiplyMatrices(createRotationMatrix(resolvedAngleDegrees - getMatrixRotation(screen), axis), screen),
   );
 }

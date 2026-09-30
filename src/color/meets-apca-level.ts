@@ -19,12 +19,13 @@ const MIN_CONTRAST: Readonly<Record<ApcaLevel, number>> = {
  *
  * @param text - Color of the text or graphic.
  * @param background - Background color.
- * @param level - The use of the text, which sets the minimum contrast (see `ApcaLevel`).
+ * @param level - The use of the text, which sets the minimum contrast (see `ApcaLevel`). Defaults to `'body-text'`.
  * @returns `true` when the absolute contrast reaches the minimum of the use.
  * @example
  * meetsApcaLevel({ r: 136, g: 136, b: 136 }, { r: 255, g: 255, b: 255 }, 'content-text'); // true (Lc 63.1)
  * meetsApcaLevel({ r: 136, g: 136, b: 136 }, { r: 255, g: 255, b: 255 }, 'body-text'); // false
  */
-export function meetsApcaLevel(text: Rgb, background: Rgb, level: ApcaLevel): boolean {
-  return Math.abs(getApcaContrast(text, background)) >= MIN_CONTRAST[level];
+export function meetsApcaLevel(text: Rgb, background: Rgb, level?: ApcaLevel | null): boolean {
+  const resolvedLevel = level ?? 'body-text';
+  return Math.abs(getApcaContrast(text, background)) >= MIN_CONTRAST[resolvedLevel];
 }

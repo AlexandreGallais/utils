@@ -20,4 +20,13 @@ describe(snapToGrid, () => {
   it.for([0, -1, NaN, Infinity])('throws a RangeError for a grid of %s', (gridSize) => {
     expect(() => snapToGrid({ x: 0, y: 0 }, gridSize, { x: 0, y: 0 })).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(snapToGrid(undefined, 10)).toStrictEqual(snapToGrid({ x: 0, y: 0 }, 10, { x: 0, y: 0 }));
+    expect(snapToGrid(null, 10, null)).toStrictEqual(snapToGrid({ x: 0, y: 0 }, 10, { x: 0, y: 0 }));
+  });
+  it('snaps from the origin for a null or undefined origin', () => {
+    expect(snapToGrid({ x: 13, y: 27 }, 10)).toStrictEqual(snapToGrid({ x: 13, y: 27 }, 10, { x: 0, y: 0 }));
+    expect(snapToGrid({ x: 13, y: 27 }, 10, null)).toStrictEqual(snapToGrid({ x: 13, y: 27 }, 10, { x: 0, y: 0 }));
+  });
 });

@@ -41,4 +41,13 @@ describe(resetMatrixRotationAndFlip, () => {
       f: 8,
     });
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(resetMatrixRotationAndFlip({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 })).toStrictEqual(
+      resetMatrixRotationAndFlip({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, { x: 0, y: 0 }),
+    );
+    expect(resetMatrixRotationAndFlip({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, null)).toStrictEqual(
+      resetMatrixRotationAndFlip({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, { x: 0, y: 0 }),
+    );
+  });
 });

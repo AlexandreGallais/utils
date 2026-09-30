@@ -12,4 +12,11 @@ describe(formatList, () => {
     expect(formatList(['a'], 'en-US', 'conjunction')).toBe('a');
     expect(formatList(['a', 'b'], 'en-US', 'conjunction')).toBe('a and b');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatList(['pump', 'valve'])).toStrictEqual(formatList(['pump', 'valve'], 'en-US', 'conjunction'));
+    expect(formatList(['pump', 'valve'], null, null)).toStrictEqual(
+      formatList(['pump', 'valve'], 'en-US', 'conjunction'),
+    );
+  });
 });

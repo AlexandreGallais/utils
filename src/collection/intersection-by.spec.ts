@@ -12,4 +12,13 @@ describe(intersectionBy, () => {
   it('keeps nothing without common keys', () => {
     expect(intersectionBy([1, 2], [3], (value) => value)).toStrictEqual([]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(intersectionBy(undefined, undefined, (item: number) => item)).toStrictEqual(
+      intersectionBy([], [], (item: number) => item),
+    );
+    expect(intersectionBy(null, null, (item: number) => item)).toStrictEqual(
+      intersectionBy([], [], (item: number) => item),
+    );
+  });
 });

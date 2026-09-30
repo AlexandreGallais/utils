@@ -18,8 +18,8 @@ features:
     details: Press Ctrl K and type a name or what you need ("thousands", "blink", "rotate around"). Every function has its own page.
   - title: Copy a file, not a package
     details: Each page lists the files a function needs and shows its source with a copy button.
-  - title: Simple variants
-    details: The …Simple functions take fewer parameters, with the house choices fixed (invariant numbers, local time, Math.random).
+  - title: Sensible defaults
+    details: Every setting with a neutral value has a default (en-US, local time, Math.random), and null takes it too.
   - title: SVG on screen
     details: Place, move, rotate, flip and scale SVG elements relative to each other, as seen on screen, whatever their groups.
   - title: Fast by design

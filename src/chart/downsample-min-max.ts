@@ -5,7 +5,7 @@ import type { Point } from '../geometry';
  * through the result shows the same peaks as the full series: typically one bucket per pixel column, to
  * draw 100 000 samples on an 800 px wide chart at every refresh.
  *
- * @param points - The series, sorted by ascending `x`.
+ * @param points - The series, sorted by ascending `x`. Defaults to `[]`.
  * @param bucketCount - Number of groups of consecutive points, such as the width of the chart in pixels.
  * @returns A new array with the kept points, in their original order; a copy when the series already has
  * no more than two points per bucket.
@@ -13,14 +13,15 @@ import type { Point } from '../geometry';
  * @example
  * downsampleMinMax(samples, plotWidth);
  */
-export function downsampleMinMax(points: readonly Point[], bucketCount: number): Point[] {
+export function downsampleMinMax(points: readonly Point[] | null | undefined, bucketCount: number): Point[] {
+  const resolvedPoints = points ?? [];
   if (!Number.isSafeInteger(bucketCount) || bucketCount < 1) {
     throw new RangeError(`bucketCount must be a positive integer, got ${bucketCount}`);
   }
-  if (points.length <= bucketCount * 2) {
-    return [...points];
+  if (resolvedPoints.length <= bucketCount * 2) {
+    return [...resolvedPoints];
   }
-  const bucketSize = points.length / bucketCount;
+  const bucketSize = resolvedPoints.length / bucketCount;
   const result: Point[] = [];
   for (let bucket = 0; bucket < bucketCount; bucket++) {
     const bucketStart = Math.floor(bucket * bucketSize);
@@ -29,7 +30,7 @@ export function downsampleMinMax(points: readonly Point[], bucketCount: number):
     let maxIndex = bucketStart;
     let min = Infinity;
     let max = -Infinity;
-    for (const [offset, { y }] of points.slice(bucketStart, bucketEnd).entries()) {
+    for (const [offset, { y }] of resolvedPoints.slice(bucketStart, bucketEnd).entries()) {
       if (y < min) {
         min = y;
         minIndex = bucketStart + offset;
@@ -39,9 +40,9 @@ export function downsampleMinMax(points: readonly Point[], bucketCount: number):
         maxIndex = bucketStart + offset;
       }
     }
-    result.push(...points.slice(Math.min(minIndex, maxIndex), Math.min(minIndex, maxIndex) + 1));
+    result.push(...resolvedPoints.slice(Math.min(minIndex, maxIndex), Math.min(minIndex, maxIndex) + 1));
     if (maxIndex !== minIndex) {
-      result.push(...points.slice(Math.max(minIndex, maxIndex), Math.max(minIndex, maxIndex) + 1));
+      result.push(...resolvedPoints.slice(Math.max(minIndex, maxIndex), Math.max(minIndex, maxIndex) + 1));
     }
   }
   return result;

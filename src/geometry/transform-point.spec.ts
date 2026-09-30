@@ -17,4 +17,11 @@ describe(transformPoint, () => {
   ] as const)('transforms (1, 1) with %j', ([matrix, expected]) => {
     expect(transformPoint({ x: 1, y: 1 }, matrix)).toStrictEqual(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(transformPoint()).toStrictEqual(transformPoint({ x: 0, y: 0 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }));
+    expect(transformPoint(null, null)).toStrictEqual(
+      transformPoint({ x: 0, y: 0 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }),
+    );
+  });
 });

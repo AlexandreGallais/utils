@@ -12,11 +12,11 @@ type TimeSource = () => number;
 /** Settings of `createLogger`: minimum level, output and clock. */
 export interface LoggerOptions {
   /** Entries below this level are dropped; `'info'` by default, `'silent'` drops everything. */
-  readonly level?: LogLevel;
+  readonly level?: LogLevel | null;
   /** Output of the entries; the console by default. */
-  readonly sink?: LogSink;
+  readonly sink?: LogSink | null;
   /** Clock of the timestamps, `Date.now` by default; replace it in tests. */
-  readonly now?: TimeSource;
+  readonly now?: TimeSource | null;
 }
 
 /** Rank of each level: an entry is kept when its rank reaches the minimum level's. */
@@ -34,15 +34,18 @@ const LEVEL_RANKS: Readonly<Record<LogLevel, number>> = {
  * paths.
  *
  * @param scope - Name shown with each entry, such as the module or the component.
- * @param options - Minimum level, output and clock.
+ * @param options - Minimum level, output and clock. Defaults to `{}`.
  * @returns An object with `debug`, `info`, `warn`, `error` and `child`.
  * @example
  * const log = createLogger('engine', { level: 'debug' });
  * log.info('Started', { rpm: 800 }); // [12:34:56.789] INFO engine: Started { rpm: 800 }
  * log.child('pump').warn('Pressure low'); // [12:34:56.790] WARN engine:pump: Pressure low
  */
-export function createLogger(scope: string, options: LoggerOptions): Logger {
-  const { level = 'info', sink = consoleSink, now = Date.now } = options;
+export function createLogger(scope: string, options?: LoggerOptions | null): Logger {
+  const resolvedOptions = options ?? {};
+  const level = resolvedOptions.level ?? 'info';
+  const sink = resolvedOptions.sink ?? consoleSink;
+  const now = resolvedOptions.now ?? Date.now;
   const minimumRank = LEVEL_RANKS[level];
 
   function write(entryLevel: LogEntry['level'], message: string, data: readonly unknown[]): void {
@@ -66,7 +69,7 @@ export function createLogger(scope: string, options: LoggerOptions): Logger {
       write('error', message, data);
     },
     child(childScope: string): Logger {
-      return createLogger(`${scope}:${childScope}`, options);
+      return createLogger(`${scope}:${childScope}`, resolvedOptions);
     },
   };
 }

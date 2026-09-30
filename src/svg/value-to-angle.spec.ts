@@ -18,4 +18,9 @@ describe(valueToAngle, () => {
   it('supports counterclockwise scales', () => {
     expect(valueToAngle(25, 0, 100, 90, -90, true)).toBe(45);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(valueToAngle(0.5)).toStrictEqual(valueToAngle(0.5, 0, 1, 0, 360, true));
+    expect(valueToAngle(0.5, null, null, null, null, null)).toStrictEqual(valueToAngle(0.5, 0, 1, 0, 360, true));
+  });
 });

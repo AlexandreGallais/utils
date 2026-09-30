@@ -11,7 +11,7 @@
  * const [strings, numbers] = partition(['a', 1, 'b'], isString); // ['a', 'b'] (string[]), [1] (number[])
  */
 export function partition<T, S extends T>(
-  items: readonly T[],
+  items: readonly T[] | null | undefined,
   predicate: (item: T) => item is S,
 ): [passed: S[], failed: Exclude<T, S>[]];
 
@@ -25,11 +25,18 @@ export function partition<T, S extends T>(
  * @example
  * partition([1, 2, 3, 4], (value) => value % 2 === 0); // [[2, 4], [1, 3]]
  */
-export function partition<T>(items: readonly T[], predicate: (item: T) => boolean): [passed: T[], failed: T[]];
-export function partition<T>(items: readonly T[], predicate: (item: T) => boolean): [passed: T[], failed: T[]] {
+export function partition<T>(
+  items: readonly T[] | null | undefined,
+  predicate: (item: T) => boolean,
+): [passed: T[], failed: T[]];
+export function partition<T>(
+  items: readonly T[] | null | undefined,
+  predicate: (item: T) => boolean,
+): [passed: T[], failed: T[]] {
+  const resolvedItems = items ?? [];
   const passed: T[] = [];
   const failed: T[] = [];
-  for (const item of items) {
+  for (const item of resolvedItems) {
     if (predicate(item)) {
       passed.push(item);
     } else {

@@ -5,12 +5,14 @@ import { randomInt } from './random-int';
  *
  * @param start - Earliest date, included.
  * @param end - Latest date, included.
- * @param random - Source of numbers in [0, 1), such as a seeded generator for reproducible runs.
+ * @param random - Source of numbers in [0, 1), such as a seeded generator for reproducible runs. Defaults to
+ * `Math.random`.
  * @returns A new date.
  * @throws {RangeError} When a date is invalid or `start` is after `end`.
  * @example
  * randomDate(new Date('2026-01-01'), new Date('2026-12-31'), Math.random);
  */
-export function randomDate(start: Date, end: Date, random: () => number): Date {
-  return new Date(randomInt(start.getTime(), end.getTime(), random));
+export function randomDate(start: Date, end: Date, random?: (() => number) | null): Date {
+  const resolvedRandom = random ?? Math.random;
+  return new Date(randomInt(start.getTime(), end.getTime(), resolvedRandom));
 }

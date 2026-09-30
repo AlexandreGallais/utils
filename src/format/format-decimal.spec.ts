@@ -32,4 +32,14 @@ describe(formatDecimal, () => {
     expect(formatDecimal(1.5, 0)).toBe('2');
     expect(formatDecimal(1.5, 100)).toBe('1.5');
   });
+
+  it('groups the thousands with a comma when asked', () => {
+    expect(formatDecimal(1_234_567.891, 2, true)).toBe('1,234,567.89');
+    expect(formatDecimal(1234.5, 2, false)).toBe('1234.5');
+  });
+
+  it('takes 3 decimals and no grouping for null or undefined', () => {
+    expect(formatDecimal(1234.5678)).toBe('1234.568');
+    expect(formatDecimal(1234.5678, null, null)).toBe('1234.568');
+  });
 });

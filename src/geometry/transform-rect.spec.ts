@@ -34,4 +34,13 @@ describe(transformRect, () => {
     expect(box.width).toBeCloseTo(20 * Math.SQRT2, 9);
     expect(box.x).toBeCloseTo(-10 * Math.SQRT2, 9);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(transformRect({ x: 10, y: 20, width: 100, height: 50 })).toStrictEqual(
+      transformRect({ x: 10, y: 20, width: 100, height: 50 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }),
+    );
+    expect(transformRect({ x: 10, y: 20, width: 100, height: 50 }, null)).toStrictEqual(
+      transformRect({ x: 10, y: 20, width: 100, height: 50 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }),
+    );
+  });
 });

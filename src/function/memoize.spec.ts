@@ -58,4 +58,11 @@ describe(memoize, () => {
       ),
     ).toThrow(RangeError);
   });
+
+  it('keys by the first argument and keeps 1000 results for null or undefined', () => {
+    for (const memoized of [memoize((value: number) => value * 2), memoize((value: number) => value * 2, null, null)]) {
+      expect(memoized(2)).toBe(4);
+      expect(memoized.cache.size).toBe(1);
+    }
+  });
 });

@@ -69,4 +69,13 @@ describe(clipSegment, () => {
     const point = { x: 3, y: 3 };
     expect(clipSegment(point, point, rect)).toStrictEqual([point, point]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(clipSegment(undefined, undefined, { x: 10, y: 20, width: 100, height: 50 })).toStrictEqual(
+      clipSegment({ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 10, y: 20, width: 100, height: 50 }),
+    );
+    expect(clipSegment(null, null, { x: 10, y: 20, width: 100, height: 50 })).toStrictEqual(
+      clipSegment({ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 10, y: 20, width: 100, height: 50 }),
+    );
+  });
 });

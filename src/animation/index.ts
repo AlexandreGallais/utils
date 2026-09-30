@@ -14,5 +14,3 @@ export { startTween } from './start-tween';
 export type { TweenOptions } from './start-tween';
 export type { BlinkOptions } from './start-blink';
 export { startBlink } from './start-blink';
-export { startBlinkSimple } from './start-blink-simple';
-export { startAnimationSimple } from './start-animation-simple';

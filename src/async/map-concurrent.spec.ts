@@ -23,7 +23,6 @@ describe(mapConcurrent, () => {
         return `${index}:${ms}`;
       },
       2,
-      undefined,
     );
     await vi.advanceTimersByTimeAsync(100);
     await expect(promise).resolves.toStrictEqual(['0:30', '1:10', '2:20']);
@@ -42,7 +41,6 @@ describe(mapConcurrent, () => {
         return value;
       },
       3,
-      undefined,
     );
     await vi.advanceTimersByTimeAsync(100);
     await promise;
@@ -58,7 +56,7 @@ describe(mapConcurrent, () => {
       return value;
     });
     await Promise.all([
-      expect(mapConcurrent([0, 1, 2, 3, 4], mapper, 2, undefined)).rejects.toThrow('failed 1'),
+      expect(mapConcurrent([0, 1, 2, 3, 4], mapper, 2)).rejects.toThrow('failed 1'),
       vi.advanceTimersByTimeAsync(100),
     ]);
     expect(mapper).toHaveBeenCalledTimes(3);
@@ -81,12 +79,17 @@ describe(mapConcurrent, () => {
   });
 
   it('returns an empty list for no item', async () => {
-    await expect(mapConcurrent([], vi.fn<() => Promise<number>>(), 2, undefined)).resolves.toStrictEqual([]);
+    await expect(mapConcurrent([], vi.fn<() => Promise<number>>(), 2)).resolves.toStrictEqual([]);
   });
 
   it.for([0, -1, 1.5])('throws a RangeError for concurrency %s', async (concurrency) => {
-    await expect(mapConcurrent([1], vi.fn<() => Promise<number>>(), concurrency, undefined)).rejects.toThrow(
-      RangeError,
-    );
+    await expect(mapConcurrent([1], vi.fn<() => Promise<number>>(), concurrency)).rejects.toThrow(RangeError);
+  });
+
+  it('takes an empty list and no signal for null or undefined', async () => {
+    const double = async (value: number): Promise<number> => value * 2;
+    await expect(mapConcurrent(undefined, double, 2)).resolves.toStrictEqual([]);
+    await expect(mapConcurrent(null, double, 2, null)).resolves.toStrictEqual([]);
+    await expect(mapConcurrent([1, 2], double, 2)).resolves.toStrictEqual([2, 4]);
   });
 });

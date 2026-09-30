@@ -8,9 +8,9 @@ import { updateScreenMatrix } from './internal';
  * groups and transforms each one is in: a pointer turning around the hub of a gauge drawn in another layer.
  *
  * @param element - The element to turn.
- * @param angleDegrees - The added rotation, in degrees, clockwise on screen.
+ * @param angleDegrees - The added rotation, in degrees, clockwise on screen. Defaults to `0`.
  * @param pivot - The element giving the axis, such as the gauge hub.
- * @param pivotAnchor - The point of `pivot` used as axis, such as `'center'`.
+ * @param pivotAnchor - The point of `pivot` used as axis, such as `'center'`. Defaults to `'center'`.
  * @throws {TypeError} When an element is not rendered, a transform is flattened or a `transform` attribute
  * is invalid.
  * @example
@@ -18,10 +18,12 @@ import { updateScreenMatrix } from './internal';
  */
 export function rotateSvgElementAround(
   element: SVGGraphicsElement,
-  angleDegrees: number,
+  angleDegrees: number | null | undefined,
   pivot: SVGGraphicsElement,
-  pivotAnchor: Anchor,
+  pivotAnchor?: Anchor | null,
 ): void {
-  const axis = getSvgAnchorPoint(pivot, pivotAnchor);
-  updateScreenMatrix(element, (screen) => multiplyMatrices(createRotationMatrix(angleDegrees, axis), screen));
+  const resolvedAngleDegrees = angleDegrees ?? 0;
+  const resolvedPivotAnchor = pivotAnchor ?? 'center';
+  const axis = getSvgAnchorPoint(pivot, resolvedPivotAnchor);
+  updateScreenMatrix(element, (screen) => multiplyMatrices(createRotationMatrix(resolvedAngleDegrees, axis), screen));
 }

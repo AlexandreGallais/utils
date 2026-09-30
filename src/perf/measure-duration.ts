@@ -4,7 +4,7 @@
  *
  * @template T - The result type.
  * @param task - The work to measure.
- * @param now - Clock in milliseconds, injectable for tests.
+ * @param now - Clock in milliseconds, injectable for tests. Defaults to `performance.now()`.
  * @returns The result of the task and its duration in milliseconds.
  * @example
  * const { result, durationMs } = measureDuration(() => projectPoints(samples, bounds, plot), () => performance.now());
@@ -12,9 +12,10 @@
  */
 export function measureDuration<T>(
   task: () => T,
-  now: () => number,
+  now?: (() => number) | null,
 ): { readonly result: T; readonly durationMs: number } {
-  const start = now();
+  const resolvedNow = now ?? ((): number => performance.now());
+  const start = resolvedNow();
   const result = task();
-  return { result, durationMs: now() - start };
+  return { result, durationMs: resolvedNow() - start };
 }

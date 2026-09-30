@@ -20,4 +20,13 @@ describe(randomDate, () => {
     expect(() => randomDate(new Date('2026-02-01'), new Date('2026-01-01'), Math.random)).toThrow(RangeError);
     expect(() => randomDate(new Date(NaN), end, Math.random)).toThrow(RangeError);
   });
+
+  it('takes Math.random and the other defaults for null or undefined', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.3);
+    expect(randomDate(new Date(0), new Date(1000))).toStrictEqual(randomDate(new Date(0), new Date(1000), Math.random));
+    expect(randomDate(new Date(0), new Date(1000), null)).toStrictEqual(
+      randomDate(new Date(0), new Date(1000), Math.random),
+    );
+    vi.restoreAllMocks();
+  });
 });

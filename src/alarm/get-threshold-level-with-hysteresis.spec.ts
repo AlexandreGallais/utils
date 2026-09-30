@@ -36,4 +36,13 @@ describe(getThresholdLevelWithHysteresis, () => {
     expect(getThresholdLevelWithHysteresis(90, SCALE, 'warning', 0)).toBe('alarm');
     expect(getThresholdLevelWithHysteresis(89.99, SCALE, 'alarm', 0)).toBe('warning');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getThresholdLevelWithHysteresis(90, SCALE, 'warning')).toStrictEqual(
+      getThresholdLevelWithHysteresis(90, SCALE, 'warning', 0),
+    );
+    expect(getThresholdLevelWithHysteresis(90, SCALE, 'warning', null)).toStrictEqual(
+      getThresholdLevelWithHysteresis(90, SCALE, 'warning', 0),
+    );
+  });
 });

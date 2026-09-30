@@ -1,5 +1,5 @@
 import { setSvgRotationAround } from './set-svg-rotation-around';
-import { asSvgElement, createFakeSvgElementIn, describeOnScreen, screenPoint } from './testing';
+import { asSvgElement, createFakeSvgElementIn, describeOnScreen, screenPoint, createTwistedElement } from './testing';
 
 const IDENTITY = { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 };
 
@@ -17,5 +17,17 @@ describe(setSvgRotationAround, () => {
     setSvgRotationAround(asSvgElement(needle), 90, asSvgElement(hub), 'center');
     expect(describeOnScreen(needle).rotation).toBeCloseTo(90, 2);
     expect(screenPoint(needle, { x: 0, y: -20 })).toStrictEqual({ x: 90, y: 50 });
+  });
+
+  it('takes the defaults for null or undefined', () => {
+    const pivot = asSvgElement(createTwistedElement('translate(30 5)'));
+    const omitted = createTwistedElement('rotate(10)');
+    const nulled = createTwistedElement('rotate(10)');
+    const explicit = createTwistedElement('rotate(10)');
+    setSvgRotationAround(asSvgElement(omitted), undefined, pivot);
+    setSvgRotationAround(asSvgElement(nulled), null, pivot, null);
+    setSvgRotationAround(asSvgElement(explicit), 0, pivot, 'center');
+    expect(describeOnScreen(omitted)).toStrictEqual(describeOnScreen(explicit));
+    expect(describeOnScreen(nulled)).toStrictEqual(describeOnScreen(explicit));
   });
 });

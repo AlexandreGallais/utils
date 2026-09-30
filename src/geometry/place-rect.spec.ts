@@ -32,4 +32,12 @@ describe(placeRect, () => {
       y: 70,
     });
   });
+
+  it('centers the box on the center of the target for null or undefined options', () => {
+    const target = { x: 0, y: 0, width: 100, height: 50 };
+    const expected = { x: 44, y: 19, width: 12, height: 12 };
+    expect(placeRect({ width: 12, height: 12 }, target)).toStrictEqual(expected);
+    expect(placeRect({ width: 12, height: 12 }, target, null)).toStrictEqual(expected);
+    expect(placeRect({ width: 12, height: 12 }, target, { targetAnchor: null })).toStrictEqual(expected);
+  });
 });

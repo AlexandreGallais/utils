@@ -37,4 +37,9 @@ describe(getPolygonCentroid, () => {
   it('returns undefined without vertex', () => {
     expect(getPolygonCentroid([])).toBeUndefined();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getPolygonCentroid()).toStrictEqual(getPolygonCentroid([]));
+    expect(getPolygonCentroid(null)).toStrictEqual(getPolygonCentroid([]));
+  });
 });

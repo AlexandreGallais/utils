@@ -11,4 +11,9 @@ describe(kebabCase, () => {
   ] as const)('converts %j to %j', ([input, expected]) => {
     expect(kebabCase(input)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(kebabCase()).toStrictEqual(kebabCase(''));
+    expect(kebabCase(null)).toStrictEqual(kebabCase(''));
+  });
 });

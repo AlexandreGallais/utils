@@ -23,4 +23,11 @@ describe(randomInt, () => {
   ] as const)('throws a RangeError for [%s, %s]', ([min, max]) => {
     expect(() => randomInt(min, max, Math.random)).toThrow(RangeError);
   });
+
+  it('takes Math.random and the other defaults for null or undefined', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.3);
+    expect(randomInt(1, 6)).toStrictEqual(randomInt(1, 6, Math.random));
+    expect(randomInt(1, 6, null)).toStrictEqual(randomInt(1, 6, Math.random));
+    vi.restoreAllMocks();
+  });
 });

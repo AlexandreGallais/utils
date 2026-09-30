@@ -10,4 +10,9 @@ describe(lerpAngle, () => {
   ] as const)('interpolates %s° → %s° at %s as %s°', ([from, to, t, expected]) => {
     expect(lerpAngle(from, to, t)).toBeCloseTo(expected, 10);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(lerpAngle()).toStrictEqual(lerpAngle(0, 0, 0));
+    expect(lerpAngle(null, null, null)).toStrictEqual(lerpAngle(0, 0, 0));
+  });
 });

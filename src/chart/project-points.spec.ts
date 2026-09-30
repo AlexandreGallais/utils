@@ -32,4 +32,13 @@ describe(projectPoints, () => {
   it('returns an empty list without point', () => {
     expect(projectPoints([], { minX: 0, maxX: 1, minY: 0, maxY: 1 }, rect)).toStrictEqual([]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(
+      projectPoints(undefined, { minX: 0, maxX: 10, minY: 0, maxY: 5 }, { x: 0, y: 0, width: 100, height: 50 }),
+    ).toStrictEqual(projectPoints([], { minX: 0, maxX: 10, minY: 0, maxY: 5 }, { x: 0, y: 0, width: 100, height: 50 }));
+    expect(
+      projectPoints(null, { minX: 0, maxX: 10, minY: 0, maxY: 5 }, { x: 0, y: 0, width: 100, height: 50 }),
+    ).toStrictEqual(projectPoints([], { minX: 0, maxX: 10, minY: 0, maxY: 5 }, { x: 0, y: 0, width: 100, height: 50 }));
+  });
 });

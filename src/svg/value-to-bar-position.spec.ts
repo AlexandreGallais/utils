@@ -24,4 +24,9 @@ describe(valueToBarPosition, () => {
     expect(valueToBarPosition(-5, scale('right'), true)).toBe(10);
     expect(valueToBarPosition(20, scale('up'), false)).toBe(-180);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(valueToBarPosition(20, scale('up'))).toStrictEqual(valueToBarPosition(20, scale('up'), true));
+    expect(valueToBarPosition(20, scale('up'), null)).toStrictEqual(valueToBarPosition(20, scale('up'), true));
+  });
 });

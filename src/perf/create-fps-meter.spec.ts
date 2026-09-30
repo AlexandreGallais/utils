@@ -41,4 +41,11 @@ describe(createFpsMeter, () => {
   it.for([0, -1, 1.5])('throws a RangeError for a window of %s', (windowSize) => {
     expect(() => createFpsMeter(windowSize)).toThrow(RangeError);
   });
+
+  it('takes a window of 60 frames for null or undefined', () => {
+    const meters = [createFpsMeter(), createFpsMeter(null), createFpsMeter(60)];
+    const readings = meters.map((meter) => [0, 10, 20, 40].map((time) => meter.tick(time)));
+    expect(readings[0]).toStrictEqual(readings[2]);
+    expect(readings[1]).toStrictEqual(readings[2]);
+  });
 });

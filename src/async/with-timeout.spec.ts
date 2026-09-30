@@ -22,14 +22,22 @@ describe(withTimeout, () => {
 
   it('rejects with a TimeoutError when too slow', async () => {
     await Promise.all([
-      expect(withTimeout(sleep(1000, undefined), 100, 'Timed out')).rejects.toThrow(TimeoutError),
+      expect(withTimeout(sleep(1000), 100, 'Timed out')).rejects.toThrow(TimeoutError),
       vi.advanceTimersByTimeAsync(100),
     ]);
   });
 
   it('uses the custom message', async () => {
     await Promise.all([
-      expect(withTimeout(sleep(1000, undefined), 100, 'Server too slow')).rejects.toThrow('Server too slow'),
+      expect(withTimeout(sleep(1000), 100, 'Server too slow')).rejects.toThrow('Server too slow'),
+      vi.advanceTimersByTimeAsync(100),
+    ]);
+  });
+
+  it('says how long it waited for a null or undefined message', async () => {
+    await Promise.all([
+      expect(withTimeout(sleep(1000), 100)).rejects.toThrow('Timed out after 100 ms'),
+      expect(withTimeout(sleep(1000), 100, null)).rejects.toThrow('Timed out after 100 ms'),
       vi.advanceTimersByTimeAsync(100),
     ]);
   });

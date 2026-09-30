@@ -11,38 +11,60 @@ const MAX_INTEGER_DIGITS = 21;
 /** `{minIntegerDigits}.{minFractionDigits}-{maxFractionDigits}`, every part optional. */
 const DIGITS_INFO_PATTERN = /^(?<minInteger>\d+)?\.(?:(?<minFraction>\d+)(?:-(?<maxFraction>\d+))?)?$/v;
 
-/** Formatters by locale, then by `digitsInfo`: nested maps, so no key string is built at each call. */
-const numberFormatters = new Map<string, Map<string, Intl.NumberFormat>>();
+/** `digitsInfo` when none is given: Angular's `DecimalPipe` default. */
+const DEFAULT_DIGITS_INFO = '1.0-3';
+/** Locale when none is given: `.` before the decimals, `,` between thousands when grouping. */
+const DEFAULT_LOCALE = 'en-US';
+
+/**
+ * Formatters without then with grouping, by locale, then by `digitsInfo`: nested maps, so no key string is built
+ * at each call.
+ */
+const numberFormatters = [
+  new Map<string, Map<string, Intl.NumberFormat>>(),
+  new Map<string, Map<string, Intl.NumberFormat>>(),
+] as const;
 
 /**
  * Formats a number with digits driven by `digitsInfo` and the separators of a locale, like Angular's
- * `DecimalPipe` (`1,234.5` in `'en-US'`, `1 234,5` in `'fr-FR'`). For an invariant text without grouping,
- * use `formatDecimal`. `NaN`, infinities and `-0` are handled like `formatDecimal`. Formatters are cached
- * per locale and `digitsInfo`.
+ * `DecimalPipe`: `1234.5` by default, `1,234.5` in `'en-US'` with grouping, `1 234,5` in `'fr-FR'`. `NaN`,
+ * infinities and `-0` are handled like `formatDecimal`. Formatters are cached per locale, grouping and
+ * `digitsInfo`.
  *
  * @param value - The number to format.
- * @param digitsInfo - `'{minIntegerDigits}.{minFractionDigits}-{maxFractionDigits}'`, each part optional
- * (defaults `1.0-3`), such as `'1.0-2'` or `'3.2-4'`.
- * @param locale - BCP 47 locale of the separators and grouping, such as `'en-US'`.
+ * @param digitsInfo - `'{minIntegerDigits}.{minFractionDigits}-{maxFractionDigits}'`, each part optional, such as
+ * `'1.0-2'` or `'3.2-4'`. Defaults to `'1.0-3'`.
+ * @param locale - BCP 47 locale of the separators and grouping, such as `'fr-FR'`. Defaults to `'en-US'`.
+ * @param useGrouping - Whether to separate the thousands, with the separator of the locale. Defaults to `false`.
  * @returns The formatted number.
  * @throws {RangeError} When `digitsInfo` is malformed or outside the `Intl.NumberFormat` limits.
  * @example
- * formatNumber(Math.PI, '1.0-2', 'en-US'); // '3.14'
- * formatNumber(5, '3.0-2', 'en-US'); // '005'
- * formatNumber(1234.5, '1.2-2', 'en-US'); // '1,234.50'
- * formatNumber(1234.5, '1.2-2', 'de-DE'); // '1.234,50'
+ * formatNumber(1234.5678); // '1234.568'
+ * formatNumber(Math.PI, '1.0-2'); // '3.14'
+ * formatNumber(5, '3.0-2'); // '005'
+ * formatNumber(1234.5, '1.2-2', 'en-US', true); // '1,234.50'
+ * formatNumber(1234.5, '1.2-2', 'de-DE', true); // '1.234,50'
  */
-export function formatNumber(value: number, digitsInfo: string, locale: string): string {
-  let localeFormatters = numberFormatters.get(locale);
+export function formatNumber(
+  value: number,
+  digitsInfo?: string | null,
+  locale?: string | null,
+  useGrouping?: boolean | null,
+): string {
+  const resolvedDigitsInfo = digitsInfo ?? DEFAULT_DIGITS_INFO;
+  const resolvedLocale = locale ?? DEFAULT_LOCALE;
+  const resolvedUseGrouping = useGrouping ?? false;
+  const formatters = numberFormatters[resolvedUseGrouping ? 1 : 0];
+  let localeFormatters = formatters.get(resolvedLocale);
   if (!localeFormatters) {
     localeFormatters = new Map();
-    numberFormatters.set(locale, localeFormatters);
+    formatters.set(resolvedLocale, localeFormatters);
   }
 
-  let formatter = localeFormatters.get(digitsInfo);
+  let formatter = localeFormatters.get(resolvedDigitsInfo);
   if (!formatter) {
-    formatter = createNumberFormatter(digitsInfo, locale);
-    localeFormatters.set(digitsInfo, formatter);
+    formatter = createNumberFormatter(resolvedDigitsInfo, resolvedLocale, resolvedUseGrouping);
+    localeFormatters.set(resolvedDigitsInfo, formatter);
   }
   return Number.isFinite(value) ? formatter.format(value) : String(value);
 }
@@ -52,10 +74,11 @@ export function formatNumber(value: number, digitsInfo: string, locale: string):
  *
  * @param digitsInfo - The digits specification.
  * @param locale - BCP 47 locale, such as `'en-US'` or `'fr-FR'`.
+ * @param useGrouping - Whether to separate the thousands.
  * @returns A new formatter.
  * @throws {RangeError} When `digitsInfo` is malformed or outside the `Intl.NumberFormat` limits.
  */
-function createNumberFormatter(digitsInfo: string, locale: string): Intl.NumberFormat {
+function createNumberFormatter(digitsInfo: string, locale: string, useGrouping: boolean): Intl.NumberFormat {
   const groups = DIGITS_INFO_PATTERN.exec(digitsInfo)?.groups;
   if (!groups) {
     throw new RangeError(`digitsInfo must look like '1.0-2' (integer.minFraction-maxFraction), got '${digitsInfo}'`);
@@ -81,6 +104,7 @@ function createNumberFormatter(digitsInfo: string, locale: string): Intl.NumberF
     minimumIntegerDigits: minIntegerDigits,
     minimumFractionDigits: minFractionDigits,
     maximumFractionDigits: maxFractionDigits,
+    useGrouping,
     signDisplay: 'negative',
   });
 }

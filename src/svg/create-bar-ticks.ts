@@ -22,17 +22,17 @@ export interface BarTicksOptions extends BarScale {
   /** Interval between major graduations, from `min`. */
   readonly majorStep: number;
   /** Interval between minor graduations, from `min`; no minor graduation when omitted. */
-  readonly minorStep?: number;
+  readonly minorStep?: number | null;
   /** Length of major ticks, across the bar; the whole thickness of the bar when omitted. */
-  readonly majorLength?: number;
+  readonly majorLength?: number | null;
   /** Length of minor ticks, across the bar; half the major length when omitted. */
-  readonly minorLength?: number;
+  readonly minorLength?: number | null;
 
   /**
    * Edge the ticks start from: `'start'` is the left edge of a vertical bar or the top edge of a horizontal
    * one, `'end'` the opposite edge.
    */
-  readonly align?: 'end' | 'start';
+  readonly align?: 'end' | 'start' | null;
 }
 
 /**
@@ -51,7 +51,8 @@ export interface BarTicksOptions extends BarScale {
  * scale.setAttribute('d', createTicksPath(ticks));
  */
 export function createBarTicks(options: BarTicksOptions): BarTick[] {
-  const { rect, direction, align = 'start' } = options;
+  const { rect, direction } = options;
+  const align = options.align ?? 'start';
   const isVertical = direction === 'up' || direction === 'down';
   const thickness = isVertical ? rect.width : rect.height;
   const majorLength = options.majorLength ?? thickness;

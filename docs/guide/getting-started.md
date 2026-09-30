@@ -5,7 +5,7 @@ synoptics. It has no dependency and runs in any browser.
 
 ## Two ways to use it
 
-- **Import it** as a package: `import { formatNumberSimple } from 'utils';`. Bundlers keep only what is used.
+- **Import it** as a package: `import { formatNumber } from 'utils';`. Bundlers keep only what is used.
 - **Copy a file**: every export lives in its own file. Its page lists the other files it needs, under
   **Source**, and shows the code with a copy button.
 
@@ -18,8 +18,9 @@ synoptics. It has no dependency and runs in any browser.
 ## Conventions
 
 - **Angles** are in degrees, 0° up and clockwise, everywhere.
-- **Every parameter is required**, so a call shows every choice: `formatNumber(value, '1.2-2', 'en-US')`.
-  The [`…Simple` variants](./simple-variants.md) fix the usual choices.
+- **Defaults wherever a neutral value exists** (`0`, `[]`, `''`, `{}`, `'en-US'`, `Math.random`, local
+  time), and `null` takes the default like `undefined`: `formatNumber(value)`,
+  `formatNumber(value, null, 'fr-FR')`.
 - **Errors**: an invalid argument throws a `RangeError` (out of range) or a `TypeError` (unparsable);
   `parse…` functions return `undefined` instead, and `parse…OrThrow` variants throw.
 - **Caches** are opt-in: `…Cached` variants keep computed values, the plain functions do not.
@@ -28,9 +29,9 @@ synoptics. It has no dependency and runs in any browser.
 ## Example
 
 ```ts
-import { Clock, formatNumberSimple, isBlinkOnSimple, MovingAverage, smoothTowards } from 'utils';
+import { Clock, formatNumber, isBlinkOn, MovingAverage, smoothTowards } from 'utils';
 
-const clock = new Clock({}); // one shared tick source for the whole UI
+const clock = new Clock(); // one shared tick source for the whole UI
 const speed = new MovingAverage(20); // smooths the noisy 1 000 Hz input
 let needle = 0;
 
@@ -38,7 +39,7 @@ simulation.on('speed', (value) => speed.push(value));
 
 clock.subscribe(({ timestamp, deltaMs }) => {
   needle = smoothTowards(needle, speed.value, deltaMs, 150); // same smoothing whatever the frame rate
-  label.textContent = `${formatNumberSimple(needle, '1.1-1')} kn`;
-  alarm.classList.toggle('on', isBlinkOnSimple(timestamp, 1000)); // every alarm blinks in phase
+  label.textContent = `${formatNumber(needle, '1.1-1')} kn`;
+  alarm.classList.toggle('on', isBlinkOn(timestamp, 1000)); // every alarm blinks in phase
 });
 ```

@@ -10,4 +10,9 @@ describe(chunk, () => {
   it.for([0, -1, 1.5, NaN])('throws a RangeError for size %s', (size) => {
     expect(() => chunk([1], size)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(chunk(undefined, 2)).toStrictEqual(chunk([], 2));
+    expect(chunk(null, 2)).toStrictEqual(chunk([], 2));
+  });
 });

@@ -14,14 +14,21 @@ const AAA_LARGE_TEXT = 4.5;
  *
  * @param a - Text color.
  * @param b - Background color.
- * @param level - Conformance level to reach.
- * @param isLargeText - Whether the text is large (at least 18pt, or 14pt bold).
+ * @param level - Conformance level to reach. Defaults to `'AA'`.
+ * @param isLargeText - Whether the text is large (at least 18pt, or 14pt bold). Defaults to `false`.
  * @returns `true` when the contrast ratio reaches the level's threshold.
  * @example
  * meetsContrastLevel({ r: 118, g: 118, b: 118 }, { r: 255, g: 255, b: 255 }, 'AA', false); // true (4.54)
  */
-export function meetsContrastLevel(a: Rgb, b: Rgb, level: ContrastLevel, isLargeText: boolean): boolean {
-  return getContrastRatio(a, b) >= contrastThreshold(level, isLargeText);
+export function meetsContrastLevel(
+  a: Rgb,
+  b: Rgb,
+  level?: ContrastLevel | null,
+  isLargeText?: boolean | null,
+): boolean {
+  const resolvedLevel = level ?? 'AA';
+  const resolvedIsLargeText = isLargeText ?? false;
+  return getContrastRatio(a, b) >= contrastThreshold(resolvedLevel, resolvedIsLargeText);
 }
 
 /**

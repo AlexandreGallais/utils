@@ -1,5 +1,8 @@
 import { getScaleFactor } from '../internal';
 
+/** Decimals kept when none is given, like formatDecimal. */
+const DEFAULT_MAX_FRACTION_DIGITS = 3;
+
 /** From 2^53 on, a double has no fractional part left to round. */
 const MAX_EXACT_INTEGER = Number.MAX_SAFE_INTEGER + 1;
 
@@ -9,15 +12,16 @@ const MAX_EXACT_INTEGER = Number.MAX_SAFE_INTEGER + 1;
  * plain arithmetic, no string, no `Intl`. Never returns `-0`.
  *
  * @param value - The number to round; `NaN` and infinities are returned unchanged.
- * @param maxFractionDigits - Number of decimals to keep, an integer in [0, 100].
+ * @param maxFractionDigits - Number of decimals to keep, an integer in [0, 100]. Defaults to `3`.
  * @returns The rounded number.
  * @throws {RangeError} When `maxFractionDigits` is not an integer in [0, 100].
  * @example
  * roundToFractionDigits(1.005, 2); // 1.01 (`toFixed` gives 1.00)
  * roundToFractionDigits(-2.5, 0); // -3
  */
-export function roundToFractionDigits(value: number, maxFractionDigits: number): number {
-  const factor = getScaleFactor(maxFractionDigits);
+export function roundToFractionDigits(value: number, maxFractionDigits?: number | null): number {
+  const resolvedMaxFractionDigits = maxFractionDigits ?? DEFAULT_MAX_FRACTION_DIGITS;
+  const factor = getScaleFactor(resolvedMaxFractionDigits);
   const scaled = Math.abs(value) * factor;
   if (!Number.isFinite(scaled) || scaled >= MAX_EXACT_INTEGER) {
     return value + 0;

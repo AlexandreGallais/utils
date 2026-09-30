@@ -19,11 +19,11 @@ export interface TweenOptions {
   /** Length of the tween in milliseconds of simulated time. */
   readonly durationMs: number;
   /** Curve of the movement; `easeOutQuad` when omitted. */
-  readonly easing?: EasingFunction;
+  readonly easing?: EasingFunction | null;
   /** Called at each tick with the current value. */
   readonly onUpdate: ValueCallback;
   /** Called once when the value reaches `to`. */
-  readonly onComplete?: CompleteCallback;
+  readonly onComplete?: CompleteCallback | null;
 }
 
 /**
@@ -42,7 +42,8 @@ export interface TweenOptions {
  * });
  */
 export function startTween(clock: TickSource, options: TweenOptions): () => void {
-  const { from, to, durationMs, easing = easeOutQuad, onUpdate, onComplete } = options;
+  const { from, to, durationMs, onUpdate, onComplete } = options;
+  const easing = options.easing ?? easeOutQuad;
   return startAnimation(clock, {
     durationMs,
     easing,

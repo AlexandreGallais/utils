@@ -16,4 +16,15 @@ describe(differenceInCalendarDays, () => {
   it('returns NaN for an invalid date', () => {
     expect(differenceInCalendarDays(new Date('oops'), new Date(0), false)).toBeNaN();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(differenceInCalendarDays(new Date('2026-09-29T14:30:05Z'), new Date('2026-09-20T10:00:00Z'))).toStrictEqual(
+      differenceInCalendarDays(new Date('2026-09-29T14:30:05Z'), new Date('2026-09-20T10:00:00Z'), false),
+    );
+    expect(
+      differenceInCalendarDays(new Date('2026-09-29T14:30:05Z'), new Date('2026-09-20T10:00:00Z'), null),
+    ).toStrictEqual(
+      differenceInCalendarDays(new Date('2026-09-29T14:30:05Z'), new Date('2026-09-20T10:00:00Z'), false),
+    );
+  });
 });

@@ -30,4 +30,14 @@ describe(copyText, () => {
     vi.stubGlobal('navigator', {});
     await expect(copyText('x')).resolves.toBe(false);
   });
+
+  it('copies an empty text for null or undefined', async () => {
+    const writeText = vi.fn<(text: string) => Promise<void>>(async () => {
+      await Promise.resolve();
+    });
+    vi.stubGlobal('navigator', { clipboard: { writeText } });
+    await expect(copyText()).resolves.toBe(true);
+    await expect(copyText(null)).resolves.toBe(true);
+    expect(writeText.mock.calls).toStrictEqual([[''], ['']]);
+  });
 });

@@ -21,4 +21,15 @@ describe(rotateSvgElement, () => {
     const moved = transformPoint(local, element.getScreenCTM());
     expect(Math.hypot(moved.x - pivot.x, moved.y - pivot.y)).toBeLessThan(1e-4);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    const omitted = createTwistedElement('rotate(10)');
+    const nulled = createTwistedElement('rotate(10)');
+    const explicit = createTwistedElement('rotate(10)');
+    rotateSvgElement(asSvgElement(omitted));
+    rotateSvgElement(asSvgElement(nulled), null, null);
+    rotateSvgElement(asSvgElement(explicit), 0, 'center');
+    expect(describeOnScreen(omitted)).toStrictEqual(describeOnScreen(explicit));
+    expect(describeOnScreen(nulled)).toStrictEqual(describeOnScreen(explicit));
+  });
 });

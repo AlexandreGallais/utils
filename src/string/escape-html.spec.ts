@@ -10,4 +10,9 @@ describe(escapeHtml, () => {
   ] as const)('escapes %j', ([input, expected]) => {
     expect(escapeHtml(input)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(escapeHtml()).toStrictEqual(escapeHtml(''));
+    expect(escapeHtml(null)).toStrictEqual(escapeHtml(''));
+  });
 });

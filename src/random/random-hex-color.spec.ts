@@ -10,4 +10,11 @@ describe(randomHexColor, () => {
   it('returns a #rrggbb color', () => {
     expect(randomHexColor(Math.random)).toMatch(/^#[0-9a-f]{6}$/v);
   });
+
+  it('takes Math.random and the other defaults for null or undefined', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.3);
+    expect(randomHexColor()).toStrictEqual(randomHexColor(Math.random));
+    expect(randomHexColor(null)).toStrictEqual(randomHexColor(Math.random));
+    vi.restoreAllMocks();
+  });
 });

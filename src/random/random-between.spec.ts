@@ -12,4 +12,11 @@ describe(randomBetween, () => {
     expect(value).toBeGreaterThanOrEqual(3);
     expect(value).toBeLessThan(4);
   });
+
+  it('takes Math.random and the other defaults for null or undefined', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.3);
+    expect(randomBetween()).toStrictEqual(randomBetween(0, 1, Math.random));
+    expect(randomBetween(null, null, null)).toStrictEqual(randomBetween(0, 1, Math.random));
+    vi.restoreAllMocks();
+  });
 });

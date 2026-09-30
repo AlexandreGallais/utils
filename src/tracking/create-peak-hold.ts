@@ -8,19 +8,20 @@ import type { PeakHold } from './peak-hold';
  *
  * @param holdMs - How long a peak stays before falling back, in milliseconds.
  * @param decayPerSecond - Fall speed after the hold, in units per second; `Infinity` jumps to the current
- * value.
+ * value. Defaults to `Number.POSITIVE_INFINITY`.
  * @returns An indicator without value.
  * @throws {RangeError} When `holdMs` is negative or not finite, or `decayPerSecond` is not positive.
  * @example
  * const maxRpm = createPeakHold(2000, 500);
  * clock.subscribe(({ timestamp }) => peakMarker.set(maxRpm.update(engine.rpm, timestamp)));
  */
-export function createPeakHold(holdMs: number, decayPerSecond: number): PeakHold {
+export function createPeakHold(holdMs: number, decayPerSecond?: number | null): PeakHold {
+  const resolvedDecayPerSecond = decayPerSecond ?? Number.POSITIVE_INFINITY;
   if (!Number.isFinite(holdMs) || holdMs < 0) {
     throw new RangeError(`holdMs must be a non-negative finite number, got ${holdMs}`);
   }
-  if (Number.isNaN(decayPerSecond) || decayPerSecond <= 0) {
-    throw new RangeError(`decayPerSecond must be a positive number, got ${decayPerSecond}`);
+  if (Number.isNaN(resolvedDecayPerSecond) || resolvedDecayPerSecond <= 0) {
+    throw new RangeError(`decayPerSecond must be a positive number, got ${resolvedDecayPerSecond}`);
   }
   let peak = NaN;
   let peakTimestampMs = 0;
@@ -36,9 +37,9 @@ export function createPeakHold(holdMs: number, decayPerSecond: number): PeakHold
         peakTimestampMs = timestampMs;
       } else if (timestampMs > releaseMs) {
         peak =
-          decayPerSecond === Infinity
+          resolvedDecayPerSecond === Infinity
             ? value
-            : moveTowards(peak, value, decayPerSecond, timestampMs - Math.max(lastTimestampMs, releaseMs));
+            : moveTowards(peak, value, resolvedDecayPerSecond, timestampMs - Math.max(lastTimestampMs, releaseMs));
       }
       lastTimestampMs = timestampMs;
       return peak;

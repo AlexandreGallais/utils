@@ -1,3 +1,6 @@
+/** Pattern when none is given: the ISO order, readable. */
+const DEFAULT_PATTERN = 'YYYY-MM-DD HH:mm:ss';
+
 /** Date fields a format can set. */
 interface Fields {
   year: number;
@@ -47,16 +50,18 @@ const MINUTES_OR_SECONDS = 60;
  * appear as is. Impossible dates (31 February, 25:00) are rejected.
  *
  * @param input - The text to read; surrounding spaces are ignored.
- * @param pattern - The format of the text, such as `'DD/MM/YYYY HH:mm'`.
- * @param isUtc - Whether the fields are in UTC; local time otherwise.
+ * @param pattern - The format of the text, such as `'DD/MM/YYYY HH:mm'`. Defaults to `'YYYY-MM-DD HH:mm:ss'`.
+ * @param isUtc - Whether the fields are in UTC; local time otherwise. Defaults to `false`.
  * @returns A new `Date`, or `undefined` when the text does not match the format or is not a real date.
  * @example
  * parseDateFormat('29/09/2026 14:30', 'DD/MM/YYYY HH:mm', false); // 29 September 2026, 14:30 local time
  * parseDateFormat('9/29/2026', 'M/D/YYYY', true)?.toISOString(); // '2026-09-29T00:00:00.000Z'
  * parseDateFormat('31/02/2026', 'DD/MM/YYYY', false); // undefined
  */
-export function parseDateFormat(input: string, pattern: string, isUtc: boolean): Date | undefined {
-  const fields = readFields(input.trim(), pattern);
+export function parseDateFormat(input: string, pattern?: string | null, isUtc?: boolean | null): Date | undefined {
+  const resolvedPattern = pattern ?? DEFAULT_PATTERN;
+  const resolvedIsUtc = isUtc ?? false;
+  const fields = readFields(input.trim(), resolvedPattern);
   if (!fields) {
     return undefined;
   }
@@ -64,17 +69,17 @@ export function parseDateFormat(input: string, pattern: string, isUtc: boolean):
   if (!areFieldsInRange(fields)) {
     return undefined;
   }
-  const date = isUtc
+  const date = resolvedIsUtc
     ? new Date(Date.UTC(year, month - 1, day, hour, minute, second, millisecond))
     : new Date(year, month - 1, day, hour, minute, second, millisecond);
   // Years 0–99 would be read as 1900–1999.
-  if (isUtc) {
+  if (resolvedIsUtc) {
     date.setUTCFullYear(year);
   } else {
     date.setFullYear(year);
   }
   // A day past the end of the month rolls over (31 February → 3 March): the date must keep its day.
-  const actualDay = isUtc ? date.getUTCDate() : date.getDate();
+  const actualDay = resolvedIsUtc ? date.getUTCDate() : date.getDate();
   return actualDay === day ? date : undefined;
 }
 

@@ -32,4 +32,9 @@ describe(parseEnumValue, () => {
     expect(parseEnumValue(Level, 'High', true)).toBe(Level.High);
     expect(parseEnumValue(Mode, 'Night', true)).toBe(Mode.Night);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(parseEnumValue(Level, 'High')).toStrictEqual(parseEnumValue(Level, 'High', false));
+    expect(parseEnumValue(Level, 'High', null)).toStrictEqual(parseEnumValue(Level, 'High', false));
+  });
 });

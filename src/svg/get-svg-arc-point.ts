@@ -9,13 +9,14 @@ import type { SvgArc } from './svg-arc';
  *
  * @param target - The element whose coordinates are wanted, such as the `<g>` of the labels.
  * @param arc - The center element, the radius, the start angle and the opening.
- * @param ratio - Position along the arc: 0 at the start, 1 at the end.
+ * @param ratio - Position along the arc: 0 at the start, 1 at the end. Defaults to `0`.
  * @returns The point, in the local coordinates of `target`.
  * @throws {TypeError} When an element is not rendered, or `target` is flattened.
  * @example
  * const { x, y } = getSvgArcPoint(labels, { ...arc, radius: 28 }, index / 6); // label of the index-th tick
  */
-export function getSvgArcPoint(target: SVGGraphicsElement, arc: SvgArc, ratio: number): Point {
+export function getSvgArcPoint(target: SVGGraphicsElement, arc: SvgArc, ratio?: number | null): Point {
+  const resolvedRatio = ratio ?? 0;
   const center = getSvgAnchorPointIn(arc.center, 'center', target);
-  return polarToCartesian(center, arc.radius, arc.startAngle + arc.sweepAngle * ratio);
+  return polarToCartesian(center, arc.radius, arc.startAngle + arc.sweepAngle * resolvedRatio);
 }

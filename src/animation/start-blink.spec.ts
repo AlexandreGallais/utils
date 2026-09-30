@@ -53,4 +53,25 @@ describe(startBlink, () => {
     stop();
     expect(onChange.mock.calls).toStrictEqual([[false], [true]]);
   });
+
+  it('takes empty options for null or undefined', () => {
+    const withDefaults: boolean[] = [];
+    const withNull: boolean[] = [];
+    startBlink(clock, 1000, (isOn) => {
+      withDefaults.push(isOn);
+    });
+    startBlink(
+      clock,
+      1000,
+      (isOn) => {
+        withNull.push(isOn);
+      },
+      null,
+    );
+    for (const timestamp of [100, 600, 1100]) {
+      clock.tick(0, timestamp);
+    }
+    expect(withDefaults).toStrictEqual([true, false, true]);
+    expect(withNull).toStrictEqual(withDefaults);
+  });
 });

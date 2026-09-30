@@ -14,4 +14,13 @@ describe(isSameDay, () => {
   it('is false for an invalid date', () => {
     expect(isSameDay(new Date('oops'), new Date('oops'), false)).toBe(false);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(isSameDay(new Date('2026-09-29T14:30:05Z'), new Date('2026-09-29T14:30:05Z'))).toStrictEqual(
+      isSameDay(new Date('2026-09-29T14:30:05Z'), new Date('2026-09-29T14:30:05Z'), false),
+    );
+    expect(isSameDay(new Date('2026-09-29T14:30:05Z'), new Date('2026-09-29T14:30:05Z'), null)).toStrictEqual(
+      isSameDay(new Date('2026-09-29T14:30:05Z'), new Date('2026-09-29T14:30:05Z'), false),
+    );
+  });
 });

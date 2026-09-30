@@ -29,4 +29,13 @@ describe(insetRect, () => {
       height: 50,
     });
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(insetRect({ x: 10, y: 20, width: 100, height: 50 })).toStrictEqual(
+      insetRect({ x: 10, y: 20, width: 100, height: 50 }, 0),
+    );
+    expect(insetRect({ x: 10, y: 20, width: 100, height: 50 }, null)).toStrictEqual(
+      insetRect({ x: 10, y: 20, width: 100, height: 50 }, 0),
+    );
+  });
 });

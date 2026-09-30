@@ -19,4 +19,9 @@ describe(range, () => {
   it.for([0, NaN, Infinity])('throws a RangeError for step %s', (step) => {
     expect(() => range(0, 1, step)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(range(undefined, 3)).toStrictEqual(range(0, 3, 1));
+    expect(range(null, 3, null)).toStrictEqual(range(0, 3, 1));
+  });
 });

@@ -20,24 +20,18 @@ function textsOf(entry, name) {
 }
 
 /**
- * Renders the title, the badges, the description, the fixed choices, the import and the signature.
+ * Renders the title, the badges, the description, the cache, the import and the signature.
  *
  * @param entry - The export.
  * @returns The Markdown lines.
  */
 function renderHeader(entry) {
   const badges = [`<Badge type="info" text="${entry.kind}" />`];
-  if (entry.name.endsWith('Simple')) {
-    badges.push('<Badge type="tip" text="simple" />');
-  }
   if (entry.name.endsWith('Cached')) {
     badges.push('<Badge type="warning" text="cached" />');
   }
   const title = `# ${entry.name} ${badges.join(' ')}`;
   const lines = ['---', `title: ${entry.name}`, '---', '', title, '', escapeText(entry.description), ''];
-  for (const text of textsOf(entry, 'simple')) {
-    lines.push('::: tip Fixed choices', escapeText(text), ':::', '');
-  }
   for (const text of textsOf(entry, 'cached')) {
     lines.push('::: warning Cache', escapeText(text), ':::', '');
   }
@@ -96,15 +90,15 @@ function renderBehavior(entry) {
 }
 
 /**
- * Renders the links to the other variants of the same function (plain, `…Simple`, `…Cached`).
+ * Renders the links to the other variants of the same function (plain, `…Cached`).
  *
  * @param entry - The export.
  * @param byName - Every export by name.
  * @returns The Markdown lines; none without variant.
  */
 function renderRelated(entry, byName) {
-  const base = entry.name.replace(/(?:Cached|Simple)$/v, '');
-  const related = [base, `${base}Simple`, `${base}Cached`]
+  const base = entry.name.replace(/Cached$/v, '');
+  const related = [base, `${base}Cached`]
     .filter((name) => name !== entry.name)
     .map((name) => byName.get(name))
     .filter((other) => other !== undefined);

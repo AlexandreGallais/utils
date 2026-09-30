@@ -18,4 +18,9 @@ describe(getHeadingBetween, () => {
   it('inverts polarToCartesian', () => {
     expect(getHeadingBetween(CENTER, polarToCartesian(CENTER, 30, 123.4))).toBeCloseTo(123.4, 9);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getHeadingBetween()).toStrictEqual(getHeadingBetween({ x: 0, y: 0 }, { x: 0, y: 0 }));
+    expect(getHeadingBetween(null, null)).toStrictEqual(getHeadingBetween({ x: 0, y: 0 }, { x: 0, y: 0 }));
+  });
 });

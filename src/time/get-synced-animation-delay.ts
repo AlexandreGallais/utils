@@ -7,14 +7,15 @@ import { getAnimationPhase } from './get-animation-phase';
  * later blink together with the ones already on screen.
  *
  * @param periodMs - Duration of the CSS animation, in milliseconds; a positive number.
- * @param nowMs - Current time on the document timeline, in milliseconds.
+ * @param nowMs - Current time on the document timeline, in milliseconds. Defaults to `performance.now()`.
  * @returns The delay in milliseconds, in ]-periodMs, 0].
  * @throws {RangeError} When `periodMs` is not a positive finite number.
  * @example
  * // .alarm { animation: blink 1s steps(1) infinite; }
  * alarm.style.animationDelay = `${getSyncedAnimationDelay(1000, performance.now())}ms`;
  */
-export function getSyncedAnimationDelay(periodMs: number, nowMs: number): number {
+export function getSyncedAnimationDelay(periodMs: number, nowMs?: number | null): number {
+  const resolvedNowMs = nowMs ?? performance.now();
   // `0 -` turns a `-0` into `0`.
-  return 0 - getAnimationPhase(nowMs, periodMs) * periodMs;
+  return 0 - getAnimationPhase(resolvedNowMs, periodMs) * periodMs;
 }

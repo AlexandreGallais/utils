@@ -75,4 +75,15 @@ describe(processInChunks, () => {
     );
     expect(seen).toStrictEqual([1, 2]);
   });
+
+  it('takes an empty list and empty options for null or undefined', async () => {
+    const seen: string[] = [];
+    const push = (item: string): void => {
+      seen.push(item);
+    };
+    await processInChunks(undefined, push);
+    await processInChunks(null, push, null);
+    await processInChunks(['a'], push);
+    expect(seen).toStrictEqual(['a']);
+  });
 });

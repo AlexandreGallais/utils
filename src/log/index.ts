@@ -7,4 +7,3 @@ export type { LogLevel } from './log-level';
 export type { LogSink } from './create-logger';
 export type { Logger } from './logger';
 export type { LoggerOptions } from './create-logger';
-export { createLoggerSimple } from './create-logger-simple';

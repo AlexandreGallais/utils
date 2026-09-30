@@ -20,4 +20,9 @@ describe(countBy, () => {
   it('returns an empty object for no items', () => {
     expect(countBy([], String)).toStrictEqual({});
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(countBy(undefined, (item: string) => item)).toStrictEqual(countBy([], (item: string) => item));
+    expect(countBy(null, (item: string) => item)).toStrictEqual(countBy([], (item: string) => item));
+  });
 });

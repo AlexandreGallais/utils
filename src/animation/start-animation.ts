@@ -13,11 +13,11 @@ export interface AnimationOptions {
   /** Length of the animation in milliseconds of simulated time; `Infinity` for an endless animation. */
   readonly durationMs: number;
   /** Curve applied to the progress; `linear` when omitted. */
-  readonly easing?: EasingFunction;
+  readonly easing?: EasingFunction | null;
   /** Called at each tick with the eased progress (0 to 1), the elapsed time and the tick. */
   readonly onFrame: FrameCallback;
   /** Called once when the animation reaches its end (not when it is stopped before). */
-  readonly onComplete?: CompleteCallback;
+  readonly onComplete?: CompleteCallback | null;
 }
 
 /**
@@ -38,7 +38,8 @@ export interface AnimationOptions {
  * });
  */
 export function startAnimation(clock: TickSource, options: AnimationOptions): () => void {
-  const { durationMs, easing = linear, onFrame, onComplete } = options;
+  const { durationMs, onFrame, onComplete } = options;
+  const easing = options.easing ?? linear;
   let elapsedMs = 0;
   let isRunning = true;
   const unsubscribe = clock.subscribe((tick: ClockTick) => {

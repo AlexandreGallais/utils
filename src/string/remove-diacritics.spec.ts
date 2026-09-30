@@ -9,4 +9,9 @@ describe(removeDiacritics, () => {
   ] as const)('removes the diacritics of %j', ([input, expected]) => {
     expect(removeDiacritics(input)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(removeDiacritics()).toStrictEqual(removeDiacritics(''));
+    expect(removeDiacritics(null)).toStrictEqual(removeDiacritics(''));
+  });
 });

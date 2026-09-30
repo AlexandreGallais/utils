@@ -18,4 +18,9 @@ describe(createPolylinePath, () => {
   it('returns an empty path without point, even closed', () => {
     expect(createPolylinePath([], true)).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createPolylinePath()).toStrictEqual(createPolylinePath([], false));
+    expect(createPolylinePath(null, null)).toStrictEqual(createPolylinePath([], false));
+  });
 });

@@ -10,4 +10,3 @@ export { getEnumKeys } from './get-enum-keys';
 export { parseEnumValue } from './parse-enum-value';
 export type { EnumLiteral } from './enum-literal';
 export { getEnumKey } from './get-enum-key';
-export { parseEnumValueSimple } from './parse-enum-value-simple';

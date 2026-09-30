@@ -9,4 +9,9 @@ describe(standardDeviation, () => {
   it('returns NaN for no value', () => {
     expect(standardDeviation([], false)).toBeNaN();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(standardDeviation([1, 2, 3, 4])).toStrictEqual(standardDeviation([1, 2, 3, 4], false));
+    expect(standardDeviation([1, 2, 3, 4], null)).toStrictEqual(standardDeviation([1, 2, 3, 4], false));
+  });
 });

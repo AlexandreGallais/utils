@@ -18,4 +18,9 @@ describe(createLinearScale, () => {
   it('maps an empty domain to the start of the range', () => {
     expect(createLinearScale([5, 5], [0, 100])(7)).toBe(0);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createLinearScale()(0.25)).toStrictEqual(createLinearScale([0, 1], [0, 1])(0.25));
+    expect(createLinearScale(null, null)(0.25)).toStrictEqual(createLinearScale([0, 1], [0, 1])(0.25));
+  });
 });

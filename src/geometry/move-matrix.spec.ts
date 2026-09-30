@@ -11,4 +11,9 @@ describe(moveMatrix, () => {
       f: 3,
     });
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(moveMatrix()).toStrictEqual(moveMatrix({ a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }, 0, 0));
+    expect(moveMatrix(null, null, null)).toStrictEqual(moveMatrix({ a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }, 0, 0));
+  });
 });

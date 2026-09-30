@@ -27,4 +27,57 @@ describe(sliceVisiblePoints, () => {
   it('returns an empty list without point', () => {
     expect(sliceVisiblePoints([], 0, 1, true)).toStrictEqual([]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(
+      sliceVisiblePoints(
+        [
+          { x: 0, y: 1 },
+          { x: 1, y: 3 },
+          { x: 2, y: 2 },
+        ],
+        0.5,
+        1.5,
+      ),
+    ).toStrictEqual(
+      sliceVisiblePoints(
+        [
+          { x: 0, y: 1 },
+          { x: 1, y: 3 },
+          { x: 2, y: 2 },
+        ],
+        0.5,
+        1.5,
+        true,
+      ),
+    );
+    expect(
+      sliceVisiblePoints(
+        [
+          { x: 0, y: 1 },
+          { x: 1, y: 3 },
+          { x: 2, y: 2 },
+        ],
+        0.5,
+        1.5,
+        null,
+      ),
+    ).toStrictEqual(
+      sliceVisiblePoints(
+        [
+          { x: 0, y: 1 },
+          { x: 1, y: 3 },
+          { x: 2, y: 2 },
+        ],
+        0.5,
+        1.5,
+        true,
+      ),
+    );
+  });
+
+  it('takes an empty list for null or undefined', () => {
+    expect(sliceVisiblePoints(undefined, 0, 1)).toStrictEqual(sliceVisiblePoints([], 0, 1));
+    expect(sliceVisiblePoints(null, 0, 1)).toStrictEqual(sliceVisiblePoints([], 0, 1));
+  });
 });

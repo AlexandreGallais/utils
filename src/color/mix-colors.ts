@@ -8,17 +8,18 @@ import type { Rgba } from './rgba';
  *
  * @param from - Color at `t = 0`; opaque when it has no alpha channel.
  * @param to - Color at `t = 1`; opaque when it has no alpha channel.
- * @param t - Interpolation factor, usually in [0, 1].
+ * @param t - Interpolation factor, usually in [0, 1]. Defaults to `0`.
  * @returns The interpolated color.
  * @example
  * mixColors({ r: 0, g: 0, b: 0 }, { r: 255, g: 255, b: 255 }, 0.5); // { r: 127.5, g: 127.5, b: 127.5, a: 1 }
  */
-export function mixColors(from: Rgb | Rgba, to: Rgb | Rgba, t: number): Rgba {
+export function mixColors(from: Rgb | Rgba, to: Rgb | Rgba, t?: number | null): Rgba {
+  const resolvedT = t ?? 0;
   return {
-    r: lerp(from.r, to.r, t),
-    g: lerp(from.g, to.g, t),
-    b: lerp(from.b, to.b, t),
-    a: lerp(alphaOf(from), alphaOf(to), t),
+    r: lerp(from.r, to.r, resolvedT),
+    g: lerp(from.g, to.g, resolvedT),
+    b: lerp(from.b, to.b, resolvedT),
+    a: lerp(alphaOf(from), alphaOf(to), resolvedT),
   };
 }
 

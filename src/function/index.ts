@@ -8,4 +8,3 @@ export type { RateLimitedFunction } from './rate-limited-function';
 export { throttle } from './throttle';
 export { memoize } from './memoize';
 export type { MemoizedFunction } from './memoized-function';
-export { memoizeSimple } from './memoize-simple';

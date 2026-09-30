@@ -9,7 +9,7 @@ import type { ThresholdScale } from './threshold-scale';
  * @param value - The monitored value.
  * @param scale - The levels and their limits.
  * @param previousLevel - The level shown until now.
- * @param deadband - How far past a limit the value must go to change level, in the unit of the value.
+ * @param deadband - How far past a limit the value must go to change level, in the unit of the value. Defaults to `0`.
  * @returns The new level.
  * @example
  * level = getThresholdLevelWithHysteresis(89.5, TEMPERATURE, 'alarm', 1); // 'alarm' (still within 1 of 90)
@@ -19,11 +19,12 @@ export function getThresholdLevelWithHysteresis<L>(
   value: number,
   scale: ThresholdScale<L>,
   previousLevel: L,
-  deadband: number,
+  deadband?: number | null,
 ): L {
+  const resolvedDeadband = deadband ?? 0;
   // Levels reachable within the deadband, as indexes: 0 is `belowLevel`, i + 1 is `thresholds[i]`.
-  const lowest = getLevelIndex(value - deadband, scale);
-  const highest = getLevelIndex(value + deadband, scale);
+  const lowest = getLevelIndex(value - resolvedDeadband, scale);
+  const highest = getLevelIndex(value + resolvedDeadband, scale);
   for (let index = lowest; index <= highest; index++) {
     if (getLevelAt(scale, index) === previousLevel) {
       return previousLevel;

@@ -16,4 +16,9 @@ describe(pairwise, () => {
     expect(pairwise([1])).toStrictEqual([]);
     expect(pairwise([])).toStrictEqual([]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(pairwise()).toStrictEqual(pairwise([]));
+    expect(pairwise(null)).toStrictEqual(pairwise([]));
+  });
 });

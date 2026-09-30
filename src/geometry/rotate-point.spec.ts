@@ -17,4 +17,13 @@ describe(rotatePoint, () => {
     expect(point.x).toBeCloseTo(40, 9);
     expect(point.y).toBeCloseTo(50, 9);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(rotatePoint()).toStrictEqual(rotatePoint({ x: 0, y: 0 }, 0, { x: 0, y: 0 }));
+    expect(rotatePoint(null, null, null)).toStrictEqual(rotatePoint({ x: 0, y: 0 }, 0, { x: 0, y: 0 }));
+  });
+  it('turns around the origin for a null or undefined center', () => {
+    expect(rotatePoint({ x: 3, y: 4 }, 90)).toStrictEqual(rotatePoint({ x: 3, y: 4 }, 90, { x: 0, y: 0 }));
+    expect(rotatePoint({ x: 3, y: 4 }, 90, null)).toStrictEqual(rotatePoint({ x: 3, y: 4 }, 90, { x: 0, y: 0 }));
+  });
 });

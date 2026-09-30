@@ -12,7 +12,7 @@ describe(sleep, () => {
   it('resolves after the delay', async () => {
     const onResolved = vi.fn<() => void>();
     async function sleepThenNotify(): Promise<void> {
-      await sleep(100, undefined);
+      await sleep(100);
       onResolved();
     }
     const promise = sleepThenNotify();
@@ -50,5 +50,11 @@ describe(sleep, () => {
     await vi.advanceTimersByTimeAsync(10);
     await promise;
     expect(removeListener).toHaveBeenCalledOnce();
+  });
+
+  it('waits 0 ms without signal for null or undefined', async () => {
+    const promises = [sleep(), sleep(null, null)];
+    await vi.advanceTimersByTimeAsync(0);
+    await expect(Promise.all(promises)).resolves.toStrictEqual([undefined, undefined]);
   });
 });

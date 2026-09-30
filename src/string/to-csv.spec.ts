@@ -42,4 +42,9 @@ describe(toCsv, () => {
   it('returns an empty string without row', () => {
     expect(toCsv([], ',', false)).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(toCsv()).toStrictEqual(toCsv([], ',', true));
+    expect(toCsv(null, null, null)).toStrictEqual(toCsv([], ',', true));
+  });
 });

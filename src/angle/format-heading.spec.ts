@@ -20,4 +20,9 @@ describe(formatHeading, () => {
   it('throws a RangeError for invalid digits', () => {
     expect(() => formatHeading(1, -1)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatHeading(12.6)).toStrictEqual(formatHeading(12.6, 0));
+    expect(formatHeading(12.6, null)).toStrictEqual(formatHeading(12.6, 0));
+  });
 });

@@ -30,4 +30,9 @@ describe(createSmoothPath, () => {
     expect(createSmoothPath([{ x: 3, y: 4 }], 1)).toBe('M 3 4');
     expect(createSmoothPath([], 1)).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createSmoothPath()).toStrictEqual(createSmoothPath([], 1));
+    expect(createSmoothPath(null, null)).toStrictEqual(createSmoothPath([], 1));
+  });
 });

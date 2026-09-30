@@ -38,4 +38,13 @@ describe(parseDateFormat, () => {
   it('rejects an impossible local date', () => {
     expect(parseDateFormat('31/04/2026', 'DD/MM/YYYY', false)).toBeUndefined();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(parseDateFormat('2026-09-29 14:30:05')).toStrictEqual(
+      parseDateFormat('2026-09-29 14:30:05', 'YYYY-MM-DD HH:mm:ss', false),
+    );
+    expect(parseDateFormat('2026-09-29 14:30:05', null, null)).toStrictEqual(
+      parseDateFormat('2026-09-29 14:30:05', 'YYYY-MM-DD HH:mm:ss', false),
+    );
+  });
 });

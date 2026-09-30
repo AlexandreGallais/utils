@@ -31,4 +31,15 @@ describe(randomString, () => {
       randomString(5, 2, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', Math.random),
     ).toThrow(RangeError);
   });
+
+  it('takes Math.random and the other defaults for null or undefined', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.3);
+    expect(randomString(4)).toStrictEqual(
+      randomString(4, 4, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', Math.random),
+    );
+    expect(randomString(4, null, null, null)).toStrictEqual(
+      randomString(4, 4, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', Math.random),
+    );
+    vi.restoreAllMocks();
+  });
 });

@@ -19,4 +19,9 @@ describe(polarToCartesian, () => {
   it('returns the center for a zero radius', () => {
     expect(polarToCartesian(CENTER, 0, 123)).toStrictEqual(CENTER);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(polarToCartesian()).toStrictEqual(polarToCartesian({ x: 0, y: 0 }, 0, 0));
+    expect(polarToCartesian(null, null, null)).toStrictEqual(polarToCartesian({ x: 0, y: 0 }, 0, 0));
+  });
 });

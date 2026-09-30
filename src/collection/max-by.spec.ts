@@ -25,4 +25,9 @@ describe(maxBy, () => {
   it('returns undefined for no item', () => {
     expect(maxBy([], (value: number) => value)).toBeUndefined();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(maxBy(undefined, (item: number) => item)).toStrictEqual(maxBy([], (item: number) => item));
+    expect(maxBy(null, (item: number) => item)).toStrictEqual(maxBy([], (item: number) => item));
+  });
 });

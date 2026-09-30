@@ -45,4 +45,9 @@ describe(paginate, () => {
   it.for([0, -1, 1.5])('throws a RangeError for page size %s', (pageSize) => {
     expect(() => paginate(LETTERS, 1, pageSize)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(paginate(undefined, undefined, 10)).toStrictEqual(paginate([], 1, 10));
+    expect(paginate(null, null, 10)).toStrictEqual(paginate([], 1, 10));
+  });
 });

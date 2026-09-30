@@ -11,4 +11,9 @@ describe(angleDifference, () => {
   ] as const)('turns from %s° to %s° by %s°', ([from, to, expected]) => {
     expect(angleDifference(from, to)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(angleDifference()).toStrictEqual(angleDifference(0, 0));
+    expect(angleDifference(null, null)).toStrictEqual(angleDifference(0, 0));
+  });
 });

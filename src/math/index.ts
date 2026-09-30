@@ -19,5 +19,3 @@ export { applyHysteresis } from './apply-hysteresis';
 export { interpolateTable } from './interpolate-table';
 export { hasSignificantChange } from './has-significant-change';
 export { roundToSignificantDigits } from './round-to-significant-digits';
-export { isBetweenSimple } from './is-between-simple';
-export { isNearlyEqualSimple } from './is-nearly-equal-simple';

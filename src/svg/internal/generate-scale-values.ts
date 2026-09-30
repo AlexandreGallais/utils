@@ -27,12 +27,17 @@ const NOISE_FRACTION_DIGITS = 10;
  * @returns The values, in increasing order.
  * @throws {RangeError} When a step is not a positive finite number, or `max` is not greater than `min`.
  */
-export function generateScaleValues(min: number, max: number, majorStep: number, minorStep?: number): ScaleValue[] {
+export function generateScaleValues(
+  min: number,
+  max: number,
+  majorStep: number,
+  minorStep?: number | null,
+): ScaleValue[] {
   if (max <= min || !Number.isFinite(max - min)) {
     throw new RangeError(`max (${max}) must be a finite number greater than min (${min})`);
   }
   const majors = stepValues(min, max, majorStep);
-  const minors = minorStep === undefined ? [] : stepValues(min, max, minorStep);
+  const minors = minorStep === undefined || minorStep === null ? [] : stepValues(min, max, minorStep);
   const values: ScaleValue[] = majors.map((value) => ({ value, isMajor: true }));
   for (const value of minors) {
     if (majors.every((major) => !isNearlyEqual(major, value, COINCIDENCE_TOLERANCE))) {

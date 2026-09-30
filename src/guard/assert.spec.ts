@@ -14,4 +14,13 @@ describe(assert, () => {
       checkAssert(condition, 'Boom');
     }).toThrow('Boom');
   });
+
+  it('throws "Assertion failed" for a null or undefined message', () => {
+    expect(() => {
+      assert(false);
+    }).toThrow('Assertion failed');
+    expect(() => {
+      assert(false, null);
+    }).toThrow('Assertion failed');
+  });
 });

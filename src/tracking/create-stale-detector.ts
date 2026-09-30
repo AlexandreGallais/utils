@@ -6,7 +6,8 @@ import type { StaleDetector } from './stale-detector';
  * frozen, trustworthy-looking number. Call `update` on each value, `isStale` when drawing.
  *
  * @param maxAgeMs - Longest silence before the value is stale, in milliseconds.
- * @param now - Clock in milliseconds, such as `() => performance.now()` (a fake clock in tests).
+ * @param now - Clock in milliseconds, such as `() => performance.now()` (a fake clock in tests). Defaults to
+ * `performance.now()`.
  * @returns A detector, stale until its first `update`.
  * @throws {RangeError} When `maxAgeMs` is not a positive finite number.
  * @example
@@ -14,20 +15,21 @@ import type { StaleDetector } from './stale-detector';
  * feed.on('speed', (value) => { speed.set(value); speedFreshness.update(); });
  * clock.subscribe(() => isSpeedStale.set(speedFreshness.isStale()), 250);
  */
-export function createStaleDetector(maxAgeMs: number, now: () => number): StaleDetector {
+export function createStaleDetector(maxAgeMs: number, now?: (() => number) | null): StaleDetector {
+  const resolvedNow = now ?? ((): number => performance.now());
   if (!Number.isFinite(maxAgeMs) || maxAgeMs <= 0) {
     throw new RangeError(`maxAgeMs must be a positive finite number, got ${maxAgeMs}`);
   }
   let lastUpdateMs = -Infinity;
   return {
     update(): void {
-      lastUpdateMs = now();
+      lastUpdateMs = resolvedNow();
     },
     isStale(): boolean {
-      return now() - lastUpdateMs > maxAgeMs;
+      return resolvedNow() - lastUpdateMs > maxAgeMs;
     },
     getAgeMs(): number {
-      return now() - lastUpdateMs;
+      return resolvedNow() - lastUpdateMs;
     },
   };
 }

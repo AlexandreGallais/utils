@@ -4,7 +4,7 @@
  *
  * @param element - The element to watch.
  * @param onResize - Called with the entry of each change, and once soon after the start.
- * @param options - Which box to measure, such as `{ box: 'border-box' }`.
+ * @param options - Which box to measure, such as `{ box: 'border-box' }`. Defaults to `{}`.
  * @returns A function that stops the observer.
  * @example
  * const size = signal({ width: 0, height: 0 });
@@ -13,14 +13,15 @@
 export function observeResize(
   element: Element,
   onResize: (entry: ResizeObserverEntry) => void,
-  options: ResizeObserverOptions,
+  options?: ResizeObserverOptions | null,
 ): () => void {
+  const resolvedOptions = options ?? {};
   const observer = new ResizeObserver((entries) => {
     for (const entry of entries) {
       onResize(entry);
     }
   });
-  observer.observe(element, options);
+  observer.observe(element, resolvedOptions);
   return (): void => {
     observer.disconnect();
   };

@@ -7,14 +7,15 @@ import { formatCoordinate } from './internal';
  * overlaps (a square with a radius of half its side becomes a circle).
  *
  * @param rect - Position and size of the rectangle.
- * @param radius - Corner radius, capped to half the smaller side.
+ * @param radius - Corner radius, capped to half the smaller side. Defaults to `0`.
  * @returns The closed path data.
  * @example
  * createRoundedRectPath({ x: 0, y: 0, width: 40, height: 20 }, 4);
  * // 'M 4 0 H 36 A 4 4 0 0 1 40 4 V 16 A 4 4 0 0 1 36 20 H 4 A 4 4 0 0 1 0 16 V 4 A 4 4 0 0 1 4 0 Z'
  */
-export function createRoundedRectPath(rect: Rect, radius: number): string {
-  const r = Math.max(0, Math.min(radius, rect.width / 2, rect.height / 2));
+export function createRoundedRectPath(rect: Rect, radius?: number | null): string {
+  const resolvedRadius = radius ?? 0;
+  const r = Math.max(0, Math.min(resolvedRadius, rect.width / 2, rect.height / 2));
   const left = rect.x;
   const top = rect.y;
   const right = rect.x + rect.width;

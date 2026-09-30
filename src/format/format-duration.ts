@@ -11,7 +11,7 @@ const MAX_SECOND_FRACTION_DIGITS = 3;
  * second. Fractions are truncated, not rounded, so a countdown never shows a second that has not elapsed.
  *
  * @param ms - The duration in milliseconds; a negative duration gets a `-` sign.
- * @param secondFractionDigits - Decimals of the seconds, an integer in [0, 3].
+ * @param secondFractionDigits - Decimals of the seconds, an integer in [0, 3]. Defaults to `0`.
  * @returns The formatted duration; `'--:--'` for `NaN` or an infinite duration.
  * @throws {RangeError} When `secondFractionDigits` is not an integer in [0, 3].
  * @example
@@ -19,25 +19,28 @@ const MAX_SECOND_FRACTION_DIGITS = 3;
  * formatDuration(3_909_000, 0); // '1:05:09'
  * formatDuration(9870, 1); // '0:09.8'
  */
-export function formatDuration(ms: number, secondFractionDigits: number): string {
+export function formatDuration(ms: number, secondFractionDigits?: number | null): string {
+  const resolvedSecondFractionDigits = secondFractionDigits ?? 0;
   if (
-    !Number.isSafeInteger(secondFractionDigits) ||
-    secondFractionDigits < 0 ||
-    secondFractionDigits > MAX_SECOND_FRACTION_DIGITS
+    !Number.isSafeInteger(resolvedSecondFractionDigits) ||
+    resolvedSecondFractionDigits < 0 ||
+    resolvedSecondFractionDigits > MAX_SECOND_FRACTION_DIGITS
   ) {
-    throw new RangeError(`secondFractionDigits must be an integer in [0, 3], got ${secondFractionDigits}`);
+    throw new RangeError(`secondFractionDigits must be an integer in [0, 3], got ${resolvedSecondFractionDigits}`);
   }
   if (!Number.isFinite(ms)) {
     return '--:--';
   }
-  const unitsPerSecond = DECIMAL_BASE ** secondFractionDigits;
+  const unitsPerSecond = DECIMAL_BASE ** resolvedSecondFractionDigits;
   const totalUnits = Math.trunc((Math.abs(ms) * unitsPerSecond) / MS_PER_SECOND);
   const totalSeconds = Math.trunc(totalUnits / unitsPerSecond);
   const totalMinutes = Math.trunc(totalSeconds / SECONDS_PER_MINUTE);
   const hours = Math.trunc(totalMinutes / MINUTES_PER_HOUR);
   const minutes = totalMinutes % MINUTES_PER_HOUR;
   const fraction =
-    secondFractionDigits > 0 ? `.${String(totalUnits % unitsPerSecond).padStart(secondFractionDigits, '0')}` : '';
+    resolvedSecondFractionDigits > 0
+      ? `.${String(totalUnits % unitsPerSecond).padStart(resolvedSecondFractionDigits, '0')}`
+      : '';
   const seconds = `${pad(totalSeconds % SECONDS_PER_MINUTE)}${fraction}`;
   const sign = ms < 0 && totalUnits > 0 ? '-' : '';
   return hours > 0 ? `${sign}${hours}:${pad(minutes)}:${seconds}` : `${sign}${minutes}:${seconds}`;

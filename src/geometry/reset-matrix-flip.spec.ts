@@ -36,4 +36,13 @@ describe(resetMatrixFlip, () => {
     const matrix = parseTransform('rotate(30)') ?? IDENTITY;
     expect(resetMatrixFlip(matrix, { x: 1, y: 1 })).toBe(matrix);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(resetMatrixFlip({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 })).toStrictEqual(
+      resetMatrixFlip({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, { x: 0, y: 0 }),
+    );
+    expect(resetMatrixFlip({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, null)).toStrictEqual(
+      resetMatrixFlip({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, { x: 0, y: 0 }),
+    );
+  });
 });

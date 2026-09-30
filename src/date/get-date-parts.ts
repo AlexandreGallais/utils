@@ -9,32 +9,33 @@ const ISO_SUNDAY = 7;
  * ISO weekdays from 1 (Monday) to 7 (Sunday), plus the day of the year.
  *
  * @param date - The date to read.
- * @param isUtc - Whether to read the fields in UTC; local time otherwise.
+ * @param isUtc - Whether to read the fields in UTC; local time otherwise. Defaults to `false`.
  * @returns The fields, or `undefined` for an invalid date.
  * @example
  * getDateParts(new Date('2026-09-29T14:30:05.123Z'), true);
  * // { year: 2026, month: 9, day: 29, hour: 14, minute: 30, second: 5, millisecond: 123,
  * //   weekday: 2, dayOfYear: 272, timestamp: 1790692205123 }
  */
-export function getDateParts(date: Readonly<Date>, isUtc: boolean): DateParts | undefined {
+export function getDateParts(date: Readonly<Date>, isUtc?: boolean | null): DateParts | undefined {
+  const resolvedIsUtc = isUtc ?? false;
   const timestamp = date.getTime();
   if (Number.isNaN(timestamp)) {
     return undefined;
   }
-  const year = isUtc ? date.getUTCFullYear() : date.getFullYear();
-  const month = isUtc ? date.getUTCMonth() : date.getMonth();
-  const day = isUtc ? date.getUTCDate() : date.getDate();
-  const weekday = isUtc ? date.getUTCDay() : date.getDay();
+  const year = resolvedIsUtc ? date.getUTCFullYear() : date.getFullYear();
+  const month = resolvedIsUtc ? date.getUTCMonth() : date.getMonth();
+  const day = resolvedIsUtc ? date.getUTCDate() : date.getDate();
+  const weekday = resolvedIsUtc ? date.getUTCDay() : date.getDay();
   // Days are counted on UTC calendar dates, so daylight saving time does not shift them.
   const dayOfYear = (Date.UTC(year, month, day) - Date.UTC(year, 0, 1)) / MS_PER_DAY + 1;
   return {
     year,
     month: month + 1,
     day,
-    hour: isUtc ? date.getUTCHours() : date.getHours(),
-    minute: isUtc ? date.getUTCMinutes() : date.getMinutes(),
-    second: isUtc ? date.getUTCSeconds() : date.getSeconds(),
-    millisecond: isUtc ? date.getUTCMilliseconds() : date.getMilliseconds(),
+    hour: resolvedIsUtc ? date.getUTCHours() : date.getHours(),
+    minute: resolvedIsUtc ? date.getUTCMinutes() : date.getMinutes(),
+    second: resolvedIsUtc ? date.getUTCSeconds() : date.getSeconds(),
+    millisecond: resolvedIsUtc ? date.getUTCMilliseconds() : date.getMilliseconds(),
     weekday: weekday === 0 ? ISO_SUNDAY : weekday,
     dayOfYear,
     timestamp,

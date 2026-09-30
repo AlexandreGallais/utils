@@ -19,4 +19,13 @@ describe(multiplyMatrices, () => {
     expect(multiplyMatrices(createIdentityMatrix(), ROTATE_90)).toStrictEqual(ROTATE_90);
     expect(multiplyMatrices(TRANSLATE, createIdentityMatrix())).toStrictEqual(TRANSLATE);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(multiplyMatrices()).toStrictEqual(
+      multiplyMatrices({ a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }),
+    );
+    expect(multiplyMatrices(null, null)).toStrictEqual(
+      multiplyMatrices({ a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }),
+    );
+  });
 });

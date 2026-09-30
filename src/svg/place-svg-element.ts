@@ -8,9 +8,10 @@ import { moveSvgElement } from './move-svg-element';
  * rotated symbol, a label in the middle of a zone. Only the position changes.
  *
  * @param element - The element to move.
- * @param elementAnchor - Its point that must land on the target, such as `'center'` or `'top-left'`.
+ * @param elementAnchor - Its point that must land on the target, such as `'center'` or `'top-left'`. Defaults to
+ * `'center'`.
  * @param reference - The element to align with.
- * @param referenceAnchor - The point of `reference` to reach, such as `'top-right'`.
+ * @param referenceAnchor - The point of `reference` to reach, such as `'top-right'`. Defaults to `'center'`.
  * @throws {TypeError} When an element is not rendered, a transform is flattened or a `transform` attribute
  * is invalid.
  * @example
@@ -19,11 +20,13 @@ import { moveSvgElement } from './move-svg-element';
  */
 export function placeSvgElement(
   element: SVGGraphicsElement,
-  elementAnchor: Anchor,
+  elementAnchor: Anchor | null | undefined,
   reference: SVGGraphicsElement,
-  referenceAnchor: Anchor,
+  referenceAnchor?: Anchor | null,
 ): void {
-  const from = getSvgAnchorPoint(element, elementAnchor);
-  const to = getSvgAnchorPoint(reference, referenceAnchor);
+  const resolvedElementAnchor = elementAnchor ?? 'center';
+  const resolvedReferenceAnchor = referenceAnchor ?? 'center';
+  const from = getSvgAnchorPoint(element, resolvedElementAnchor);
+  const to = getSvgAnchorPoint(reference, resolvedReferenceAnchor);
   moveSvgElement(element, to.x - from.x, to.y - from.y);
 }

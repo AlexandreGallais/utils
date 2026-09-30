@@ -15,4 +15,15 @@ describe(scaleSvgElement, () => {
     );
     expect(Math.hypot(newBottom.x - bottom.x, newBottom.y - bottom.y)).toBeLessThan(1e-4);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    const omitted = createTwistedElement('rotate(10)');
+    const nulled = createTwistedElement('rotate(10)');
+    const explicit = createTwistedElement('rotate(10)');
+    scaleSvgElement(asSvgElement(omitted));
+    scaleSvgElement(asSvgElement(nulled), null, null);
+    scaleSvgElement(asSvgElement(explicit), 1, 'center');
+    expect(describeOnScreen(omitted)).toStrictEqual(describeOnScreen(explicit));
+    expect(describeOnScreen(nulled)).toStrictEqual(describeOnScreen(explicit));
+  });
 });

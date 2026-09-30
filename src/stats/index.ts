@@ -9,5 +9,3 @@ export { quantile } from './quantile';
 export { median } from './median';
 export { standardDeviation } from './standard-deviation';
 export { variance } from './variance';
-export { varianceSimple } from './variance-simple';
-export { standardDeviationSimple } from './standard-deviation-simple';

@@ -44,4 +44,9 @@ describe(roundToFractionDigits, () => {
     }
     expect(mismatches).toStrictEqual([]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(roundToFractionDigits(Math.PI)).toStrictEqual(roundToFractionDigits(Math.PI, 3));
+    expect(roundToFractionDigits(Math.PI, null)).toStrictEqual(roundToFractionDigits(Math.PI, 3));
+  });
 });

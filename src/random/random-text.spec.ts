@@ -29,4 +29,11 @@ describe(randomText, () => {
   it('throws a RangeError for inverted lengths', () => {
     expect(() => randomText(5, 2, Math.random)).toThrow(RangeError);
   });
+
+  it('takes Math.random and the other defaults for null or undefined', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.3);
+    expect(randomText(3)).toStrictEqual(randomText(3, 3, Math.random));
+    expect(randomText(3, null, null)).toStrictEqual(randomText(3, 3, Math.random));
+    vi.restoreAllMocks();
+  });
 });

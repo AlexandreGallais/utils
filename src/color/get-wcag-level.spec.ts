@@ -17,4 +17,13 @@ describe(getWcagLevel, () => {
   it('checks normal text', () => {
     expect(getWcagLevel({ r: 118, g: 118, b: 118 }, WHITE, false)).toBe('AA');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getWcagLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 })).toStrictEqual(
+      getWcagLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 }, false),
+    );
+    expect(getWcagLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 }, null)).toStrictEqual(
+      getWcagLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 }, false),
+    );
+  });
 });

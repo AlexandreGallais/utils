@@ -24,4 +24,13 @@ describe(padBounds, () => {
       maxY: 2,
     });
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(padBounds({ minX: 0, maxX: 10, minY: 0, maxY: 5 })).toStrictEqual(
+      padBounds({ minX: 0, maxX: 10, minY: 0, maxY: 5 }, 0.05, 1),
+    );
+    expect(padBounds({ minX: 0, maxX: 10, minY: 0, maxY: 5 }, null, null)).toStrictEqual(
+      padBounds({ minX: 0, maxX: 10, minY: 0, maxY: 5 }, 0.05, 1),
+    );
+  });
 });

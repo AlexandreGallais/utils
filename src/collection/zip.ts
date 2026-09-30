@@ -4,16 +4,18 @@
  *
  * @template A - Type of the first list's items.
  * @template B - Type of the second list's items.
- * @param first - The first list (any iterable).
- * @param second - The second list (any iterable).
+ * @param first - The first list (any iterable). Defaults to `[]`.
+ * @param second - The second list (any iterable). Defaults to `[]`.
  * @returns `[first[i], second[i]]` pairs.
  * @example
  * zip(['rpm', 'temperature'], [800, 72]); // [['rpm', 800], ['temperature', 72]]
  */
-export function zip<A, B>(first: Iterable<A>, second: Iterable<B>): [A, B][] {
+export function zip<A, B>(first?: Iterable<A> | null, second?: Iterable<B> | null): [A, B][] {
+  const resolvedFirst = first ?? [];
+  const resolvedSecond = second ?? [];
   const pairs: [A, B][] = [];
-  const secondIterator = second[Symbol.iterator]();
-  for (const item of first) {
+  const secondIterator = resolvedSecond[Symbol.iterator]();
+  for (const item of resolvedFirst) {
     const next = secondIterator.next();
     if (next.done === true) {
       break;

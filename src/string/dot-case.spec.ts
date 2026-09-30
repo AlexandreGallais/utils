@@ -8,4 +8,9 @@ describe(dotCase, () => {
   ] as const)('converts %j to %j', ([input, expected]) => {
     expect(dotCase(input)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(dotCase()).toStrictEqual(dotCase(''));
+    expect(dotCase(null)).toStrictEqual(dotCase(''));
+  });
 });

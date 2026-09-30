@@ -8,7 +8,7 @@ const ROUNDING_ULPS = 4;
  *
  * @param previous - The last displayed value.
  * @param next - The new value.
- * @param threshold - Smallest change worth an update, a non-negative number.
+ * @param threshold - Smallest change worth an update, a non-negative number. Defaults to `0`.
  * @returns `true` when `|next - previous| >= threshold` (float rounding tolerated), or when only one of them
  * is `NaN`.
  * @example
@@ -17,11 +17,12 @@ const ROUNDING_ULPS = 4;
  *   label.textContent = formatDecimal(speed, 1);
  * }
  */
-export function hasSignificantChange(previous: number, next: number, threshold: number): boolean {
+export function hasSignificantChange(previous: number, next: number, threshold?: number | null): boolean {
+  const resolvedThreshold = threshold ?? 0;
   if (Number.isNaN(previous) || Number.isNaN(next)) {
     return Number.isNaN(previous) !== Number.isNaN(next);
   }
   // `10.1 - 10` is 0.09999999999999964: tolerate the rounding error of the subtraction.
   const roundingError = ROUNDING_ULPS * Number.EPSILON * Math.max(Math.abs(previous), Math.abs(next));
-  return Math.abs(next - previous) >= threshold - roundingError;
+  return Math.abs(next - previous) >= resolvedThreshold - roundingError;
 }

@@ -57,7 +57,3 @@ export { moveMatrix } from './move-matrix';
 export { resetMatrixFlip } from './reset-matrix-flip';
 export { resetMatrixRotation } from './reset-matrix-rotation';
 export { getArcLength } from './get-arc-length';
-export { formatMatrixSimple } from './format-matrix-simple';
-export { fitRectSimple } from './fit-rect-simple';
-export { scaleRectSimple } from './scale-rect-simple';
-export { placeRectSimple } from './place-rect-simple';

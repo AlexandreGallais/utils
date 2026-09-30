@@ -9,11 +9,11 @@ export interface ClockOptions {
    * Tick source: `'frame'` ticks once per animation frame (`requestAnimationFrame`, for rendering),
    * `'interval'` every `intervalMs` (`setInterval`, for logic, also in the background).
    */
-  readonly mode?: 'frame' | 'interval';
+  readonly mode?: 'frame' | 'interval' | null;
   /** Period of the `'interval'` mode, in milliseconds. */
-  readonly intervalMs?: number;
+  readonly intervalMs?: number | null;
   /** Time source, `performance.now` by default; replace it in tests. */
-  readonly now?: TimeSource;
+  readonly now?: TimeSource | null;
 }
 
 /** Default period of the `'interval'` mode, in milliseconds. */
@@ -60,11 +60,14 @@ export class Clock {
   /**
    * Creates a stopped clock; it starts with its first subscriber.
    *
-   * @param options - Tick source (`'frame'` by default or `'interval'`), interval and time source.
+   * @param options - Tick source (`'frame'` by default or `'interval'`), interval and time source. Defaults to `{}`.
    * @throws {RangeError} When `intervalMs` is not a positive finite number.
    */
-  public constructor(options: ClockOptions) {
-    const { mode = 'frame', intervalMs = DEFAULT_INTERVAL_MS, now = (): number => performance.now() } = options;
+  public constructor(options?: ClockOptions | null) {
+    const resolvedOptions = options ?? {};
+    const mode = resolvedOptions.mode ?? 'frame';
+    const intervalMs = resolvedOptions.intervalMs ?? DEFAULT_INTERVAL_MS;
+    const now = resolvedOptions.now ?? ((): number => performance.now());
     if (!Number.isFinite(intervalMs) || intervalMs <= 0) {
       throw new RangeError(`intervalMs must be a positive finite number, got ${intervalMs}`);
     }

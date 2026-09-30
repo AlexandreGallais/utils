@@ -50,4 +50,9 @@ describe(getTimeTicks, () => {
   ])('throws a RangeError for [%s, %s] in %s ticks', ([start = 0, end = 0, count = 0]) => {
     expect(() => getTimeTicks(start, end, count, false)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getTimeTicks(0, 3_600_000)).toStrictEqual(getTimeTicks(0, 3_600_000, 5, false));
+    expect(getTimeTicks(0, 3_600_000, null, null)).toStrictEqual(getTimeTicks(0, 3_600_000, 5, false));
+  });
 });

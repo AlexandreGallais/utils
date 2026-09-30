@@ -3,7 +3,7 @@
  * the same key: `O(log n)`, to keep a live list sorted without sorting it again at each update.
  *
  * @template T - The item type.
- * @param items - The list, sorted by ascending key.
+ * @param items - The list, sorted by ascending key. Defaults to `[]`.
  * @param key - The key of the item to insert.
  * @param getKey - Reads the sort key of an item.
  * @returns The insertion index, from `0` to `items.length`.
@@ -12,16 +12,17 @@
  * alarms = alarms.toSpliced(index, 0, alarm);
  */
 export function sortedIndexBy<T>(
-  items: readonly T[],
+  items: readonly T[] | null | undefined,
   key: number | string,
   getKey: (item: T) => number | string,
 ): number {
+  const resolvedItems = items ?? [];
   let low = 0;
-  let high = items.length;
+  let high = resolvedItems.length;
   while (low < high) {
     const middle = (low + high) >>> 1;
     // `middle` is always in range: the loop only runs over existing items.
-    const [item] = items.slice(middle, middle + 1);
+    const [item] = resolvedItems.slice(middle, middle + 1);
     if (item !== undefined && getKey(item) > key) {
       high = middle;
     } else {

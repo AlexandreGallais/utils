@@ -14,4 +14,9 @@ describe(ceilToStep, () => {
   it('does not return -0', () => {
     expect(Object.is(ceilToStep(-0.4, 1), 0)).toBe(true);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(ceilToStep(2.3)).toStrictEqual(ceilToStep(2.3, 1));
+    expect(ceilToStep(2.3, null)).toStrictEqual(ceilToStep(2.3, 1));
+  });
 });

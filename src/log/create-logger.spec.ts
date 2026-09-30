@@ -48,4 +48,9 @@ describe(createLogger, () => {
     expect(info).toHaveBeenCalledOnce();
     vi.restoreAllMocks();
   });
+
+  it('takes empty options for null or undefined', () => {
+    expect(createLogger('app').scope).toBe('app');
+    expect(createLogger('app', null).scope).toBe('app');
+  });
 });

@@ -13,4 +13,9 @@ describe(camelCase, () => {
   ] as const)('converts %j to %j', ([input, expected]) => {
     expect(camelCase(input)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(camelCase()).toStrictEqual(camelCase(''));
+    expect(camelCase(null)).toStrictEqual(camelCase(''));
+  });
 });

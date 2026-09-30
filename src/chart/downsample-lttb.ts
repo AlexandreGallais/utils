@@ -9,7 +9,7 @@ const MIN_TARGET_COUNT = 3;
  * the shape of the curve survives better than with `downsampleMinMax` for a smooth signal, with fewer
  * points. The first and last points are always kept.
  *
- * @param points - The series, sorted by ascending `x`.
+ * @param points - The series, sorted by ascending `x`. Defaults to `[]`.
  * @param targetCount - Number of points to keep, at least 3 (such as the plot width in pixels).
  * @returns A new array with the kept points, in order; a copy when the series is not longer than
  * `targetCount`.
@@ -17,28 +17,29 @@ const MIN_TARGET_COUNT = 3;
  * @example
  * createPolylinePath(projectPoints(downsampleLttb(samples, 400), bounds, plot), false);
  */
-export function downsampleLttb(points: readonly Point[], targetCount: number): Point[] {
+export function downsampleLttb(points: readonly Point[] | null | undefined, targetCount: number): Point[] {
+  const resolvedPoints = points ?? [];
   if (!Number.isSafeInteger(targetCount) || targetCount < MIN_TARGET_COUNT) {
     throw new RangeError(`targetCount must be an integer of at least ${MIN_TARGET_COUNT}, got ${targetCount}`);
   }
-  const [first] = points;
-  const [last] = points.slice(-1);
-  if (first === undefined || last === undefined || points.length <= targetCount) {
-    return [...points];
+  const [first] = resolvedPoints;
+  const [last] = resolvedPoints.slice(-1);
+  if (first === undefined || last === undefined || resolvedPoints.length <= targetCount) {
+    return [...resolvedPoints];
   }
   // The inner points are split into `targetCount - 2` buckets; the first and last points stand alone.
-  const bucketSize = (points.length - 2) / (targetCount - 2);
+  const bucketSize = (resolvedPoints.length - 2) / (targetCount - 2);
   const result: Point[] = [first];
   let previous = first;
   for (let bucket = 0; bucket < targetCount - 2; bucket++) {
     const start = Math.floor(bucket * bucketSize) + 1;
     const end = Math.floor((bucket + 1) * bucketSize) + 1;
     // The average of the next bucket; the last point after the last bucket.
-    const nextEnd = Math.min(Math.floor((bucket + 2) * bucketSize) + 1, points.length - 1);
-    const next = averagePoint(points.slice(end, nextEnd)) ?? last;
+    const nextEnd = Math.min(Math.floor((bucket + 2) * bucketSize) + 1, resolvedPoints.length - 1);
+    const next = averagePoint(resolvedPoints.slice(end, nextEnd)) ?? last;
     let selected = previous;
     let maxArea = -1;
-    for (const point of points.slice(start, end)) {
+    for (const point of resolvedPoints.slice(start, end)) {
       // Twice the area of the triangle (previous, point, next): the factor does not change the maximum.
       const area = Math.abs(
         (previous.x - next.x) * (point.y - previous.y) - (previous.x - point.x) * (next.y - previous.y),

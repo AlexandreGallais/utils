@@ -16,4 +16,9 @@ describe(formatSigned, () => {
   it('throws a RangeError for invalid digits', () => {
     expect(() => formatSigned(1, -1)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatSigned(1.23456)).toStrictEqual(formatSigned(1.23456, 3));
+    expect(formatSigned(1.23456, null)).toStrictEqual(formatSigned(1.23456, 3));
+  });
 });

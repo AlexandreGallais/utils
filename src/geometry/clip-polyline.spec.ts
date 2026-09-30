@@ -80,4 +80,13 @@ describe(clipPolyline, () => {
       ),
     ).toStrictEqual([]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(clipPolyline(undefined, { x: 10, y: 20, width: 100, height: 50 })).toStrictEqual(
+      clipPolyline([], { x: 10, y: 20, width: 100, height: 50 }),
+    );
+    expect(clipPolyline(null, { x: 10, y: 20, width: 100, height: 50 })).toStrictEqual(
+      clipPolyline([], { x: 10, y: 20, width: 100, height: 50 }),
+    );
+  });
 });

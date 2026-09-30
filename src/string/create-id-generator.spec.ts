@@ -12,4 +12,9 @@ describe(createIdGenerator, () => {
     first();
     expect(second()).toBe('b-1');
   });
+
+  it('takes no prefix for null or undefined', () => {
+    expect(createIdGenerator()()).toBe(createIdGenerator('')());
+    expect(createIdGenerator(null)()).toBe(createIdGenerator('')());
+  });
 });

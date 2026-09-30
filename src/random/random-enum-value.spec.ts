@@ -18,4 +18,11 @@ describe(randomEnumValue, () => {
   it('throws a RangeError for an empty enum', () => {
     expect(() => randomEnumValue(Empty, Math.random)).toThrow(RangeError);
   });
+
+  it('takes Math.random for null or undefined', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.3);
+    expect(randomEnumValue(Status)).toBe(randomEnumValue(Status, Math.random));
+    expect(randomEnumValue(Status, null)).toBe(randomEnumValue(Status, Math.random));
+    vi.restoreAllMocks();
+  });
 });

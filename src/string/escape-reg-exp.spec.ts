@@ -21,4 +21,9 @@ describe(escapeRegExp, () => {
     expect(escapeRegExp('a.b')).toBe(String.raw`a\.b`);
     expect(escapeRegExp('abc')).toBe('abc');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(escapeRegExp()).toStrictEqual(escapeRegExp(''));
+    expect(escapeRegExp(null)).toStrictEqual(escapeRegExp(''));
+  });
 });

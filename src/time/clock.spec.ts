@@ -146,4 +146,12 @@ describe(Clock, () => {
   it.for([0, -1, NaN])('throws a RangeError for interval %s', (intervalMs) => {
     expect(() => new Clock({ mode: 'interval', intervalMs })).toThrow(RangeError);
   });
+
+  it.for([
+    ['omitted', new Clock()],
+    ['null', new Clock(null)],
+    ['null fields', new Clock({ mode: null, intervalMs: null, now: null })],
+  ] as const)('takes the defaults for %s options', ([, clock]) => {
+    expect(clock.isRunning).toBe(false);
+  });
 });

@@ -10,4 +10,9 @@ describe(extractNumbers, () => {
     expect(extractNumbers('1 2')).toStrictEqual([1, 2]);
     expect(extractNumbers('1 2')).toStrictEqual([1, 2]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(extractNumbers()).toStrictEqual(extractNumbers(''));
+    expect(extractNumbers(null)).toStrictEqual(extractNumbers(''));
+  });
 });

@@ -1,8 +1,8 @@
 /**
  * Waits for a delay, cancellable with an `AbortSignal`: the timer is cleared on abort.
  *
- * @param ms - Delay in milliseconds.
- * @param signal - Optional signal that cancels the wait.
+ * @param ms - Delay in milliseconds. Defaults to `0`.
+ * @param signal - Optional signal that cancels the wait. Defaults to none.
  * @returns A promise resolved once the delay has elapsed.
  * @rejects {Error} With the signal's reason (an `AbortError` by default) when `signal` is aborted before the
  * delay elapses, or already aborted.
@@ -10,21 +10,23 @@
  * await sleep(100, undefined);
  * await sleep(1000, controller.signal); // rejects as soon as controller.abort() is called
  */
-export async function sleep(ms: number, signal: AbortSignal | undefined): Promise<void> {
+export async function sleep(ms?: number | null, signal?: AbortSignal | null): Promise<void> {
+  const resolvedMs = ms ?? 0;
+  const resolvedSignal = signal ?? undefined;
   return new Promise<void>((resolve, reject) => {
-    if (signal?.aborted === true) {
-      reject(abortReason(signal));
+    if (resolvedSignal?.aborted === true) {
+      reject(abortReason(resolvedSignal));
       return;
     }
     const timer = setTimeout(() => {
-      signal?.removeEventListener('abort', onAbort);
+      resolvedSignal?.removeEventListener('abort', onAbort);
       resolve();
-    }, ms);
+    }, resolvedMs);
     function onAbort(this: AbortSignal): void {
       clearTimeout(timer);
       reject(abortReason(this));
     }
-    signal?.addEventListener('abort', onAbort, { once: true });
+    resolvedSignal?.addEventListener('abort', onAbort, { once: true });
   });
 }
 

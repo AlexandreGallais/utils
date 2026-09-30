@@ -1,5 +1,8 @@
 import type { TimeTicks } from './time-ticks';
 
+/** Ticks wanted when no count is given: readable on a gauge or an axis. */
+const DEFAULT_TICK_COUNT = 5;
+
 /** Milliseconds per minute. */
 const MINUTE_MS = 60_000;
 /** Milliseconds per week, the largest round step; beyond, steps are multiples of it. */
@@ -24,26 +27,28 @@ const STEPS_MS: readonly number[] = STEPS.split(' ').map((step) => {
  *
  * @param start - Start of the visible interval, in milliseconds since the epoch.
  * @param end - End of the visible interval.
- * @param count - Approximate number of ticks wanted.
- * @param isUtc - Whether to align on UTC clock times instead of local ones.
+ * @param count - Approximate number of ticks wanted. Defaults to `5`.
+ * @param isUtc - Whether to align on UTC clock times instead of local ones. Defaults to `false`.
  * @returns The ticks within the interval and their step; beyond a week, steps are multiples of a week.
  * @throws {RangeError} When `count` is not a positive integer or the interval is invalid.
  * @example
  * const { values, stepMs } = getTimeTicks(Date.now() - 600_000, Date.now(), 5, false); // a tick every 2 minutes
  * const labels = values.map((value) => formatDate(new Date(value), getTimeTickPattern(stepMs), false));
  */
-export function getTimeTicks(start: number, end: number, count: number, isUtc: boolean): TimeTicks {
-  if (!Number.isSafeInteger(count) || count < 1) {
-    throw new RangeError(`count must be a positive integer, got ${count}`);
+export function getTimeTicks(start: number, end: number, count?: number | null, isUtc?: boolean | null): TimeTicks {
+  const resolvedCount = count ?? DEFAULT_TICK_COUNT;
+  const resolvedIsUtc = isUtc ?? false;
+  if (!Number.isSafeInteger(resolvedCount) || resolvedCount < 1) {
+    throw new RangeError(`count must be a positive integer, got ${resolvedCount}`);
   }
   if (!Number.isFinite(start) || !Number.isFinite(end) || start > end) {
     throw new RangeError(`[${start}, ${end}] is not a valid interval`);
   }
-  const rawStep = (end - start) / count;
+  const rawStep = (end - start) / resolvedCount;
   const stepMs = STEPS_MS.find((step) => step >= rawStep) ?? Math.ceil(rawStep / WEEK_MS) * WEEK_MS;
   // Shift to local clock time, so that multiples of the step fall on round local times.
   const startDate = new Date(start);
-  const offsetMs = isUtc ? 0 : -startDate.getTimezoneOffset() * MINUTE_MS;
+  const offsetMs = resolvedIsUtc ? 0 : -startDate.getTimezoneOffset() * MINUTE_MS;
   const first = Math.ceil((start + offsetMs) / stepMs);
   const last = Math.floor((end + offsetMs) / stepMs);
   const values = Array.from({ length: last - first + 1 }, (_, index) => (first + index) * stepMs - offsetMs);

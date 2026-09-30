@@ -9,21 +9,22 @@ import { getScreenMatrix } from './internal';
  *
  * @param path - The `<path>` whose `d` attribute is written.
  * @param element - The element to frame.
- * @param padding - Margin around its visible box, in screen pixels.
+ * @param padding - Margin around its visible box, in screen pixels. Defaults to `0`.
  * @throws {TypeError} When an element is not rendered, or the path is flattened.
  * @example
  * drawSvgFrame(selection, selectedSymbol, 4);
  */
-export function drawSvgFrame(path: SVGGraphicsElement, element: SVGGraphicsElement, padding: number): void {
+export function drawSvgFrame(path: SVGGraphicsElement, element: SVGGraphicsElement, padding?: number | null): void {
+  const resolvedPadding = padding ?? 0;
   const toPath = invertMatrix(getScreenMatrix(path));
   if (toPath === undefined) {
     throw new TypeError('The path is flattened: its coordinates cannot be computed');
   }
   const { x, y, width, height } = getSvgScreenBox(element);
-  const left = x - padding;
-  const top = y - padding;
-  const right = x + width + padding;
-  const bottom = y + height + padding;
+  const left = x - resolvedPadding;
+  const top = y - resolvedPadding;
+  const right = x + width + resolvedPadding;
+  const bottom = y + height + resolvedPadding;
   const corners = [
     { x: left, y: top },
     { x: right, y: top },

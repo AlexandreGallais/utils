@@ -1,28 +1,38 @@
 import type { Point } from './point';
 import type { Rect } from './rect';
 
+/** The origin: the point when none is given. */
+const ORIGIN = { x: 0, y: 0 };
+
 /**
  * Cuts a segment to the part inside a rectangle (Liang–Barsky algorithm), to draw a line that leaves a
  * plot area without spilling over the axes.
  *
- * @param start - First end of the segment.
- * @param end - Second end of the segment.
+ * @param start - First end of the segment. Defaults to the origin `{ x: 0, y: 0 }`.
+ * @param end - Second end of the segment. Defaults to the origin `{ x: 0, y: 0 }`.
  * @param rect - The clipping rectangle, edges included.
  * @returns The visible part, from `start` towards `end`, or `undefined` when the segment misses the
  * rectangle. An end inside the rectangle is returned as is (same object), so a caller can tell a cut end
  * from an original one.
  * @example
- * clipSegment({ x: -10, y: 5 }, { x: 5, y: 5 }, { x: 0, y: 0, width: 10, height: 10 }); // [{ x: 0, y: 5 }, { x: 5, y: 5 }]
+ * clipSegment({ x: -10, y: 5 }, { x: 5, y: 5 }, { x: 0, y: 0, width: 10, height: 10 }); // [{ x: 0, y: 5 }, { x: 5, y:
+ * 5 }]
  */
-export function clipSegment(start: Point, end: Point, rect: Rect): readonly [start: Point, end: Point] | undefined {
-  const dx = end.x - start.x;
-  const dy = end.y - start.y;
+export function clipSegment(
+  start: Point | null | undefined,
+  end: Point | null | undefined,
+  rect: Rect,
+): readonly [start: Point, end: Point] | undefined {
+  const resolvedStart = start ?? ORIGIN;
+  const resolvedEnd = end ?? ORIGIN;
+  const dx = resolvedEnd.x - resolvedStart.x;
+  const dy = resolvedEnd.y - resolvedStart.y;
   // Each edge as [direction of the segment towards the outside, distance from start to the edge].
   const edges = [
-    [-dx, start.x - rect.x],
-    [dx, rect.x + rect.width - start.x],
-    [-dy, start.y - rect.y],
-    [dy, rect.y + rect.height - start.y],
+    [-dx, resolvedStart.x - rect.x],
+    [dx, rect.x + rect.width - resolvedStart.x],
+    [-dy, resolvedStart.y - rect.y],
+    [dy, rect.y + rect.height - resolvedStart.y],
   ] as const;
   let enter = 0;
   let exit = 1;
@@ -40,7 +50,7 @@ export function clipSegment(start: Point, end: Point, rect: Rect): readonly [sta
   if (enter > exit) {
     return undefined;
   }
-  return [pointAt(start, dx, dy, enter), exit === 1 ? end : pointAt(start, dx, dy, exit)];
+  return [pointAt(resolvedStart, dx, dy, enter), exit === 1 ? resolvedEnd : pointAt(resolvedStart, dx, dy, exit)];
 }
 
 /**

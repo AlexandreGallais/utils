@@ -17,4 +17,9 @@ describe(formatRelativeTime, () => {
     expect(formatRelativeTime(-86_400_000, 'fr-FR', 'auto')).toBe('hier');
     expect(formatRelativeTime(-86_400_000, 'fr-FR', 'always')).toBe('il y a 1 jour');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatRelativeTime(-86_400_000)).toStrictEqual(formatRelativeTime(-86_400_000, 'en-US', 'auto'));
+    expect(formatRelativeTime(-86_400_000, null, null)).toStrictEqual(formatRelativeTime(-86_400_000, 'en-US', 'auto'));
+  });
 });

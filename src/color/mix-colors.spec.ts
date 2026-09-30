@@ -18,4 +18,13 @@ describe(mixColors, () => {
     expect(mixColors(RED, WHITE, 0)).toStrictEqual(RED);
     expect(mixColors(RED, WHITE, 1)).toStrictEqual({ ...WHITE, a: 1 });
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(mixColors({ r: 200, g: 100, b: 50 }, { r: 0, g: 0, b: 0 })).toStrictEqual(
+      mixColors({ r: 200, g: 100, b: 50 }, { r: 0, g: 0, b: 0 }, 0),
+    );
+    expect(mixColors({ r: 200, g: 100, b: 50 }, { r: 0, g: 0, b: 0 }, null)).toStrictEqual(
+      mixColors({ r: 200, g: 100, b: 50 }, { r: 0, g: 0, b: 0 }, 0),
+    );
+  });
 });

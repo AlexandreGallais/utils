@@ -3,16 +3,18 @@
  * may be given in any order. Never returns `-0`.
  *
  * @param value - The number to wrap.
- * @param min - One bound (included).
- * @param max - The other bound (excluded).
+ * @param min - One bound (included). Defaults to `0`.
+ * @param max - The other bound (excluded). Defaults to `1`.
  * @returns The equivalent value in [min, max[; the lower bound for an empty range.
  * @example
  * wrap(370, 0, 360); // 10
  * wrap(-10, 0, 360); // 350
  */
-export function wrap(value: number, min: number, max: number): number {
-  const lower = Math.min(min, max);
-  const span = Math.abs(max - min);
+export function wrap(value: number, min?: number | null, max?: number | null): number {
+  const resolvedMin = min ?? 0;
+  const resolvedMax = max ?? 1;
+  const lower = Math.min(resolvedMin, resolvedMax);
+  const span = Math.abs(resolvedMax - resolvedMin);
   if (span === 0) {
     return lower;
   }

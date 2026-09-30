@@ -15,4 +15,12 @@ describe(getSvgArcPoint, () => {
     );
     expect({ x: Math.round(point.x * 1e9) / 1e9 + 0, y: Math.round(point.y * 1e9) / 1e9 + 0 }).toStrictEqual(expected);
   });
+
+  it('takes the start of the arc for null or undefined', () => {
+    const { hub, path } = createGaugeScene();
+    const arc = { center: asSvgElement(hub), radius: 40, startAngle: 0, sweepAngle: 180 };
+    const expected = getSvgArcPoint(asSvgElement(path), arc, 0);
+    expect(getSvgArcPoint(asSvgElement(path), arc)).toStrictEqual(expected);
+    expect(getSvgArcPoint(asSvgElement(path), arc, null)).toStrictEqual(expected);
+  });
 });

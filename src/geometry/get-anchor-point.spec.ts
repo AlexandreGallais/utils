@@ -16,4 +16,13 @@ describe(getAnchorPoint, () => {
   ] as const)('finds the %s point', ([anchor, expected]) => {
     expect(getAnchorPoint(BOX, anchor)).toStrictEqual(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getAnchorPoint({ x: 10, y: 20, width: 100, height: 50 })).toStrictEqual(
+      getAnchorPoint({ x: 10, y: 20, width: 100, height: 50 }, 'center'),
+    );
+    expect(getAnchorPoint({ x: 10, y: 20, width: 100, height: 50 }, null)).toStrictEqual(
+      getAnchorPoint({ x: 10, y: 20, width: 100, height: 50 }, 'center'),
+    );
+  });
 });

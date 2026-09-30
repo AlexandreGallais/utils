@@ -19,4 +19,13 @@ describe(resizeRect, () => {
       height: 2,
     });
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(resizeRect({ x: 10, y: 20, width: 100, height: 50 }, { width: 50, height: 20 })).toStrictEqual(
+      resizeRect({ x: 10, y: 20, width: 100, height: 50 }, { width: 50, height: 20 }, 'center'),
+    );
+    expect(resizeRect({ x: 10, y: 20, width: 100, height: 50 }, { width: 50, height: 20 }, null)).toStrictEqual(
+      resizeRect({ x: 10, y: 20, width: 100, height: 50 }, { width: 50, height: 20 }, 'center'),
+    );
+  });
 });

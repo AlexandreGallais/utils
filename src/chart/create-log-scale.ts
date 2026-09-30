@@ -1,5 +1,10 @@
 import type { Scale } from './scale';
 
+/** Width of the default domain: one decade. */
+const DECADE = 10;
+/** Domain when none is given: one decade. */
+const DEFAULT_DOMAIN = [1, DECADE] as const;
+
 /** Base of the logarithm: each power of ten takes the same length. */
 const BASE = 10;
 
@@ -7,8 +12,8 @@ const BASE = 10;
  * Creates a logarithmic scale for a chart axis, like d3's `scaleLog`: each power of ten takes the same
  * length, for values spanning several orders of magnitude (frequencies, concentrations, sound levels).
  *
- * @param domain - The data interval, both ends strictly positive, such as `[1, 10_000]`.
- * @param range - The screen interval, such as `[height, 0]` for a y axis growing upwards.
+ * @param domain - The data interval, both ends strictly positive, such as `[1, 10_000]`. Defaults to `[1, 10]`.
+ * @param range - The screen interval, such as `[height, 0]` for a y axis growing upwards. Defaults to `[0, 1]`.
  * @returns The scale: a function with `invert`, `domain` and `range`; a value not strictly positive
  * projects to `NaN`.
  * @throws {RangeError} When a domain end is not a strictly positive finite number.
@@ -18,12 +23,14 @@ const BASE = 10;
  * x.invert(200); // 100
  */
 export function createLogScale(
-  domain: readonly [start: number, end: number],
-  range: readonly [start: number, end: number],
+  domain?: readonly [start: number, end: number] | null,
+  range?: readonly [start: number, end: number] | null,
 ): Scale {
-  const [domainStart, domainEnd] = domain;
-  const [rangeStart, rangeEnd] = range;
-  for (const end of domain) {
+  const resolvedDomain = domain ?? DEFAULT_DOMAIN;
+  const resolvedRange = range ?? ([0, 1] as const);
+  const [domainStart, domainEnd] = resolvedDomain;
+  const [rangeStart, rangeEnd] = resolvedRange;
+  for (const end of resolvedDomain) {
     if (!Number.isFinite(end) || end <= 0) {
       throw new RangeError(`domain ends must be strictly positive finite numbers, got ${end}`);
     }

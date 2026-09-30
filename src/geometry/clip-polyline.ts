@@ -6,18 +6,19 @@ import type { Rect } from './rect';
  * Cuts a broken line to the parts inside a rectangle, such as a chart series zoomed in: each part is a
  * continuous run to draw as its own polyline (a line leaving and coming back into view gives two runs).
  *
- * @param points - The vertices of the line, in drawing order.
+ * @param points - The vertices of the line, in drawing order. Defaults to `[]`.
  * @param rect - The clipping rectangle, edges included.
  * @returns The visible runs, each with at least two points; empty below two points.
  * @example
  * clipPolyline([{ x: 5, y: 5 }, { x: 15, y: 5 }, { x: 5, y: 8 }], { x: 0, y: 0, width: 10, height: 10 });
  * // [[{ x: 5, y: 5 }, { x: 10, y: 5 }], [{ x: 10, y: 6.5 }, { x: 5, y: 8 }]]
  */
-export function clipPolyline(points: readonly Point[], rect: Rect): Point[][] {
+export function clipPolyline(points: readonly Point[] | null | undefined, rect: Rect): Point[][] {
+  const resolvedPoints = points ?? [];
   const runs: Point[][] = [];
   let run: Point[] | undefined;
   let start: Point | undefined;
-  for (const end of points) {
+  for (const end of resolvedPoints) {
     const clipped = start && clipSegment(start, end, rect);
     if (clipped === undefined) {
       run = undefined;

@@ -18,4 +18,9 @@ describe(formatCompact, () => {
   it('throws a RangeError for invalid digits', () => {
     expect(() => formatCompact(1, 'en-US', -1)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatCompact(1234)).toStrictEqual(formatCompact(1234, 'en-US', 1));
+    expect(formatCompact(1234, null, null)).toStrictEqual(formatCompact(1234, 'en-US', 1));
+  });
 });

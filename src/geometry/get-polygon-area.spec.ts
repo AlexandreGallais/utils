@@ -30,4 +30,9 @@ describe(getPolygonArea, () => {
   ])('measures $expected', ({ vertices, expected }) => {
     expect(getPolygonArea(vertices)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getPolygonArea()).toStrictEqual(getPolygonArea([]));
+    expect(getPolygonArea(null)).toStrictEqual(getPolygonArea([]));
+  });
 });

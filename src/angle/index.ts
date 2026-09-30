@@ -10,5 +10,3 @@ export { formatHeading } from './format-heading';
 export { meanAngle } from './mean-angle';
 export { moveAngleTowards } from './move-angle-towards';
 export { smoothAngleTowards } from './smooth-angle-towards';
-export { formatHeadingSimple } from './format-heading-simple';
-export { headingToCardinalSimple } from './heading-to-cardinal-simple';

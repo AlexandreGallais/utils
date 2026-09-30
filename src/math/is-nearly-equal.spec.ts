@@ -12,4 +12,9 @@ describe(isNearlyEqual, () => {
     expect(isNearlyEqual(1, 1.1, 0.01)).toBe(false);
     expect(isNearlyEqual(1, 1.1, 0.1)).toBe(true);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(isNearlyEqual(0.1 + 0.2, 0.3)).toStrictEqual(isNearlyEqual(0.1 + 0.2, 0.3, 1e-9));
+    expect(isNearlyEqual(0.1 + 0.2, 0.3, null)).toStrictEqual(isNearlyEqual(0.1 + 0.2, 0.3, 1e-9));
+  });
 });

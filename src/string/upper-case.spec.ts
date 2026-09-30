@@ -9,4 +9,9 @@ describe(upperCase, () => {
   ] as const)('converts %j to %j', ([input, expected]) => {
     expect(upperCase(input)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(upperCase()).toStrictEqual(upperCase(''));
+    expect(upperCase(null)).toStrictEqual(upperCase(''));
+  });
 });

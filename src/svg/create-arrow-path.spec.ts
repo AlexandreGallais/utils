@@ -16,4 +16,13 @@ describe(createArrowPath, () => {
   it('returns an empty path for an arrow of zero length', () => {
     expect(createArrowPath({ x: 3, y: 3 }, { x: 3, y: 3 }, 4, 4)).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createArrowPath(undefined, undefined, 10)).toStrictEqual(
+      createArrowPath({ x: 0, y: 0 }, { x: 0, y: 0 }, 10, 10),
+    );
+    expect(createArrowPath(null, null, 10, null)).toStrictEqual(
+      createArrowPath({ x: 0, y: 0 }, { x: 0, y: 0 }, 10, 10),
+    );
+  });
 });

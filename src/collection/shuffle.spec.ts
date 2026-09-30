@@ -27,4 +27,13 @@ describe(shuffle, () => {
     expect(shuffle([], Math.random)).toStrictEqual([]);
     expect(shuffle([1], Math.random)).toStrictEqual([1]);
   });
+
+  it('takes an empty list and Math.random for null or undefined', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.3);
+    expect(shuffle([1, 2, 3])).toStrictEqual(shuffle([1, 2, 3], Math.random));
+    expect(shuffle([1, 2, 3], null)).toStrictEqual(shuffle([1, 2, 3], Math.random));
+    expect(shuffle()).toStrictEqual(shuffle([], Math.random));
+    expect(shuffle(null, null)).toStrictEqual(shuffle([], Math.random));
+    vi.restoreAllMocks();
+  });
 });

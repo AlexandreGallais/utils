@@ -11,4 +11,13 @@ describe(addDays, () => {
     const date = addDays(new Date(2026, 2, 28, 14, 0), 2, false);
     expect([date.getDate(), date.getHours()]).toStrictEqual([30, 14]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(addDays(new Date('2026-09-29T14:30:05Z'))).toStrictEqual(
+      addDays(new Date('2026-09-29T14:30:05Z'), 0, false),
+    );
+    expect(addDays(new Date('2026-09-29T14:30:05Z'), null, null)).toStrictEqual(
+      addDays(new Date('2026-09-29T14:30:05Z'), 0, false),
+    );
+  });
 });

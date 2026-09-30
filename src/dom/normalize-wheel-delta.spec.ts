@@ -12,4 +12,9 @@ describe(normalizeWheelDelta, () => {
   it('uses the given page height', () => {
     expect(normalizeWheelDelta({ deltaMode: 2, deltaY: 1 }, 300)).toBe(300);
   });
+
+  it('takes a page of 800 px for null or undefined', () => {
+    expect(normalizeWheelDelta({ deltaMode: 2, deltaY: 1 })).toBe(800);
+    expect(normalizeWheelDelta({ deltaMode: 2, deltaY: 1 }, null)).toBe(800);
+  });
 });

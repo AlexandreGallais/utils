@@ -18,13 +18,13 @@ export interface ArcTicksOptions {
   /** Interval between major graduations, from `min`. */
   readonly majorStep: number;
   /** Interval between minor graduations, from `min`; no minor graduation when omitted. */
-  readonly minorStep?: number;
+  readonly minorStep?: number | null;
   /** Radius where major ticks start (towards the center). */
   readonly innerRadius: number;
   /** Radius where every tick ends (towards the outside). */
   readonly outerRadius: number;
   /** Radius where minor ticks start, so they are shorter; `innerRadius` when omitted. */
-  readonly minorInnerRadius?: number;
+  readonly minorInnerRadius?: number | null;
 }
 
 /** A graduation of a round gauge, returned by `createArcTicks`. */

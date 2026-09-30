@@ -6,4 +6,9 @@ describe(sum, () => {
     expect(sum(new Float64Array([1, 2]))).toBe(3);
     expect(sum([])).toBe(0);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(sum()).toStrictEqual(sum([]));
+    expect(sum(null)).toStrictEqual(sum([]));
+  });
 });

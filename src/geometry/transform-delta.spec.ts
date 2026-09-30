@@ -14,4 +14,11 @@ describe(transformDelta, () => {
       y: 2,
     });
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(transformDelta()).toStrictEqual(transformDelta({ x: 0, y: 0 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }));
+    expect(transformDelta(null, null)).toStrictEqual(
+      transformDelta({ x: 0, y: 0 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }),
+    );
+  });
 });

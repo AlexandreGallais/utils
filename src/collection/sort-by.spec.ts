@@ -35,4 +35,16 @@ describe(sortBy, () => {
     expect(sortBy(values, (value) => value, 'asc')).toStrictEqual([1, 2, 3, NaN, undefined]);
     expect(sortBy(values, (value) => value, 'desc')).toStrictEqual([3, 2, 1, NaN, undefined]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(sortBy([3, 1, 2], (item: number) => item)).toStrictEqual(sortBy([3, 1, 2], (item: number) => item, 'asc'));
+    expect(sortBy([3, 1, 2], (item: number) => item, null)).toStrictEqual(
+      sortBy([3, 1, 2], (item: number) => item, 'asc'),
+    );
+  });
+
+  it('takes an empty list for null or undefined', () => {
+    expect(sortBy(undefined, (item: number) => item)).toStrictEqual(sortBy([], (item: number) => item));
+    expect(sortBy(null, (item: number) => item)).toStrictEqual(sortBy([], (item: number) => item));
+  });
 });

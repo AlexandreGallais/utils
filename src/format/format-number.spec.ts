@@ -4,8 +4,8 @@ describe(formatNumber, () => {
   it.for([
     [Math.PI, '1.0-2', '3.14'],
     [5, '3.0-2', '005'],
-    [1234.5, '1.2-2', '1,234.50'],
-    [1_234_567.891, '1.0-2', '1,234,567.89'],
+    [1234.5, '1.2-2', '1234.50'],
+    [1_234_567.891, '1.0-2', '1234567.89'],
     [0.5, '1.0-0', '1'],
     [-0.001, '1.0-2', '0'],
     [1.23456, '.1-1', '1.2'],
@@ -15,9 +15,16 @@ describe(formatNumber, () => {
     expect(formatNumber(value, digitsInfo, 'en-US')).toBe(expected);
   });
 
-  it('uses the separators and grouping of the locale', () => {
-    expect(formatNumber(1234.5, '1.2-2', 'fr-FR')).toBe('1\u{202F}234,50');
-    expect(formatNumber(1234.5, '1.2-2', 'de-DE')).toBe('1.234,50');
+  it('uses the separators and grouping of the locale when grouping', () => {
+    expect(formatNumber(1_234_567.891, '1.0-2', 'en-US', true)).toBe('1,234,567.89');
+    expect(formatNumber(1234.5, '1.2-2', 'fr-FR', true)).toBe('1\u{202F}234,50');
+    expect(formatNumber(1234.5, '1.2-2', 'de-DE', true)).toBe('1.234,50');
+    expect(formatNumber(1234.5, '1.2-2', 'de-DE', false)).toBe('1234,50');
+  });
+
+  it('takes 1.0-3, en-US and no grouping for null or undefined', () => {
+    expect(formatNumber(1234.5678)).toBe('1234.568');
+    expect(formatNumber(1234.5678, null, null, null)).toBe('1234.568');
   });
 
   it('formats NaN and infinities like String()', () => {

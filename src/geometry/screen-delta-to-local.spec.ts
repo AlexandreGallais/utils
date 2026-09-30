@@ -27,4 +27,13 @@ describe(screenDeltaToLocal, () => {
   it('returns undefined for a transform that is not invertible', () => {
     expect(screenDeltaToLocal({ x: 1, y: 1 }, { a: 0, b: 0, c: 0, d: 0, e: 0, f: 0 })).toBeUndefined();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(screenDeltaToLocal()).toStrictEqual(
+      screenDeltaToLocal({ x: 0, y: 0 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }),
+    );
+    expect(screenDeltaToLocal(null, null)).toStrictEqual(
+      screenDeltaToLocal({ x: 0, y: 0 }, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }),
+    );
+  });
 });

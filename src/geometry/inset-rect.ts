@@ -18,16 +18,19 @@ export interface Insets {
  * zero at its center.
  *
  * @param rect - The rectangle.
- * @param insets - The same margin on every side, or a margin per side.
+ * @param insets - The same margin on every side, or a margin per side. Defaults to `0`.
  * @returns The inner rectangle.
  * @example
  * insetRect({ x: 0, y: 0, width: 100, height: 50 }, 10); // { x: 10, y: 10, width: 80, height: 30 }
  * insetRect({ x: 0, y: 0, width: 100, height: 50 }, { top: 5, right: 0, bottom: 15, left: 20 });
  * // { x: 20, y: 5, width: 80, height: 30 }
  */
-export function insetRect(rect: Rect, insets: number | Insets): Rect {
+export function insetRect(rect: Rect, insets?: number | Insets | null): Rect {
+  const resolvedInsets = insets ?? 0;
   const { top, right, bottom, left } =
-    typeof insets === 'number' ? { top: insets, right: insets, bottom: insets, left: insets } : insets;
+    typeof resolvedInsets === 'number'
+      ? { top: resolvedInsets, right: resolvedInsets, bottom: resolvedInsets, left: resolvedInsets }
+      : resolvedInsets;
   const width = rect.width - left - right;
   const height = rect.height - top - bottom;
   return {

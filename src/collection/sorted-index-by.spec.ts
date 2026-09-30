@@ -25,4 +25,11 @@ describe(sortedIndexBy, () => {
   it('returns 0 for an empty list', () => {
     expect(sortedIndexBy([], 1, getTime)).toBe(0);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(sortedIndexBy(undefined, 3, (item: number) => item)).toStrictEqual(
+      sortedIndexBy([], 3, (item: number) => item),
+    );
+    expect(sortedIndexBy(null, 3, (item: number) => item)).toStrictEqual(sortedIndexBy([], 3, (item: number) => item));
+  });
 });

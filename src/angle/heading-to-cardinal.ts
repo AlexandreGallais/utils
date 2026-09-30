@@ -1,5 +1,8 @@
 import { normalizeAngle } from './normalize-angle';
 
+/** Compass points when none is given: N, NE, E, SE, S, SW, W, NW. */
+const DEFAULT_POINTS = 8;
+
 const FULL_TURN = 360;
 
 /** Supported sizes of the compass rose. */
@@ -30,17 +33,18 @@ const COMPASS_POINTS = [
  * points (with 8 points, `NE` covers 22.5° to 67.5°).
  *
  * @param heading - Heading in degrees, any value (normalized to [0, 360[).
- * @param points - Number of compass points: 4 (`N E S W`), 8 (with `NE`…) or 16 (with `NNE`…).
+ * @param points - Number of compass points: 4 (`N E S W`), 8 (with `NE`…) or 16 (with `NNE`…). Defaults to `8`.
  * @returns The compass point, in English abbreviations.
  * @example
  * headingToCardinal(47, 8); // 'NE'
  * headingToCardinal(47, 4); // 'E'
  * headingToCardinal(-10, 16); // 'N'
  */
-export function headingToCardinal(heading: number, points: CompassPointCount): (typeof COMPASS_POINTS)[number] {
-  const sector = FULL_TURN / points;
-  const index = Math.round(normalizeAngle(heading) / sector) % points;
-  const stride = COMPASS_POINTS.length / points;
+export function headingToCardinal(heading: number, points?: CompassPointCount | null): (typeof COMPASS_POINTS)[number] {
+  const resolvedPoints = points ?? DEFAULT_POINTS;
+  const sector = FULL_TURN / resolvedPoints;
+  const index = Math.round(normalizeAngle(heading) / sector) % resolvedPoints;
+  const stride = COMPASS_POINTS.length / resolvedPoints;
   const [name = 'N'] = COMPASS_POINTS.slice(index * stride, index * stride + 1);
   return name;
 }

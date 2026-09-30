@@ -12,7 +12,7 @@ describe(streamInChunks, () => {
   it('delivers the first chunk at once, then one per interval', async () => {
     const received: number[][] = [];
     async function consume(): Promise<void> {
-      for await (const part of streamInChunks([1, 2, 3, 4, 5], 2, 100, undefined)) {
+      for await (const part of streamInChunks([1, 2, 3, 4, 5], 2, 100)) {
         received.push(part);
       }
     }
@@ -31,7 +31,7 @@ describe(streamInChunks, () => {
 
   it('delivers nothing for an empty list', async () => {
     const received: number[][] = [];
-    for await (const part of streamInChunks<number>([], 2, 100, undefined)) {
+    for await (const part of streamInChunks<number>([], 2, 100)) {
       received.push(part);
     }
     expect(received).toStrictEqual([]);
@@ -51,6 +51,20 @@ describe(streamInChunks, () => {
   });
 
   it('rejects an invalid chunk size', async () => {
-    await expect(streamInChunks([1], 0, 100, undefined).next()).rejects.toThrow(RangeError);
+    await expect(streamInChunks([1], 0, 100).next()).rejects.toThrow(RangeError);
+  });
+
+  it('takes an empty list and no signal for null or undefined', async () => {
+    const received: number[][] = [];
+    for await (const part of streamInChunks<number>(undefined, 2, 100)) {
+      received.push(part);
+    }
+    for await (const part of streamInChunks<number>(null, 2, 100, null)) {
+      received.push(part);
+    }
+    for await (const part of streamInChunks([1, 2], 2, 100)) {
+      received.push(part);
+    }
+    expect(received).toStrictEqual([[1, 2]]);
   });
 });

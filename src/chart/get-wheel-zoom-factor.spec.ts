@@ -14,4 +14,9 @@ describe(getWheelZoomFactor, () => {
   it('uses the sensitivity', () => {
     expect(getWheelZoomFactor(-1, Math.LN2)).toBe(2);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getWheelZoomFactor(100)).toStrictEqual(getWheelZoomFactor(100, 0.002));
+    expect(getWheelZoomFactor(100, null)).toStrictEqual(getWheelZoomFactor(100, 0.002));
+  });
 });

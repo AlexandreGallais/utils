@@ -18,4 +18,11 @@ describe(getSvgAnchorPointIn, () => {
     });
     expect(() => getSvgAnchorPointIn(asSvgElement(hub), 'center', asSvgElement(flat))).toThrow(TypeError);
   });
+
+  it('takes the center for null or undefined', () => {
+    const { hub, path } = createGaugeScene();
+    const expected = getSvgAnchorPointIn(asSvgElement(hub), 'center', asSvgElement(path));
+    expect(getSvgAnchorPointIn(asSvgElement(hub), undefined, asSvgElement(path))).toStrictEqual(expected);
+    expect(getSvgAnchorPointIn(asSvgElement(hub), null, asSvgElement(path))).toStrictEqual(expected);
+  });
 });

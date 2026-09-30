@@ -19,4 +19,9 @@ describe(keyBy, () => {
   it('keeps the last item of a duplicate key', () => {
     expect(keyBy(USERS, (user) => user.role)).toStrictEqual({ admin: USERS[0], user: USERS[2] });
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(keyBy(undefined, (item: string) => item)).toStrictEqual(keyBy([], (item: string) => item));
+    expect(keyBy(null, (item: string) => item)).toStrictEqual(keyBy([], (item: string) => item));
+  });
 });

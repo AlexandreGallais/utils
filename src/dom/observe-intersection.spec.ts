@@ -24,4 +24,11 @@ describe(observeIntersection, () => {
     stop();
     expect(observer?.isDisconnected).toBe(true);
   });
+
+  it('takes empty options for null or undefined', () => {
+    const element = createFake<Element>();
+    observeIntersection(element, () => undefined);
+    observeIntersection(element, () => undefined, null);
+    expect(FakeObserver.instances.map((observer) => observer.options)).toStrictEqual([{}, {}]);
+  });
 });

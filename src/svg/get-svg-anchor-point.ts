@@ -7,12 +7,13 @@ import { getSvgScreenBox } from './get-svg-screen-box';
  * its visible box), in pixels.
  *
  * @param element - A rendered SVG element.
- * @param anchor - The point, such as `'center'` or `'top-right'`.
+ * @param anchor - The point, such as `'center'` or `'top-right'`. Defaults to `'center'`.
  * @returns The point, in screen pixels.
  * @throws {TypeError} When the element is not rendered.
  * @example
  * getSvgAnchorPoint(symbol, 'top-right'); // { x: 220, y: 92 }
  */
-export function getSvgAnchorPoint(element: SVGGraphicsElement, anchor: Anchor): Point {
-  return getAnchorPoint(getSvgScreenBox(element), anchor);
+export function getSvgAnchorPoint(element: SVGGraphicsElement, anchor?: Anchor | null): Point {
+  const resolvedAnchor = anchor ?? 'center';
+  return getAnchorPoint(getSvgScreenBox(element), resolvedAnchor);
 }

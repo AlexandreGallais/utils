@@ -8,13 +8,15 @@ const HEX_RADIX = 16;
 /**
  * Draws an opaque color, to tell series or items apart in tests and mock-ups.
  *
- * @param random - Source of numbers in [0, 1), such as a seeded generator for reproducible runs.
+ * @param random - Source of numbers in [0, 1), such as a seeded generator for reproducible runs. Defaults to
+ * `Math.random`.
  * @returns A lowercase `#rrggbb` color.
  * @example
  * randomHexColor(Math.random); // '#3fa2c8'
  */
-export function randomHexColor(random: () => number): string {
-  return `#${Math.floor(random() * COLOR_COUNT)
+export function randomHexColor(random?: (() => number) | null): string {
+  const resolvedRandom = random ?? Math.random;
+  return `#${Math.floor(resolvedRandom() * COLOR_COUNT)
     .toString(HEX_RADIX)
     .padStart(HEX_DIGITS, '0')}`;
 }

@@ -5,13 +5,14 @@
  * @template T - Type of the object.
  * @template K - Keys to leave out.
  * @param object - The source object; left untouched.
- * @param keys - The keys to leave out.
+ * @param keys - The keys to leave out. Defaults to `[]`.
  * @returns A new object with the other own enumerable properties.
  * @example
  * omit({ id: 1, name: 'Pump', internalRef: 'x' }, ['internalRef']); // { id: 1, name: 'Pump' }
  */
-export function omit<T extends object, K extends keyof T>(object: T, keys: readonly K[]): Omit<T, K> {
-  const excluded = new Set<PropertyKey>(keys);
+export function omit<T extends object, K extends keyof T>(object: T, keys?: readonly K[] | null): Omit<T, K> {
+  const resolvedKeys = keys ?? [];
+  const excluded = new Set<PropertyKey>(resolvedKeys);
   const result: Record<PropertyKey, unknown> = {};
   for (const key of Reflect.ownKeys(object)) {
     if (!excluded.has(key) && Object.prototype.propertyIsEnumerable.call(object, key)) {

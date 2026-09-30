@@ -5,14 +5,15 @@
  * @template T - Type of the object.
  * @template K - Keys to keep.
  * @param object - The source object; left untouched.
- * @param keys - The keys to copy.
+ * @param keys - The keys to copy. Defaults to `[]`.
  * @returns A new object with only those keys.
  * @example
  * pick({ id: 1, name: 'Pump', rpm: 800 }, ['id', 'name']); // { id: 1, name: 'Pump' }
  */
-export function pick<T extends object, K extends keyof T>(object: T, keys: readonly K[]): Pick<T, K> {
+export function pick<T extends object, K extends keyof T>(object: T, keys?: readonly K[] | null): Pick<T, K> {
+  const resolvedKeys = keys ?? [];
   const result: Partial<Pick<T, K>> = {};
-  for (const key of keys) {
+  for (const key of resolvedKeys) {
     if (Object.hasOwn(object, key)) {
       result[key] = object[key];
     }

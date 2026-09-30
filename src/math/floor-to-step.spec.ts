@@ -10,4 +10,9 @@ describe(floorToStep, () => {
   ] as const)('floors %s to step %s as %s', ([value, step, expected]) => {
     expect(floorToStep(value, step)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(floorToStep(2.7)).toStrictEqual(floorToStep(2.7, 1));
+    expect(floorToStep(2.7, null)).toStrictEqual(floorToStep(2.7, 1));
+  });
 });

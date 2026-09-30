@@ -39,4 +39,9 @@ describe(isPointInPolygon, () => {
   it('returns false without vertex', () => {
     expect(isPointInPolygon({ x: 0, y: 0 }, [])).toBe(false);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(isPointInPolygon()).toStrictEqual(isPointInPolygon({ x: 0, y: 0 }, []));
+    expect(isPointInPolygon(null, null)).toStrictEqual(isPointInPolygon({ x: 0, y: 0 }, []));
+  });
 });

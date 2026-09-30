@@ -10,4 +10,9 @@ describe(getStrokeDashOffset, () => {
   ] as const)('offsets a progress of %s by %s', ([progress, expected]) => {
     expect(getStrokeDashOffset(100, progress)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getStrokeDashOffset(100)).toStrictEqual(getStrokeDashOffset(100, 0));
+    expect(getStrokeDashOffset(100, null)).toStrictEqual(getStrokeDashOffset(100, 0));
+  });
 });

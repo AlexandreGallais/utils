@@ -5,7 +5,7 @@ import type { DataBounds } from './data-bounds';
  * Converts data points to screen coordinates: `bounds` is stretched over `rect` and the y axis is flipped so
  * that larger values are drawn higher. Points out of the bounds land out of the rectangle.
  *
- * @param points - The data points.
+ * @param points - The data points. Defaults to `[]`.
  * @param bounds - The data window shown by the chart.
  * @param rect - The plot area, in screen coordinates.
  * @returns The screen points, in the same order; an empty bounds axis maps to the left or bottom edge.
@@ -13,11 +13,15 @@ import type { DataBounds } from './data-bounds';
  * projectPoints([{ x: 5, y: 50 }], { minX: 0, maxX: 10, minY: 0, maxY: 100 }, { x: 0, y: 0, width: 200, height: 100 });
  * // [{ x: 100, y: 50 }]
  */
-export function projectPoints(points: readonly Point[], bounds: DataBounds, rect: Rect): Point[] {
+export function projectPoints(points: readonly Point[] | null | undefined, bounds: DataBounds, rect: Rect): Point[] {
+  const resolvedPoints = points ?? [];
   const scaleX = getScale(rect.width, bounds.maxX - bounds.minX);
   const scaleY = getScale(rect.height, bounds.maxY - bounds.minY);
   const bottom = rect.y + rect.height;
-  return points.map(({ x, y }) => ({ x: rect.x + (x - bounds.minX) * scaleX, y: bottom - (y - bounds.minY) * scaleY }));
+  return resolvedPoints.map(({ x, y }) => ({
+    x: rect.x + (x - bounds.minX) * scaleX,
+    y: bottom - (y - bounds.minY) * scaleY,
+  }));
 }
 
 /**

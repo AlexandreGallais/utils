@@ -28,4 +28,9 @@ describe(quantile, () => {
   it.for([-0.1, 1.1, NaN])('throws a RangeError for q = %s', (q) => {
     expect(() => quantile([1], q)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(quantile([1, 2, 3, 4])).toStrictEqual(quantile([1, 2, 3, 4], 0.5));
+    expect(quantile([1, 2, 3, 4], null)).toStrictEqual(quantile([1, 2, 3, 4], 0.5));
+  });
 });

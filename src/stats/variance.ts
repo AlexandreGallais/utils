@@ -6,13 +6,14 @@ import type { NumberList } from './number-list';
  *
  * @param values - An array or a typed array.
  * @param isSample - `true` for the sample variance (divides by `n - 1`), `false` for the population variance
- * (divides by `n`).
+ * (divides by `n`). Defaults to `false`.
  * @returns The variance; `NaN` for an empty list (or a single value with `isSample`).
  * @example
  * variance([2, 4, 4, 4, 5, 5, 7, 9], false); // 4
  * variance([2, 4, 4, 4, 5, 5, 7, 9], true); // 4.571…
  */
-export function variance(values: NumberList, isSample: boolean): number {
+export function variance(values: NumberList, isSample?: boolean | null): number {
+  const resolvedIsSample = isSample ?? false;
   let count = 0;
   let mean = 0;
   let squaredDeviations = 0;
@@ -22,6 +23,6 @@ export function variance(values: NumberList, isSample: boolean): number {
     mean += delta / count;
     squaredDeviations += delta * (value - mean);
   }
-  const divisor = isSample ? count - 1 : count;
+  const divisor = resolvedIsSample ? count - 1 : count;
   return divisor > 0 ? squaredDeviations / divisor : NaN;
 }

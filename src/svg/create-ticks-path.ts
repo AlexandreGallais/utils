@@ -13,14 +13,15 @@ interface TickLine {
  * Joins tick lines into the `d` attribute of a single path: one DOM element for the whole scale is much
  * cheaper to create, style and update than one `<line>` per tick. Stroke it (it has no area to fill).
  *
- * @param ticks - Lines from `createArcTicks` or `createBarTicks`, or any `{ start, end }` pairs.
+ * @param ticks - Lines from `createArcTicks` or `createBarTicks`, or any `{ start, end }` pairs. Defaults to `[]`.
  * @returns One `M … L …` segment per tick; `''` without tick.
  * @example
  * majorScale.setAttribute('d', createTicksPath(ticks.filter((tick) => tick.isMajor)));
  */
-export function createTicksPath(ticks: Iterable<TickLine>): string {
+export function createTicksPath(ticks?: Iterable<TickLine> | null): string {
+  const resolvedTicks = ticks ?? [];
   const segments: string[] = [];
-  for (const { start, end } of ticks) {
+  for (const { start, end } of resolvedTicks) {
     segments.push(
       `M ${formatCoordinate(start.x)} ${formatCoordinate(start.y)} L ${formatCoordinate(end.x)} ${formatCoordinate(end.y)}`,
     );

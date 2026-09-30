@@ -4,9 +4,9 @@ import type { TickSource } from '../time';
 /** Rhythm and rest state of `startBlink`. */
 export interface BlinkOptions {
   /** Fraction of the period spent on, in [0, 1]; 0.5 by default (on and off for the same time). */
-  readonly dutyCycle?: number;
+  readonly dutyCycle?: number | null;
   /** State applied when the blinking stops; `true` (visible) by default, so nothing stays hidden. */
-  readonly restState?: boolean;
+  readonly restState?: boolean | null;
 }
 
 /** Default fraction of the period spent on. */
@@ -21,7 +21,7 @@ const HALF_PERIOD = 0.5;
  * @param clock - The tick source, such as the application's `Clock`.
  * @param periodMs - Duration of a full on/off cycle, in milliseconds.
  * @param onChange - Called with the new state at the first tick, then at each change, and at the stop.
- * @param options - Duty cycle and rest state.
+ * @param options - Duty cycle and rest state. Defaults to `{}`.
  * @returns A function that stops the blinking and applies the rest state (once).
  * @throws {RangeError} At the first tick, when `periodMs` is not a positive finite number.
  * @example
@@ -33,9 +33,11 @@ export function startBlink(
   clock: TickSource,
   periodMs: number,
   onChange: (isOn: boolean) => void,
-  options: BlinkOptions,
+  options?: BlinkOptions | null,
 ): () => void {
-  const { dutyCycle = HALF_PERIOD, restState = true } = options;
+  const resolvedOptions = options ?? {};
+  const dutyCycle = resolvedOptions.dutyCycle ?? HALF_PERIOD;
+  const restState = resolvedOptions.restState ?? true;
   let state: boolean | undefined;
   let isRunning = true;
   const unsubscribe = clock.subscribe(({ timestamp }) => {

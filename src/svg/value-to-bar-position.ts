@@ -7,16 +7,17 @@ import type { BarScale } from './bar-scale';
  *
  * @param value - The value to place.
  * @param scale - Value range, drawing area and direction of the bar.
- * @param shouldClamp - Whether to stop at the ends of the bar instead of extrapolating.
+ * @param shouldClamp - Whether to stop at the ends of the bar instead of extrapolating. Defaults to `true`.
  * @returns The coordinate, in SVG user units.
  * @example
  * const scale = { min: 0, max: 10, rect: { x: 0, y: 0, width: 20, height: 200 }, direction: 'up' } as const;
  * valueToBarPosition(2.5, scale, true); // 150 (a quarter of the way up from the bottom)
  */
-export function valueToBarPosition(value: number, scale: BarScale, shouldClamp: boolean): number {
+export function valueToBarPosition(value: number, scale: BarScale, shouldClamp?: boolean | null): number {
+  const resolvedShouldClamp = shouldClamp ?? true;
   const { rect, direction } = scale;
   const ratio = inverseLerp(scale.min, scale.max, value);
-  const t = shouldClamp ? clamp(ratio, 0, 1) : ratio;
+  const t = resolvedShouldClamp ? clamp(ratio, 0, 1) : ratio;
   switch (direction) {
     case 'up': {
       return rect.y + rect.height - rect.height * t;

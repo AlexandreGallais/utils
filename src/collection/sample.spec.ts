@@ -14,4 +14,13 @@ describe(sample, () => {
   it('returns undefined for an empty list', () => {
     expect(sample<string>([], Math.random)).toBeUndefined();
   });
+
+  it('takes an empty list and Math.random for null or undefined', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.3);
+    expect(sample([1, 2, 3])).toStrictEqual(sample([1, 2, 3], Math.random));
+    expect(sample([1, 2, 3], null)).toStrictEqual(sample([1, 2, 3], Math.random));
+    expect(sample()).toBeUndefined();
+    expect(sample(null, null)).toBeUndefined();
+    vi.restoreAllMocks();
+  });
 });

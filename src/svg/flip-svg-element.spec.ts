@@ -21,4 +21,15 @@ describe(flipSvgElement, () => {
     // Mirrored around its left edge, the element now ends there.
     expect(Math.abs(box.center.x + box.width / 2 - left.x)).toBeLessThan(0.01);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    const omitted = createTwistedElement('rotate(10)');
+    const nulled = createTwistedElement('rotate(10)');
+    const explicit = createTwistedElement('rotate(10)');
+    flipSvgElement(asSvgElement(omitted));
+    flipSvgElement(asSvgElement(nulled), null, null);
+    flipSvgElement(asSvgElement(explicit), 'horizontal', 'center');
+    expect(describeOnScreen(omitted)).toStrictEqual(describeOnScreen(explicit));
+    expect(describeOnScreen(nulled)).toStrictEqual(describeOnScreen(explicit));
+  });
 });

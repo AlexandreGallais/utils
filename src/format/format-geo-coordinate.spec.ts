@@ -33,4 +33,11 @@ describe(formatGeoCoordinate, () => {
   ] as const)('returns an empty string for %s as a %s', ([value, axis]) => {
     expect(formatGeoCoordinate(value, axis, 'dm', 3)).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatGeoCoordinate(48.856667, 'lat')).toStrictEqual(formatGeoCoordinate(48.856667, 'lat', 'dm', 3));
+    expect(formatGeoCoordinate(48.856667, 'lat', null, null)).toStrictEqual(
+      formatGeoCoordinate(48.856667, 'lat', 'dm', 3),
+    );
+  });
 });

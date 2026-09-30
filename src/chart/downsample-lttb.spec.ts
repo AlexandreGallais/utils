@@ -25,4 +25,9 @@ describe(downsampleLttb, () => {
   it.for([2, 0, 3.5, NaN])('throws a RangeError for a target of %s', (targetCount) => {
     expect(() => downsampleLttb([], targetCount)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(downsampleLttb(undefined, 3)).toStrictEqual(downsampleLttb([], 3));
+    expect(downsampleLttb(null, 3)).toStrictEqual(downsampleLttb([], 3));
+  });
 });

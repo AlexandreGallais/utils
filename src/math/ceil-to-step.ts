@@ -5,13 +5,14 @@ import { snapToStep } from './internal';
  * `0.4`.
  *
  * @param value - The number to round up.
- * @param step - The step, a positive finite number.
+ * @param step - The step, a positive finite number. Defaults to `1`.
  * @returns The smallest multiple of `step` greater than or equal to `value`.
  * @throws {RangeError} When `step` is not a positive finite number.
  * @example
  * ceilToStep(0.31, 0.1); // 0.4
  * ceilToStep(-7, 5); // -5
  */
-export function ceilToStep(value: number, step: number): number {
-  return snapToStep(value, step, Math.ceil);
+export function ceilToStep(value: number, step?: number | null): number {
+  const resolvedStep = step ?? 1;
+  return snapToStep(value, resolvedStep, Math.ceil);
 }

@@ -13,4 +13,13 @@ describe(createRegularPolygonPoints, () => {
   it.for([2, 3.5, NaN])('throws a RangeError for %s sides', (sides) => {
     expect(() => createRegularPolygonPoints({ x: 0, y: 0 }, 10, sides, 0)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createRegularPolygonPoints(undefined, 10, 6)).toStrictEqual(
+      createRegularPolygonPoints({ x: 0, y: 0 }, 10, 6, 0),
+    );
+    expect(createRegularPolygonPoints(null, 10, 6, null)).toStrictEqual(
+      createRegularPolygonPoints({ x: 0, y: 0 }, 10, 6, 0),
+    );
+  });
 });

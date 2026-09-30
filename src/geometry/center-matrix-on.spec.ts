@@ -11,4 +11,13 @@ describe(centerMatrixOn, () => {
     expect(drawn.y).toBeCloseTo(100, 9);
     expect([centered.a, centered.b, centered.c, centered.d]).toStrictEqual([matrix.a, matrix.b, matrix.c, matrix.d]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(centerMatrixOn()).toStrictEqual(
+      centerMatrixOn({ a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }),
+    );
+    expect(centerMatrixOn(null, null, null)).toStrictEqual(
+      centerMatrixOn({ a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }),
+    );
+  });
 });

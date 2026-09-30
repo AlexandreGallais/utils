@@ -1,3 +1,6 @@
+/** Locale when none is given. */
+const DEFAULT_LOCALE = 'en-US';
+
 /** Relative time formatters by locale and style: creating an `Intl.RelativeTimeFormat` costs more than using it. */
 const relativeTimeFormatters = new Map<string, Intl.RelativeTimeFormat>();
 
@@ -24,18 +27,24 @@ const UNITS: readonly (readonly [unit: Intl.RelativeTimeFormatUnit, ms: number])
  * weeks): `'5 minutes ago'`, `'in 2 hours'`, `'il y a 3 jours'`. Formatters are cached per locale and style.
  *
  * @param offsetMs - The offset from now: negative in the past, positive in the future.
- * @param locale - BCP 47 locale, such as `'fr-FR'`.
- * @param numeric - `'auto'` for words such as "yesterday" and "now", `'always'` for "1 day ago".
+ * @param locale - BCP 47 locale, such as `'fr-FR'`. Defaults to `'en-US'`.
+ * @param numeric - `'auto'` for words such as "yesterday" and "now", `'always'` for "1 day ago". Defaults to `'auto'`.
  * @returns The offset in words, rounded to the unit.
  * @example
  * formatRelativeTime(alarm.time - Date.now(), 'en-US', 'auto'); // '5 minutes ago'
  * formatRelativeTime(-86_400_000, 'fr-FR', 'auto'); // 'hier'
  */
-export function formatRelativeTime(offsetMs: number, locale: string, numeric: Intl.RelativeTimeFormatNumeric): string {
-  const key = `${locale}|${numeric}`;
+export function formatRelativeTime(
+  offsetMs: number,
+  locale?: string | null,
+  numeric?: Intl.RelativeTimeFormatNumeric | null,
+): string {
+  const resolvedLocale = locale ?? DEFAULT_LOCALE;
+  const resolvedNumeric = numeric ?? 'auto';
+  const key = `${resolvedLocale}|${resolvedNumeric}`;
   let formatter = relativeTimeFormatters.get(key);
   if (!formatter) {
-    formatter = new Intl.RelativeTimeFormat(locale, { numeric });
+    formatter = new Intl.RelativeTimeFormat(resolvedLocale, { numeric: resolvedNumeric });
     relativeTimeFormatters.set(key, formatter);
   }
   const [unit, unitMs] = UNITS.find(([, ms]) => Math.abs(offsetMs) >= ms) ?? ['second', SECOND_MS];

@@ -15,4 +15,9 @@ describe(partition, () => {
     expect(strings).toStrictEqual(['a', 'b']);
     expect(numbers).toStrictEqual([1, 2]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(partition(undefined, (item: number) => item > 0)).toStrictEqual(partition([], (item: number) => item > 0));
+    expect(partition(null, (item: number) => item > 0)).toStrictEqual(partition([], (item: number) => item > 0));
+  });
 });

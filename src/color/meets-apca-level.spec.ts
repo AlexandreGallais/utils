@@ -22,4 +22,13 @@ describe(meetsApcaLevel, () => {
   it('accepts light text on a dark background', () => {
     expect(meetsApcaLevel(WHITE, { r: 0, g: 0, b: 0 }, 'fluent-text')).toBe(true);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(meetsApcaLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 })).toStrictEqual(
+      meetsApcaLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 }, 'body-text'),
+    );
+    expect(meetsApcaLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 }, null)).toStrictEqual(
+      meetsApcaLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 }, 'body-text'),
+    );
+  });
 });

@@ -28,4 +28,9 @@ describe(formatDuration, () => {
   it.for([-1, 4, 1.5])('throws a RangeError for %s fraction digits', (digits) => {
     expect(() => formatDuration(0, digits)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatDuration(9870)).toStrictEqual(formatDuration(9870, 0));
+    expect(formatDuration(9870, null)).toStrictEqual(formatDuration(9870, 0));
+  });
 });

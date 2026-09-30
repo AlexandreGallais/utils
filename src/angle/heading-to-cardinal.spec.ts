@@ -21,4 +21,9 @@ describe(headingToCardinal, () => {
     expect(headingToCardinal(22.5, 16)).toBe('NNE');
     expect(headingToCardinal(350, 16)).toBe('N');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(headingToCardinal(47)).toStrictEqual(headingToCardinal(47, 8));
+    expect(headingToCardinal(47, null)).toStrictEqual(headingToCardinal(47, 8));
+  });
 });

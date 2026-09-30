@@ -148,7 +148,8 @@ function helper(value: number): number {
 - Up to 3 or 4 positional parameters; beyond, an options object with its `…Options` interface, in the function's file (`BarTicksOptions` in `create-bar-ticks.ts`), every field `readonly` and documented, defaults destructured in the function.
 - Parameters are readonly (`readonly T[]`, `readonly` fields): a utility never mutates its arguments and returns new objects.
 - Callbacks are named for their role (`callback`, `keySelector`, `predicate`, `mapper`, `listener`).
-- **No default and no optional positional parameter**: every parameter is required, so a call always shows every choice (`formatNumber(value, '1.0-2', 'en-US')`, `createRotationMatrix(90, { x: 0, y: 0 })`). A parameter whose absence is meaningful takes `| undefined` explicitly (`signal: AbortSignal | undefined`). JSDoc suggests usual values with "such as", never "by default".
+- **Defaults wherever a neutral value exists**: settings and data get a default (coordinates and sizes `0`, lists `[]`, texts `''`, options `{}`, locale `'en-US'`, `Math.random`, `performance.now()`), so `formatNumber(value)` or `rotateSvgElement(element, 30)` just work. Stay required only what has no neutral: DOM elements, callbacks, the date or value to convert or format.
+- A default applies to `null` as well as `undefined`: the parameter is `param?: T | null` (or `param: T | null | undefined` when a required one follows), resolved at the top of the body with `const resolvedParam = param ?? DEFAULT;`, never with a `= default` initializer. Option fields are `readonly x?: T | null`, read as `resolvedOptions.x ?? DEFAULT` (a destructuring default lets `null` through). The `@param` ends with "Defaults to `X`.", and a test checks that the omitted, `null` and explicit calls give the same result.
 - Time sources and randomness are parameters (`now: () => number`, `random: () => number`): callers pass `() => performance.now()` or `Math.random`, tests and replayable simulations pass fakes or `createSeededRandom`.
 - Angles: 0° up and clockwise everywhere (SVG y axis down, compass headings).
 - No magic numbers: module constants, documented.
@@ -158,13 +159,6 @@ function helper(value: number): number {
 - A programming error (argument out of range, invalid step) throws a `RangeError`, an unparsable input a `TypeError`; the message gives the expected range and the received value: `` `step must be a positive finite number, got ${step}` ``.
 - Data that may legitimately be invalid (user input, network) is parsed by a `parse…` function returning `undefined`, with a `parse…OrThrow` variant when useful.
 - Async functions reject with `Error` instances; an `AbortSignal` parameter cancels them (`signal?.throwIfAborted()`).
-
-### `…Simple` variants (the house standard)
-
-- A function whose parameters are choices (locale, decimals, random source, clock, time zone, tolerance…) may get a `…Simple` variant in its own file (`format-number-simple.ts` → `formatNumberSimple`): **fewer parameters**, the choices fixed to the house standard, and a call to the full function. The full function is never changed for it.
-- The variant is tagged `@simple` in its JSDoc, listing the fixed choices; its fixed values are named module constants.
-- House standard: numbers as digits in a row with a `.` before the decimals (`1234.50`, no thousands separator), whole units when a precision is needed (whole seconds, whole degrees), local time for dates, `Math.random` and `performance.now()` as sources, about 5 ticks on an axis, inclusive bounds, population statistics, clamped gauge values, no abort signal.
-- No variant when nothing sensible can be fixed (a language for texts, a guard for stored data).
 
 ### Caches
 

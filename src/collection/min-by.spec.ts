@@ -25,4 +25,9 @@ describe(minBy, () => {
   it('returns undefined for no item', () => {
     expect(minBy([], (value: number) => value)).toBeUndefined();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(minBy(undefined, (item: number) => item)).toStrictEqual(minBy([], (item: number) => item));
+    expect(minBy(null, (item: number) => item)).toStrictEqual(minBy([], (item: number) => item));
+  });
 });

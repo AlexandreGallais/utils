@@ -9,15 +9,16 @@ import type { DeepPartial } from '../types';
  *
  * @template T - The settings type.
  * @param base - The complete object, such as the defaults.
- * @param patch - The values to change.
+ * @param patch - The values to change. Defaults to `{}`.
  * @returns A new object; the unchanged branches are shared with `base`, neither argument is modified.
  * @example
  * deepMerge({ grid: { step: 10, isVisible: true }, series: ['a'] }, { grid: { isVisible: false } });
  * // { grid: { step: 10, isVisible: false }, series: ['a'] }
  */
-export function deepMerge<T extends object>(base: T, patch: DeepPartial<NoInfer<T>>): T {
+export function deepMerge<T extends object>(base: T, patch?: DeepPartial<NoInfer<T>> | null): T {
+  const resolvedPatch = patch ?? {};
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- a DeepPartial<T> merged into a T keeps the shape of T.
-  return mergeValues(base, patch) as T;
+  return mergeValues(base, resolvedPatch) as T;
 }
 
 /**

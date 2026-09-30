@@ -13,4 +13,9 @@ describe(createTicksPath, () => {
   it('returns an empty path without tick', () => {
     expect(createTicksPath([])).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createTicksPath()).toStrictEqual(createTicksPath([]));
+    expect(createTicksPath(null)).toStrictEqual(createTicksPath([]));
+  });
 });

@@ -20,4 +20,9 @@ describe(zip, () => {
       [2, 'b'],
     ]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(zip()).toStrictEqual(zip([], []));
+    expect(zip(null, null)).toStrictEqual(zip([], []));
+  });
 });

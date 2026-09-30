@@ -20,4 +20,9 @@ describe(createAreaPath, () => {
   it('returns an empty path without point', () => {
     expect(createAreaPath([], 10)).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createAreaPath()).toStrictEqual(createAreaPath([], 0));
+    expect(createAreaPath(null, null)).toStrictEqual(createAreaPath([], 0));
+  });
 });

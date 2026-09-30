@@ -28,4 +28,9 @@ describe(isBlinkOn, () => {
   it.for([0, -1, NaN, Infinity])('throws a RangeError for period %s', (periodMs) => {
     expect(() => isBlinkOn(0, periodMs, 0.5)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(isBlinkOn(200, 1000)).toStrictEqual(isBlinkOn(200, 1000, 0.5));
+    expect(isBlinkOn(200, 1000, null)).toStrictEqual(isBlinkOn(200, 1000, 0.5));
+  });
 });

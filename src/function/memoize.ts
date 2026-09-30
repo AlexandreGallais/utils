@@ -1,5 +1,8 @@
 import type { MemoizedFunction } from './memoized-function';
 
+/** Cached results when no size is given: bounded, since keys may come from user input. */
+const DEFAULT_MAX_SIZE = 1000;
+
 /**
  * Caches the results of a pure function by key: a call with an already seen key returns the stored result
  * without running the function. The key is computed by `getKey`. For a value recomputed at each
@@ -8,8 +11,8 @@ import type { MemoizedFunction } from './memoized-function';
  * @template TArguments - Parameters of the wrapped function.
  * @template TResult - Return type of the wrapped function.
  * @param callback - A pure function.
- * @param getKey - Computes the cache key from the arguments, such as `(id) => id`.
- * @param maxSize - Maximum number of cached results, a positive integer.
+ * @param getKey - Computes the cache key from the arguments, such as `(id) => id`. Defaults to the first argument.
+ * @param maxSize - Maximum number of cached results, a positive integer. Defaults to `1000`.
  * @returns The memoized function, with its read-only `cache` and `clear()`.
  * @throws {RangeError} When `maxSize` is not a positive integer.
  * @cached Results by key in a `Map`, `maxSize` entries (the oldest evicted first), emptied by `clear()`.
@@ -20,21 +23,23 @@ import type { MemoizedFunction } from './memoized-function';
  */
 export function memoize<TArguments extends unknown[], TResult>(
   callback: (...callArguments: TArguments) => TResult,
-  getKey: (...callArguments: TArguments) => unknown,
-  maxSize: number,
+  getKey?: ((...callArguments: TArguments) => unknown) | null,
+  maxSize?: number | null,
 ): MemoizedFunction<TArguments, TResult> {
-  if (!Number.isSafeInteger(maxSize) || maxSize < 1) {
-    throw new RangeError(`maxSize must be a positive integer, got ${maxSize}`);
+  const resolvedGetKey = getKey ?? ((...callArguments: TArguments): unknown => callArguments[0]);
+  const resolvedMaxSize = maxSize ?? DEFAULT_MAX_SIZE;
+  if (!Number.isSafeInteger(resolvedMaxSize) || resolvedMaxSize < 1) {
+    throw new RangeError(`maxSize must be a positive integer, got ${resolvedMaxSize}`);
   }
   const cache = new Map<unknown, TResult>();
   function memoized(...callArguments: TArguments): TResult {
-    const key = getKey(...callArguments);
+    const key = resolvedGetKey(...callArguments);
     if (cache.has(key)) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- `has` guarantees a stored result, possibly `undefined`.
       return cache.get(key) as TResult;
     }
     const result = callback(...callArguments);
-    if (cache.size >= maxSize) {
+    if (cache.size >= resolvedMaxSize) {
       // A `Map` iterates in insertion order: the first key is the oldest.
       const [oldest] = cache.keys();
       cache.delete(oldest);

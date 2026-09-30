@@ -17,4 +17,11 @@ describe(getDistanceToSegment, () => {
   it('measures to a point for an empty segment', () => {
     expect(getDistanceToSegment({ x: 3, y: 4 }, start, start)).toBe(5);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getDistanceToSegment()).toStrictEqual(getDistanceToSegment({ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }));
+    expect(getDistanceToSegment(null, null, null)).toStrictEqual(
+      getDistanceToSegment({ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }),
+    );
+  });
 });

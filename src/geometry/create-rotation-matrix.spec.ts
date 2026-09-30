@@ -29,4 +29,9 @@ describe(createRotationMatrix, () => {
     expect(matrix.a).toBeCloseTo(1, 9);
     expect(matrix.b).toBeCloseTo(0, 9);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createRotationMatrix()).toStrictEqual(createRotationMatrix(0, { x: 0, y: 0 }));
+    expect(createRotationMatrix(null, null)).toStrictEqual(createRotationMatrix(0, { x: 0, y: 0 }));
+  });
 });

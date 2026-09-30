@@ -14,4 +14,9 @@ describe(getDataBounds, () => {
   it('returns undefined without point', () => {
     expect(getDataBounds([])).toBeUndefined();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getDataBounds()).toStrictEqual(getDataBounds([]));
+    expect(getDataBounds(null)).toStrictEqual(getDataBounds([]));
+  });
 });

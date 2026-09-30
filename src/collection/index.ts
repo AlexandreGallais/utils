@@ -21,7 +21,3 @@ export { differenceBy } from './difference-by';
 export { intersectionBy } from './intersection-by';
 export { moveItem } from './move-item';
 export { sortedIndexBy } from './sorted-index-by';
-export { shuffleSimple } from './shuffle-simple';
-export { sampleSimple } from './sample-simple';
-export { sortBySimple } from './sort-by-simple';
-export { rangeSimple } from './range-simple';

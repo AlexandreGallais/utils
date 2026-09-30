@@ -27,4 +27,9 @@ describe(getBoundingRect, () => {
   it('returns undefined for no point', () => {
     expect(getBoundingRect([])).toBeUndefined();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getBoundingRect()).toStrictEqual(getBoundingRect([]));
+    expect(getBoundingRect(null)).toStrictEqual(getBoundingRect([]));
+  });
 });

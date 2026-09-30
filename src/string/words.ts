@@ -9,17 +9,18 @@ type CharacterKind = 'digit' | 'lower' | 'separator' | 'upper';
  * supported. One linear pass, no backtracking regular expression. The case functions (`camelCase`,
  * `kebabCase`…) are built on it.
  *
- * @param input - Any identifier or sentence.
+ * @param input - Any identifier or sentence. Defaults to `''`.
  * @returns The words, with their original case; empty when there is none.
  * @example
  * words('XMLHttpRequest'); // ['XML', 'Http', 'Request']
  * words('user_id-v2 Name'); // ['user', 'id', 'v', '2', 'Name']
  */
-export function words(input: string): string[] {
+export function words(input?: string | null): string[] {
+  const resolvedInput = input ?? '';
   const result: string[] = [];
   let word = '';
   let previous: CharacterKind = 'separator';
-  for (const character of input) {
+  for (const character of resolvedInput) {
     const kind = kindOf(character);
     if (kind === 'separator') {
       if (word !== '') {

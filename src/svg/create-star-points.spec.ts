@@ -21,4 +21,9 @@ describe(createStarPoints, () => {
   it.for([1, 0, 2.5])('throws a RangeError for %s branches', (branches) => {
     expect(() => createStarPoints({ x: 0, y: 0 }, 10, 5, branches)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createStarPoints(undefined, 10, 5)).toStrictEqual(createStarPoints({ x: 0, y: 0 }, 10, 5, 5));
+    expect(createStarPoints(null, 10, 5, null)).toStrictEqual(createStarPoints({ x: 0, y: 0 }, 10, 5, 5));
+  });
 });

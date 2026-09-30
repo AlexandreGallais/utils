@@ -10,7 +10,7 @@ import type { EventMapOf } from './event-map-of';
  * @param target - The element, `window`, `document` or any `EventTarget`.
  * @param type - The event name, such as `'pointermove'`.
  * @param listener - Called with each event, typed from the name (`PointerEvent` for `'pointermove'`).
- * @param options - Standard listener options; `passive: true` for scroll and touch events.
+ * @param options - Standard listener options; `passive: true` for scroll and touch events. Defaults to `{}`.
  * @returns A function that removes the listener; calling it again does nothing.
  * @example
  * const width = signal(window.innerWidth);
@@ -20,12 +20,13 @@ export function listen<T extends EventTarget, K extends keyof EventMapOf<T> & st
   target: T,
   type: K,
   listener: (event: EventMapOf<T>[K]) => void,
-  options: AddEventListenerOptions,
+  options?: AddEventListenerOptions | null,
 ): () => void {
+  const resolvedOptions = options ?? {};
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- the event map of `T` gives the type of `K` events.
   const handler = listener as EventListener;
-  target.addEventListener(type, handler, options);
+  target.addEventListener(type, handler, resolvedOptions);
   return (): void => {
-    target.removeEventListener(type, handler, options);
+    target.removeEventListener(type, handler, resolvedOptions);
   };
 }

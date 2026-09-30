@@ -16,4 +16,9 @@ describe(isBetween, () => {
     expect(isBetween(10, 0, 10, false)).toBe(false);
     expect(isBetween(5, 0, 10, false)).toBe(true);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(isBetween(1)).toStrictEqual(isBetween(1, 0, 1, true));
+    expect(isBetween(1, null, null, null)).toStrictEqual(isBetween(1, 0, 1, true));
+  });
 });

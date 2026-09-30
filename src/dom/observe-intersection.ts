@@ -4,7 +4,8 @@
  *
  * @param element - The element to watch.
  * @param onChange - Called with the visibility and the entry of each change, and once soon after the start.
- * @param options - The scroll container (`root`), its margin and the visible ratios that trigger a call.
+ * @param options - The scroll container (`root`), its margin and the visible ratios that trigger a call. Defaults to
+ * `{}`.
  * @returns A function that stops the observer.
  * @example
  * const isOnScreen = signal(false);
@@ -13,13 +14,14 @@
 export function observeIntersection(
   element: Element,
   onChange: (isIntersecting: boolean, entry: IntersectionObserverEntry) => void,
-  options: IntersectionObserverInit,
+  options?: IntersectionObserverInit | null,
 ): () => void {
+  const resolvedOptions = options ?? {};
   const observer = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       onChange(entry.isIntersecting, entry);
     }
-  }, options);
+  }, resolvedOptions);
   observer.observe(element);
   return (): void => {
     observer.disconnect();

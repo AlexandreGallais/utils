@@ -14,4 +14,9 @@ describe(hasSignificantChange, () => {
   ] as const)('compares %s → %s with threshold %s: %s', ([previous, next, threshold, expected]) => {
     expect(hasSignificantChange(previous, next, threshold)).toBe(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(hasSignificantChange(1, 1.000_001)).toStrictEqual(hasSignificantChange(1, 1.000_001, 0));
+    expect(hasSignificantChange(1, 1.000_001, null)).toStrictEqual(hasSignificantChange(1, 1.000_001, 0));
+  });
 });

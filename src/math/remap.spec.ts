@@ -16,4 +16,9 @@ describe(remap, () => {
   it('returns outMin for an empty input range', () => {
     expect(remap(3, 1, 1, 0, 100, false)).toBe(0);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(remap(0.25)).toStrictEqual(remap(0.25, 0, 1, 0, 1, false));
+    expect(remap(0.25, null, null, null, null, null)).toStrictEqual(remap(0.25, 0, 1, 0, 1, false));
+  });
 });

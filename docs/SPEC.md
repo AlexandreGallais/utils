@@ -430,7 +430,7 @@ Règles d'écriture formalisées d'abord (section « Writing a function » d'[`A
 
 ## Sixième lot
 
-### Variantes `…Simple` (le standard maison)
+### Variantes `…Simple` (le standard maison, retirées au dix-septième lot)
 
 - Les fonctions existantes ne changent pas. Une fonction dont des paramètres sont des choix a une variante `…Simple` dans son propre fichier : moins de paramètres, choix figés, tag JSDoc `@simple` qui les liste (comme `@cached`). Règle dans `AGENTS.md`, rappel dans le skill `add-function`.
 - Standard : nombres en chiffres collés avec un point avant les décimales (`formatNumberSimple(1234.5, '1.2-2')` → `'1234.50'`), unités entières (secondes, degrés), heure locale pour les dates, `Math.random` et `performance.now()`, environ 5 graduations, bornes incluses, statistiques de population, jauges bornées, pas de signal d'annulation, `assertSimple(isTrue: boolean)` (booléen strict).
@@ -554,3 +554,10 @@ Règles d'écriture formalisées d'abord (section « Writing a function » d'[`A
 - **CI** : `pnpm lint` / `pnpm lint:css` échouent sur les erreurs ; `pnpm lint:strict` / `pnpm lint:css:strict` aussi sur les warnings, pour une MR vers `main`.
 - **`lint/legacy/angular-18.eslintrc.json`** : les mêmes règles ESLint pour un ancien projet Angular 18 sous ESLint 8 (format `.eslintrc.json`, commentaires gardés), généré depuis le preset d'application et vérifié avec ESLint 8.57, typescript-eslint 8 et angular-eslint 18 (12 réglages adaptés). Sans SonarJS, import-x, Prettier ni règles maison.
 - **Le dossier `lint/`** garde son nom : il contient maintenant `eslint/`, `stylelint/` et `legacy/`.
+
+## Dix-septième lot : valeurs par défaut partout, fin des variantes `…Simple`
+
+- **Un défaut partout où un neutre existe** : coordonnées et tailles `0`, listes `[]`, textes `''`, options `{}`, locale `'en-US'`, `Math.random`, `performance.now()`, heure locale, pas de 1, bornes [0, 1], 5 graduations, ancre `'center'`, angles de 0 à 360°. Restent obligatoires les éléments DOM, les callbacks et la valeur à convertir ou formater.
+- **`null` prend le défaut comme `undefined`** : `param?: T | null` (ou `T | null | undefined` quand un paramètre obligatoire suit), résolu par `const resolvedParam = param ?? DEFAULT;` ; les champs d'options sont `readonly x?: T | null`, lus avec `??` (une valeur par défaut de déstructuration laisse passer `null`). La JSDoc finit par « Defaults to `X`. », et chaque spec vérifie que l'appel sans argument, avec `null` et explicite donnent le même résultat.
+- **`formatNumber(value, digitsInfo?, locale?, useGrouping?)`** : `'1.0-3'`, `'en-US'` et pas de séparateur de milliers par défaut (`1234.5`) ; `useGrouping` à `true` rend `1,234.5`. `formatDecimal(value, maxFractionDigits?, useGrouping?)` gagne aussi `useGrouping`.
+- **Les 79 variantes `…Simple` sont supprimées** (avec le tag `@simple`, le badge du wiki et la page `guide/simple-variants`) : la fonction complète appelée avec ses défauts les remplace.

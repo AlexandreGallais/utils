@@ -8,15 +8,16 @@ import type { Rgb } from './rgb';
  *
  * @param text - Text color.
  * @param background - Background color.
- * @param isLargeText - Whether the text is large (at least 18pt, or 14pt bold).
+ * @param isLargeText - Whether the text is large (at least 18pt, or 14pt bold). Defaults to `false`.
  * @returns `'AAA'`, `'AA'`, or `undefined` when the pair fails AA.
  * @example
  * getWcagLevel({ r: 0, g: 0, b: 0 }, { r: 255, g: 255, b: 255 }, false); // 'AAA'
  * getWcagLevel({ r: 150, g: 150, b: 150 }, { r: 255, g: 255, b: 255 }, false); // undefined (2.96)
  */
-export function getWcagLevel(text: Rgb, background: Rgb, isLargeText: boolean): ContrastLevel | undefined {
-  if (meetsContrastLevel(text, background, 'AAA', isLargeText)) {
+export function getWcagLevel(text: Rgb, background: Rgb, isLargeText?: boolean | null): ContrastLevel | undefined {
+  const resolvedIsLargeText = isLargeText ?? false;
+  if (meetsContrastLevel(text, background, 'AAA', resolvedIsLargeText)) {
     return 'AAA';
   }
-  return meetsContrastLevel(text, background, 'AA', isLargeText) ? 'AA' : undefined;
+  return meetsContrastLevel(text, background, 'AA', resolvedIsLargeText) ? 'AA' : undefined;
 }

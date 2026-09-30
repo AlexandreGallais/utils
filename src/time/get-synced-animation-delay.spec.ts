@@ -23,4 +23,11 @@ describe(getSyncedAnimationDelay, () => {
   it('throws a RangeError for an invalid period', () => {
     expect(() => getSyncedAnimationDelay(0, 0)).toThrow(RangeError);
   });
+
+  it('reads performance.now for null or undefined', () => {
+    for (const delay of [getSyncedAnimationDelay(1000), getSyncedAnimationDelay(1000, null)]) {
+      expect(delay).toBeLessThanOrEqual(0);
+      expect(delay).toBeGreaterThan(-1000);
+    }
+  });
 });

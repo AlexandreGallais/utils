@@ -19,4 +19,9 @@ describe(moveItem, () => {
   ])('throws a RangeError for %s → %s', ([from = 0, to = 0]) => {
     expect(() => moveItem(['a', 'b', 'c', 'd'], from, to)).toThrow(RangeError);
   });
+
+  it('takes an empty list for null or undefined, where every index is out of range', () => {
+    expect(() => moveItem(undefined, 0, 0)).toThrow(RangeError);
+    expect(() => moveItem(null, 0, 0)).toThrow(RangeError);
+  });
 });

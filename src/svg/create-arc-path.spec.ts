@@ -17,4 +17,9 @@ describe(createArcPath, () => {
     expect(createArcPath(CENTER, 40, 0, 360)).toBe('M 50 10 A 40 40 0 1 1 50 90 A 40 40 0 1 1 50 10');
     expect(createArcPath(CENTER, 40, 0, -400)).toBe('M 50 10 A 40 40 0 1 0 50 90 A 40 40 0 1 0 50 10');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createArcPath()).toStrictEqual(createArcPath({ x: 0, y: 0 }, 0, 0, 360));
+    expect(createArcPath(null, null, null, null)).toStrictEqual(createArcPath({ x: 0, y: 0 }, 0, 0, 360));
+  });
 });

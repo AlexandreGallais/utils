@@ -41,4 +41,11 @@ describe(createPeakHold, () => {
   ])('throws a RangeError for hold %s and decay %s', ([holdMs = 0, decayPerSecond = 0]) => {
     expect(() => createPeakHold(holdMs, decayPerSecond)).toThrow(RangeError);
   });
+
+  it('drops at once after the hold for null or undefined', () => {
+    const peaks = [createPeakHold(1000), createPeakHold(1000, null), createPeakHold(1000, Number.POSITIVE_INFINITY)];
+    const readings = peaks.map((peak) => [peak.update(9, 0), peak.update(3, 500), peak.update(3, 1500)]);
+    expect(readings[0]).toStrictEqual(readings[2]);
+    expect(readings[1]).toStrictEqual(readings[2]);
+  });
 });

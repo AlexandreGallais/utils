@@ -9,4 +9,9 @@ describe(compact, () => {
   it('types the result without the falsy values', () => {
     expectTypeOf(compact(['a', undefined])).toEqualTypeOf<string[]>();
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(compact()).toStrictEqual(compact([]));
+    expect(compact(null)).toStrictEqual(compact([]));
+  });
 });

@@ -17,4 +17,13 @@ describe(formatMatrix, () => {
   it('throws a RangeError for invalid decimals', () => {
     expect(() => formatMatrix({ a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }, -1)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatMatrix({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 })).toStrictEqual(
+      formatMatrix({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, 6),
+    );
+    expect(formatMatrix({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, null)).toStrictEqual(
+      formatMatrix({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, 6),
+    );
+  });
 });

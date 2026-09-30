@@ -9,9 +9,9 @@ import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
  *
  * @param path - The `<path>` whose `d` attribute is written.
  * @param from - The element where the line starts.
- * @param fromAnchor - The point of `from` where it starts, such as `'right'`.
+ * @param fromAnchor - The point of `from` where it starts, such as `'right'`. Defaults to `'center'`.
  * @param to - The element where the line ends.
- * @param toAnchor - The point of `to` where it ends, such as `'left'`.
+ * @param toAnchor - The point of `to` where it ends, such as `'left'`. Defaults to `'center'`.
  * @throws {TypeError} When an element is not rendered, or the path is flattened.
  * @example
  * drawSvgLine(pipe, pump, 'right', tank, 'left');
@@ -19,11 +19,13 @@ import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
 export function drawSvgLine(
   path: SVGGraphicsElement,
   from: SVGGraphicsElement,
-  fromAnchor: Anchor,
+  fromAnchor: Anchor | null | undefined,
   to: SVGGraphicsElement,
-  toAnchor: Anchor,
+  toAnchor?: Anchor | null,
 ): void {
-  const start = getSvgAnchorPointIn(from, fromAnchor, path);
-  const end = getSvgAnchorPointIn(to, toAnchor, path);
+  const resolvedFromAnchor = fromAnchor ?? 'center';
+  const resolvedToAnchor = toAnchor ?? 'center';
+  const start = getSvgAnchorPointIn(from, resolvedFromAnchor, path);
+  const end = getSvgAnchorPointIn(to, resolvedToAnchor, path);
   path.setAttribute('d', createPolylinePath([start, end], false));
 }

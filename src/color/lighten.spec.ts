@@ -12,4 +12,9 @@ describe(lighten, () => {
   it('darkens with a negative amount', () => {
     expect(lighten({ r: 255, g: 0, b: 0 }, -0.25)).toStrictEqual({ r: 128, g: 0, b: 0, a: 1 });
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(lighten({ r: 200, g: 100, b: 50 })).toStrictEqual(lighten({ r: 200, g: 100, b: 50 }, 0));
+    expect(lighten({ r: 200, g: 100, b: 50 }, null)).toStrictEqual(lighten({ r: 200, g: 100, b: 50 }, 0));
+  });
 });

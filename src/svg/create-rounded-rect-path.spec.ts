@@ -18,4 +18,13 @@ describe(createRoundedRectPath, () => {
       'M 0 0 H 10 A 0 0 0 0 1 10 0 V 5 A 0 0 0 0 1 10 5 H 0 A 0 0 0 0 1 0 5 V 0 A 0 0 0 0 1 0 0 Z',
     );
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createRoundedRectPath({ x: 10, y: 20, width: 100, height: 50 })).toStrictEqual(
+      createRoundedRectPath({ x: 10, y: 20, width: 100, height: 50 }, 0),
+    );
+    expect(createRoundedRectPath({ x: 10, y: 20, width: 100, height: 50 }, null)).toStrictEqual(
+      createRoundedRectPath({ x: 10, y: 20, width: 100, height: 50 }, 0),
+    );
+  });
 });

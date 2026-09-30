@@ -9,4 +9,9 @@ describe(lerpPoint, () => {
   ] as const)('interpolates at %s', ([t, expected]) => {
     expect(lerpPoint({ x: 0, y: 0 }, { x: 10, y: 20 }, t)).toStrictEqual(expected);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(lerpPoint()).toStrictEqual(lerpPoint({ x: 0, y: 0 }, { x: 0, y: 0 }, 0));
+    expect(lerpPoint(null, null, null)).toStrictEqual(lerpPoint({ x: 0, y: 0 }, { x: 0, y: 0 }, 0));
+  });
 });

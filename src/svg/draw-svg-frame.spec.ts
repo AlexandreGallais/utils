@@ -21,4 +21,14 @@ describe(drawSvgFrame, () => {
       drawSvgFrame(asSvgElement(flat), asSvgElement(hub), 1);
     }).toThrow(TypeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    const drawn = [createGaugeScene(), createGaugeScene(), createGaugeScene()] as const;
+    drawSvgFrame(asSvgElement(drawn[0].path), asSvgElement(drawn[0].hub));
+    drawSvgFrame(asSvgElement(drawn[1].path), asSvgElement(drawn[1].hub), null);
+    drawSvgFrame(asSvgElement(drawn[2].path), asSvgElement(drawn[2].hub), 0);
+    const paths = drawn.map((scene) => scene.path.attributes.get('d'));
+    expect(paths[0]).toBe(paths[2]);
+    expect(paths[1]).toBe(paths[2]);
+  });
 });

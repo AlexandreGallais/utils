@@ -16,4 +16,9 @@ describe(createPiePath, () => {
   it('returns an empty path for an empty slice', () => {
     expect(createPiePath({ x: 0, y: 0 }, 10, 45, 45)).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createPiePath()).toStrictEqual(createPiePath({ x: 0, y: 0 }, 0, 0, 360));
+    expect(createPiePath(null, null, null, null)).toStrictEqual(createPiePath({ x: 0, y: 0 }, 0, 0, 360));
+  });
 });

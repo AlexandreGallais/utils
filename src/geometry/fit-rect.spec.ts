@@ -38,4 +38,13 @@ describe(fitRect, () => {
   it('gives a zero scale for an empty content', () => {
     expect(fitRect({ width: 0, height: 0 }, SQUARE, 'contain', 0.5, 0.5).scale).toBe(0);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(fitRect({ width: 10, height: 5 }, { x: 10, y: 20, width: 100, height: 50 })).toStrictEqual(
+      fitRect({ width: 10, height: 5 }, { x: 10, y: 20, width: 100, height: 50 }, 'contain', 0.5, 0.5),
+    );
+    expect(fitRect({ width: 10, height: 5 }, { x: 10, y: 20, width: 100, height: 50 }, null, null, null)).toStrictEqual(
+      fitRect({ width: 10, height: 5 }, { x: 10, y: 20, width: 100, height: 50 }, 'contain', 0.5, 0.5),
+    );
+  });
 });

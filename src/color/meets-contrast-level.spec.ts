@@ -20,4 +20,13 @@ describe(meetsContrastLevel, () => {
     expect(meetsContrastLevel(lightGray, WHITE, 'AA', true)).toBe(true);
     expect(meetsContrastLevel(gray, WHITE, 'AAA', true)).toBe(true);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(meetsContrastLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 })).toStrictEqual(
+      meetsContrastLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 }, 'AA', false),
+    );
+    expect(meetsContrastLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 }, null, null)).toStrictEqual(
+      meetsContrastLevel({ r: 0, g: 0, b: 0 }, { r: 200, g: 100, b: 50 }, 'AA', false),
+    );
+  });
 });

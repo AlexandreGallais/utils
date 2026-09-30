@@ -14,4 +14,13 @@ describe(createScaleMatrix, () => {
     expect(matrix).toStrictEqual({ a: -1, b: 0, c: 0, d: 1, e: 100, f: 0 });
     expect(matrix.a * 50 + matrix.e).toBe(50);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createScaleMatrix()).toStrictEqual(createScaleMatrix(1, 1, { x: 0, y: 0 }));
+    expect(createScaleMatrix(null, null, null)).toStrictEqual(createScaleMatrix(1, 1, { x: 0, y: 0 }));
+  });
+  it('scales uniformly for a null or undefined sy', () => {
+    expect(createScaleMatrix(2)).toStrictEqual(createScaleMatrix(2, 2, { x: 0, y: 0 }));
+    expect(createScaleMatrix(2, null, null)).toStrictEqual(createScaleMatrix(2, 2, { x: 0, y: 0 }));
+  });
 });

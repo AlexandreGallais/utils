@@ -29,4 +29,11 @@ describe(createStaleDetector, () => {
   it.for([0, -1, Infinity, NaN])('throws a RangeError for a maximum age of %s', (maxAgeMs) => {
     expect(() => createStaleDetector(maxAgeMs, () => performance.now())).toThrow(RangeError);
   });
+
+  it('reads performance.now for null or undefined', () => {
+    for (const detector of [createStaleDetector(60_000), createStaleDetector(60_000, null)]) {
+      detector.update();
+      expect(detector.isStale()).toBe(false);
+    }
+  });
 });

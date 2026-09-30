@@ -34,4 +34,13 @@ describe(resetMatrixRotation, () => {
       2, 0, 0, 3,
     ]);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(resetMatrixRotation({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 })).toStrictEqual(
+      resetMatrixRotation({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, { x: 0, y: 0 }),
+    );
+    expect(resetMatrixRotation({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, null)).toStrictEqual(
+      resetMatrixRotation({ a: 0, b: 1, c: -1, d: 0, e: 10, f: 20 }, { x: 0, y: 0 }),
+    );
+  });
 });

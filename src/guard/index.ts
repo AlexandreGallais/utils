@@ -15,4 +15,3 @@ export { isRecord } from './is-record';
 export { isString } from './is-string';
 export { isUndefined } from './is-undefined';
 export { isNonEmptyArray } from './is-non-empty-array';
-export { assertSimple } from './assert-simple';

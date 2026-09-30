@@ -22,4 +22,9 @@ describe(createStepPath, () => {
   it('returns an empty path without point', () => {
     expect(createStepPath([], 'after')).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createStepPath()).toStrictEqual(createStepPath([], 'after'));
+    expect(createStepPath(null, null)).toStrictEqual(createStepPath([], 'after'));
+  });
 });

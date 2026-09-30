@@ -24,4 +24,11 @@ describe(observeResize, () => {
     stop();
     expect(observer?.isDisconnected).toBe(true);
   });
+
+  it('takes empty options for null or undefined', () => {
+    const element = createFake<Element>();
+    observeResize(element, () => undefined);
+    observeResize(element, () => undefined, null);
+    expect(FakeObserver.instances.map((observer) => observer.observed[0]?.options)).toStrictEqual([{}, {}]);
+  });
 });

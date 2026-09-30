@@ -7,13 +7,18 @@ const MS_PER_DAY = 86_400_000;
  *
  * @param later - The later date (an earlier one gives a negative count).
  * @param earlier - The earlier date.
- * @param isUtc - Whether days are UTC days; local days otherwise.
+ * @param isUtc - Whether days are UTC days; local days otherwise. Defaults to `false`.
  * @returns The number of day boundaries crossed; `NaN` when a date is invalid.
  * @example
  * differenceInCalendarDays(new Date('2026-10-01T00:01:00Z'), new Date('2026-09-29T23:59:00Z'), true); // 2
  */
-export function differenceInCalendarDays(later: Readonly<Date>, earlier: Readonly<Date>, isUtc: boolean): number {
-  return dayNumber(later, isUtc) - dayNumber(earlier, isUtc);
+export function differenceInCalendarDays(
+  later: Readonly<Date>,
+  earlier: Readonly<Date>,
+  isUtc?: boolean | null,
+): number {
+  const resolvedIsUtc = isUtc ?? false;
+  return dayNumber(later, resolvedIsUtc) - dayNumber(earlier, resolvedIsUtc);
 }
 
 /**

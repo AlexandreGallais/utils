@@ -9,18 +9,26 @@ const FORMULA_START = /^[\t\r+\-=@]/v;
  * spreadsheet; prepend a byte order mark (U+FEFF) so that Excel reads UTF-8.
  *
  * @param rows - The rows, header first if any; `null` and `undefined` give empty fields, dates their ISO
- * text, primitives `String(value)`, other objects their JSON.
- * @param separator - Field separator: `','`, or `';'` for spreadsheets in locales with a decimal comma.
+ * text, primitives `String(value)`, other objects their JSON. Defaults to `[]`.
+ * @param separator - Field separator: `','`, or `';'` for spreadsheets in locales with a decimal comma. Defaults to
+ * `','`.
  * @param shouldEscapeFormulas - Whether to prefix text starting with `=`, `+`, `-`, `@` with `'`, so that a
- * spreadsheet shows it instead of running it as a formula (for text typed by users).
+ * spreadsheet shows it instead of running it as a formula (for text typed by users). Defaults to `true`.
  * @returns The CSV text, without a final line break.
  * @example
  * toCsv([['time', 'speed'], ...samples.map((sample) => [new Date(sample.time), sample.speed])], ',', false);
  * // 'time,speed\r\n2026-01-15T12:00:00.000Z,12.5\r\n…'
  */
-export function toCsv(rows: Iterable<readonly unknown[]>, separator: string, shouldEscapeFormulas: boolean): string {
-  const lines: string[] = Array.from(rows, (row) =>
-    row.map((value) => formatField(value, separator, shouldEscapeFormulas)).join(separator),
+export function toCsv(
+  rows?: Iterable<readonly unknown[]> | null,
+  separator?: string | null,
+  shouldEscapeFormulas?: boolean | null,
+): string {
+  const resolvedRows = rows ?? [];
+  const resolvedSeparator = separator ?? ',';
+  const resolvedShouldEscapeFormulas = shouldEscapeFormulas ?? true;
+  const lines: string[] = Array.from(resolvedRows, (row) =>
+    row.map((value) => formatField(value, resolvedSeparator, resolvedShouldEscapeFormulas)).join(resolvedSeparator),
   );
   return lines.join('\r\n');
 }

@@ -1,3 +1,6 @@
+/** Ticks wanted when no count is given: readable on a gauge or an axis. */
+const DEFAULT_TICK_COUNT = 5;
+
 /** Margin absorbing floating-point errors when looking for the first and last multiples of the step. */
 const TOLERANCE = 1e-9;
 /** The base of the powers the steps are multiples of. */
@@ -11,16 +14,17 @@ const NICE_FACTORS: readonly number[] = [1, 2, DECIMAL_BASE / 2];
  *
  * @param min - Start of the interval.
  * @param max - End of the interval.
- * @param count - Approximate number of ticks wanted.
+ * @param count - Approximate number of ticks wanted. Defaults to `5`.
  * @returns The tick values, ascending, without floating-point noise (`0.3`, not `0.30000000000000004`).
  * @throws {RangeError} When `count` is not a positive integer or `min` is greater than `max`.
  * @example
  * getNiceTicks(0, 97, 5); // [0, 20, 40, 60, 80]
  * getNiceTicks(-0.25, 0.25, 5); // [-0.2, -0.1, 0, 0.1, 0.2]
  */
-export function getNiceTicks(min: number, max: number, count: number): number[] {
-  if (!Number.isSafeInteger(count) || count < 1) {
-    throw new RangeError(`count must be a positive integer, got ${count}`);
+export function getNiceTicks(min: number, max: number, count?: number | null): number[] {
+  const resolvedCount = count ?? DEFAULT_TICK_COUNT;
+  if (!Number.isSafeInteger(resolvedCount) || resolvedCount < 1) {
+    throw new RangeError(`count must be a positive integer, got ${resolvedCount}`);
   }
   if (min > max) {
     throw new RangeError(`min (${min}) must not be greater than max (${max})`);
@@ -28,7 +32,7 @@ export function getNiceTicks(min: number, max: number, count: number): number[] 
   if (min === max) {
     return [min];
   }
-  const step = getNiceStep((max - min) / count);
+  const step = getNiceStep((max - min) / resolvedCount);
   // Dividing integers by the inverse of a step below 1 avoids the noise of multiplying by it.
   const inverse = step < 1 ? Math.round(1 / step) : 1 / step;
   const toValue = step < 1 ? (index: number): number => index / inverse : (index: number): number => index * step;

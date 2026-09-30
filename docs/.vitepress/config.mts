@@ -17,7 +17,6 @@ const GUIDE_SIDEBAR: DefaultTheme.SidebarItem[] = [
     text: 'Guide',
     items: [
       { text: 'Getting started', link: '/guide/getting-started' },
-      { text: 'Simple variants', link: '/guide/simple-variants' },
       { text: 'SVG on screen', link: '/guide/svg-on-screen' },
       { text: 'Performance', link: '/guide/performance' },
       { text: 'Tests and coverage', link: '/guide/tests' },

@@ -26,4 +26,13 @@ describe(formatDate, () => {
   it('returns an empty string for an invalid date', () => {
     expect(formatDate(new Date('oops'), 'YYYY', false)).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatDate(new Date('2026-09-29T14:30:05Z'))).toStrictEqual(
+      formatDate(new Date('2026-09-29T14:30:05Z'), 'YYYY-MM-DD HH:mm:ss', false),
+    );
+    expect(formatDate(new Date('2026-09-29T14:30:05Z'), null, null)).toStrictEqual(
+      formatDate(new Date('2026-09-29T14:30:05Z'), 'YYYY-MM-DD HH:mm:ss', false),
+    );
+  });
 });

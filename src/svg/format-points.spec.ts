@@ -13,4 +13,9 @@ describe(formatPoints, () => {
   it('returns an empty string without point', () => {
     expect(formatPoints([])).toBe('');
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(formatPoints()).toStrictEqual(formatPoints([]));
+    expect(formatPoints(null)).toStrictEqual(formatPoints([]));
+  });
 });

@@ -14,4 +14,11 @@ describe(measureDuration, () => {
     expect(result).toBe(42);
     expect(durationMs).toBeGreaterThanOrEqual(0);
   });
+
+  it('reads performance.now for null or undefined', () => {
+    for (const { result, durationMs } of [measureDuration(() => 1), measureDuration(() => 1, null)]) {
+      expect(result).toBe(1);
+      expect(durationMs).toBeGreaterThanOrEqual(0);
+    }
+  });
 });

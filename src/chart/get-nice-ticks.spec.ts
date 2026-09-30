@@ -33,4 +33,9 @@ describe(getNiceTicks, () => {
   it('throws a RangeError for an inverted interval', () => {
     expect(() => getNiceTicks(1, 0, 5)).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(getNiceTicks(0, 97)).toStrictEqual(getNiceTicks(0, 97, 5));
+    expect(getNiceTicks(0, 97, null)).toStrictEqual(getNiceTicks(0, 97, 5));
+  });
 });

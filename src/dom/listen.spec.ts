@@ -44,4 +44,15 @@ describe(listen, () => {
       .parameter(0)
       .toEqualTypeOf<Event>();
   });
+
+  it('takes no options for null or undefined', () => {
+    const target = new EventTarget();
+    const first = vi.fn<(event: Event) => void>();
+    const second = vi.fn<(event: Event) => void>();
+    listen(target, 'ping', first);
+    listen(target, 'ping', second, null);
+    target.dispatchEvent(new Event('ping'));
+    expect(first).toHaveBeenCalledOnce();
+    expect(second).toHaveBeenCalledOnce();
+  });
 });

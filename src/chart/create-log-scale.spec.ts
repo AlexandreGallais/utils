@@ -25,4 +25,9 @@ describe(createLogScale, () => {
   it.for([0, -1, Infinity, NaN])('throws a RangeError for a domain end of %s', (end) => {
     expect(() => createLogScale([1, end], [0, 1])).toThrow(RangeError);
   });
+
+  it('takes the defaults for null or undefined', () => {
+    expect(createLogScale()(5)).toStrictEqual(createLogScale([1, 10], [0, 1])(5));
+    expect(createLogScale(null, null)(5)).toStrictEqual(createLogScale([1, 10], [0, 1])(5));
+  });
 });

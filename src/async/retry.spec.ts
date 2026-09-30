@@ -53,4 +53,9 @@ describe(retry, () => {
     await expect(promise).rejects.toThrow('Cancelled');
     await expect(retry(operation, { signal: controller.signal })).rejects.toThrow('Cancelled');
   });
+
+  it('takes empty options for null or undefined', async () => {
+    await expect(retry(async () => 'ok')).resolves.toBe('ok');
+    await expect(retry(async () => 'ok', null)).resolves.toBe('ok');
+  });
 });
