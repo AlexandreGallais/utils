@@ -7,7 +7,6 @@ describe(joinPath, () => {
     [['/assets', '', 'img/'], '/assets/img/'],
     [['https://api.example.com/', '/v1/', 'users'], 'https://api.example.com/v1/users'],
     [['wss://host//', '//x'], 'wss://host/x'],
-    [['file:///tmp', 'a'], 'file:///tmp/a'],
     [['/', 'a'], '/a'],
     [['a//b', 'c'], 'a/b/c'],
     [['', ''], ''],

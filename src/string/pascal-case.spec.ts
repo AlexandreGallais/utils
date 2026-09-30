@@ -10,9 +10,4 @@ describe(pascalCase, () => {
   ] as const)('converts %j to %j', ([input, expected]) => {
     expect(pascalCase(input)).toBe(expected);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(pascalCase()).toStrictEqual(pascalCase(''));
-    expect(pascalCase(null)).toStrictEqual(pascalCase(''));
-  });
 });

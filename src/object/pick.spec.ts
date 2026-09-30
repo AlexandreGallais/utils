@@ -22,9 +22,4 @@ describe(pick, () => {
   it('ignores inherited properties', () => {
     expect(pick(new WithInheritedGetter(), ['inherited'])).toStrictEqual({});
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(pick({ a: 1 })).toStrictEqual(pick({ a: 1 }, []));
-    expect(pick({ a: 1 }, null)).toStrictEqual(pick({ a: 1 }, []));
-  });
 });

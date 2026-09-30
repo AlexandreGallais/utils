@@ -2,32 +2,22 @@ import { isRecord } from '../guard';
 import type { DeepPartial } from '../types';
 
 /**
- * Applies a partial patch to nested settings, such as saved user preferences over the defaults: plain
- * objects are merged at every depth, anything else (arrays, dates, primitives) in the patch replaces the
- * value, and `undefined` in the patch keeps the value. Safe with parsed JSON: a `__proto__` key stays an
- * ordinary property.
+ * Applies a partial patch to nested settings, such as saved preferences over the defaults: plain objects are
+ * merged at every depth, other values replace, `undefined` keeps. A `__proto__` key stays a plain property.
  *
- * @template T - The settings type.
+ * @template T - The type of the settings.
  * @param base - The complete object, such as the defaults.
- * @param patch - The values to change. Defaults to `{}`.
- * @returns A new object; the unchanged branches are shared with `base`, neither argument is modified.
+ * @param patch - The values to change.
+ * @returns A new object that shares the unchanged branches with `base`.
  * @example
- * deepMerge({ grid: { step: 10, isVisible: true }, series: ['a'] }, { grid: { isVisible: false } });
- * // { grid: { step: 10, isVisible: false }, series: ['a'] }
+ * deepMerge({ grid: { step: 10, isVisible: true } }, { grid: { isVisible: false } });
+ * // { grid: { step: 10, isVisible: false } }
  */
-export function deepMerge<T extends object>(base: T, patch?: DeepPartial<NoInfer<T>> | null): T {
-  const resolvedPatch = patch ?? {};
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- a DeepPartial<T> merged into a T keeps the shape of T.
-  return mergeValues(base, resolvedPatch) as T;
+export function deepMerge<T extends object>(base: T, patch: DeepPartial<NoInfer<T>>): T {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- A DeepPartial<T> merged into a T is a T.
+  return mergeValues(base, patch) as T;
 }
 
-/**
- * Merges one value of the patch into the matching value of the base.
- *
- * @param base - The current value.
- * @param patch - The patch value.
- * @returns The merged value.
- */
 function mergeValues(base: unknown, patch: unknown): unknown {
   if (patch === undefined) {
     return base;
@@ -35,7 +25,6 @@ function mergeValues(base: unknown, patch: unknown): unknown {
   if (!isRecord(base) || !isRecord(patch)) {
     return patch;
   }
-  // `Object.fromEntries` defines own properties: a `__proto__` key cannot change the prototype.
   return Object.fromEntries([
     ...Object.entries(base),
     ...Object.entries(patch).map(([key, value]) => [

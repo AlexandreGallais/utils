@@ -1,9 +1,7 @@
 /**
- * Checks whether a value is not `undefined`; `null` passes.
+ * Checks whether a value is not `undefined`; `null` passes, unlike with `isDefined`.
  *
- * Differs from `isDefined`, which also excludes `null`.
- *
- * @template T - Type of the value.
+ * @template T - The type of the value.
  * @param value - The value to check.
  * @returns `true` for anything but `undefined`.
  * @example

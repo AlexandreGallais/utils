@@ -8,9 +8,4 @@ describe(squish, () => {
   ] as const)('squishes %j', ([input, expected]) => {
     expect(squish(input)).toBe(expected);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(squish()).toStrictEqual(squish(''));
-    expect(squish(null)).toStrictEqual(squish(''));
-  });
 });

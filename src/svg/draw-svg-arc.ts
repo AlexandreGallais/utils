@@ -1,15 +1,14 @@
-import { createArcPath } from './create-arc-path';
 import { getSvgAnchorPointIn } from './get-svg-anchor-point-in';
+import { createArcPath } from './internal';
 import type { SvgArc } from './svg-arc';
 
 /**
- * Draws an arc in a `<path>` around the center of an element, whatever groups and transforms each one is
- * in: the track of a gauge around its hub. Style it with `stroke` and `stroke-width` (thicker or thinner
- * arc), without `fill`.
+ * Draws an arc in a `<path>` around the center of an element, in any group: the track of a gauge around its
+ * hub. Style it with `stroke`.
  *
- * @param path - The `<path>` whose `d` attribute is written.
+ * @param path - The `<path>` to write.
  * @param arc - The center element, the radius, the start angle and the opening.
- * @throws {TypeError} When an element is not rendered, or the path is flattened.
+ * @throws {TypeError} When an element is not rendered.
  * @example
  * drawSvgArc(track, { center: hub, radius: 40, startAngle: -135, sweepAngle: 270 });
  */

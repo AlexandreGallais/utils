@@ -11,8 +11,7 @@ describe(floorToStep, () => {
     expect(floorToStep(value, step)).toBe(expected);
   });
 
-  it('takes the defaults for null or undefined', () => {
+  it('takes the defaults', () => {
     expect(floorToStep(2.7)).toStrictEqual(floorToStep(2.7, 1));
-    expect(floorToStep(2.7, null)).toStrictEqual(floorToStep(2.7, 1));
   });
 });

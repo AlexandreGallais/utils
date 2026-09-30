@@ -1,30 +1,22 @@
+import { getSvgAnchorPoint } from './get-svg-anchor-point';
 import { moveSvgElement } from './move-svg-element';
-import { asSvgElement, createTwistedElement, describeOnScreen, isSamePoint } from './testing';
+import { renderSvg } from './testing';
 
 describe(moveSvgElement, () => {
-  it('moves by screen pixels whatever the parent transforms', () => {
-    const element = createTwistedElement('rotate(40)');
-    const before = describeOnScreen(element);
-    moveSvgElement(asSvgElement(element), -5, 5);
-    const after = describeOnScreen(element);
-    expect(isSamePoint(after.center, { x: before.center.x - 5, y: before.center.y + 5 })).toBe(true);
-    expect([after.width, after.height, after.rotation]).toStrictEqual([before.width, before.height, before.rotation]);
+  it('moves in a direction of the screen, by units of the parent', () => {
+    const byId = renderSvg(`
+      <g transform="translate(200 200) rotate(90) scale(2)"><rect id="label" transform="rotate(45)" width="10" height="10" /></g>
+    `);
+    const before = getSvgAnchorPoint(byId('label'));
+    moveSvgElement(byId('label'), 0, -5);
+    const after = getSvgAnchorPoint(byId('label'));
+    expect(after.x - before.x).toBeCloseTo(0, 3);
+    expect(after.y - before.y).toBeCloseTo(-10, 3);
   });
 
-  it('throws a TypeError for a flattened element', () => {
-    expect(() => {
-      moveSvgElement(asSvgElement(createTwistedElement('scale(0)')), 1, 1);
-    }).toThrow(TypeError);
-  });
-
-  it('takes the defaults for null or undefined', () => {
-    const omitted = createTwistedElement('rotate(10)');
-    const nulled = createTwistedElement('rotate(10)');
-    const explicit = createTwistedElement('rotate(10)');
-    moveSvgElement(asSvgElement(omitted));
-    moveSvgElement(asSvgElement(nulled), null, null);
-    moveSvgElement(asSvgElement(explicit), 0, 0);
-    expect(describeOnScreen(omitted)).toStrictEqual(describeOnScreen(explicit));
-    expect(describeOnScreen(nulled)).toStrictEqual(describeOnScreen(explicit));
+  it('does not move for a zero move', () => {
+    const byId = renderSvg('<rect id="label" transform="translate(5 5)" width="10" height="10" />');
+    moveSvgElement(byId('label'), 0, 0);
+    expect(getSvgAnchorPoint(byId('label'))).toMatchObject({ x: 10, y: 10 });
   });
 });

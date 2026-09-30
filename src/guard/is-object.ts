@@ -1,9 +1,9 @@
 /**
- * Checks whether a value is a non-null object: plain objects, arrays, class instances, dates… Functions are
- * excluded. Use `isRecord` for plain objects only.
+ * Checks whether a value is a non-null object: plain object, array, class instance, date… `isRecord` accepts
+ * plain objects only.
  *
  * @param value - The value to check.
- * @returns `true` for any non-null object.
+ * @returns `true` for any non-null object; `false` for a function.
  * @example
  * isObject([]); // true
  * isObject(null); // false

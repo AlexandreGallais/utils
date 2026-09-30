@@ -15,12 +15,9 @@ describe(assert, () => {
     }).toThrow('Boom');
   });
 
-  it('throws "Assertion failed" for a null or undefined message', () => {
+  it('throws "Assertion failed" by default', () => {
     expect(() => {
       assert(false);
-    }).toThrow('Assertion failed');
-    expect(() => {
-      assert(false, null);
     }).toThrow('Assertion failed');
   });
 });

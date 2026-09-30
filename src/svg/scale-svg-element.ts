@@ -1,26 +1,35 @@
-import type { Anchor } from '../geometry';
-import { multiplyMatrices, createScaleMatrix } from '../geometry';
+import type { Anchor } from './anchor';
 import { getSvgAnchorPoint } from './get-svg-anchor-point';
-import { updateScreenMatrix } from './internal';
+import { changeOnScreen, createMatrix } from './internal';
 
 /**
- * Enlarges or shrinks an SVG element on screen, around one of its 9 anchors that stays in place, whatever
- * its rotation and groups.
+ * Enlarges or shrinks an SVG element on screen around one of its anchors, whatever its rotation and groups:
+ * with `'bottom'`, it grows upwards.
  *
  * @param element - A rendered SVG element.
- * @param factor - The size multiplier: `2` doubles it, `0.5` halves it. Defaults to `1`.
- * @param anchor - The point of its visible box that does not move, such as `'center'` or `'bottom-left'`. Defaults to
- * `'center'`.
- * @throws {TypeError} When the element is not rendered, a transform is flattened (including a factor of
- * `0`) or its `transform` attribute is invalid.
+ * @param scaleX - The horizontal factor, as seen: `2` doubles the width.
+ * @param scaleY - The vertical factor, as seen. Defaults to `scaleX`.
+ * @param anchor - The point of its visible box that stays in place. Defaults to `'center'`.
+ * @param transform - A transform of the list to set instead of adding one, to repeat the call without piling
+ * transforms up.
+ * @returns The transform holding the change, in the `transform` list of the element.
+ * @throws {TypeError} When an element is not rendered.
  * @example
- * scaleSvgElement(icon, 1.5, 'bottom'); // grows upwards from its base
+ * scaleSvgElement(tank, 1, 1.5, 'bottom'); // 50 % taller, from its base
  */
-export function scaleSvgElement(element: SVGGraphicsElement, factor?: number | null, anchor?: Anchor | null): void {
-  const resolvedFactor = factor ?? 1;
-  const resolvedAnchor = anchor ?? 'center';
-  const pivot = getSvgAnchorPoint(element, resolvedAnchor);
-  updateScreenMatrix(element, (screen) =>
-    multiplyMatrices(createScaleMatrix(resolvedFactor, resolvedFactor, pivot), screen),
+export function scaleSvgElement(
+  element: SVGGraphicsElement,
+  scaleX: number,
+  scaleY = scaleX,
+  anchor: Anchor = 'center',
+  transform?: SVGTransform,
+): SVGTransform {
+  return changeOnScreen(
+    element,
+    (screen) => {
+      const { x, y } = getSvgAnchorPoint(element, anchor);
+      return createMatrix(element, [scaleX, 0, 0, scaleY, x * (1 - scaleX), y * (1 - scaleY)]).multiply(screen);
+    },
+    transform,
   );
 }

@@ -16,9 +16,4 @@ describe(extractNumber, () => {
   it.for(['', 'n/a', '-', '.', 'abc'])('returns undefined for %j', (input) => {
     expect(extractNumber(input)).toBeUndefined();
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(extractNumber()).toStrictEqual(extractNumber(''));
-    expect(extractNumber(null)).toStrictEqual(extractNumber(''));
-  });
 });

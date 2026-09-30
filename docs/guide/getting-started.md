@@ -12,34 +12,23 @@ synoptics. It has no dependency and runs in any browser.
 ## Find a function
 
 - Press <kbd>Ctrl</kbd> <kbd>K</kbd> (or <kbd>⌘</kbd> <kbd>K</kbd>) and type a name or a need: _thousands_,
-  _blink_, _rotate around_, _CSV_.
+  _rotate_, _anchor_, _gauge_.
 - Or browse the [API](/api/) by category.
 
 ## Conventions
 
 - **Angles** are in degrees, 0° up and clockwise, everywhere.
-- **Defaults wherever a neutral value exists** (`0`, `[]`, `''`, `{}`, `'en-US'`, `Math.random`, local
-  time), and `null` takes the default like `undefined`: `formatNumber(value)`,
-  `formatNumber(value, null, 'fr-FR')`.
-- **Errors**: an invalid argument throws a `RangeError` (out of range) or a `TypeError` (unparsable);
-  `parse…` functions return `undefined` instead, and `parse…OrThrow` variants throw.
-- **Caches** are opt-in: `…Cached` variants keep computed values, the plain functions do not.
+- **Defaults in the signature** for the settings: `formatNumber(value)`, `rotateSvgElement(flag, 15)`. No
+  `null`: pass `value ?? undefined` to get a default.
+- **Inputs are trusted**: no argument validation; a `parse…` function throws a single `TypeError` when its
+  text does not match the expected format.
 - **Arguments are never mutated**: functions return new arrays and objects.
 
 ## Example
 
 ```ts
-import { Clock, formatNumber, isBlinkOn, MovingAverage, smoothTowards } from 'utils';
+import { formatNumber, remap } from 'utils';
 
-const clock = new Clock(); // one shared tick source for the whole UI
-const speed = new MovingAverage(20); // smooths the noisy 1 000 Hz input
-let needle = 0;
-
-simulation.on('speed', (value) => speed.push(value));
-
-clock.subscribe(({ timestamp, deltaMs }) => {
-  needle = smoothTowards(needle, speed.value, deltaMs, 150); // same smoothing whatever the frame rate
-  label.textContent = `${formatNumber(needle, '1.1-1')} kn`;
-  alarm.classList.toggle('on', isBlinkOn(timestamp, 1000)); // every alarm blinks in phase
-});
+label.textContent = `${formatNumber(speed, '1.1-1')} kn`;
+const angle = remap(speed, 0, 40, -135, 135, true); // the needle angle, stopped at the ends
 ```

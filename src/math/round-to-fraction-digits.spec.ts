@@ -13,6 +13,7 @@ describe(roundToFractionDigits, () => {
     [123.456, 1, 123.5],
     [1e21, 2, 1e21],
     [0.0000001, 8, 0.0000001],
+    [1.5, 150, 1.5],
   ] as const)('rounds %s to %s digits as %s', ([value, digits, expected]) => {
     expect(roundToFractionDigits(value, digits)).toBe(expected);
   });
@@ -25,10 +26,6 @@ describe(roundToFractionDigits, () => {
   it('returns non-finite values unchanged', () => {
     expect(roundToFractionDigits(NaN, 2)).toBeNaN();
     expect(roundToFractionDigits(Infinity, 2)).toBe(Infinity);
-  });
-
-  it('throws a RangeError for invalid maxFractionDigits', () => {
-    expect(() => roundToFractionDigits(1, -1)).toThrow(RangeError);
   });
 
   it('matches formatDecimal on decimal inputs', () => {
@@ -45,8 +42,7 @@ describe(roundToFractionDigits, () => {
     expect(mismatches).toStrictEqual([]);
   });
 
-  it('takes the defaults for null or undefined', () => {
+  it('takes the defaults', () => {
     expect(roundToFractionDigits(Math.PI)).toStrictEqual(roundToFractionDigits(Math.PI, 3));
-    expect(roundToFractionDigits(Math.PI, null)).toStrictEqual(roundToFractionDigits(Math.PI, 3));
   });
 });

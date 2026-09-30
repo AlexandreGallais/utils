@@ -1,9 +1,9 @@
 /**
- * Checks whether a container holds nothing: an empty string, array (or typed array), `Map`, `Set` or object
- * without own enumerable key. `null` and `undefined` count as empty; numbers and booleans never do.
+ * Checks whether a container holds nothing: an empty string, array, `Map`, `Set` or object. `null` and
+ * `undefined` count as empty.
  *
  * @param value - The value to check.
- * @returns `true` for an empty container, `null` or `undefined`.
+ * @returns `true` for an empty container, `null` or `undefined`; `false` for a number or a boolean.
  * @example
  * isEmpty({}); // true
  * isEmpty([0]); // false

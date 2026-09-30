@@ -8,7 +8,6 @@ describe(moveTowards, () => {
     [9, 10, 5, 1000, 10],
     [10, 10, 5, 1000, 10],
     [0, 10, 0, 1000, 0],
-    [0, 10, 5, -1000, 0],
   ] as const)('moves from %s towards %s at %s/s over %s ms: %s', ([current, target, rate, deltaMs, expected]) => {
     expect(moveTowards(current, target, rate, deltaMs)).toBe(expected);
   });

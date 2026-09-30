@@ -4,12 +4,12 @@ import { getEnumEntries } from './get-enum-entries';
 /**
  * Lists the member names of an enum, without the reverse mapping of numeric enums.
  *
- * @template E - Type of the enum object.
+ * @template E - The type of the enum object.
  * @param enumObject - The enum to read, such as `Direction`.
  * @returns The member names, in declaration order.
  * @example
  * enum Direction { Up, Down }
- * getEnumKeys(Direction); // ['Up', 'Down'], not ['0', '1', 'Up', 'Down']
+ * getEnumKeys(Direction); // ['Up', 'Down']
  */
 export function getEnumKeys<E extends EnumObject>(enumObject: E): (keyof E & string)[] {
   return getEnumEntries(enumObject).map(([key]) => key);

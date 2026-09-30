@@ -2,33 +2,31 @@ import type { EnumObject } from './enum-object';
 import { getEnumEntries } from './get-enum-entries';
 
 /**
- * Reads a member of an enum from a value that went through text: a query parameter, a storage entry, an
- * HTML attribute. A numeric enum is matched from its number (`1`) or its text (`'1'`); with `isKeyAccepted`,
- * the member name (`'High'`) is accepted too.
+ * Reads an enum member from a text, such as a query parameter: `'1'` gives the member of value `1`. With
+ * `isKeyAccepted`, a member name (`'High'`) works too.
  *
- * @template E - Type of the enum object.
+ * @template E - The type of the enum object.
  * @param enumObject - The enum, such as `Level`.
- * @param input - The value to read, of any type.
+ * @param input - The value or the name to read.
  * @param isKeyAccepted - Whether a member name also identifies the member. Defaults to `false`.
- * @returns The member, or `undefined` when nothing matches.
+ * @returns The member.
+ * @throws {TypeError} When no member matches.
  * @example
  * enum Level { Low = 0, High = 1 }
- * parseEnumValue(Level, '1', false); // Level.High
+ * parseEnumValue(Level, '1'); // Level.High
  * parseEnumValue(Level, 'High', true); // Level.High
- * parseEnumValue(Level, '7', false); // undefined
  */
 export function parseEnumValue<E extends EnumObject>(
   enumObject: E,
-  input: unknown,
-  isKeyAccepted?: boolean | null,
-): E[keyof E] | undefined {
-  const resolvedIsKeyAccepted = isKeyAccepted ?? false;
-  if (typeof input !== 'string' && typeof input !== 'number') {
-    return undefined;
-  }
+  input: number | string,
+  isKeyAccepted = false,
+): E[keyof E] {
   const text = String(input);
   const match = getEnumEntries(enumObject).find(
-    ([key, value]) => String(value) === text || (resolvedIsKeyAccepted && key === text),
+    ([key, value]) => String(value) === text || (isKeyAccepted && key === text),
   );
-  return match?.[1];
+  if (!match) {
+    throw new TypeError(`No enum member matches '${text}'`);
+  }
+  return match[1];
 }

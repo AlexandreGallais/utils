@@ -17,9 +17,4 @@ describe(interpolate, () => {
   it('accepts dotted keys and ignores malformed placeholders', () => {
     expect(interpolate('{user.name} { } {}', { 'user.name': 'Ada' })).toBe('Ada { } {}');
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(interpolate()).toStrictEqual(interpolate('', {}));
-    expect(interpolate(null, null)).toStrictEqual(interpolate('', {}));
-  });
 });

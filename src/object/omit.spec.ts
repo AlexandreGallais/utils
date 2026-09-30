@@ -16,9 +16,4 @@ describe(omit, () => {
     const source = Object.defineProperty({ id: 1 }, 'hidden', { value: true, enumerable: false });
     expect(omit(source, [])).toStrictEqual({ id: 1 });
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(omit({ a: 1 })).toStrictEqual(omit({ a: 1 }, []));
-    expect(omit({ a: 1 }, null)).toStrictEqual(omit({ a: 1 }, []));
-  });
 });

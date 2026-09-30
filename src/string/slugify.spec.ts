@@ -10,9 +10,4 @@ describe(slugify, () => {
   ] as const)('slugifies %j as %j', ([input, expected]) => {
     expect(slugify(input)).toBe(expected);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(slugify()).toStrictEqual(slugify(''));
-    expect(slugify(null)).toStrictEqual(slugify(''));
-  });
 });

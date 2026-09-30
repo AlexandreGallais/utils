@@ -1,38 +1,10 @@
 import { drawSvgArcTicks } from './draw-svg-arc-ticks';
-import { asSvgElement, createGaugeScene } from './testing';
+import { renderSvg } from './testing';
 
 describe(drawSvgArcTicks, () => {
-  it('draws count + 1 ticks from the radius towards the center', () => {
-    const { hub, path } = createGaugeScene();
-    drawSvgArcTicks(
-      asSvgElement(path),
-      { center: asSvgElement(hub), radius: 40, startAngle: 0, sweepAngle: 180 },
-      2,
-      10,
-    );
-    expect(path.attributes.get('d')).toBe('M 50 10 L 50 20 M 90 50 L 80 50 M 50 90 L 50 80');
-  });
-
-  it('draws outwards with a negative length', () => {
-    const { hub, path } = createGaugeScene();
-    drawSvgArcTicks(
-      asSvgElement(path),
-      { center: asSvgElement(hub), radius: 40, startAngle: 0, sweepAngle: 90 },
-      1,
-      -5,
-    );
-    expect(path.attributes.get('d')).toBe('M 50 10 L 50 5 M 90 50 L 95 50');
-  });
-
-  it.for([0, -1, 1.5])('throws a RangeError for %s intervals', (count) => {
-    const { hub, path } = createGaugeScene();
-    expect(() => {
-      drawSvgArcTicks(
-        asSvgElement(path),
-        { center: asSvgElement(hub), radius: 40, startAngle: 0, sweepAngle: 90 },
-        count,
-        5,
-      );
-    }).toThrow(RangeError);
+  it('draws count + 1 ticks towards the center', () => {
+    const byId = renderSvg('<circle id="hub" cx="50" cy="50" r="5" /><path id="ticks" />');
+    drawSvgArcTicks(byId('ticks'), { center: byId('hub'), radius: 40, startAngle: -90, sweepAngle: 180 }, 2, 10);
+    expect(byId('ticks').getAttribute('d')).toBe('M 10 50 L 20 50 M 50 10 L 50 20 M 90 50 L 80 50');
   });
 });

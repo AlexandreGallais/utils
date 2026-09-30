@@ -11,7 +11,7 @@ This repository is linted very strictly on purpose: most rules below are enforce
 - Constants live in the file that uses them (duplicate a small constant rather than share it).
 - `docs/FUNCTIONS.md` is generated (`pnpm docs:catalog`): it lists every export and the files it needs, followed through the `index.ts` files.
 - The wiki is VitePress in `docs/` (`pnpm wiki:dev`): hand-written guide pages in `docs/guide/`, API pages generated from the JSDoc by `scripts/generate-wiki.mjs` into `docs/api/` (ignored by Git). `.github/workflows/wiki.yml` publishes it on GitHub Pages at each push to `main`. A new folder needs a title in `scripts/wiki/read-sources.mjs`.
-- Tests: Vitest (Node environment, globals, 100 % coverage). Benchmarks: Vitest benchmarks in `benchmarks/`, run in Chromium through Playwright (`pnpm bench`).
+- Tests: Vitest with globals and 100 % coverage: the `node` project runs the specs in Node, the `browser` project runs the SVG specs in Chromium through Playwright, on rendered SVG. Benchmarks: Vitest benchmarks in `benchmarks/`, run in Chromium (`pnpm bench`).
 - The specification and the design decisions are in `docs/SPEC.md`: update it with any API change.
 
 ## Performance
@@ -20,7 +20,7 @@ Values may refresh ~1 000 times per second: functions used at each refresh must 
 
 - No allocation in hot paths when avoidable: plain `for` / `for…of` loops, no intermediate arrays, no spread of large arrays.
 - Objects that are expensive to create (`Intl` formatters, segmenters) may be cached inside the plain function.
-- A cache of computed values is opt-in: the plain function has no cache (`parseColor`), and a `…Cached` variant in its own file adds it (`parseColorCached`), with a `@cached` JSDoc tag describing the cache (key, size, eviction). Bound caches keyed by user input.
+- A cache lives inside the function when it always pays (`Intl` formatters by settings, the values of each enum in a `WeakMap`), with a `@cached` JSDoc tag; there is no `…Cached` variant. A cache keyed by user input is bounded.
 - Prefer precomputed tables (`/* @__PURE__ */` so bundlers drop unused ones) over repeated `Math.pow`, `toString(16)`, `10 ** n`.
 - Any optimisation claim is backed by a benchmark in `benchmarks/` against the naive baseline; keep the optimisation only if it wins.
 
@@ -60,7 +60,7 @@ pnpm check
 
 ## Files, folders and exports
 
-- File and folder names are kebab-case and match the exported function or class (`local/export-matches-filename`): `parse-color.ts` exports `parseColor`, `ring-buffer.ts` exports `RingBuffer`. Only the `index.ts` files re-export.
+- File and folder names are kebab-case and match the exported function or class (`local/export-matches-filename`): `parse-time-span.ts` exports `parseTimeSpan`, `get-svg-anchor-point.ts` exports `getSvgAnchorPoint`. Only the `index.ts` files re-export.
 - Every file exporting runtime code has its spec next to it (the 100 % coverage thresholds enforce it); `internal/` helpers are tested through the public functions.
 - No other barrel than the `index.ts` of each folder. Import a neighbour (`./clamp`) or another folder (`../math`), never a file inside another folder. A theme never imports another theme's `internal/` folder.
 - Named exports only. Default exports are allowed only where a tool requires them (config files).
@@ -88,86 +88,75 @@ Every function of the library follows the same shape, so any file reads the same
 import { clamp } from '../math'; // another folder, through its index.ts
 import type { Rgb } from './rgb'; // a neighbour
 
-/** What the constant is, and why this value. */
-const MAX_CHANNEL = 255;
+const MAX_CHANNEL = 255; // no comment: the name says it
 
 /**
- * One sentence saying what the function does, then when to use it or what makes it special (edge cases,
- * performance, conventions). Sentences start with a capital (or `code`) and end with a period.
+ * One short sentence saying what the function does, then, if needed, one saying when to use it or what
+ * makes it special. Sentences start with a capital (or `code`) and end with a period.
  *
  * @template T - What the type parameter stands for.
  * @param value - What the parameter is: unit, range, accepted forms.
- * @param isInclusive - Boolean parameters read as questions.
- * @returns What comes back, and what comes back in the edge cases (`undefined`, `NaN`, empty).
- * @throws {RangeError} When an argument is out of range (the condition, not the message).
+ * @param isInclusive - Boolean parameters read as questions. Defaults to `true`.
+ * @returns What comes back, and in the edge cases it handles on purpose (`undefined`, `NaN`, empty).
  * @example
  * functionName(15, 0, 10); // 10
- * functionName(5, 10, 0); // 5 (bounds swapped)
+ * functionName(5, 0, 10, false); // 5
  */
 export function functionName(value: number, isInclusive = true): number {
   …
 }
 
-/**
- * Private helpers stay in the file, after the exported function, with the same JSDoc (no `@example`).
- *
- * @param value - …
- * @returns …
- */
+// Private helpers stay in the file, after the exported function, without JSDoc: their name says what they do.
 function helper(value: number): number {
   …
 }
 ```
 
 - **One exported function or class per file**, named like the file (`round-to-step.ts` → `roundToStep`), with the types and constants that belong to it; an enum goes in a `.enum.ts` file (`alarm-level.enum.ts` → `AlarmLevel`); a type shared by several files gets its own file (`rgb.ts` → `Rgb`).
-- **JSDoc tags in this order**: `@internal` / `@cached`, `@template`, `@param`, `@returns`, `@yields`, `@throws`, `@rejects`, `@example`. Every exported function or class has an `@example` with its result as a `// comment`; an internal helper has `@internal` instead.
-- **Descriptions** say more than the name: not "The matrix." but "The matrix to apply, such as the result of `parseTransform`.".
+- **JSDoc on exports only**, in this tag order: `@cached`, `@template`, `@param`, `@returns`, `@yields`, `@throws`, `@rejects`, `@example`. Every exported function or class has an `@example` with its result as a `// comment`. Constants, private helpers and `internal/` files get no comment: an explicit name is enough. No comment in the body either, unless a line cannot be understood without it.
+- **Descriptions** are short sentences that say more than the name, written for developers: not "The matrix." but "The matrix to apply, such as the result of `parseTransform`.". One or two sentences; no long explanation.
 
 ### Naming
 
-| Prefix                      | Returns                                     | Examples                                    |
-| --------------------------- | ------------------------------------------- | ------------------------------------------- |
-| `is…`, `has…`, `meets…`     | `boolean`                                   | `isBetween`, `hasSignificantChange`         |
-| `get…`                      | a value computed from the arguments         | `getRelativeLuminance`, `getAnimationPhase` |
-| `to…`                       | the same data in another representation     | `toHex`, `toLinear`                         |
-| `parse…`                    | a value from text, `undefined` when invalid | `parseColor`, `parseTransform`              |
-| `parse…OrThrow`             | a value from text, throws when invalid      | `parseColorOrThrow`                         |
-| `format…`                   | a `string` for display                      | `formatDecimal`, `formatDuration`           |
-| `create…`                   | a new object, function or path              | `createArcPath`, `createLogger`             |
-| `draw…`                     | writes the geometry of an SVG element       | `drawSvgArc`, `drawSvgLine`                 |
-| `reset…`                    | cancels a transform part without moving     | `resetSvgRotation`, `resetMatrixFlip`       |
-| `round…`, `floor…`, `ceil…` | a `number`                                  | `roundToStep`                               |
-| `…Cached`                   | the same result, through a value cache      | `parseColorCached`                          |
+| Prefix                      | Returns                                                | Examples                                       |
+| --------------------------- | ------------------------------------------------------ | ---------------------------------------------- |
+| `is…`, `has…`, `meets…`     | `boolean`                                              | `isBetween`, `hasSignificantChange`            |
+| `get…`                      | a value computed from the arguments                    | `getSvgAnchorPoint`, `getContrastingTextColor` |
+| `parse…`                    | a value from text, throws a `TypeError` when malformed | `parseTimeSpan`, `parseEnumValue`              |
+| `format…`                   | a `string` for display                                 | `formatDecimal`, `formatNumber`                |
+| `draw…`                     | writes the `d` of an SVG `<path>`                      | `drawSvgArc`, `drawSvgBarTicks`                |
+| `reset…`                    | cancels a transform part without moving                | `resetSvgRotation`, `resetSvgFlip`             |
+| `round…`, `floor…`, `ceil…` | a `number`                                             | `roundToStep`                                  |
 
 - Plural parameters for lists (`items`, `values`, `points`); `min` / `max`, `from` / `to`, `start` / `end` for ranges; units in names when ambiguous (`deltaMs`, `angleDegrees`, `periodMs`).
-- Decimals are `maxFractionDigits`; bounds may be given in any order when it makes sense.
+- Decimals are `maxFractionDigits`.
 
 ### Parameters and results
 
-- Pure functions whenever possible; classes only for stateful structures (`RingBuffer`, `Clock`).
-- Up to 3 or 4 positional parameters; beyond, an options object with its `…Options` interface, in the function's file (`BarTicksOptions` in `create-bar-ticks.ts`), every field `readonly` and documented, defaults destructured in the function.
+- Pure functions whenever possible; classes only for stateful structures.
+- Up to 3 or 4 positional parameters; beyond, an options object with its `…Options` interface, in the function's file, every field `readonly`, defaults destructured in the function (`const { budgetMs = 8 } = options;`).
 - Parameters are readonly (`readonly T[]`, `readonly` fields): a utility never mutates its arguments and returns new objects.
 - Callbacks are named for their role (`callback`, `keySelector`, `predicate`, `mapper`, `listener`).
-- **Defaults wherever a neutral value exists**: settings and data get a default (coordinates and sizes `0`, lists `[]`, texts `''`, options `{}`, locale `'en-US'`, `Math.random`, `performance.now()`), so `formatNumber(value)` or `rotateSvgElement(element, 30)` just work. Stay required only what has no neutral: DOM elements, callbacks, the date or value to convert or format.
-- A default applies to `null` as well as `undefined`: the parameter is `param?: T | null` (or `param: T | null | undefined` when a required one follows), resolved at the top of the body with `const resolvedParam = param ?? DEFAULT;`, never with a `= default` initializer. Option fields are `readonly x?: T | null`, read as `resolvedOptions.x ?? DEFAULT` (a destructuring default lets `null` through). The `@param` ends with "Defaults to `X`.", and a test checks that the omitted, `null` and explicit calls give the same result.
-- Time sources and randomness are parameters (`now: () => number`, `random: () => number`): callers pass `() => performance.now()` or `Math.random`, tests and replayable simulations pass fakes or `createSeededRandom`.
+- **Defaults in the signature** (`step = 1`, `locale = 'en-US'`, `anchor: Anchor = 'center'`) for the settings: precision, locale, anchor, random source, clock, options. The main operands (the value to format, the list to process, the element to move) stay required. The JSDoc ends the `@param` with "Defaults to `X`.".
+- **No `null`**: a parameter is never typed `| null`. A caller holding a nullable value passes `value ?? undefined` to get the default.
+- Time sources and randomness are parameters with a default (`now = () => performance.now()`, `random = Math.random`), so tests can pass fakes.
 - Angles: 0° up and clockwise everywhere (SVG y axis down, compass headings).
-- No magic numbers: module constants, documented.
+- No magic numbers: module constants with explicit names (`MS_PER_SECOND`), without comment. A number in a default value is fine.
 
 ### Errors
 
-- A programming error (argument out of range, invalid step) throws a `RangeError`, an unparsable input a `TypeError`; the message gives the expected range and the received value: `` `step must be a positive finite number, got ${step}` ``.
-- Data that may legitimately be invalid (user input, network) is parsed by a `parse…` function returning `undefined`, with a `parse…OrThrow` variant when useful.
+- **Inputs are trusted**: the data reaching the UI is checked by the tests of its producer, and the UI is not exposed to the Internet. No argument validation (range, integer, empty list): a wrong argument is a bug to fix where the call is.
+- A `parse…` function checks its text with the regular expression it needs anyway, and throws a single `TypeError` naming the expected format when it does not match: `` `digitsInfo must look like '1.0-3', got '${digitsInfo}'` ``. No other check.
 - Async functions reject with `Error` instances; an `AbortSignal` parameter cancels them (`signal?.throwIfAborted()`).
 
 ### Caches
 
-- Objects that are expensive to create (`Intl` formatters, segmenters) may be cached inside the plain function.
-- A cache of computed values is opt-in: the plain function has none (`parseColor`), a `…Cached` variant in its own file adds it (`parseColorCached`), with a `@cached` tag describing the key, the size and the eviction. Caches keyed by user input are bounded.
+- Objects that are expensive to create (`Intl` formatters, segmenters) are cached inside the function.
+- A cache of computed values lives inside the function when it always pays (the values of each enum, in a `WeakMap`); otherwise there is none. There is no `…Cached` variant.
 
 ### Adding a function
 
-1. Write the file (template above) and its spec next to it (`it.for` tables, edge cases: `NaN`, empty, negative, bounds).
+1. Write the file (template above) and its spec next to it (`it.for` tables, the edge cases the function handles on purpose).
 2. Add the export to the folder's `index.ts` (a new folder also goes in `src/index.ts`).
 3. Run `pnpm check`: it regenerates `README.md` and `docs/FUNCTIONS.md` from the JSDoc, then typechecks, lints and tests (100 % coverage).
 4. A performance claim needs a benchmark in `benchmarks/` against the naive baseline.
@@ -175,7 +164,7 @@ function helper(value: number): number {
 
 ## Tests (Vitest)
 
-- Specs are `*.spec.ts` next to the tested file; `it`, never `test`.
+- Specs are `*.spec.ts` next to the tested file; `it`, never `test`. The SVG specs render real SVG in Chromium (`renderSvg` in `src/svg/testing/`).
 - Vitest globals are enabled: do NOT import `describe`, `it`, `expect`, `vi` from `vitest`.
 - `describe` title: the tested function or class (`describe(clamp, …)`); `it` titles in lowercase.
 - Table-driven tests with `it.for([...])`; at most 5 `expect` per test; no conditional expects or tests; no `.only`, `.skip` or commented-out tests.

@@ -1,21 +1,44 @@
-import { moveMatrix } from '../geometry';
-import { updateScreenMatrix } from './internal';
+import { changeOnScreen, createMatrix } from './internal';
 
 /**
- * Moves an SVG element by an offset in screen pixels, whatever its rotation, flip and groups: 5 to the left
- * is always 5 pixels to the left of what is seen.
+ * Moves an SVG element in a direction of the screen, by a distance in the units of its parent: 5 up goes
+ * up as seen, whatever the rotation of the element and its groups, by 5 units of the parent.
  *
  * @param element - A rendered SVG element.
- * @param dx - Horizontal offset in screen pixels, positive to the right. Defaults to `0`.
- * @param dy - Vertical offset in screen pixels, positive downwards. Defaults to `0`.
- * @throws {TypeError} When the element is not rendered, a transform is flattened or its `transform`
- * attribute is invalid.
+ * @param dx - The horizontal distance, positive to the right of the screen.
+ * @param dy - The vertical distance, positive towards the bottom of the screen.
+ * @param transform - A transform of the list to set instead of adding one, to repeat the call without piling
+ * transforms up.
+ * @returns The transform holding the change, in the `transform` list of the element.
+ * @throws {TypeError} When an element is not rendered.
  * @example
- * placeSvgElement(badge, 'top-left', symbol, 'top-left');
- * moveSvgElement(badge, -5, 5); // then 5 px to the left and 5 px down
+ * moveSvgElement(label, 0, -5); // 5 units up, as seen
  */
-export function moveSvgElement(element: SVGGraphicsElement, dx?: number | null, dy?: number | null): void {
-  const resolvedDx = dx ?? 0;
-  const resolvedDy = dy ?? 0;
-  updateScreenMatrix(element, (screen) => moveMatrix(screen, resolvedDx, resolvedDy));
+export function moveSvgElement(
+  element: SVGGraphicsElement,
+  dx: number,
+  dy: number,
+  transform?: SVGTransform,
+): SVGTransform {
+  return changeOnScreen(
+    element,
+    (screen) => {
+      if (dx === 0 && dy === 0) {
+        return screen;
+      }
+      let local = createMatrix(element);
+      for (const item of element.transform.baseVal) {
+        local = local.multiply(item.matrix);
+      }
+      const parent = screen.multiply(local.inverse());
+      const toParent = parent.inverse();
+      const x = toParent.a * dx + toParent.c * dy;
+      const y = toParent.b * dx + toParent.d * dy;
+      const scale = Math.hypot(dx, dy) / Math.hypot(x, y);
+      const screenX = (parent.a * x + parent.c * y) * scale;
+      const screenY = (parent.b * x + parent.d * y) * scale;
+      return createMatrix(element).translate(screenX, screenY).multiply(screen);
+    },
+    transform,
+  );
 }

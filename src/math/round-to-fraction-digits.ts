@@ -1,32 +1,25 @@
 import { getScaleFactor } from '../internal';
 
-/** Decimals kept when none is given, like formatDecimal. */
-const DEFAULT_MAX_FRACTION_DIGITS = 3;
-
-/** From 2^53 on, a double has no fractional part left to round. */
 const MAX_EXACT_INTEGER = Number.MAX_SAFE_INTEGER + 1;
 
 /**
- * Rounds a number to a given number of decimals, half away from zero. Gives the same results as
- * `Number(formatDecimal(value, maxFractionDigits))` for values up to 15 significant digits, much faster:
- * plain arithmetic, no string, no `Intl`. Never returns `-0`.
+ * Rounds a number to a number of decimals, half away from zero, with plain arithmetic: the same result as
+ * `Number(formatDecimal(value, maxFractionDigits))`, much faster. Never returns `-0`.
  *
- * @param value - The number to round; `NaN` and infinities are returned unchanged.
- * @param maxFractionDigits - Number of decimals to keep, an integer in [0, 100]. Defaults to `3`.
+ * @param value - The number to round; `NaN` and infinities come back unchanged.
+ * @param maxFractionDigits - The number of decimals to keep. Defaults to `3`.
  * @returns The rounded number.
- * @throws {RangeError} When `maxFractionDigits` is not an integer in [0, 100].
  * @example
  * roundToFractionDigits(1.005, 2); // 1.01 (`toFixed` gives 1.00)
  * roundToFractionDigits(-2.5, 0); // -3
  */
-export function roundToFractionDigits(value: number, maxFractionDigits?: number | null): number {
-  const resolvedMaxFractionDigits = maxFractionDigits ?? DEFAULT_MAX_FRACTION_DIGITS;
-  const factor = getScaleFactor(resolvedMaxFractionDigits);
+export function roundToFractionDigits(value: number, maxFractionDigits = 3): number {
+  const factor = getScaleFactor(maxFractionDigits);
   const scaled = Math.abs(value) * factor;
   if (!Number.isFinite(scaled) || scaled >= MAX_EXACT_INTEGER) {
     return value + 0;
   }
-  // `1 + EPSILON` absorbs the binary representation error: 1.005 is stored as 1.00499999999999989…
+  // `1 + EPSILON` absorbs the binary error: 1.005 is stored as 1.00499999999999989…
   const rounded = Math.round(scaled * (1 + Number.EPSILON)) / factor;
   return rounded !== 0 && value < 0 ? -rounded : rounded;
 }

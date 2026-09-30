@@ -1,5 +1,2 @@
-/**
- * Any TypeScript enum (string, numeric or both), or a `const` object used as one: the parameter type of the
- * enum helpers.
- */
+/** Any TypeScript enum, or a `const` object used as one. */
 export type EnumObject = Readonly<Record<string, number | string>>;

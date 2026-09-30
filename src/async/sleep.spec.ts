@@ -51,10 +51,4 @@ describe(sleep, () => {
     await promise;
     expect(removeListener).toHaveBeenCalledOnce();
   });
-
-  it('waits 0 ms without signal for null or undefined', async () => {
-    const promises = [sleep(), sleep(null, null)];
-    await vi.advanceTimersByTimeAsync(0);
-    await expect(Promise.all(promises)).resolves.toStrictEqual([undefined, undefined]);
-  });
 });

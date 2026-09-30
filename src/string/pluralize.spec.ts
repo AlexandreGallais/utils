@@ -16,13 +16,7 @@ describe(pluralize, () => {
     expect(pluralize(0, 'alarme', 'alarmes', true)).toBe('alarme');
   });
 
-  it('takes the defaults for null or undefined', () => {
+  it('takes the defaults', () => {
     expect(pluralize(3, 'alarm')).toStrictEqual(pluralize(3, 'alarm', 'alarms', false));
-    expect(pluralize(3, 'alarm', null, null)).toStrictEqual(pluralize(3, 'alarm', 'alarms', false));
-  });
-
-  it('takes the singular for a count of 1 by default', () => {
-    expect(pluralize(1, 'alarm')).toStrictEqual(pluralize(1, 'alarm', 'alarms', true));
-    expect(pluralize(1, 'alarm', null, null)).toStrictEqual(pluralize(1, 'alarm', 'alarms', true));
   });
 });

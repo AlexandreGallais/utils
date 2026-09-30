@@ -1,32 +1,21 @@
 import { isObject } from '../guard';
 
-/** Pairs already being compared, to stop on circular references. */
 type Visited = WeakMap<object, WeakSet<object>>;
 
 /**
- * Compares two values structurally, at every depth: primitives (`NaN` equals `NaN`, `0` equals `-0`),
- * arrays, plain objects and class instances (same prototype, own enumerable keys), `Date`, `RegExp`, `Map`,
- * `Set` (items compared by identity) and typed arrays. Circular references are supported. For a cheap
- * first-level check, use `shallowEqual`.
+ * Compares two values at every depth: primitives (`NaN` equals `NaN`), arrays, objects with the same
+ * prototype, `Date`, `RegExp`, `Map`, `Set` and typed arrays. Circular references work.
  *
  * @param a - A value.
  * @param b - Another value.
  * @returns `true` when both values have the same structure and contents.
  * @example
- * isDeepEqual({ position: { x: 1, y: 2 }, tags: ['a'] }, { position: { x: 1, y: 2 }, tags: ['a'] }); // true
+ * isDeepEqual({ position: { x: 1 }, tags: ['a'] }, { position: { x: 1 }, tags: ['a'] }); // true
  */
 export function isDeepEqual(a: unknown, b: unknown): boolean {
   return equals(a, b, new WeakMap());
 }
 
-/**
- * Compares two values, remembering the pairs of objects in progress.
- *
- * @param a - A value.
- * @param b - Another value.
- * @param visited - Pairs of objects being compared.
- * @returns `true` when both values are deeply equal.
- */
 function equals(a: unknown, b: unknown, visited: Visited): boolean {
   if (a === b || (Number.isNaN(a) && Number.isNaN(b))) {
     return true;
@@ -42,14 +31,6 @@ function equals(a: unknown, b: unknown, visited: Visited): boolean {
   return equalObjects(a, b, visited);
 }
 
-/**
- * Compares two objects of the same prototype by kind.
- *
- * @param a - An object.
- * @param b - An object with the same prototype.
- * @param visited - Pairs of objects being compared.
- * @returns `true` when their contents are deeply equal.
- */
 function equalObjects(a: object, b: object, visited: Visited): boolean {
   if (a instanceof Date && b instanceof Date) {
     return Object.is(a.getTime(), b.getTime());

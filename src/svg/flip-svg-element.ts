@@ -1,30 +1,35 @@
-import type { Anchor } from '../geometry';
-import { multiplyMatrices, createScaleMatrix } from '../geometry';
+import type { Anchor } from './anchor';
 import { getSvgAnchorPoint } from './get-svg-anchor-point';
-import { updateScreenMatrix } from './internal';
+import { changeOnScreen, createMatrix } from './internal';
 
 /**
- * Mirrors an SVG element on screen, around one of its 9 anchors that stays in place, whatever its
- * rotation and groups: `'horizontal'` swaps left and right as seen, `'vertical'` swaps top and bottom.
+ * Mirrors an SVG element on screen around one of its anchors, whatever its rotation and groups.
  *
  * @param element - A rendered SVG element.
- * @param axis - `'horizontal'` for a left-right mirror, `'vertical'` for a top-bottom mirror. Defaults to
+ * @param axis - `'horizontal'` swaps left and right as seen, `'vertical'` top and bottom. Defaults to
  * `'horizontal'`.
- * @param anchor - The point of its visible box that does not move, such as `'center'` or `'left'`. Defaults to
- * `'center'`.
- * @throws {TypeError} When the element is not rendered, a transform is flattened or its `transform`
- * attribute is invalid.
+ * @param anchor - The point of its visible box that stays in place. Defaults to `'center'`.
+ * @param transform - A transform of the list to set instead of adding one, to repeat the call without piling
+ * transforms up.
+ * @returns The transform holding the change, in the `transform` list of the element.
+ * @throws {TypeError} When an element is not rendered.
  * @example
- * flipSvgElement(valve, 'horizontal', 'center'); // the valve now faces the other way, same place
+ * flipSvgElement(valve); // faces the other way, same place
  */
 export function flipSvgElement(
   element: SVGGraphicsElement,
-  axis?: 'horizontal' | 'vertical' | null,
-  anchor?: Anchor | null,
-): void {
-  const resolvedAxis = axis ?? 'horizontal';
-  const resolvedAnchor = anchor ?? 'center';
-  const pivot = getSvgAnchorPoint(element, resolvedAnchor);
-  const mirror = resolvedAxis === 'horizontal' ? createScaleMatrix(-1, 1, pivot) : createScaleMatrix(1, -1, pivot);
-  updateScreenMatrix(element, (screen) => multiplyMatrices(mirror, screen));
+  axis: 'horizontal' | 'vertical' = 'horizontal',
+  anchor: Anchor = 'center',
+  transform?: SVGTransform,
+): SVGTransform {
+  return changeOnScreen(
+    element,
+    (screen) => {
+      const { x, y } = getSvgAnchorPoint(element, anchor);
+      return createMatrix(element, axis === 'horizontal' ? [-1, 0, 0, 1, 2 * x, 0] : [1, 0, 0, -1, 0, 2 * y]).multiply(
+        screen,
+      );
+    },
+    transform,
+  );
 }

@@ -1,14 +1,11 @@
 /**
- * Turns an enum type into the union of its literal values: `'idle' | 'running'` for a string enum, `0 | 1`
- * for a numeric enum. Accept plain literals where an enum is expected (JSON, templates, tests) while staying
- * checked, and compare with strings or numbers without an enum cast.
+ * Turns an enum type into the union of its literal values, so plain literals are accepted where the enum is
+ * expected: `'idle' | 'running'` for a string enum, `0 | 1` for a numeric one.
  *
- * @template E - The enum type, such as `Status` (the type, not `typeof Status`).
+ * @template E - The enum type, such as `Status` (not `typeof Status`).
  * @example
  * enum Status { Idle = 'idle', Running = 'running' }
  * type StatusValue = EnumLiteral<Status>; // 'idle' | 'running'
- * function setStatus(status: Status | EnumLiteral<Status>): void {}
- * setStatus('idle'); // accepted, and 'stopped' is rejected
  */
 export type EnumLiteral<E extends number | string> = E extends string
   ? `${E}`

@@ -12,37 +12,18 @@ const JSDOC_END = '*/';
 
 /** Titles of the categories, by folder. */
 const CATEGORY_TITLES = new Map([
-  ['alarm', 'Alarms'],
-  ['angle', 'Angles'],
-  ['animation', 'Animation'],
   ['async', 'Async'],
-  ['chart', 'Charts'],
-  ['collection', 'Collections'],
   ['color', 'Colors'],
-  ['date', 'Dates'],
-  ['dom', 'DOM & signals'],
   ['duration', 'Durations'],
   ['enum', 'Enums'],
-  ['event', 'Events'],
   ['format', 'Formatting'],
-  ['function', 'Functions'],
-  ['geometry', 'Geometry'],
   ['guard', 'Guards'],
-  ['log', 'Logging'],
   ['math', 'Math'],
   ['object', 'Objects'],
   ['path', 'Paths'],
-  ['perf', 'Performance'],
-  ['random', 'Random'],
-  ['stats', 'Statistics'],
-  ['storage', 'Storage'],
   ['string', 'Strings'],
-  ['structure', 'Data structures'],
   ['svg', 'SVG'],
-  ['time', 'Time & clock'],
-  ['tracking', 'Live values'],
   ['types', 'Types'],
-  ['unit', 'Units'],
 ]);
 
 /**

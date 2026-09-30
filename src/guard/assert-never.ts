@@ -1,18 +1,17 @@
 /**
- * Marks a code path as unreachable. In the `default` branch of a `switch` over a union, TypeScript refuses
- * to compile when a member is not handled; at run time, an unexpected value throws.
+ * Marks a code path as unreachable: in the `default` of a `switch` over a union, TypeScript fails when a
+ * member is not handled, and an unexpected value throws at run time.
  *
- * @param value - The value that should have been narrowed to `never`.
- * @param message - Message of the thrown error. Defaults to `'Unexpected value'`.
- * @throws {Error} Always, with the given message.
+ * @param value - The value narrowed to `never`.
+ * @param message - The message of the error. Defaults to `'Unexpected value'`.
+ * @throws {Error} Always.
  * @example
- * switch (level) {
- *   case 'AA': return 4.5;
- *   case 'AAA': return 7;
- *   default: return assertNever(level, `Unknown level: ${String(level)}`);
+ * switch (mode) {
+ *   case 'day': return light;
+ *   case 'night': return dark;
+ *   default: return assertNever(mode);
  * }
  */
-export function assertNever(value: never, message?: string | null): never {
-  const resolvedMessage = message ?? 'Unexpected value';
-  throw new Error(resolvedMessage);
+export function assertNever(value: never, message = 'Unexpected value'): never {
+  throw new Error(message);
 }

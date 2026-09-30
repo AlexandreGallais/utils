@@ -3,7 +3,6 @@
 export type { EnumObject } from './enum-object';
 export { getEnumValues } from './get-enum-values';
 export { isEnumValue } from './is-enum-value';
-export { isEnumValueCached } from './is-enum-value-cached';
 export { toEnumValue } from './to-enum-value';
 export { getEnumEntries } from './get-enum-entries';
 export { getEnumKeys } from './get-enum-keys';

@@ -16,12 +16,7 @@ describe(roundToStep, () => {
     expect(roundToStep(value, step)).toBe(expected);
   });
 
-  it.for([0, -1, NaN, Infinity])('throws a RangeError for step %s', (step) => {
-    expect(() => roundToStep(1, step)).toThrow(RangeError);
-  });
-
-  it('takes the defaults for null or undefined', () => {
+  it('takes the defaults', () => {
     expect(roundToStep(2.5)).toStrictEqual(roundToStep(2.5, 1));
-    expect(roundToStep(2.5, null)).toStrictEqual(roundToStep(2.5, 1));
   });
 });

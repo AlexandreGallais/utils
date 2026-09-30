@@ -16,18 +16,4 @@ describe(truncate, () => {
     expect(truncate('Engine room temperature', 12, '...')).toBe('Engine ro...');
     expect(truncate('Engine room temperature', 2, '...')).toBe('..');
   });
-
-  it.for([-1, 1.5, NaN])('throws a RangeError for maxLength %s', (maxLength) => {
-    expect(() => truncate('abc', maxLength, '…')).toThrow(RangeError);
-  });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(truncate(undefined, 3)).toStrictEqual(truncate('', 3, '…'));
-    expect(truncate(null, 3, null)).toStrictEqual(truncate('', 3, '…'));
-  });
-
-  it('takes an ellipsis by default', () => {
-    expect(truncate('pressure', 5)).toStrictEqual(truncate('pressure', 5, '…'));
-    expect(truncate('pressure', 5, null)).toStrictEqual(truncate('pressure', 5, '…'));
-  });
 });

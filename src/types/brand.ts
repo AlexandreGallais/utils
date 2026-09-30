@@ -1,4 +1,3 @@
-// Type-only symbol: the brand key exists at compile time only, and never shows in autocompletion.
 declare const brand: unique symbol;
 
 /**

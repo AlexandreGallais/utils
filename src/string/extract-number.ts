@@ -1,22 +1,19 @@
 import { parseMatchedNumber } from './internal';
 
-/** Source of a signed decimal number, `.` or `,` as decimal separator: `-12`, `3.5`, `+0,25`, `.5`. */
 const NUMBER_SOURCE = String.raw`[+\-]?(?:\d+(?:[,.]\d+)?|[,.]\d+)`;
 
 const NUMBER_PATTERN = new RegExp(NUMBER_SOURCE, 'v');
 
 /**
- * Extracts the first number of a text: sign and decimals, `.` or `,` as decimal separator. There is no
- * thousands separator and no exponent: `1,234` is read as `1.234`.
+ * Extracts the first number of a text, with `.` or `,` before the decimals: `1,234` is `1.234`.
  *
- * @param input - Free text, such as a label or a sensor message. Defaults to `''`.
- * @returns The first number found, or `undefined` when there is none.
+ * @param input - A text, such as a label or a sensor message.
+ * @returns The first number; `undefined` when there is none.
  * @example
  * extractNumber('Speed: -12,5 kn'); // -12.5
  * extractNumber('n/a'); // undefined
  */
-export function extractNumber(input?: string | null): number | undefined {
-  const resolvedInput = input ?? '';
-  const match = NUMBER_PATTERN.exec(resolvedInput);
+export function extractNumber(input: string): number | undefined {
+  const match = NUMBER_PATTERN.exec(input);
   return match ? parseMatchedNumber(match[0]) : undefined;
 }

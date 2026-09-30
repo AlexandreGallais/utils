@@ -1,27 +1,15 @@
 /**
- * Updates an on/off state with hysteresis: it switches on at or above `highThreshold`, off at or below
- * `lowThreshold`, and keeps its previous value in between. An alarm fed by a noisy value hovering around its
- * threshold no longer flickers.
+ * Updates an on/off state with hysteresis: on at or above `highThreshold`, off at or below `lowThreshold`,
+ * unchanged in between. A noisy value near a threshold no longer makes the state flicker.
  *
- * @param value - The latest measured value.
- * @param isOn - The current state. Defaults to `false`.
- * @param lowThreshold - Value at or below which the state switches off.
- * @param highThreshold - Value at or above which the state switches on; greater than `lowThreshold`.
+ * @param value - The latest value.
+ * @param isOn - The current state.
+ * @param lowThreshold - The value at or below which the state switches off.
+ * @param highThreshold - The value at or above which the state switches on.
  * @returns The new state.
- * @throws {RangeError} When `highThreshold` is not greater than `lowThreshold`.
  * @example
- * // high temperature alarm: on at 90 °C, off only back under 85 °C
- * isAlarmOn = applyHysteresis(temperature, isAlarmOn, 85, 90);
+ * isAlarmOn = applyHysteresis(temperature, isAlarmOn, 85, 90); // on at 90 °C, off under 85 °C
  */
-export function applyHysteresis(
-  value: number,
-  isOn: boolean | null | undefined,
-  lowThreshold: number,
-  highThreshold: number,
-): boolean {
-  const resolvedIsOn = isOn ?? false;
-  if (Number.isNaN(highThreshold - lowThreshold) || highThreshold <= lowThreshold) {
-    throw new RangeError(`highThreshold (${highThreshold}) must be greater than lowThreshold (${lowThreshold})`);
-  }
-  return value >= highThreshold || (value > lowThreshold && resolvedIsOn);
+export function applyHysteresis(value: number, isOn: boolean, lowThreshold: number, highThreshold: number): boolean {
+  return value >= highThreshold || (value > lowThreshold && isOn);
 }

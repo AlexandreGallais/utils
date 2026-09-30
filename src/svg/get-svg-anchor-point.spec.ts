@@ -1,23 +1,19 @@
 import { getSvgAnchorPoint } from './get-svg-anchor-point';
-import { asSvgElement, createFakeSvgElementIn, createTwistedElement } from './testing';
+import { renderSvg } from './testing';
 
 describe(getSvgAnchorPoint, () => {
-  it('reads the anchors of the visible box', () => {
-    const element = asSvgElement(
-      createFakeSvgElementIn({ a: 1, b: 0, c: 0, d: 1, e: 100, f: 50 }, undefined, {
-        x: 0,
-        y: 0,
-        width: 20,
-        height: 10,
-      }),
-    );
-    expect(getSvgAnchorPoint(element, 'top-right')).toStrictEqual({ x: 120, y: 50 });
-    expect(getSvgAnchorPoint(element, 'center')).toStrictEqual({ x: 110, y: 55 });
+  it.for([
+    ['top-left', 10, 20],
+    ['top-right', 110, 20],
+    ['bottom', 60, 70],
+    ['center', 60, 45],
+  ] as const)('finds the %s anchor', ([anchor, x, y]) => {
+    const byId = renderSvg('<rect id="box" x="10" y="20" width="100" height="50" />');
+    expect(getSvgAnchorPoint(byId('box'), anchor)).toMatchObject({ x, y });
   });
 
-  it('takes the center for null or undefined', () => {
-    const element = asSvgElement(createTwistedElement('rotate(10)'));
-    expect(getSvgAnchorPoint(element)).toStrictEqual(getSvgAnchorPoint(element, 'center'));
-    expect(getSvgAnchorPoint(element, null)).toStrictEqual(getSvgAnchorPoint(element, 'center'));
+  it('takes the center by default', () => {
+    const byId = renderSvg('<rect id="box" x="10" y="20" width="100" height="50" />');
+    expect(getSvgAnchorPoint(byId('box'))).toMatchObject({ x: 60, y: 45 });
   });
 });

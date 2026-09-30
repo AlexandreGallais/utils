@@ -11,9 +11,4 @@ describe(titleCase, () => {
   ] as const)('converts %j to %j', ([input, expected]) => {
     expect(titleCase(input)).toBe(expected);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(titleCase()).toStrictEqual(titleCase(''));
-    expect(titleCase(null)).toStrictEqual(titleCase(''));
-  });
 });

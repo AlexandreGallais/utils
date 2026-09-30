@@ -10,9 +10,4 @@ describe(snakeCase, () => {
   ] as const)('converts %j to %j', ([input, expected]) => {
     expect(snakeCase(input)).toBe(expected);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(snakeCase()).toStrictEqual(snakeCase(''));
-    expect(snakeCase(null)).toStrictEqual(snakeCase(''));
-  });
 });

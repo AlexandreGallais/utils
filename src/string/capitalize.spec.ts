@@ -12,9 +12,4 @@ describe(capitalize, () => {
   ] as const)('capitalizes %j as %j', ([input, expected]) => {
     expect(capitalize(input)).toBe(expected);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(capitalize()).toStrictEqual(capitalize(''));
-    expect(capitalize(null)).toStrictEqual(capitalize(''));
-  });
 });

@@ -10,9 +10,4 @@ describe(inverseLerp, () => {
   ] as const)('places %s → %s at %s as %s', ([start, end, value, expected]) => {
     expect(inverseLerp(start, end, value)).toBe(expected);
   });
-
-  it('takes the range [0, 1] for null or undefined', () => {
-    expect(inverseLerp(undefined, undefined, 0.25)).toBe(inverseLerp(0, 1, 0.25));
-    expect(inverseLerp(null, null, 0.25)).toBe(inverseLerp(0, 1, 0.25));
-  });
 });

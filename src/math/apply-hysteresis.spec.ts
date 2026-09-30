@@ -20,17 +20,4 @@ describe(applyHysteresis, () => {
     });
     expect(states).toStrictEqual([false, true, true, true, true, true, false]);
   });
-
-  it.for([
-    [90, 90],
-    [90, 85],
-    [NaN, 90],
-  ] as const)('throws a RangeError for thresholds %s and %s', ([low, high]) => {
-    expect(() => applyHysteresis(0, false, low, high)).toThrow(RangeError);
-  });
-
-  it('starts off for null or undefined', () => {
-    expect(applyHysteresis(50, undefined, 40, 60)).toBe(applyHysteresis(50, false, 40, 60));
-    expect(applyHysteresis(50, null, 40, 60)).toBe(applyHysteresis(50, false, 40, 60));
-  });
 });

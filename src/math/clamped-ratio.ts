@@ -2,7 +2,7 @@ import { clamp } from './clamp';
 import { ratio } from './ratio';
 
 /**
- * Divides a value by a total and clamps the result to [0, 1]: a progress or fill level.
+ * Divides a value by a total and clamps the result to [0, 1]: a progress or a fill level.
  *
  * @param value - The part.
  * @param total - The whole.
@@ -12,5 +12,5 @@ import { ratio } from './ratio';
  * clampedRatio(-5, 10); // 0
  */
 export function clampedRatio(value: number, total: number): number {
-  return clamp(ratio(value, total), 0, 1);
+  return clamp(ratio(value, total));
 }

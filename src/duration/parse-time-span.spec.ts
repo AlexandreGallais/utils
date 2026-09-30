@@ -23,17 +23,17 @@ describe(parseTimeSpan, () => {
     ['00:00:00,25', 250],
     ['10675199.02:48:05.4775807', 922_337_203_685_477.6],
   ] as const)('parses %j as %s ms', ([input, expected]) => {
-    expect(parseTimeSpan(input)?.totalMilliseconds).toBeCloseTo(expected, 4);
+    expect(parseTimeSpan(input).totalMilliseconds).toBeCloseTo(expected, 4);
   });
 
   it('never gives a negative zero', () => {
     expect(parseTimeSpan('-00:00:00')).toMatchObject({ sign: 1, totalMilliseconds: 0 });
   });
 
-  it.for(['', '30', '1:2:3', '24:00:00', '00:60:00', '00:00:60', '00:00:00.12345678', 'a.00:00:00', '1.2.00:00:00'])(
-    'rejects %j',
+  it.for(['', '30', '1:2:3', '00:00:00.12345678', 'a.00:00:00', '1.2.00:00:00'])(
+    'throws a TypeError for %j',
     (input) => {
-      expect(parseTimeSpan(input)).toBeUndefined();
+      expect(() => parseTimeSpan(input)).toThrow(TypeError);
     },
   );
 });

@@ -1,13 +1,22 @@
 import { resetSvgRotation } from './reset-svg-rotation';
-import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
+import { describeOnScreen, renderSvg } from './testing';
 
 describe(resetSvgRotation, () => {
-  it('straightens on screen without moving, keeping the flip', () => {
-    const element = createTwistedElement('rotate(40)');
-    const before = describeOnScreen(element);
-    resetSvgRotation(asSvgElement(element));
-    const after = describeOnScreen(element);
-    expect(after.rotation).toBeCloseTo(0, 2);
-    expect([after.center, after.isFlipped]).toStrictEqual([before.center, before.isFlipped]);
+  it.for([
+    ['rotate(30 50 50)', false],
+    ['rotate(30 50 50) scale(-1 1) translate(-100 0)', true],
+  ] as const)('straightens %s in place on screen', ([transform, isFlipped]) => {
+    const byId = renderSvg(
+      `<g transform="rotate(20 50 50)"><rect id="symbol" transform="${transform}" x="40" y="45" width="20" height="10" /></g>`,
+    );
+    resetSvgRotation(byId('symbol'));
+    expect(describeOnScreen(byId('symbol'))).toMatchObject({
+      x: 40,
+      y: 45,
+      width: 20,
+      height: 10,
+      rotation: 0,
+      isFlipped,
+    });
   });
 });

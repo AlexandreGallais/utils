@@ -1,28 +1,32 @@
-import type { Anchor } from '../geometry';
-import { multiplyMatrices, createRotationMatrix } from '../geometry';
+import type { Anchor } from './anchor';
 import { getSvgAnchorPoint } from './get-svg-anchor-point';
-import { updateScreenMatrix } from './internal';
+import { changeOnScreen, createMatrix } from './internal';
 
 /**
- * Turns an SVG element on itself by an angle, clockwise on screen, around one of its 9 anchors that stays
- * in place, whatever its groups.
+ * Turns an SVG element clockwise on screen, around one of its anchors, whatever its groups.
  *
  * @param element - A rendered SVG element.
- * @param angleDegrees - The added rotation, in degrees, clockwise on screen. Defaults to `0`.
- * @param anchor - The point of its visible box that does not move, such as `'center'` or `'bottom'`. Defaults to
- * `'center'`.
- * @throws {TypeError} When the element is not rendered, a transform is flattened or its `transform`
- * attribute is invalid.
+ * @param angleDegrees - The rotation, in degrees.
+ * @param anchor - The point of its visible box that stays in place. Defaults to `'center'`.
+ * @param transform - A transform of the list to set instead of adding one, to repeat the call without piling
+ * transforms up.
+ * @returns The transform holding the change, in the `transform` list of the element.
+ * @throws {TypeError} When an element is not rendered.
  * @example
  * rotateSvgElement(flag, 15, 'bottom'); // leans 15° around its foot
  */
 export function rotateSvgElement(
   element: SVGGraphicsElement,
-  angleDegrees?: number | null,
-  anchor?: Anchor | null,
-): void {
-  const resolvedAngleDegrees = angleDegrees ?? 0;
-  const resolvedAnchor = anchor ?? 'center';
-  const pivot = getSvgAnchorPoint(element, resolvedAnchor);
-  updateScreenMatrix(element, (screen) => multiplyMatrices(createRotationMatrix(resolvedAngleDegrees, pivot), screen));
+  angleDegrees: number,
+  anchor: Anchor = 'center',
+  transform?: SVGTransform,
+): SVGTransform {
+  return changeOnScreen(
+    element,
+    (screen) => {
+      const { x, y } = getSvgAnchorPoint(element, anchor);
+      return createMatrix(element).translate(x, y).rotate(angleDegrees).translate(-x, -y).multiply(screen);
+    },
+    transform,
+  );
 }

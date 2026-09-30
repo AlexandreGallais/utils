@@ -1,29 +1,16 @@
-import { getSvgAnchorPoint } from './get-svg-anchor-point';
 import { scaleSvgElement } from './scale-svg-element';
-import { asSvgElement, createTwistedElement, describeOnScreen } from './testing';
+import { describeOnScreen, renderSvg } from './testing';
 
 describe(scaleSvgElement, () => {
-  it('grows on screen around the anchor', () => {
-    const element = createTwistedElement('rotate(35)');
-    const before = describeOnScreen(element);
-    const bottom = getSvgAnchorPoint(asSvgElement(element), 'bottom');
-    scaleSvgElement(asSvgElement(element), 2, 'bottom');
-    const after = describeOnScreen(element);
-    const newBottom = getSvgAnchorPoint(asSvgElement(element), 'bottom');
-    expect([after.width, after.height]).toStrictEqual(
-      [before.width * 2, before.height * 2].map((value) => Math.round(value * 1000) / 1000),
-    );
-    expect(Math.hypot(newBottom.x - bottom.x, newBottom.y - bottom.y)).toBeLessThan(1e-4);
+  it('grows from an anchor', () => {
+    const byId = renderSvg('<rect id="tank" x="10" y="50" width="20" height="40" />');
+    scaleSvgElement(byId('tank'), 1, 1.5, 'bottom');
+    expect(describeOnScreen(byId('tank'))).toMatchObject({ x: 10, y: 30, width: 20, height: 60 });
   });
 
-  it('takes the defaults for null or undefined', () => {
-    const omitted = createTwistedElement('rotate(10)');
-    const nulled = createTwistedElement('rotate(10)');
-    const explicit = createTwistedElement('rotate(10)');
-    scaleSvgElement(asSvgElement(omitted));
-    scaleSvgElement(asSvgElement(nulled), null, null);
-    scaleSvgElement(asSvgElement(explicit), 1, 'center');
-    expect(describeOnScreen(omitted)).toStrictEqual(describeOnScreen(explicit));
-    expect(describeOnScreen(nulled)).toStrictEqual(describeOnScreen(explicit));
+  it('scales both axes around the center by default', () => {
+    const byId = renderSvg('<rect id="tank" x="10" y="10" width="20" height="20" />');
+    scaleSvgElement(byId('tank'), 2);
+    expect(describeOnScreen(byId('tank'))).toMatchObject({ x: 0, y: 0, width: 40, height: 40 });
   });
 });

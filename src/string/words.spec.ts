@@ -20,9 +20,4 @@ describe(words, () => {
   it.for(['', ' '.repeat(3), '-_./'])('returns no word for %j', (input) => {
     expect(words(input)).toStrictEqual([]);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(words()).toStrictEqual(words(''));
-    expect(words(null)).toStrictEqual(words(''));
-  });
 });

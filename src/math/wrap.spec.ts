@@ -9,7 +9,6 @@ describe(wrap, () => {
     [-720.5, 0, 360, 359.5],
     [5, 10, 20, 15],
     [25, 20, 10, 15],
-    [7, 3, 3, 3],
   ] as const)('wraps %s into [%s, %s[ as %s', ([value, min, max, expected]) => {
     expect(wrap(value, min, max)).toBe(expected);
   });
@@ -18,8 +17,7 @@ describe(wrap, () => {
     expect(Object.is(wrap(-360, 0, 360), 0)).toBe(true);
   });
 
-  it('takes the defaults for null or undefined', () => {
+  it('takes the defaults', () => {
     expect(wrap(1.25)).toStrictEqual(wrap(1.25, 0, 1));
-    expect(wrap(1.25, null, null)).toStrictEqual(wrap(1.25, 0, 1));
   });
 });

@@ -1,38 +1,5 @@
-// CSS colors: parsing any color string, WCAG contrast, readable text color, hex and rgb output, mixing.
+// Colors: the fill of an SVG element, and the black or white text that reads best on it.
 
-export type { ContrastLevel } from './contrast-level';
-export { getContrastRatio } from './get-contrast-ratio';
-export { getContrastWithBlack } from './get-contrast-with-black';
-export { getContrastWithWhite } from './get-contrast-with-white';
-export { getReadableTextColor } from './get-readable-text-color';
-export { getReadableTextColorCached } from './get-readable-text-color-cached';
-export { getRelativeLuminance } from './get-relative-luminance';
-export { meetsContrastLevel } from './meets-contrast-level';
-export { mixColors } from './mix-colors';
-export { parseColor } from './parse-color';
-export { parseColorCached } from './parse-color-cached';
-export { parseColorOrThrow } from './parse-color-or-throw';
-export { parseColorOrThrowCached } from './parse-color-or-throw-cached';
-export { parseHex } from './parse-hex';
-export { parseHsl } from './parse-hsl';
-export { parseNamedColor } from './parse-named-color';
-export { parseRgb } from './parse-rgb';
 export type { Rgb } from './rgb';
-export type { Rgba } from './rgba';
-export { toHex } from './to-hex';
-export { toLinear } from './to-linear';
-export { toRgbString } from './to-rgb-string';
-export { getApcaContrast } from './get-apca-contrast';
-export type { ApcaLevel } from './apca-level';
-export type { ColorStop } from './get-gradient-color';
-export { darken } from './darken';
-export { getApcaLevel } from './get-apca-level';
-export { getGradientColor } from './get-gradient-color';
-export { getWcagLevel } from './get-wcag-level';
-export type { Hsl } from './hsl';
-export { hslToRgba } from './hsl-to-rgba';
-export { lighten } from './lighten';
-export { meetsApcaLevel } from './meets-apca-level';
-export { toGrayscale } from './to-grayscale';
-export { toHsl } from './to-hsl';
-export { withAlpha } from './with-alpha';
+export { getSvgFillColor } from './get-svg-fill-color';
+export { getContrastingTextColor } from './get-contrasting-text-color';

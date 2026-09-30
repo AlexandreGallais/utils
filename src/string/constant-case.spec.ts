@@ -10,9 +10,4 @@ describe(constantCase, () => {
   ] as const)('converts %j to %j', ([input, expected]) => {
     expect(constantCase(input)).toBe(expected);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(constantCase()).toStrictEqual(constantCase(''));
-    expect(constantCase(null)).toStrictEqual(constantCase(''));
-  });
 });

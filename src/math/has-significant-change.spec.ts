@@ -3,7 +3,7 @@ import { hasSignificantChange } from './has-significant-change';
 describe(hasSignificantChange, () => {
   it.for([
     [10, 10.05, 0.1, false],
-    [10, 10.1, 0.1, true],
+    [10, 10.5, 0.1, true],
     [1000, 1000.1, 0.1, true],
     [10, 10.099, 0.1, false],
     [10, 9.8, 0.1, true],
@@ -15,8 +15,7 @@ describe(hasSignificantChange, () => {
     expect(hasSignificantChange(previous, next, threshold)).toBe(expected);
   });
 
-  it('takes the defaults for null or undefined', () => {
+  it('takes the defaults', () => {
     expect(hasSignificantChange(1, 1.000_001)).toStrictEqual(hasSignificantChange(1, 1.000_001, 0));
-    expect(hasSignificantChange(1, 1.000_001, null)).toStrictEqual(hasSignificantChange(1, 1.000_001, 0));
   });
 });

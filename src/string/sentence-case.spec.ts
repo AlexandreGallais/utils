@@ -11,9 +11,4 @@ describe(sentenceCase, () => {
   ] as const)('converts %j to %j', ([input, expected]) => {
     expect(sentenceCase(input)).toBe(expected);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(sentenceCase()).toStrictEqual(sentenceCase(''));
-    expect(sentenceCase(null)).toStrictEqual(sentenceCase(''));
-  });
 });

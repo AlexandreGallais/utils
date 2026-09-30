@@ -14,9 +14,4 @@ describe(lerp, () => {
   it('is exact at t = 1', () => {
     expect(lerp(0.1, 0.7, 1)).toBe(0.7);
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(lerp()).toStrictEqual(lerp(0, 1, 0));
-    expect(lerp(null, null, null)).toStrictEqual(lerp(0, 1, 0));
-  });
 });

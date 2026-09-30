@@ -15,17 +15,12 @@ describe(parseEnumValue, () => {
     ['1', Level.High],
     [1, Level.High],
     ['0', Level.Low],
-    ['7', undefined],
-    ['High', undefined],
-    [undefined, undefined],
-    [true, undefined],
   ] as const)('reads %j from a numeric enum as %s', ([input, expected]) => {
-    expect(parseEnumValue(Level, input, false)).toBe(expected);
+    expect(parseEnumValue(Level, input)).toBe(expected);
   });
 
   it('reads string enums', () => {
-    expect(parseEnumValue(Mode, 'night', false)).toBe(Mode.Night);
-    expect(parseEnumValue(Mode, 'Night', false)).toBeUndefined();
+    expect(parseEnumValue(Mode, 'night')).toBe(Mode.Night);
   });
 
   it('accepts member names on request', () => {
@@ -33,8 +28,7 @@ describe(parseEnumValue, () => {
     expect(parseEnumValue(Mode, 'Night', true)).toBe(Mode.Night);
   });
 
-  it('takes the defaults for null or undefined', () => {
-    expect(parseEnumValue(Level, 'High')).toStrictEqual(parseEnumValue(Level, 'High', false));
-    expect(parseEnumValue(Level, 'High', null)).toStrictEqual(parseEnumValue(Level, 'High', false));
+  it.for(['7', 'High'])('throws a TypeError for %j', (input) => {
+    expect(() => parseEnumValue(Level, input)).toThrow(TypeError);
   });
 });

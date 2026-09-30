@@ -30,3 +30,6 @@ npm-debug.log
 .DS_Store
 Thumbs.db
 transfer/
+
+# Vitest browser failure screenshots
+.vitest/

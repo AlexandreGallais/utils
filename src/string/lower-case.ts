@@ -1,18 +1,16 @@
 import { words } from './words';
 
 /**
- * Converts a string to lower-case words separated by spaces, whatever its case style: unlike
- * `toLowerCase()`, it also splits `camelCase`, `kebab-case` and `snake_case` identifiers.
+ * Converts a string to lower-case words separated by spaces, splitting identifiers such as `camelCase`.
  *
- * @param input - Any identifier or sentence. Defaults to `''`.
+ * @param input - Any identifier or sentence.
  * @returns The words in lower case, separated by single spaces; `''` when there is no word.
  * @example
  * lowerCase('engineRoomTemperature'); // 'engine room temperature'
  * lowerCase('MAX_SPEED'); // 'max speed'
  */
-export function lowerCase(input?: string | null): string {
-  const resolvedInput = input ?? '';
-  return words(resolvedInput)
+export function lowerCase(input: string): string {
+  return words(input)
     .map((word) => word.toLowerCase())
     .join(' ');
 }

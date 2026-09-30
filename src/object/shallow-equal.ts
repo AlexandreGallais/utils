@@ -1,9 +1,8 @@
 import { isObject } from '../guard';
 
 /**
- * Compares two values at the first level: primitives with `Object.is`, objects and arrays by their own
- * enumerable keys and `Object.is`-equal values. Use it to skip an update when a new object carries the same
- * values as the previous one.
+ * Compares two values at the first level, with `Object.is`: skips an update when a new object carries the
+ * same values as the previous one.
  *
  * @param a - A value.
  * @param b - Another value.

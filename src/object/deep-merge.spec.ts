@@ -37,9 +37,4 @@ describe(deepMerge, () => {
     expect(Object.hasOwn(result, '__proto__')).toBe(true);
     expect(Object.prototype).not.toHaveProperty('isAdmin');
   });
-
-  it('takes the defaults for null or undefined', () => {
-    expect(deepMerge({ a: 1 })).toStrictEqual(deepMerge({ a: 1 }, {}));
-    expect(deepMerge({ a: 1 }, null)).toStrictEqual(deepMerge({ a: 1 }, {}));
-  });
 });
