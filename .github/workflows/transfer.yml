@@ -24,14 +24,15 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm transfer
-      - name: Zip
-        run: |
-          test -d transfer || { echo "Dossier transfer introuvable"; exit 1; }
-          zip -r transfer.zip transfer
-      - name: Publish release
+      - name: Publish to branch "transfer"
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release view transfer >/dev/null 2>&1 \
-            || gh release create transfer --title "Transfer" --notes "Dernier build du dossier transfer"
-          gh release upload transfer transfer.zip --clobber
+          test -d transfer || { echo "Dossier transfer introuvable"; exit 1; }
+          cd transfer
+          git init -b transfer
+          git config user.name "github-actions[bot]"
+          git config user.email "41898237+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "transfer: ${{ github.sha }}"
+          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" transfer
