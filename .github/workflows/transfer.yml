@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      extra:
+        description: "Packs en plus, séparés par ';' (ex : src/svg;src/chart src/math)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -12,23 +17,34 @@ concurrency:
   group: transfer
   cancel-in-progress: true
 
+env:
+  # Un pack par ligne ; plusieurs dossiers sur une ligne = un seul fichier
+  DEFAULT_PACKS: |
+    lint
+    src
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v5
         with:
           node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm transfer
+      - name: Pack
+        env:
+          EXTRA: ${{ inputs.extra }}
+        run: |
+          packs="$DEFAULT_PACKS"$'\n'"${EXTRA//;/$'\n'}"
+          while IFS= read -r pack; do
+            [ -z "$pack" ] && continue
+            node scripts/create-transfer.mjs $pack
+          done <<< "$packs"
+          ls -la transfer
       - name: Publish to branch "transfer"
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          test -d transfer || { echo "Dossier transfer introuvable"; exit 1; }
           cd transfer
           git init -b transfer
           git config user.name "github-actions[bot]"
