@@ -6,7 +6,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: transfer
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -20,9 +24,14 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm transfer
-      - uses: actions/upload-artifact@v4
-        with:
-          name: transfer
-          path: transfer
-          retention-days: 30
-          if-no-files-found: error
+      - name: Zip
+        run: |
+          test -d transfer || { echo "Dossier transfer introuvable"; exit 1; }
+          zip -r transfer.zip transfer
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view transfer >/dev/null 2>&1 \
+            || gh release create transfer --title "Transfer" --notes "Dernier build du dossier transfer"
+          gh release upload transfer transfer.zip --clobber
