@@ -1,4 +1,4 @@
-name: Build
+name: Transfer
 
 on:
   push:
@@ -13,14 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      # pnpm avant setup-node : nécessaire pour le cache pnpm
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm exec tsx scripts/create-transfer.ts
+      - run: pnpm transfer
       - uses: actions/upload-artifact@v4
         with:
           name: transfer
